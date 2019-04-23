@@ -90,7 +90,6 @@ describe('ProceduresPage', () => {
     const viewProcessColumn = map[1];
     const actionButton = map[2];
 
-    expect(viewProcessColumn.find('#procedureView').text()).toEqual('View procedure');
     expect(actionButton.find('input').prop("value")).toEqual("processA");
 
     window.matchMedia = null;

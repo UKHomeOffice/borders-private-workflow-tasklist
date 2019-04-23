@@ -42,7 +42,7 @@ export class ProceduresPage extends React.Component {
           description: p.getIn(['process-definition', 'description']),
           action: <input id="actionButton" className="btn btn-primary" onClick={() => this.process(p)} type="submit"
                          value={name}/>,
-          diagram:  <div id="procedureView" style={pointerStyle} onClick={() => this.viewProcessDiagram(p)}>View procedure</div>
+          diagram:  null
         }
     }).toArray() : [];
 
