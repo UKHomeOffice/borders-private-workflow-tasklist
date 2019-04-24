@@ -66,7 +66,7 @@ spec:
         - name: SSL_CIPHERS
           value: "ECDHE-RSA-AES128-GCM-SHA256:AES256+EECDH:AES256+EDH:!aNULL"
         - name: ENABLE_UUID_PARAM
-          value: "FALSE"
+          value: "HEADER"
         - name: NAXSI_USE_DEFAULT_RULES
           value: "FALSE"
         - name: PORT_IN_HOST_HEADER
