@@ -16,7 +16,7 @@ export default class ShiftForm extends React.Component {
   };
 
   onRender = () => {
-    const hasCancelButton = $('.list-inline ul li:contains("Cancel")').length;
+    const hasCancelButton = $('ul.list-inline li:contains("Cancel")').length;
     if (hasCancelButton === 0 && this.cancelButtonAdded !== true) {
       $('.list-inline li:eq(0)')
         .before('<li class="list-inline-item"><button id="cancelButton" class="btn btn-default btn-secondary btn-wizard-nav-cancel">Cancel</button></li>');
