@@ -28,7 +28,7 @@ class ProcessDiagramPage extends React.Component {
 
   render() {
     const {isFetchingProcessDefinition, processDefinition, processDefinitionXml, isFetchingProcessDefinitionXml} = this.props;
-    const pointerStyle = {cursor: 'pointer', paddingTop: '2px', textDecoration: 'underline'};
+    const pointerStyle = {cursor: 'pointer', paddingTop: '2px', textDecoration: 'underline', display: 'inline-block'};
 
     if (isMobile) {
       return <div>

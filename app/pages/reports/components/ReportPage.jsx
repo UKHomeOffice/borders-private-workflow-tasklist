@@ -10,7 +10,7 @@ export class ReportPage extends React.Component {
 
         const params = queryString.parse(this.props.location.search);
         const reportName = params.reportName;
-        const pointerStyle = {cursor: 'pointer', paddingTop: '10px', textDecoration: 'underline', paddingBottom: '10px'};
+        const pointerStyle = {cursor: 'pointer', paddingTop: '10px', textDecoration: 'underline', paddingBottom: '10px', display: 'inline-block'};
 
         return <div>
             <div id="backToReports" style={pointerStyle} onClick={() => this.props.history.replace('/reports')}>Back to reports</div>
