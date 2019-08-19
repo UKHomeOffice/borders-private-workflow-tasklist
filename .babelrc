@@ -6,6 +6,7 @@
     "react"
   ],
   "plugins": [
+    "dynamic-import-node",
     "syntax-dynamic-import",
     [
       "transform-class-properties",
