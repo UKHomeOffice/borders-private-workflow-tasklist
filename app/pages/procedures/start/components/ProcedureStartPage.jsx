@@ -8,7 +8,6 @@ import {connect} from 'react-redux';
 import {withRouter} from 'react-router';
 import {Formio} from 'react-formio';
 import AppConstants from '../../../../common/AppConstants';
-import { initAll } from 'govuk-frontend';
 
 import DataSpinner from '../../../../core/components/DataSpinner';
 import Loader from 'react-loader-advanced';
@@ -17,7 +16,6 @@ import NotFound from '../../../../core/components/NotFound';
 import secureLocalStorage from '../../../../common/security/SecureLocalStorage';
 import withLog from '../../../../core/error/component/withLog';
 import {FAILED, SUBMISSION_SUCCESSFUL, SUBMITTING} from '../constants';
-
 
 export class ProcessStartPage extends React.Component {
 
@@ -49,7 +47,6 @@ export class ProcessStartPage extends React.Component {
             const processKey = this.props.processDefinition.getIn(['process-definition', 'key']);
             this.handleSubmission(submissionStatus, user, path, processKey);
         }
-        initAll();
     }
 
     handleSubmission(submissionStatus, user, path, processKey) {
@@ -100,10 +97,6 @@ export class ProcessStartPage extends React.Component {
                     submissionStatus: submissionStatus
                 }]);
         }
-    }
-
-    componentWillUnmount() {
-        this.props.clearProcessDefinition();
     }
 
     handleCustomEvent = (event) => {
@@ -216,6 +209,10 @@ export class ProcessStartPage extends React.Component {
         }
 
     };
+
+    componentWillUnmount() {
+        this.props.clearProcessDefinition();
+    }
 
 }
 

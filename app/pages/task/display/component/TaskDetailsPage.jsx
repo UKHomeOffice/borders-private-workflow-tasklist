@@ -15,7 +15,6 @@ import {customEventSubmissionStatus, form, submissionStatus} from '../../form/se
 import {SUBMITTING} from '../../form/constants';
 import DataSpinner from '../../../../core/components/DataSpinner';
 import Loader from 'react-loader-advanced';
-import { initAll } from 'govuk-frontend';
 
 export class TaskDetailsPage extends React.Component {
 
@@ -47,8 +46,6 @@ export class TaskDetailsPage extends React.Component {
     }
 
     render() {
-        initAll();
-
         const {task, variables, submissionStatus} = this.props;
         const showSubmittingLoader = submissionStatus === SUBMITTING || customEventSubmissionStatus === SUBMITTING;
 

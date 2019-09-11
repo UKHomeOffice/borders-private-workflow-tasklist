@@ -2,13 +2,18 @@ import React from 'react';
 import {Form} from 'react-formio';
 import moment from 'moment';
 import AppConstants from "../../../common/AppConstants";
+import GovUKFrontEndObserver from '../../../core/util/GovUKFrontEndObserver';
 
 export default class ShiftForm extends React.Component {
 
     constructor(props) {
         super(props);
+        this.formNode = React.createRef();
     }
 
+    componentDidMount() {
+        this.observer = new GovUKFrontEndObserver(this.formNode.element).create();
+    }
 
     shouldComponentUpdate(nextProps, nextState, nextContext) {
         return false;
@@ -59,7 +64,8 @@ export default class ShiftForm extends React.Component {
             this.options.i18n.en.submit = 'Amend shift';
 
             return <Form form={shiftForm} submission={shiftSubmission} options={this.options}
-                         ref={(form) => {
+                         ref={form => {
+                             this.formNode = form;
                              formReference(form);
                          }}
                          onSubmit={(submission) => {
@@ -79,15 +85,19 @@ export default class ShiftForm extends React.Component {
                     }
                 };
                 return <Form form={shiftForm} submission={shiftSubmission} options={this.options}
-                             ref={(form) => {
-                                 formReference(form)
+                             ref={form => {
+                                this.formNode = form;
+                                formReference(form);
                              }}
                              onSubmit={(submission) => {
                                  submit(shiftForm, submission)
                              }}/>
             } else {
                 return <Form form={shiftForm}
-                             ref={(form) => formReference(form)}
+                             ref={form => {
+                                this.formNode = form;
+                                formReference(form);
+                            }}
                              options={this.options}
                              onSubmit={(submission) => {
                                  submit(shiftForm, submission)
@@ -95,5 +105,10 @@ export default class ShiftForm extends React.Component {
             }
         }
     }
+
+    componentWillUnmount() {
+        this.observer.destroy();
+    }
+
 }
 
