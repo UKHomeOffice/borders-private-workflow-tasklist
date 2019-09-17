@@ -50,112 +50,31 @@ const fetchFormWithContext = (action$, store, { client }) => action$.ofType(type
 
 const submit = (action$, store, { client }) => action$.ofType(types.SUBMIT)
   .mergeMap(action => {
-    const { submissionData } = action;
-    return client({
+   const { submissionData, nonShiftApiCall, variableName, processKey} = action;
+   return client({
       method: 'POST',
       path: `${store.getState().appConfig.translationServiceUrl}/api/translation/form/${action.formId}/submission`,
       entity: {
         data: submissionData,
+        processKey: processKey,
+        variableName: variableName,
+        isShiftApiCall: nonShiftApiCall,
       },
       headers: {
         Accept: 'application/json',
         Authorization: `Bearer ${store.getState().keycloak.token}`,
         'Content-Type': 'application/json',
       },
-    })
-      .retryWhen(retry)
+    }).retryWhen(retry)
       .map(payload => {
-        if (action.nonShiftApiCall) {
-          return {
-            type: types.SUBMIT_TO_WORKFLOW_NON_SHIFT,
-            processKey: action.processKey,
-            variableName: action.variableName,
-            data: submissionData,
-            processName: action.processName,
-          };
-        }
-        return {
-          type: types.SUBMIT_TO_WORKFLOW,
-          processKey: action.processKey,
-          variableName: action.variableName,
-          data: payload.entity.data,
-          processName: action.processName,
-          formId: action.formId,
-        };
+        PubSub.publish('submission', {
+          submission: true,
+          autoDismiss: true,
+          message: `${action.processName} successfully started`,
+        });
+        return actions.submitToWorkflowSuccess(payload);
       })
-      .catch(error => errorObservable(actions.submitFailure(), error));
+      .catch(error => errorObservable(actions.submitToWorkflowFailure(), error));
   });
 
-
-const submitToWorkflow = (action$, store, { client }) => action$.ofType(types.SUBMIT_TO_WORKFLOW)
-  .mergeMap(action => client({
-    method: 'POST',
-    path: `${store.getState().appConfig.translationServiceUrl}/api/translation/workflow/process-instances`,
-    entity: {
-      data: action.data,
-      processKey: action.processKey,
-      variableName: action.variableName,
-      formId: action.formId,
-    },
-    headers: {
-      Accept: 'application/json',
-      Authorization: `Bearer ${store.getState().keycloak.token}`,
-      'Content-Type': 'application/json',
-    },
-  })
-    .retryWhen(retry)
-    .map(payload => {
-      PubSub.publish('submission', {
-        submission: true,
-        autoDismiss: true,
-        message: `${action.processName} successfully started`,
-      });
-      return actions.submitToWorkflowSuccess(payload);
-    })
-    .catch(error => errorObservable(actions.submitToWorkflowFailure(), error)));
-
-const createVariable = (action, email) => {
-  const { variableName } = action;
-  const variables = {};
-  variables[variableName] = {
-    value: JSON.stringify(action.data),
-    type: 'json',
-  };
-  variables.initiatedBy = {
-    value: email,
-    type: 'String',
-  };
-
-  variables.type = {
-    value: 'non-notifications',
-    type: 'String',
-  };
-  return {
-    variables,
-  };
-};
-
-const submitToWorkflowUsingNonShiftApi = (action$, store, { client }) => action$.ofType(types.SUBMIT_TO_WORKFLOW_NON_SHIFT)
-  .mergeMap(action => client({
-    method: 'POST',
-    path: `${store.getState().appConfig.workflowServiceUrl}/rest/camunda/process-definition/key/${action.processKey}/start`,
-    entity: createVariable(action, store.getState().keycloak.tokenParsed.email),
-    headers: {
-      Accept: 'application/json',
-      Authorization: `Bearer ${store.getState().keycloak.token}`,
-      'Content-Type': 'application/json',
-    },
-  }).retryWhen(retry)
-    .map(payload => {
-      console.log(JSON.stringify(action));
-      PubSub.publish('submission', {
-        submission: true,
-        autoDismiss: true,
-        message: `${action.processName} successfully started`,
-      });
-      return actions.submitToWorkflowSuccess(payload);
-    })
-    .catch(error => errorObservable(actions.submitToWorkflowFailure(), error)));
-
-
-export default combineEpics(fetchProcessDefinition, fetchForm, fetchFormWithContext, submit, submitToWorkflow, submitToWorkflowUsingNonShiftApi);
+export default combineEpics(fetchProcessDefinition, fetchForm, fetchFormWithContext, submit);
