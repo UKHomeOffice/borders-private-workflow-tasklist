@@ -118,6 +118,7 @@
     "webpack-subresource-integrity": "^1.0.3"
   },
   "dependencies": {
+    "@stomp/stompjs": "^5.4.2",
     "body-parser": "^1.18.3",
     "bootstrap": "^4.3.1",
     "bpmn-js": "^3.0.2",
@@ -172,7 +173,6 @@
     "rxjs": "^5.5.2",
     "secure-ls": "^1.2.5",
     "sockjs-client": "^1.3.0",
-    "stompjs": "^2.3.3",
     "tether": "^1.4.3",
     "throttle-debounce": "^2.0.1",
     "uuid": "^3.2.1",

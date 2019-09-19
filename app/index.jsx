@@ -86,6 +86,11 @@ const renderApp = (App, authorizedRole) => {
           rootDocument,
         );
       } else {
+        const history = MatomoTracker({
+          url: store.getState().appConfig.analyticsUrl,
+          siteId: store.getState().appConfig.analyticsSiteId,
+          clientTrackerName: 'matomo.js'
+        }).connectToHistory(createBrowserHistory());
         ReactDOM.render(
           <Provider store={store}>
             <div>
@@ -172,9 +177,7 @@ if (process.env.NODE_ENV === 'production') {
     operationalDataUrl: process.env.API_COP_URI,
     workflowServiceUrl: process.env.ENGINE_URI,
     translationServiceUrl: process.env.TRANSLATION_URI,
-    reportServiceUrl: process.env.REPORT_URI,
-    analyticsUrl: data.ANALYTICS_URL,
-    analyticsSiteId: data.ANALYTICS_SITE_ID,
+    reportServiceUrl: process.env.REPORT_URI
   };
   renderApp(App, authAccessRole);
 }

@@ -1,90 +1,80 @@
-import React from 'react';
-import PropTypes from 'prop-types';
 import ImmutablePropTypes from 'react-immutable-proptypes';
+import PropTypes from 'prop-types';
+import React from 'react';
+import SockJS from 'sockjs-client';
+
+import { Client, Message } from '@stomp/stompjs';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { withRouter } from 'react-router';
 import { debounce, throttle } from 'throttle-debounce';
-// import SockJS from 'sockjs-client';
-// import Stomp from 'stompjs';
-import YourTasks from './YourTasks';
-import DataSpinner from '../../../core/components/DataSpinner';
+import { withRouter } from 'react-router';
+
+// local imports
 import * as actions from '../actions';
+import DataSpinner from '../../../core/components/DataSpinner';
+import YourTasks from './YourTasks';
 import { yourTasks } from '../selectors';
 
 export class YourTasksContainer extends React.Component {
   constructor(props) {
     super(props);
-    // this.websocketSubscriptions = [];
-    // this.retryCount = 0;
-    // this.connect = this.connect.bind(this);
-    // this.disconnect = this.disconnect.bind(this);
+    this.websocketSubscriptions = [];
+    this.retryCount = 0;
+    this.connect = this.connect.bind(this);
     this.goToTask = this.goToTask.bind(this);
     this.sortYourTasks = this.sortYourTasks.bind(this);
     this.filterTasksByName = this.filterTasksByName.bind(this);
     this.debounceSearch = this.debounceSearch.bind(this);
   }
 
-  // connect = () => {
-  //   this.socket = new SockJS(`${this.props.appConfig.workflowServiceUrl}/ws/workflow/tasks`);
-  //   this.stompClient = Stomp.over(this.socket);
-  //   const uiEnv = this.props.appConfig.uiEnvironment.toLowerCase();
-  //   if (uiEnv !== 'development' && uiEnv !== 'local') {
-  //     this.stompClient.debug = () => {
-  //     };
-  //   }
-  //   const heartBeat = 5000;
-  //   this.stompClient.heartbeat.outgoing = heartBeat;
-  //   this.stompClient.heartbeat.incoming = heartBeat;
+  connect = (user) => {
+    const uiEnv = this.props.appConfig.uiEnvironment.toLowerCase();
+    this.client = new Client({
+      debug: function (str) {
+        if (uiEnv === 'development' || uiEnv === 'local') {
+            console.log(str);
+        }
+      },
+      reconnectDelay: 5000,
+      heartbeatIncoming: 4000,
+      heartbeatOutgoing: 4000
+    });
 
-  //   this.stompClient.connect({
-  //     Authorization: `Bearer ${this.props.kc.token}`,
-  //   }, () => {
-  //     this.connected = true;
-  //     console.log('Connected to websocket server');
-  //     const userSub = this.stompClient.subscribe('/user/queue/task', () => {
-  //       this.loadYourTasks(true, this.props.yourTasks.get('yourTasksSortValue'),
-  //         this.props.yourTasks.get('yourTasksFilterValue'));
-  //     });
-  //     this.websocketSubscriptions.push(userSub);
-  //     console.log(`Number of subscriptions ${this.websocketSubscriptions.length}`);
-  //   }, error => {
-  //     this.retryCount += 1;
-  //     if (error) {
-  //       this.websocketSubscriptions = [];
-  //       console.log(`Failed to connect ${error}...will retry to connect in ${this.retryCount === 1 ? 6 : 60} seconds`);
-  //     }
-  //     if (this.connected) {
-  //       this.connected = false;
-  //     }
-  //     const timeout = this.retryCount === 1 ? 6000 : 60000;
-  //     if (this._timeoutId) {
-  //       clearTimeout(this._timeoutId);
-  //       this._timeoutId = null;
-  //     }
-  //     this._timeoutId = setTimeout(() => this.connect(), timeout);
-  //   });
-  // };
+    const self = this;
+    this.client.webSocketFactory = function () {
+      return new SockJS(`${self.props.appConfig.workflowServiceUrl}ws/workflow/tasks?access_token=${self.props.kc.token}`);
+    };
+    this.client.onConnect = function(frame) {
+      self.props.log([{
+        message: 'Connected to websocket',
+        user: user,
+        level: 'info',
+        path: self.props.location.pathname
+      }]);
 
-  // disconnect = () => {
-  //   if (this._timeoutId) {
-  //     clearTimeout(this._timeoutId);
-  //     this._timeoutId = null;
-  //   }
-  //   this.retryCount = 0;
-  //   console.log('Disconnecting websocket');
-  //   if (this.connected) {
-  //     if (this.websocketSubscriptions) {
-  //       this.websocketSubscriptions.forEach(sub => {
-  //         console.log(`Disconnecting sub${sub.id}`);
-  //         sub.unsubscribe();
-  //       });
-  //       this.websocketSubscriptions = [];
-  //     }
-  //     this.connected = null;
-  //     this.stompClient.disconnect();
-  //   }
-  // };
+      const userSub = self.client.subscribe('/user/queue/task', () => {
+        this.loadYourTasks(true, self.props.yourTasks.get('yourTasksSortValue'),
+        self.props.yourTasks.get('yourTasksFilterValue'));
+      });
+      self.websocketSubscriptions.push(userSub);
+      self.props.log([{
+        message: 'Number of subscriptions ' + self.websocketSubscriptions.length,
+        user: user,
+        level: 'info',
+        path: self.props.location.pathname
+      }]);
+    };
+
+    this.client.onStompError = function (frame) {
+      self.props.log([{
+        message: `Failed to connect ${frame.headers['message']}`,
+        user: user,
+        level: 'error',
+        path: self.props.location.pathname
+      }]);
+    };
+    this.client.activate();
+  }
 
   componentDidMount() {
     this.loadYourTasks(false, 'sort=due,desc');
@@ -99,9 +89,11 @@ export class YourTasksContainer extends React.Component {
     this.props.history.replace(`/task/${taskId}`);
   }
 
-  componentWillUnmount() {
-    // this.retryCount = 0;
-    // this.disconnect();
+  componentWillUnmount() {    
+    if (this.client) {
+     this.client.deactivate(); 
+    }
+
     this.props.resetYourTasks();
   }
 
@@ -150,8 +142,6 @@ YourTasksContainer.propTypes = {
   fetchTasksAssignedToYou: PropTypes.func.isRequired,
   yourTasks: ImmutablePropTypes.map,
 };
-
-
 const mapDispatchToProps = dispatch => bindActionCreators(actions, dispatch);
 
 export default connect(state => ({

@@ -9,24 +9,48 @@ Ensure the following:
 * Export the environment variables defined in the [sample.env](sample.env) file.
     
 
-## Running
+## Running in development
 
-Running locally in dev mode with hot updates:
+1 - Install dependencies
+```
+npm install
+```
 
+2 - Define and export variables in the `sample.env` file
+```
+source sample.env
+```
+
+3 - Run app locally (runs the app with hot reload)
 ```
 npm run dev
-```    
+```
 
-Running in prod mode:
+4 - Open your browser and navigate to `http://localhost:8080`
 
+## Running in production
+
+1 - Install dependencies
+```
+npm install
+```
+
+2 - Build webpack
 ```
 npm run build
+```
+
+3 - Go into the `dist` folder
+```
 cd dist/
+```
+
+4 - Run server
+```
 node server.js
 ```
 
-URL:
-
+5 - Open your browser and navigate to `http://localhost:8080`
 ```
 http://localhost:8080
 ```

@@ -23,7 +23,7 @@ module.exports = webpackMerge(common, {
   devtool: 'source-map',
   entry: [
     require.resolve('react-app-polyfill/ie11'),
-    path.join(process.cwd(), './app/index.js'),
+    path.join(process.cwd(), './app/index.jsx'),
   ],
   optimization: {
     minimize: true,

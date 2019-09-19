@@ -13,7 +13,7 @@ const port = process.env.PORT || 8080;
 
 
 module.exports = webpackMerge(common, {
-  devtool: 'inline-source-map',
+  devtool: 'cheap-eval-source-map',
   mode: 'development',
   entry: {
     app: [
@@ -24,10 +24,9 @@ module.exports = webpackMerge(common, {
     ],
   },
   plugins: [
-    new BundleAnalyzerPlugin(),
     new webpack.HotModuleReplacementPlugin(),
     new webpack.DefinePlugin({
-      env: {
+      'process.env': {
         WWW_KEYCLOAK_CLIENT_ID: JSON.stringify(process.env.WWW_KEYCLOAK_CLIENT_ID),
         KEYCLOAK_REALM: JSON.stringify(process.env.KEYCLOAK_REALM),
         KEYCLOAK_URI: JSON.stringify(process.env.KEYCLOAK_URI),
@@ -72,4 +71,3 @@ module.exports = webpackMerge(common, {
     },
   },
 });
-
