@@ -58,7 +58,7 @@ const submit = (action$, store, { client }) => action$.ofType(types.SUBMIT)
         data: submissionData,
         processKey: processKey,
         variableName: variableName,
-        isShiftApiCall: nonShiftApiCall,
+        nonShiftApiCall: nonShiftApiCall ? nonShiftApiCall : false,
       },
       headers: {
         Accept: 'application/json',

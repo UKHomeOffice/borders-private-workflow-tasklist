@@ -2,6 +2,7 @@ import React from 'react';
 import {Form} from 'react-formio';
 import AppConstants from '../../../../common/AppConstants';
 import GovUKFrontEndObserver from '../../../../core/util/GovUKFrontEndObserver';
+import FileService from '../../../../core/FileService';
 
 class StartForm extends React.Component {
   constructor(props) {
@@ -22,29 +23,31 @@ class StartForm extends React.Component {
     resetForm(false);
   };
 
-  options = {
-    noAlerts: true,
-    language: 'en',
-    hooks:{
-      beforeCancel: (...args) => {
-        this.handleCancel(args);
-      }
-    },
-    buttonSettings: {
-      showCancel: true
-    },
-    i18n: {
-      en: {
-        submit: 'Submit',
-        cancel: 'Cancel',
-        previous: 'Back',
-        next: 'Next'
-      }
-    }
-  };
+
 
   render() {
-    const { dataChange, submission, formReference, handleSubmit, onCustomEvent, startForm} = this.props;
+    const { dataChange, submission, formReference, handleSubmit, onCustomEvent, startForm, kc} = this.props;
+    const options = {
+      noAlerts: true,
+      language: 'en',
+      fileService: new FileService(kc),
+      hooks:{
+        beforeCancel: (...args) => {
+          this.handleCancel(args);
+        }
+      },
+      buttonSettings: {
+        showCancel: true
+      },
+      i18n: {
+        en: {
+          submit: 'Submit',
+          cancel: 'Cancel',
+          previous: 'Back',
+          next: 'Next'
+        }
+      }
+    };
     if (submission) {
       return <Form
         submission={{
@@ -56,7 +59,7 @@ class StartForm extends React.Component {
           this.formNode = form;
           formReference(form);
         }}
-        options={this.options}
+        options={options}
         onCustomEvent={(event) => onCustomEvent(event)}
         onSubmit={(submission) => handleSubmit(submission)}/>;
     } else {
@@ -67,7 +70,7 @@ class StartForm extends React.Component {
           this.formNode = form;
           formReference(form);
         }}
-        options={this.options}
+        options={options}
         onCustomEvent={(event) => onCustomEvent(event)}
         onSubmit={(submission) => handleSubmit(submission)}/>;
     }

@@ -24,6 +24,9 @@ import url from './common/formio/url';
 import secureLocalStorage from './common/security/SecureLocalStorage';
 import { initAll } from 'govuk-frontend';
 import formioTemplate from './common/formio/formio-template';
+import qs from "querystring";
+import axios from 'axios';
+import jwt_decode from "jwt-decode";
 
 const store = configureStore();
 let kc = null;
@@ -31,7 +34,7 @@ let kc = null;
 Formio.providers.storage.url = url;
 Formio.Templates.current = formioTemplate;
 
-const renderApp = (App, authorizedRole) => {
+const renderApp = (App, config, authorizedRole) => {
   initAll();
   kc.onTokenExpired = () => {
     secureLocalStorage.removeAll();
@@ -43,9 +46,79 @@ const renderApp = (App, authorizedRole) => {
       kc.logout();
     });
   };
+
   kc.init({ onLoad: 'login-required', checkLoginIframe: false }).success(authenticated => {
     if (authenticated) {
       store.getState().keycloak = kc;
+      Formio.baseUrl = `${config.formApi.url}`;
+      Formio.formsUrl = `${config.formApi.url}/form`;
+      Formio.formUrl = `${config.formApi.url}/form`;
+      Formio.projectUrl = `${config.formApi.url}`;
+      Formio.plugins = [{
+        priority: 0,
+        preRequest: async function (requestArgs) {
+            if (!requestArgs.opts) {
+                requestArgs.opts = {};
+            }
+            if (!requestArgs.opts.header) {
+                requestArgs.opts.header = new Headers();
+                if (requestArgs.method !== 'upload') {
+                    requestArgs.opts.header.set('Accept', 'application/json');
+                    requestArgs.opts.header.set('Content-type', 'application/json; charset=UTF-8');
+                } else {
+                    requestArgs.opts.header.set('Content-type', requestArgs.file.type);
+                }
+            }
+            let token = store.getState().keycloak.token;
+            const isExpired = jwt_decode(keycloak.token).exp < new Date().getTime() / 1000;
+            if (isExpired) {
+                try {
+                    const response = await axios({
+                        method: 'POST',
+                        url: `${kc.authServerUrl}/realms/${kc.realm}/protocol/openid-connect/token`,
+                        headers: {
+                            "Content-Type": "application/x-www-form-urlencoded"
+                        },
+                        data: qs.stringify({
+                            grant_type: 'refresh_token',
+                            client_id: kc.clientId,
+                            refresh_token: kc.refreshToken
+                        })
+                    });
+                    token = response.data.access_token;
+                } catch (e) {
+                    console.error(e);
+                }
+            }
+
+            requestArgs.opts.header.set('Authorization', `Bearer ${token}`);
+            if (!requestArgs.url) {
+                requestArgs.url = "";
+            }
+            requestArgs.url = requestArgs.url.replace("_id", "id");
+            return Promise.resolve(requestArgs);
+        },
+    }, {
+        priority: 0,
+        requestResponse: function (response) {
+            return {
+                ok: response.ok,
+                json: () => response.json().then((result) => {
+                    if (result.forms) {
+                        return result.forms.map((form) => {
+                            form['_id'] = form.id;
+                            return form;
+                        });
+                    }
+                    result['_id'] = result.id;
+                    return result;
+                }),
+                status: response.status,
+                headers: response.headers
+            };
+
+        }
+    }];
       const hasPlatformRoleAccess = kc.realmAccess.roles.includes(authorizedRole);
       const rootDocument = document.getElementById('root');
       if (hasPlatformRoleAccess) {
@@ -58,10 +131,7 @@ const renderApp = (App, authorizedRole) => {
           onUpdateReady: () => OfflinePluginRuntime.applyUpdate(),
           onUpdated: () => window.swUpdate = true,
         });
-        history.push(location.href);
-        window.onpopstate = () => {
-          history.go(1);
-        };
+      
         setInterval(() => {
           kc.updateToken().success(refreshed => {
             if (refreshed) {
@@ -159,7 +229,11 @@ if (process.env.NODE_ENV === 'production') {
         analyticsUrl: data.ANALYTICS_URL,
         analyticsSiteId: data.ANALYTICS_SITE_ID,
       };
-      renderApp(App, data.WWW_KEYCLOAK_ACCESS_ROLE);
+      renderApp(App, {
+        formApi: {
+          url: data.TRANSLATION_SERVICE_URL
+        }
+      }, data.WWW_KEYCLOAK_ACCESS_ROLE);
     }).catch(err => {
       console.log('Unable to start application: ', err.message);
       unavailable();
@@ -179,7 +253,11 @@ if (process.env.NODE_ENV === 'production') {
     translationServiceUrl: process.env.TRANSLATION_URI,
     reportServiceUrl: process.env.REPORT_URI
   };
-  renderApp(App, authAccessRole);
+  renderApp(App, {
+    formApi: {
+      url: process.env.TRANSLATION_URI
+    }
+  }, authAccessRole);
 }
 // Hot Module Replacement API
 if (module.hot) {

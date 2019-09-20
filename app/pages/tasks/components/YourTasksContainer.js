@@ -42,7 +42,7 @@ export class YourTasksContainer extends React.Component {
 
     const self = this;
     this.client.webSocketFactory = function () {
-      return new SockJS(`${self.props.appConfig.workflowServiceUrl}ws/workflow/tasks?access_token=${self.props.kc.token}`);
+      return new SockJS(`${self.props.appConfig.workflowServiceUrl}/ws/workflow/tasks?access_token=${self.props.kc.token}`);
     };
     this.client.onConnect = function(frame) {
       self.props.log([{
