@@ -5,9 +5,11 @@
 @import "../../node_modules/govuk-frontend/all";
 @import "./card";
 @import "./buttons";
+@import "base/colors";
+@import "components/footer";
 
 html {
-  background-color: transparent;
+  background-color: $light-grey;
 }
 
 .govuk-button {

@@ -7,6 +7,7 @@ import DataSpinner from './components/DataSpinner';
 import withOnboardingCheck from './shift/withOnboardingCheck';
 import withShiftCheck from './shift/withShiftCheck';
 import ErrorHandlingComponent from './error/component/ErrorHandlingComponent';
+import PrivacyPolicy from './components/PrivacyPolicy';
 
 //onboarding check only
 const ShiftPage = withOnboardingCheck(lazy(() => import ('../pages/shift/components/ShiftPage')));
@@ -36,6 +37,7 @@ const Main = () => (
   <main style={{paddingTop: '10px'}}>
     <Suspense fallback={<div style={{ justifyContent: 'center'}}><DataSpinner message="Loading routes"/></div>}>
       <Switch>
+        <Route name="Privacy Policy" exact path={"/privacy-policy"} component={PrivacyPolicy}/>
         <Route name="Dashboard" exact path={AppConstants.DASHBOARD_PATH} component={() => <DashboardPage />}/>
         <Route name="Shift" exact path={AppConstants.SHIFT_PATH} component={() => <ErrorHandlingComponent skipAuthError={true}><ShiftPage/></ErrorHandlingComponent>}/>
         <Route name="Your tasks" exact path={AppConstants.YOUR_TASKS_PATH} component={() => <YourTasksContainer />}/>
@@ -51,9 +53,9 @@ const Main = () => (
         <Route name="Unauthorized path" exact path={"/unauthorized"} component={() => <UnauthorizedPage/> }/>
         <Route name="On board User" exact path={AppConstants.ONBOARD_USER_PATH} component={() => <ErrorHandlingComponent skipAuthError={true}><StartProcedurePage processKey="onboard-user" noBackLink={true} nonShiftApiCall={true} redirectPath={"/noop-dashboard"}/></ErrorHandlingComponent>} />
         <Route name="No-Op Dashboard" exact path={"/noop-dashboard"} component={() => <NoOpDashboardPage/>} />
-
         <Redirect to={AppConstants.DASHBOARD_PATH}/>
       </Switch>
+
     </Suspense>
   </main>
 );
