@@ -57,7 +57,7 @@ const form = {
   ],
 };
 
-describe('Start a procedure page', () => {
+describe('Submit a form page', () => {
   it('renders loading bar if form is loading', async () => {
     const props = {
       loadingForm: true,

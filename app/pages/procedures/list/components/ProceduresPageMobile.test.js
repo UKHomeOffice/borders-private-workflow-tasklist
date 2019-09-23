@@ -55,7 +55,7 @@ describe('ProceduresPage', () => {
     />);
     console.log(wrapper.html());
     expect(fetchProcessDefinitions).toBeCalled();
-    expect(wrapper.find('#proceduresCountLabel').text()).toEqual('2 procedures');
+    expect(wrapper.find('#proceduresCountLabel').text()).toEqual('2 forms');
 
     const tableWrapper = wrapper.find('table');
     expect(tableWrapper.exists()).toEqual(true);

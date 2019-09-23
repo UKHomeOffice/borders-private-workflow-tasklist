@@ -31,7 +31,7 @@ exports[`Procedures Dashboard Panel renders procedures dashboard panel 1`] = `
       <span
         className="govuk-!-font-size-36 govuk-!-font-weight-bold"
       >
-        Procedures
+        Forms
       </span>
     </a>
     <div
@@ -40,7 +40,7 @@ exports[`Procedures Dashboard Panel renders procedures dashboard panel 1`] = `
       <span
         className="govuk-!-font-size-19"
       >
-        Start a procedure
+        Submit a form
       </span>
     </div>
   </li>

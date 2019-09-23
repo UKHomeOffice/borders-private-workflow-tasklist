@@ -55,12 +55,12 @@ export class ProceduresPage extends React.Component {
     return <div>
       <div className="govuk-grid-row">
         <div className="govuk-grid-column-one-half">
-          <span className="govuk-caption-l">Operational procedures</span>
-          <h2 className="govuk-heading-l" id="proceduresCountLabel">{processDefinitions.size} procedures</h2>
+          <span className="govuk-caption-l">Operational forms</span>
+          <h2 className="govuk-heading-l" id="proceduresCountLabel">{processDefinitions.size} forms</h2>
         </div>
 
       </div>
-      {isFetchingProcessDefinitions ? <h4 className="govuk-heading-s" id="loading">Loading processes...</h4> :
+      {isFetchingProcessDefinitions ? <h4 className="govuk-heading-s" id="loading">Loading forms...</h4> :
           <ReactHyperResponsiveTable
           headers={headers}
           rows={data}

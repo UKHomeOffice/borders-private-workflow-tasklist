@@ -38,12 +38,12 @@ describe('ProceduresPage', () => {
 
     console.log(wrapper.html());
     expect(fetchProcessDefinitions).toBeCalled();
-    expect(wrapper.find('#proceduresCountLabel').text()).toEqual('0 procedures');
-    expect(wrapper.find('#loading').text()).toEqual('Loading processes...');
+    expect(wrapper.find('#proceduresCountLabel').text()).toEqual('0 forms');
+    expect(wrapper.find('#loading').text()).toEqual('Loading forms...');
     expect(fetchProcessDefinitions).toBeCalled();
   });
 
-  it('renders  a list of procedures with procedure view', async () => {
+  it('renders  a list of forms with form view', async () => {
     window.matchMedia = window.matchMedia || function matchMedia() {
       return {
         matches: true,
@@ -75,7 +75,7 @@ describe('ProceduresPage', () => {
 
     console.log(wrapper.html());
     expect(fetchProcessDefinitions).toBeCalled();
-    expect(wrapper.find('#proceduresCountLabel').text()).toEqual('2 procedures');
+    expect(wrapper.find('#proceduresCountLabel').text()).toEqual('2 forms');
     const tableWrapper = wrapper.find('table');
     expect(tableWrapper.exists()).toEqual(true);
 

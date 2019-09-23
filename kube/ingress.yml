@@ -11,7 +11,7 @@ metadata:
     ingress.kubernetes.io/force-ssl-redirect: "true"
     ingress.kubernetes.io/proxy-send-timeout: "3600"
     ingress.kubernetes.io/proxy-read-timeout: "3600"
-    ingress.kubernetes.io/whitelist-source-range: {{.WHITELIST}}
+#    ingress.kubernetes.io/whitelist-source-range: {{.WHITELIST}}
     stable.k8s.psg.io/kcm.provider: http
 spec:
   rules:

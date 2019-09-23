@@ -83,7 +83,7 @@ const YourGroupTasks = ({ yourGroupTasks,
     </div>
   });
   return <div>
-    <a href="#" className="govuk-link govuk-!-font-size-19" style={{textDecoration:'underline'}} onClick={startAProcedure}>Start a procedure</a>
+    <a href="#" className="govuk-link govuk-!-font-size-19" style={{textDecoration:'underline'}} onClick={startAProcedure}>Submit a form</a>
     <div style={{ paddingTop: '10px' }}>
       <div className="data" id="yourGroupTasksTotalCount">
           <span

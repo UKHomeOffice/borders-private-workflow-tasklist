@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Start a procedure page renders the form and process definition 1`] = `
+exports[`Submit a form page renders the form and process definition 1`] = `
 <div>
   <a
     className="govuk-back-link govuk-!-font-size-19"
