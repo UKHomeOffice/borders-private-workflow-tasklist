@@ -95,39 +95,18 @@ const submit = (action$, store, { client }) => action$.ofType(types.SUBMIT_VALID
     const shiftData = action.submissionData;
     return client({
       method: 'POST',
-      path: `${store.getState().appConfig.translationServiceUrl}/api/translation/form/${action.formId}/submission`,
-      entity: {
-        data: shiftData,
-      },
+      path: `${store.getState().appConfig.workflowServiceUrl}/api/workflow/shift`,
+      entity: shiftData,
       headers: {
         Accept: 'application/json',
         Authorization: `Bearer ${store.getState().keycloak.token}`,
         'Content-Type': 'application/json',
       },
-    }).take(1).map(payload => ({
-      type: types.CREATE_ACTIVE_SHIFT,
-      shiftInfo: payload.entity.data,
+    }).map(payload => ({
+      type: types.FETCH_ACTIVE_SHIFT_AFTER_CREATE
     })).retryWhen(retry)
       .catch(error => errorObservable(actions.submitFailure(), error));
   });
-
-
-const createActiveShift = (action$, store, { client }) => action$.ofType(types.CREATE_ACTIVE_SHIFT)
-  .mergeMap(action => client({
-    method: 'POST',
-    entity: action.shiftInfo,
-    path: `${store.getState().appConfig.workflowServiceUrl}/api/workflow/shift`,
-    headers: {
-      Authorization: `Bearer ${store.getState().keycloak.token}`,
-      Accept: 'application/json',
-      'Content-Type': 'application/json',
-    },
-  })
-    .retryWhen(retry)
-    .map(() => ({
-      type: types.FETCH_ACTIVE_SHIFT_AFTER_CREATE,
-    }))
-    .catch(error => errorObservable(actions.createActiveShiftFailure(), error)));
 
 
 const fetchActiveShiftAfterCreation = (action$, store, { client }) => action$.ofType(types.FETCH_ACTIVE_SHIFT_AFTER_CREATE)
@@ -171,5 +150,5 @@ const fetchActiveShiftAfterCreation = (action$, store, { client }) => action$.of
       return errorObservable(actions.createActiveShiftFailure(), error);
     }));
 
-export default combineEpics(fetchActiveShift, submit, createActiveShift, fetchShiftForm,
+export default combineEpics(fetchActiveShift, submit, fetchShiftForm,
   fetchActiveShiftAfterCreation, fetchStaffDetails, endShift);

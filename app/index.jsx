@@ -70,7 +70,7 @@ const renderApp = (App, config, authorizedRole) => {
                 }
             }
             let token = store.getState().keycloak.token;
-            const isExpired = jwt_decode(keycloak.token).exp < new Date().getTime() / 1000;
+            const isExpired = jwt_decode(token).exp < new Date().getTime() / 1000;
             if (isExpired) {
                 try {
                     const response = await axios({

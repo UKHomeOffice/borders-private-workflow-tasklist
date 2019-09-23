@@ -75,7 +75,7 @@ export class ShiftPage extends React.Component {
                     <div className="govuk-grid-row-column-full" id="shiftWizardForm">
                         {!isFetchingShift && !hasActiveShift && !failedToCreateShift  ?
                             <div style={{display: 'flex', justifyContent: 'center', paddingTop: '15px'}}>
-                                <div class="govuk-warning-text">
+                                <div className="govuk-warning-text">
                                     <span className="govuk-warning-text__icon" aria-hidden="true"
                                           style={{width: '40px', height: '40px'}}>!</span>
                                     <strong className="govuk-warning-text__text">
