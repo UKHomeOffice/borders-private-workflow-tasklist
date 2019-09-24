@@ -53,12 +53,12 @@ const submit = (action$, store, { client }) => action$.ofType(types.SUBMIT)
    const { submissionData, nonShiftApiCall, variableName, processKey} = action;
    return client({
       method: 'POST',
-      path: `${store.getState().appConfig.translationServiceUrl}/api/translation/form/${action.formId}/submission`,
+      path: `${store.getState().appConfig.workflowServiceUrl}/api/workflow/process-instances`,
       entity: {
         data: submissionData,
         processKey: processKey,
         variableName: variableName,
-        nonShiftApiCall: nonShiftApiCall ? nonShiftApiCall : false,
+        businessKey: submissionData['businessKey']
       },
       headers: {
         Accept: 'application/json',

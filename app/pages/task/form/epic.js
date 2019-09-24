@@ -65,61 +65,34 @@ const fetchTaskForm = (action$, store, { client }) => action$.ofType(types.FETCH
 
 const submitTaskForm = (action$, store, { client }) => action$.ofType(types.SUBMIT_TASK_FORM)
   .mergeMap(action => {
-    const submissionData = { ...action.submission };
+    const data = {
+      variables: {},
+    };
+    data.variables[action.variableName] = {
+      value: JSON.stringify(action.submission),
+      type: 'Json',
+      valueInfo: {},
+    };
     return client({
       method: 'POST',
-      path: `${store.getState().appConfig.translationServiceUrl}/api/translation/form/${action.formId}/submission`,
-      entity: {
-        data: submissionData,
-      },
+      path: `${store.getState().appConfig.workflowServiceUrl}/api/workflow/tasks/${action.taskId}/form/_complete`,
+      entity: data,
       headers: {
         Accept: 'application/json',
         Authorization: `Bearer ${store.getState().keycloak.token}`,
         'Content-Type': 'application/json',
       },
-    })
-      .take(1)
-      .map(() => {
-        const data = {
-          variables: {},
-          formId: action.formId,
-        };
-        data.variables[action.variableName] = {
-          value: JSON.stringify(submissionData),
-          type: 'Json',
-          valueInfo: {},
-        };
-        return {
-          type: types.COMPLETE_TASK_FORM,
-          taskId: action.taskId,
-          data,
-        };
-      })
-      .catch(error => errorObservable(actions.submitTaskFormFailure(), error));
-  });
-
-
-const completeTaskForm = (action$, store, { client }) => action$.ofType(types.COMPLETE_TASK_FORM)
-  .mergeMap(action => client({
-    method: 'POST',
-    path: `${store.getState().appConfig.translationServiceUrl}/api/translation/workflow/tasks/${action.taskId}/form/_complete`,
-    entity: action.data,
-    headers: {
-      Accept: 'application/json',
-      Authorization: `Bearer ${store.getState().keycloak.token}`,
-      'Content-Type': 'application/json',
-    },
-  })
-    .retryWhen(retry)
-    .map(payload => {
+    }).map(payload => {
       PubSub.publish('submission', {
         submission: true,
         autoDismiss: true,
         message: 'Task successfully completed',
       });
       return actions.completeTaskSuccess(payload);
-    })
-    .catch(error => errorObservable(actions.completeTaskFailure(), error)));
+    }).catch(error => errorObservable(actions.completeTaskFailure(), error))
+  });
 
 
-export default combineEpics(fetchTaskForm, submitTaskForm, completeTaskForm, customEvent);
+
+
+export default combineEpics(fetchTaskForm, submitTaskForm, customEvent);
