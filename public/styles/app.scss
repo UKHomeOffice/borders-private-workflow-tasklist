@@ -83,6 +83,32 @@ input:disabled {
   }
 }
 
+.formio-component-datagrid {
+  & > table {
+    width: 100%;
+    & tr {
+      display: flex;
+      & > td:first-of-type {
+        flex-grow: 1;
+      }
+    }
+    & .govuk-select.form-control {
+      padding-right: 30px;
+    }
+    & .govuk-select {
+      height: auto;
+    }
+    & .govuk-error-message {
+      margin-top: 10px;
+    }
+    & .formio-component-number {
+      & input {
+        width: 55px;
+      }
+    }
+  }
+}
+
 .full-width-field .datagrid-table td {
   vertical-align: top;
   width: 100%;
@@ -98,7 +124,7 @@ input:disabled {
 }
 
 .formio-button-remove-row {
-  margin-left: 15px;
+  margin-left: 5px;
   padding-bottom: 5px;
   padding-top: 7px;
 }
