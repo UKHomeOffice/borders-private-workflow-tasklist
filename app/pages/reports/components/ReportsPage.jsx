@@ -21,8 +21,10 @@ export class ReportsPage extends React.Component {
         const {loadingReports, reports} = this.props;
         const pointerStyle = {cursor: 'pointer'};
         const items = [];
-        if (reports) {
-            reports.forEach((report) => {
+        const filteredReports = reports.filter(report => report !== null);
+
+        if (filteredReports) {
+            filteredReports.forEach((report) => {
                 items.push(<tr key={uuidv4()} id="report" style={pointerStyle} onClick={() => {
                     this.props.history.push(`/report?reportName=${report.get('htmlName')}`)
                 }} className="govuk-table__row">
@@ -36,7 +38,7 @@ export class ReportsPage extends React.Component {
             <div className="govuk-grid-row">
                 <div className="govuk-grid-column-one-half">
                     <span className="govuk-caption-l">Operational reports</span>
-                    <h2 className="govuk-heading-l" id="reportsCountLabel">{reports.size} {reports.size === 1 ? 'report' : 'reports'}</h2>
+                    <h2 className="govuk-heading-l" id="reportsCountLabel">{filteredReports.size} {filteredReports.size === 1 ? 'report' : 'reports'}</h2>
                 </div>
 
             </div>
