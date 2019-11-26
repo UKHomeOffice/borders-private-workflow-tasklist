@@ -102,6 +102,11 @@ const submit = (action$, store, { client }) => action$.ofType(types.SUBMIT_VALID
         'Content-Type': 'application/json',
       },
     }).map(payload => {
+        PubSub.publish('submission', {
+            submission: true,
+            autoDismiss: true,
+            message: 'Shift successfully started',
+        });
         return actions.createActiveShiftSuccess(payload);
     }).retryWhen(retry)
       .catch(error => errorObservable(actions.submitFailure(), error));
