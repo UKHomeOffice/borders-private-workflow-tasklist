@@ -1,10 +1,31 @@
 import { combineEpics } from 'redux-observable';
-import PubSub from 'pubsub-js';
 import * as types from './actionTypes';
 import * as actions from './actions';
 import { errorObservable } from '../../../core/error/epicUtil';
 import { retry } from '../../../core/util/retry';
 
+const fetchExtendedStaffDetails = (action$, store, { client }) =>
+action$.ofType(types.FETCH_EXTENDED_STAFF_DETAILS).mergeMap(action =>
+client({
+  method: 'POST',
+  path: `${
+    store.getState().appConfig.operationalDataUrl
+  }/v1/rpc/extendedstaffdetails`,
+  entity: {
+    argstaffid: action.staffId,
+  },
+  headers: {
+    'Content-Type': 'application/json',
+    Accept: 'application/json',
+        Authorization: `Bearer ${store.getState().keycloak.token}`,
+      },
+    })
+      .retryWhen(retry)
+      .map(payload => actions.fetchExtendedStaffDetailsSuccess(payload))
+      .catch(error =>
+        errorObservable(actions.fetchExtendedStaffDetailsFailure(), error),
+      ),
+  );
 
 const fetchProcessDefinition = (action$, store, { client }) => action$.ofType(types.FETCH_PROCESS_DEFINITION)
   .mergeMap(action => client({
@@ -97,4 +118,4 @@ const submit = (action$, store, { client }) => action$.ofType(types.SUBMIT)
       .catch(error => errorObservable(actions.submitToWorkflowFailure(), error));
   });
 
-export default combineEpics(fetchProcessDefinition, fetchForm, fetchFormWithContext, submit);
+export default combineEpics(fetchProcessDefinition, fetchForm, fetchFormWithContext, submit, fetchExtendedStaffDetails);

@@ -1,6 +1,6 @@
 import Immutable from 'immutable';
 import {
-  form, loadingForm, submissionStatus,
+  extendedStaffDetails, form, loadingForm, submissionStatus
 } from './selectors';
 
 
@@ -55,5 +55,15 @@ describe('Start form selector', () => {
     };
     const result = submissionStatus(state);
     expect(result).toEqual('FAILED');
+  });
+  it('should return extendedStaffDetails', () => {
+    const details = [{ test: 'test' }];
+    const state = {
+      'procedure-page': new Map({
+        extendedStaffDetails: details,
+      }),
+    };
+    const result = extendedStaffDetails(state);
+    expect(result).toEqual(details);
   });
 });

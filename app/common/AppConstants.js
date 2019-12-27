@@ -18,6 +18,8 @@ export default class AppConstants {
 
     static SUBMIT_A_FORM = '/submit-a-form';
 
+    static VIEW_MANDEC_PATH = '/view-mandatory-declaration';
+
     static TASK_PATH='/task';
 
     static SHIFT_PATH = '/shift';

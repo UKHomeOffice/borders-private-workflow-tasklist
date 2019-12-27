@@ -9,6 +9,8 @@ describe('Start Form Reducer', () => {
     const state = reducer(initialState, actions.fetchForm('formName'));
     expect(state)
       .toEqual(Immutable.fromJS({
+        extendedStaffDetails: null,
+        isFetchingExtendedStaffDetails: false,
         isFetchingProcessDefinition: true,
         processDefinition: {},
         loadingForm: true,
@@ -59,5 +61,20 @@ describe('Start Form Reducer', () => {
   it('captures failure to submit to workflow', () => {
     const state = reducer(initialState, actions.submitToWorkflowFailure());
     expect(state.get('submissionStatus')).toEqual('FAILED');
+  });
+  it('captures fetching extended staff details', () => {
+    const state = reducer(initialState, actions.fetchExtendedStaffDetails());
+    expect(state.get('isFetchingExtendedStaffDetails')).toEqual(true);
+  });
+  it('captures successful fetch of extended staff details', () => {
+    const payload = [{ linemanager_delegate_email: 'email', linemanager_email: 'email' }];
+    const state = reducer(initialState,
+      actions.fetchExtendedStaffDetailsSuccess({ entity: payload }));
+    expect(state.get('isFetchingExtendedStaffDetails')).toEqual(false);
+    expect(state.get('extendedStaffDetails')).toEqual(Immutable.fromJS(payload));
+  });
+  it('captures failure to fetch extended staff details', () => {
+    const state = reducer(initialState, actions.fetchExtendedStaffDetailsFailure());
+    expect(state.get('isFetchingExtendedStaffDetails')).toEqual(false);
   });
 });

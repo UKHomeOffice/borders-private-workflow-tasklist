@@ -2,6 +2,7 @@ import * as React from 'react';
 import PropTypes from 'prop-types';
 import {
     form,
+    extendedStaffDetails,
     isFetchingProcessDefinition,
     loadingForm,
     processDefinition,
@@ -27,25 +28,25 @@ import PubSub from 'pubsub-js';
 import CompleteTaskForm from "../../../task/form/components/CompleteTaskForm";
 import Immutable from 'immutable';
 import FormioEventListener from "../../../../core/util/FormioEventListener";
+import withAuthCheck from '../withAuthCheck';
 
 const {Map} = Immutable;
 
-export class ProcessStartPage extends React.Component {
+export class FormsStartPage extends React.Component {
 
     constructor(props) {
         super(props);
+        const { match: { url } } = this.props;
+        this.Form = url && url.includes(AppConstants.VIEW_MANDEC_PATH)
+            ? withAuthCheck(StartForm) : StartForm;
         this.secureLocalStorage = secureLocalStorage;
         this.handleSubmission = this.handleSubmission.bind(this);
     }
 
-
     componentDidMount() {
-        if (this.props.processKey) {
-            this.props.fetchProcessDefinition(this.props.processKey);
-        } else {
-            const {match: {params}} = this.props;
-            this.props.fetchProcessDefinition(params.processKey);
-        }
+        const { match: { params, processKey } } = this.props;
+        const key = this.props.processKey || params.processKey;
+        this.props.fetchProcessDefinition(key);
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
@@ -193,7 +194,7 @@ export class ProcessStartPage extends React.Component {
                                                 assignee: this.props.submissionResponse.tasks[0].assignee,
                                                 processInstanceId: this.props.submissionResponse.tasks[0].processInstanceId
                                             })}/>
-                                        : <StartForm {...this.props}
+                                        : <this.Form {...this.props}
                                                      startForm={form}
                                                      formReference={(formLoaded) => {
                                                          this.form = formLoaded;
@@ -240,9 +241,11 @@ export class ProcessStartPage extends React.Component {
 
 }
 
-ProcessStartPage.propTypes = {
+FormsStartPage.propTypes = {
     log: PropTypes.func,
     fetchForm: PropTypes.func,
+    extendedStaffDetails: ImmutablePropTypes.list,
+    fetchExtendedStaffDetails: PropTypes.func.isRequired,
     fetchProcessDefinition: PropTypes.func.isRequired,
     clearProcessDefinition: PropTypes.func.isRequired,
     submit: PropTypes.func,
@@ -255,6 +258,7 @@ const mapDispatchToProps = dispatch => bindActionCreators(actions, dispatch);
 
 export default withRouter(connect((state) => {
     return {
+        extendedStaffDetails: extendedStaffDetails(state),
         processDefinition: processDefinition(state),
         submissionStatus: submissionStatus(state),
         submissionResponse: submissionResponse(state),
@@ -263,4 +267,4 @@ export default withRouter(connect((state) => {
         isFetchingProcessDefinition: isFetchingProcessDefinition(state),
         kc: state.keycloak
     };
-}, mapDispatchToProps)(withLog(ProcessStartPage)));
+}, mapDispatchToProps)(withLog(FormsStartPage)));

@@ -63,6 +63,7 @@ exports[`Submit a form page renders the form and process definition 1`] = `
           <StartForm
             clearProcessDefinition={[MockFunction]}
             dataChange={[Function]}
+            fetchExtendedStaffDetails={[MockFunction]}
             fetchProcessDefinition={
               [MockFunction] {
                 "calls": Array [

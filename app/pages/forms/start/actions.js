@@ -1,5 +1,18 @@
 import * as types from './actionTypes';
 
+const fetchExtendedStaffDetails = staffId => ({
+  type: types.FETCH_EXTENDED_STAFF_DETAILS,
+  staffId,
+});
+
+const fetchExtendedStaffDetailsSuccess = payload => ({
+  type: types.FETCH_EXTENDED_STAFF_DETAILS_SUCCESS,
+  payload,
+});
+
+const fetchExtendedStaffDetailsFailure = () => ({
+  type: types.FETCH_EXTENDED_STAFF_DETAILS_FAILURE,
+});
 
 const fetchProcessDefinition = processKey => ({
   type: types.FETCH_PROCESS_DEFINITION,
@@ -10,7 +23,6 @@ const fetchProcessDefinitionSuccess = payload => ({
   type: types.FETCH_PROCESS_DEFINITION_SUCCESS,
   payload,
 });
-
 
 const fetchProcessDefinitionFailure = () => ({
   type: types.FETCH_PROCESS_DEFINITION_FAILURE,
@@ -31,7 +43,6 @@ const fetchFormWithContext = (formName, dataContext) => ({
   dataContext,
 });
 
-
 const fetchFormSuccess = payload => ({
   type: types.FETCH_FORM_SUCCESS,
   payload,
@@ -41,7 +52,14 @@ const fetchFormFailure = () => ({
   type: types.FETCH_FORM_FAILURE,
 });
 
-const submit = (formId, processKey, variableName, submissionData, processName, nonShiftApiCall) => ({
+const submit = (
+  formId,
+  processKey,
+  variableName,
+  submissionData,
+  processName,
+  nonShiftApiCall,
+) => ({
   type: types.SUBMIT,
   formId,
   processKey,
@@ -60,7 +78,13 @@ const submitFailure = () => ({
   type: types.SUBMIT_FAILURE,
 });
 
-const submitToWorkflow = (processKey, variableName, data, processName, formId) => ({
+const submitToWorkflow = (
+  processKey,
+  variableName,
+  data,
+  processName,
+  formId,
+) => ({
   type: types.SUBMIT_TO_WORKFLOW,
   processKey,
   variableName,
@@ -79,6 +103,9 @@ const submitToWorkflowFailure = () => ({
 });
 
 export {
+  fetchExtendedStaffDetails,
+  fetchExtendedStaffDetailsSuccess,
+  fetchExtendedStaffDetailsFailure,
   fetchProcessDefinition,
   fetchProcessDefinitionSuccess,
   fetchProcessDefinitionFailure,
@@ -93,5 +120,4 @@ export {
   submitToWorkflow,
   submitToWorkflowSuccess,
   submitToWorkflowFailure,
-
 };

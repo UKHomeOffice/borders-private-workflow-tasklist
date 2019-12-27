@@ -7,6 +7,8 @@ import {
 const { Map } = Immutable;
 
 const initialState = new Map({
+  extendedStaffDetails: null,
+  isFetchingExtendedStaffDetails: false,
   isFetchingProcessDefinition: true,
   processDefinition: Map({}),
   loadingForm: true,
@@ -47,6 +49,15 @@ function reducer(state = initialState, action) {
           .set('submissionResponse', action.payload.entity);
     case actions.SUBMIT_TO_WORKFLOW_FAILURE:
       return state.set('submissionStatus', FAILED);
+
+    case actions.FETCH_EXTENDED_STAFF_DETAILS:
+      return state.set('isFetchingExtendedStaffDetails', true);
+    case actions.FETCH_EXTENDED_STAFF_DETAILS_SUCCESS:
+      return state.set('isFetchingExtendedStaffDetails', false)
+        .set('extendedStaffDetails', Immutable.fromJS(action.payload.entity));
+    case actions.FETCH_EXTENDED_STAFF_DETAILS_FAILURE:
+      return state.set('isFetchingExtendedStaffDetails', false);
+
     default:
       return state;
   }

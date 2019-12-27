@@ -9,6 +9,7 @@ import withOnboardingCheck from './shift/withOnboardingCheck';
 import withShiftCheck from './shift/withShiftCheck';
 import ErrorHandlingComponent from './error/component/ErrorHandlingComponent';
 import PrivacyPolicy from './components/PrivacyPolicy';
+import FormsStartPage from '../pages/forms/start/components/FormsStartPage';
 
 
 const ShiftPage = withOnboardingCheck(lazy(() => import ('../pages/shift/components/ShiftPage')));
@@ -23,7 +24,7 @@ const ReportPage = withOnboardingCheck(withShiftCheck(lazy(() => import('../page
 const MessagesPage = withOnboardingCheck(withShiftCheck(lazy(() => import('../pages/messages/components/MessagesPage'))));
 const CalendarPage = withOnboardingCheck(withShiftCheck(lazy(() => import('../pages/calendar/components/CalendarPage'))));
 const NonShiftCheckProcedurePage = withOnboardingCheck(lazy(() => import('../pages/forms/start/components/FormsStartPage')));
-const ProcessStartPage = withOnboardingCheck(withShiftCheck(lazy(() => import('../pages/forms/start/components/FormsStartPage'))));
+const FormStartPage = withOnboardingCheck(withShiftCheck(lazy(() => import('../pages/forms/start/components/FormsStartPage'))));
 const ProcessDiagramPage = withOnboardingCheck(withShiftCheck(lazy(() => import('../pages/forms/diagram/components/ProcessDiagramPage'))));
 const TaskPage =  withOnboardingCheck(withShiftCheck(lazy(() => import('../pages/task/display/component/TaskPage'))));
 
@@ -35,23 +36,24 @@ const Main = () => (
   <main style={{paddingTop: '10px'}} className="govuk-main-wrapper" id="main-content" role="main">
     <Suspense fallback={<div style={{ justifyContent: 'center'}}><DataSpinner message="Loading routes"/></div>}>
       <Switch>
-        <Route name="Accessibility Statement" exact path={"/accessibility-statement"} component={AccessibilityStatement}/>
-        <Route name="Privacy Policy" exact path={"/privacy-policy"} component={PrivacyPolicy}/>
-        <Route name="Dashboard" exact path={AppConstants.DASHBOARD_PATH} component={() => <DashboardPage />}/>
-        <Route name="Shift" exact path={AppConstants.SHIFT_PATH} component={() => <ErrorHandlingComponent skipAuthError={true}><ShiftPage/></ErrorHandlingComponent>}/>
-        <Route name="Your tasks" exact path={AppConstants.YOUR_TASKS_PATH} component={() => <YourTasksPage />}/>
-        <Route name="Your group tasks" exact path={AppConstants.YOUR_GROUP_TASKS_PATH} component={() => <YourGroupTaskPage/>}/>
-        <Route name="Procedures" exact path={AppConstants.FORMS_PATH} component={() =><ProceduresPage/>}/>
-        <Route name="Reports" exact path={AppConstants.REPORTS_PATH} component={() =><ReportsPage/>} />
+        <Route exact path={"/accessibility-statement"} component={AccessibilityStatement}/>
+        <Route exact path={"/privacy-policy"} component={PrivacyPolicy}/>
+        <Route exact path={AppConstants.DASHBOARD_PATH} component={() => <DashboardPage />}/>
+        <Route exact path={AppConstants.SHIFT_PATH} component={() => <ErrorHandlingComponent skipAuthError={true}><ShiftPage/></ErrorHandlingComponent>}/>
+        <Route exact path={AppConstants.YOUR_TASKS_PATH} component={() => <YourTasksPage />}/>
+        <Route exact path={AppConstants.YOUR_GROUP_TASKS_PATH} component={() => <YourGroupTaskPage/>}/>
+        <Route exact path={AppConstants.FORMS_PATH} component={() =><ProceduresPage/>}/>
+        <Route exact path={AppConstants.REPORTS_PATH} component={() =><ReportsPage/>} />
         <Route exact path={AppConstants.REPORT_PATH} component={() => <ReportPage/>}/>
-        <Route name="Messages" exact path={AppConstants.MESSAGES_PATH} component={() => <MessagesPage/>}/>
-        <Route name="Calendar" exact path={AppConstants.CALENDAR_PATH} component={() => <CalendarPage/>}/>
-        <Route name="Procedure Start Page" exact path={AppConstants.SUBMIT_A_FORM + "/:processKey"} component={() =><ProcessStartPage/>}/>
-        <Route name="Procedure Diagram Page" exact path={AppConstants.PROCEDURE_DIAGRAM_PATH + "/:processKey"} component={() =><ProcessDiagramPage/>}/>
-        <Route name="Task Details Page" exact path={AppConstants.TASK_PATH + "/:taskId"} component={() =><TaskPage/>}/>
-        <Route name="Unauthorized path" exact path={"/unauthorized"} component={() => <UnauthorizedPage/> }/>
-        <Route name="On board User" exact path={AppConstants.ONBOARD_USER_PATH} component={() => <ErrorHandlingComponent skipAuthError={true}><NonShiftCheckProcedurePage processKey="onboard-user" noBackLink={true} nonShiftApiCall={true} redirectPath={"/noop-dashboard"}/></ErrorHandlingComponent>} />
-        <Route name="No-Op Dashboard" exact path={"/noop-dashboard"} component={() => <NoOpDashboardPage/>} />
+        <Route exact path={AppConstants.MESSAGES_PATH} component={() => <MessagesPage/>}/>
+        <Route exact path={AppConstants.CALENDAR_PATH} component={() => <CalendarPage/>}/>
+        <Route exact path={AppConstants.SUBMIT_A_FORM + "/:processKey"} component={FormsStartPage}/>
+        <Route exact path={AppConstants.PROCEDURE_DIAGRAM_PATH + "/:processKey"} component={() =><ProcessDiagramPage/>}/>
+        <Route exact path={AppConstants.TASK_PATH + "/:taskId"} component={() =><TaskPage/>}/>
+        <Route exact path={"/unauthorized"} component={() => <UnauthorizedPage/> }/>
+        <Route exact path={AppConstants.ONBOARD_USER_PATH} component={() => <ErrorHandlingComponent skipAuthError={true}><NonShiftCheckProcedurePage processKey="onboard-user" noBackLink={true} nonShiftApiCall={true} redirectPath={"/noop-dashboard"}/></ErrorHandlingComponent>} />
+        <Route exact path={"/noop-dashboard"} component={() => <NoOpDashboardPage/>} />
+        <Route exact path={AppConstants.VIEW_MANDEC_PATH + "/:processKey/:staffId"} component={FormsStartPage}/>
         <Redirect to={AppConstants.DASHBOARD_PATH}/>
       </Switch>
     </Suspense>
