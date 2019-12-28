@@ -26,7 +26,7 @@ import {FAILED, SUBMISSION_SUCCESSFUL, SUBMITTING} from '../constants';
 import PubSub from 'pubsub-js';
 import CompleteTaskForm from "../../../task/form/components/CompleteTaskForm";
 import Immutable from 'immutable';
-import FormioSubmissionListener from "../../../../core/util/FormioSubmissionListener";
+import FormioEventListener from "../../../../core/util/FormioEventListener";
 
 const {Map} = Immutable;
 
@@ -199,7 +199,7 @@ export class ProcessStartPage extends React.Component {
                                                          this.form = formLoaded;
                                                          if (this.form) {
                                                              this.form.createPromise.then(() => {
-                                                                 new FormioSubmissionListener(this.form, this.props)
+                                                                 new FormioEventListener(this.form, this.props)
                                                                      .initialize();
                                                              });
                                                          }

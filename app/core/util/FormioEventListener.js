@@ -1,6 +1,6 @@
 import PubSub from "pubsub-js";
 
-class FormioSubmissionListener {
+class FormioEventListener {
     constructor(form, props) {
         this.form = form;
         this.props = props;
@@ -21,9 +21,14 @@ class FormioSubmissionListener {
             PubSub.publish('formChange', value);
         });
         this.form.formio.on('prevPage', () => {
+            window.scrollTo(0, 0);
             PubSub.publish('clear');
         });
+        this.form.formio.on('nextPage', () => {
+            window.scrollTo(0, 0);
+        });
+
     }
 }
 
-export default FormioSubmissionListener;
+export default FormioEventListener;

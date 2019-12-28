@@ -2,7 +2,7 @@ import React from 'react';
 import {Form} from 'react-formio';
 import AppConstants from '../../../../common/AppConstants';
 import GovUKDetailsObserver from "../../../../core/util/GovUKDetailsObserver";
-import FormioSubmissionListener from "../../../../core/util/FormioSubmissionListener";
+import FormioEventListener from "../../../../core/util/FormioEventListener";
 
 export default class TaskForm extends React.Component {
 
@@ -68,7 +68,7 @@ export default class TaskForm extends React.Component {
                          this.formNode = form;
                          if (this.form) {
                              this.form.createPromise.then(() => {
-                                 new FormioSubmissionListener(this.form, this.props).initialize();
+                                 new FormioEventListener(this.form, this.props).initialize();
                              });
                          }
                      }
