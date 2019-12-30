@@ -4,6 +4,7 @@ class FormioEventListener {
     constructor(form, props) {
         this.form = form;
         this.props = props;
+        this.initialize();
     }
 
     initialize() {

@@ -199,8 +199,7 @@ export class ProcessStartPage extends React.Component {
                                                          this.form = formLoaded;
                                                          if (this.form) {
                                                              this.form.createPromise.then(() => {
-                                                                 new FormioEventListener(this.form, this.props)
-                                                                     .initialize();
+                                                                 new FormioEventListener(this.form, this.props);
                                                              });
                                                          }
                                                      }}
