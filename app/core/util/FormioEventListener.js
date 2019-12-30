@@ -27,6 +27,22 @@ class FormioEventListener {
         this.form.formio.on('nextPage', () => {
             window.scrollTo(0, 0);
         });
+        this.form.formio.on('componentError', (error) => {
+            if (this.props.log && (typeof this.props.log === 'function')) {
+                this.props.log([{
+                    url: document.referrer,
+                    browserCode: navigator.appCodeName,
+                    browserName: navigator.appName,
+                    browserVersion: navigator.appVersion,
+                    platform: navigator.platform,
+                    user: this.props.kc.tokenParsed.email,
+                    form: this.form.formio._form.name,
+                    level: 'error',
+                    message: error.message,
+                    error
+                }]);
+            }
+        });
 
     }
 }
