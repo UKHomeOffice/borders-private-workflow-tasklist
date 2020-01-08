@@ -1,71 +1,92 @@
 <!doctype html>
 <html lang="en">
 <head>
-    <meta charset="utf-8">
-    <title>Central Operations Platform</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="mobile-web-app-capable" content="yes">
-    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-    <meta name="theme-color" content="blue"/>
-    <meta property="og:image" content="/assets/images/govuk-opengraph-image.png">
+  <meta charset="utf-8">
+  <title>Central Operations Platform</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="blue"/>
+  <meta property="og:image" content="/assets/images/govuk-opengraph-image.png">
+  <script>
+    if (typeof TextEncoder === "undefined") {
+      TextEncoder = function TextEncoder() {}
+      TextEncoder.prototype.encode = function(s) {
+        const e = new Uint8Array(s.length);
+
+        for (let i = 0; i < s.length; i += 1) {
+          e[i] = s.charCodeAt(i);
+        }
+        return e;
+      }
+      TextDecoder = function TextDecoder() {}
+      TextDecoder.prototype.decode = function(arr) {
+        let d = "";
+
+        for (let i = 0; i < arr.length; i += 1) {
+          d += String.fromCharCode(arr[i]);
+        }
+        return d;
+      }
+    }
+  </script>
 </head>
 <body>
 <script>
-    document.body.className = ((document.body.className) ? document.body.className + ' js-enabled' : 'js-enabled');
+  document.body.className = ((document.body.className) ? document.body.className + ' js-enabled' : 'js-enabled');
 </script>
 <div id="root">
-    <style>
-        .container {
-            font-family: "nta", Arial, sans-serif;
-            height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-        }
+  <style>
+    .container {
+      font-family: "nta", Arial, sans-serif;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
 
-        .initialContent {
-            width: 220px;
-            height: 80px;
-        }
+    .initialContent {
+      width: 220px;
+      height: 80px;
+    }
 
-        .initialContent .loadingLine {
-            float: left;
-            width: 140px;
-            height: 16px;
-            margin-top: 12px;
-            border-radius: 7px;
-            background-image: linear-gradient(90deg, #ddd 0px, #e8e8e8 40px, #ddd 80px);
-            background-size: 600px;
-            animation: shine-lines 1.6s infinite linear;
-        }
+    .initialContent .loadingLine {
+      float: left;
+      width: 140px;
+      height: 16px;
+      margin-top: 12px;
+      border-radius: 7px;
+      background-image: linear-gradient(90deg, #ddd 0px, #e8e8e8 40px, #ddd 80px);
+      background-size: 600px;
+      animation: shine-lines 1.6s infinite linear;
+    }
 
-        .initialContent .loadingLine ~ .loadingLine {
-            background-color: #ddd;
-        }
+    .initialContent .loadingLine ~ .loadingLine {
+      background-color: #ddd;
+    }
 
-        @keyframes shine-lines {
-            0% {
-                background-position: -100px;
-            }
-            40%, 100% {
-                background-position: 140px;
-            }
-        }
-
-    </style>
-    <div class="container">
-        <noscript>
-            <p>Your browser does not support JavaScript. This is required for this application</p>
-        </noscript>
-        <div class="initialContent">
-            <div class="loadingLine"></div>
-            <div class="loadingLine"></div>
-            <div class="loadingLine"></div>
-            <div class="loadingLine"></div>
-        </div>
+    @keyframes shine-lines {
+      0% {
+        background-position: -100px;
+      }
+      40%, 100% {
+        background-position: 140px;
+      }
+    }
+  </style>
+  <div class="container">
+    <noscript>
+      <p>Your browser does not support JavaScript. This is required for this application</p>
+    </noscript>
+    <div class="initialContent">
+      <div class="loadingLine"></div>
+      <div class="loadingLine"></div>
+      <div class="loadingLine"></div>
+      <div class="loadingLine"></div>
     </div>
+  </div>
 </div>
 </body>
 </html>
