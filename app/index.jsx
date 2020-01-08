@@ -193,12 +193,12 @@ if (process.env.NODE_ENV === 'production') {
         uiEnvironment: data.UI_ENVIRONMENT,
         operationalDataUrl: data.OPERATIONAL_DATA_URL,
         workflowServiceUrl: data.WORKFLOW_SERVICE_URL,
-        translationServiceUrl: data.TRANSLATION_SERVICE_URL,
+        formUrl: data.FORM_URL,
         reportServiceUrl: data.REPORT_SERVICE_URL,
         analyticsUrl: data.ANALYTICS_URL,
         analyticsSiteId: data.ANALYTICS_SITE_ID,
       };
-      renderApp(App, { formApi: { url: data.TRANSLATION_SERVICE_URL }});
+      renderApp(App, { formApi: { url: data.FORM_URL }});
     }).catch(err => {
       console.log('Unable to start application: ', err.message);
       unavailable();
@@ -215,10 +215,10 @@ if (process.env.NODE_ENV === 'production') {
     uiEnvironment: process.env.WWW_UI_ENVIRONMENT,
     operationalDataUrl: process.env.API_COP_URI,
     workflowServiceUrl: process.env.ENGINE_URI,
-    translationServiceUrl: process.env.TRANSLATION_URI,
+    formUrl: process.env.API_FORM_URI,
     reportServiceUrl: process.env.REPORT_URI
   };
-  renderApp(App, { formApi: { url: process.env.TRANSLATION_URI }});
+  renderApp(App, { formApi: { url: process.env.API_FORM_URI }});
 }
 // Hot Module Replacement API
 if (module.hot) {

@@ -91,7 +91,7 @@ app.get('/api/config', (req, res) => {
     OPERATIONAL_DATA_URL: process.env.API_COP_URI,
     REF_DATA_URL: process.env.API_REF_URI,
     WORKFLOW_SERVICE_URL: process.env.ENGINE_URI,
-    TRANSLATION_SERVICE_URL: process.env.TRANSLATION_URI,
+    FORM_URL: process.env.API_FORM_URI,
     REPORT_SERVICE_URL: process.env.REPORT_URI,
     ANALYTICS_URL: process.env.ANALYTICS_URL,
     ANALYTICS_SITE_ID: process.env.ANALYTICS_SITE_ID,

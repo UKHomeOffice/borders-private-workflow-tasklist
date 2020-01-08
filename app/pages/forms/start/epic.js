@@ -20,7 +20,7 @@ const fetchProcessDefinition = (action$, store, { client }) => action$.ofType(ty
 const fetchForm = (action$, store, { client }) => action$.ofType(types.FETCH_FORM)
   .mergeMap(action => client({
     method: 'GET',
-    path: `${store.getState().appConfig.translationServiceUrl}/form/${action.formName}`,
+    path: `${store.getState().appConfig.formUrl}/form/${action.formName}`,
     headers: {
       Accept: 'application/json',
       Authorization: `Bearer ${store.getState().keycloak.token}`,
@@ -33,7 +33,7 @@ const fetchForm = (action$, store, { client }) => action$.ofType(types.FETCH_FOR
 const fetchFormWithContext = (action$, store, { client }) => action$.ofType(types.FETCH_FORM_WITH_CONTEXT)
   .mergeMap(action => client({
     method: 'POST',
-    path: `${store.getState().appConfig.translationServiceUrl}/form`,
+    path: `${store.getState().appConfig.formUrl}/form`,
     entity: {
       formName: action.formName,
       dataContext: action.dataContext,

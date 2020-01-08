@@ -52,7 +52,7 @@ const customEvent = (action$, store, { client }) => action$.ofType(types.TASK_CU
 const fetchTaskForm = (action$, store, { client }) => action$.ofType(types.FETCH_TASK_FORM)
   .mergeMap(action => client({
     method: 'GET',
-    path: `${store.getState().appConfig.translationServiceUrl}/form/${action.task.get('formKey')}?taskId=${action.task.get('id')}&processInstanceId=${action.task.get('processInstanceId')}`,
+    path: `${store.getState().appConfig.formUrl}/form/${action.task.get('formKey')}?taskId=${action.task.get('id')}&processInstanceId=${action.task.get('processInstanceId')}`,
     headers: {
       Accept: 'application/json',
       Authorization: `Bearer ${store.getState().keycloak.token}`,

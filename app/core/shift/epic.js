@@ -52,7 +52,7 @@ const fetchStaffDetails = (action$, store, { client }) => action$.ofType(types.F
 const fetchShiftForm = (action$, store, { client }) => action$.ofType(types.FETCH_SHIFT_FORM)
   .mergeMap(() => client({
     method: 'GET',
-    path: `${store.getState().appConfig.translationServiceUrl}/form/startShift`,
+    path: `${store.getState().appConfig.formUrl}/form/startShift`,
     headers: {
       Accept: 'application/json',
       Authorization: `Bearer ${store.getState().keycloak.token}`,

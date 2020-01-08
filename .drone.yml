@@ -142,10 +142,10 @@ pipeline:
         target: ENGINE_URL
       - source: PROTOCOL_HTTPS
         target: ENGINE_PROTOCOL
-      - source: DEV_TRANSLATION_URL
-        target: TRANSLATION_URL
+      - source: DEV_API_FORM_URL
+        target: API_FORM_URL
       - source: PROTOCOL_HTTPS
-        target: TRANSLATION_PROTOCOL
+        target: API_FORM_PROTOCOL
       - source: DEV_ANALYTICS_URL
         target: ANALYTICS_URL
       - source: DEV_ANALYTICS_SITE_ID
@@ -230,10 +230,10 @@ pipeline:
         target: ENGINE_URL
       - source: PROTOCOL_HTTPS
         target: ENGINE_PROTOCOL
-      - source: STAGING_TRANSLATION_URL
-        target: TRANSLATION_URL
+      - source: STAGING_API_FORM_URL
+        target: API_FORM_URL
       - source: PROTOCOL_HTTPS
-        target: TRANSLATION_PROTOCOL
+        target: API_FORM_PROTOCOL
       - source: STAGING_ANALYTICS_URL
         target: ANALYTICS_URL
       - source: STAGING_ANALYTICS_SITE_ID
@@ -306,10 +306,10 @@ pipeline:
         target: ENGINE_URL
       - source: PROTOCOL_HTTPS
         target: ENGINE_PROTOCOL
-      - source: PRODUCTION_TRANSLATION_URL
-        target: TRANSLATION_URL
+      - source: PRODUCTION_API_FORM_URL
+        target: API_FORM_URL
       - source: PROTOCOL_HTTPS
-        target: TRANSLATION_PROTOCOL
+        target: API_FORM_PROTOCOL
       - source: PRODUCTION_ANALYTICS_URL
         target: ANALYTICS_URL
       - source: PRODUCTION_ANALYTICS_SITE_ID
