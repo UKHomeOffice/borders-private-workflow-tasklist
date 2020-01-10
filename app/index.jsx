@@ -193,12 +193,12 @@ if (process.env.NODE_ENV === 'production') {
         uiEnvironment: data.UI_ENVIRONMENT,
         operationalDataUrl: data.OPERATIONAL_DATA_URL,
         workflowServiceUrl: data.WORKFLOW_SERVICE_URL,
-        formUrl: data.FORM_URL,
+        formUrl: data.API_FORM_URL,
         reportServiceUrl: data.REPORT_SERVICE_URL,
         analyticsUrl: data.ANALYTICS_URL,
         analyticsSiteId: data.ANALYTICS_SITE_ID,
       };
-      renderApp(App, { formApi: { url: data.FORM_URL }});
+      renderApp(App, { formApi: { url: data.API_FORM_URL }});
     }).catch(err => {
       console.log('Unable to start application: ', err.message);
       unavailable();
