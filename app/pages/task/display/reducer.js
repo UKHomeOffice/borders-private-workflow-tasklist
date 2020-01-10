@@ -34,6 +34,8 @@ function reducer(state = initialState, action) {
       Object.keys(rawVariables).forEach(key => {
         variables[key] = rawVariables[key].value;
       });
+      const formKey = action.payload.entity.formKey ? action.payload.entity.formKey : task.formKey;
+      task.formKey = formKey;
       return state.set('isFetchingTask', false)
         .set('task', Immutable.fromJS(task))
         .set('candidateGroups', action.payload.entity.candidateGroups
