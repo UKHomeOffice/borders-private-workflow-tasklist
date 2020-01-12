@@ -32,6 +32,16 @@ class StartForm extends React.Component {
       hooks:{
         beforeCancel: (...args) => {
           this.handleCancel(args);
+        },
+        beforeSubmit:(submission, next) => {
+          submission.data.meta = {
+            versionId: startForm.versionId,
+            title: startForm.title,
+            name: startForm.name,
+            submissionDate: new Date(),
+            submittedBy: this.props.kc.tokenParsed.email
+          }
+          next();
         }
       },
       breadcrumbSettings: {

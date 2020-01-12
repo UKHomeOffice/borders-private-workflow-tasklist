@@ -28,23 +28,33 @@ export default class TaskForm extends React.Component {
         resetForm(false);
     };
 
-    options = {
-        noAlerts: true,
-        hooks: {
-            beforeCancel: (...args) => {
-                this.handleCancel(args);
-            }
-        },
-        i18n: {
-            en: {
-                submit: 'Submit',
-            }
-        },
-    };
 
     render() {
         const {onCustomEvent, variables, task, onSubmitTaskForm, formReference, form} = this.props;
         const formVariableSubmissionName = `${form.name}::submissionData`;
+        const options = {
+            noAlerts: true,
+            hooks: {
+                beforeCancel: (...args) => {
+                    this.handleCancel(args);
+                },
+                beforeSubmit: (submission, next) => {
+                    submission.data.meta = {
+                        versionId: form.versionId,
+                        title: form.title,
+                        name: form.name,
+                        submissionDate: new Date(),
+                        submittedBy: this.props.kc.tokenParsed.email
+                    };
+                    next();
+                }
+            },
+            i18n: {
+                en: {
+                    submit: 'Submit',
+                }
+            },
+        };
         let submissionData = null;
 
         if (variables) {
@@ -59,9 +69,9 @@ export default class TaskForm extends React.Component {
         const variableName = variableInput ? variableInput.defaultValue : form.name;
 
         if (!task.get('assignee')) {
-            this.options.readOnly = true;
+            options.readOnly = true;
         }
-        return <Form form={form} options={this.options}
+        return <Form form={form} options={options}
                      ref={form => {
                          this.form = form;
                          formReference(form);
