@@ -35,7 +35,8 @@ class StartForm extends React.Component {
         },
         beforeSubmit:(submission, next) => {
           submission.data.meta = {
-            versionId: startForm.versionId,
+            formVersionId: startForm.versionId,
+            formId: startForm.id,
             title: startForm.title,
             name: startForm.name,
             submissionDate: new Date(),

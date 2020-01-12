@@ -40,7 +40,8 @@ export default class TaskForm extends React.Component {
                 },
                 beforeSubmit: (submission, next) => {
                     submission.data.meta = {
-                        versionId: form.versionId,
+                        formVersionId: form.versionId,
+                        formId: form.id,
                         title: form.title,
                         name: form.name,
                         submissionDate: new Date(),
