@@ -21,6 +21,7 @@ import gds from '@digitalpatterns/formio-gds-template';
 import qs from "querystring";
 import axios from 'axios';
 import jwt_decode from "jwt-decode";
+import * as OfflinePluginRuntime from 'offline-plugin/runtime';
 
 const store = configureStore();
 let kc = null;
