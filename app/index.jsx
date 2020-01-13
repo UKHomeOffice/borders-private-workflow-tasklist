@@ -200,7 +200,6 @@ if (process.env.NODE_ENV === 'production') {
         unavailable();
     });
 } else {
-    const authAccessRole = process.env.WWW_KEYCLOAK_ACCESS_ROLE;
     kc = Keycloak({
         realm: process.env.KEYCLOAK_REALM,
         url: process.env.KEYCLOAK_URI,
