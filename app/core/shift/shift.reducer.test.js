@@ -11,21 +11,19 @@ describe('shift reducer', () => {
       .toEqual(true);
   });
   it('handles fetchShiftFormSuccess', () => {
-    const formObject = [{
+    const formObject = {
       name: 'testForm',
       components: [
         {
           key: 'key',
         },
       ],
-    }];
+    };
     const state = reducer(initialState, actions.fetchShiftFormSuccess({
-      entity: {
-        forms: formObject
-      },
+      entity: formObject,
     }));
     expect(state.get('loadingShiftForm')).toEqual(false);
-    expect(state.get('shiftForm')).toEqual(formObject[0]);
+    expect(state.get('shiftForm')).toEqual(formObject);
   });
   it('handles fetchActiveShiftSuccess', () => {
     const shiftDetails = {

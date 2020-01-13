@@ -19,7 +19,7 @@ function shiftReducer(state = shiftInitialState, action) {
     case actions.FETCH_SHIFT_FORM:
       return state;
     case actions.FETCH_SHIFT_FORM_SUCCESS:
-      const form = action.payload.entity.forms[0];
+      const form = action.payload.entity;
       return state.set('shiftForm', form).set('loadingShiftForm', false);
     case actions.FETCH_SHIFT_FORM_FAILURE:
       return state.set('loadingShiftForm', false);
