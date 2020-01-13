@@ -87,7 +87,6 @@ app.get('/api/config', (req, res) => {
     WWW_KEYCLOAK_CLIENT_ID: process.env.WWW_KEYCLOAK_CLIENT_ID,
     WWW_UI_VERSION: process.env.WWW_UI_VERSION,
     WWW_UI_ENVIRONMENT: process.env.WWW_UI_ENVIRONMENT,
-    WWW_KEYCLOAK_ACCESS_ROLE: process.env.WWW_KEYCLOAK_ACCESS_ROLE,
     API_COP_URI: process.env.API_COP_URI,
     ENGINE_URI: process.env.ENGINE_URI,
     API_FORM_URI: process.env.API_FORM_URI,
