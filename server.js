@@ -82,17 +82,16 @@ app.post('/log', [keycloak.protect(), (req, res) => {
 
 app.get('/api/config', (req, res) => {
   res.send({
-    REALM: process.env.KEYCLOAK_REALM,
-    AUTH_URL: process.env.KEYCLOAK_URI,
+    KEYCLOAK_REALM: process.env.KEYCLOAK_REALM,
+    KEYCLOAK_URI: process.env.KEYCLOAK_URI,
     CLIENT_ID: process.env.WWW_KEYCLOAK_CLIENT_ID,
-    UI_VERSION: process.env.WWW_UI_VERSION,
-    UI_ENVIRONMENT: process.env.WWW_UI_ENVIRONMENT,
+    WWW_UI_VERSION: process.env.WWW_UI_VERSION,
+    WWW_UI_ENVIRONMENT: process.env.WWW_UI_ENVIRONMENT,
     WWW_KEYCLOAK_ACCESS_ROLE: process.env.WWW_KEYCLOAK_ACCESS_ROLE,
-    OPERATIONAL_DATA_URL: process.env.API_COP_URI,
-    REF_DATA_URL: process.env.API_REF_URI,
-    WORKFLOW_SERVICE_URL: process.env.ENGINE_URI,
-    FORM_URL: process.env.API_FORM_URI,
-    REPORT_SERVICE_URL: process.env.REPORT_URI,
+    API_COP_URI: process.env.API_COP_URI,
+    ENGINE_URI: process.env.ENGINE_URI,
+    API_FORM_URI: process.env.API_FORM_URI,
+    REPORT_URI: process.env.REPORT_URI,
     ANALYTICS_URL: process.env.ANALYTICS_URL,
     ANALYTICS_SITE_ID: process.env.ANALYTICS_SITE_ID,
   });
