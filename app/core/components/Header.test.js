@@ -7,6 +7,11 @@ describe('Header', () => {
 
   const props = {
     history: createMemoryHistory(),
+    appConfig: {
+      serviceDeskUrls: {
+        support: 'test'
+      }
+    },
     kc: {
       logout: jest.fn(),
     },

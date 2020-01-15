@@ -83,7 +83,7 @@ class FileService {
                 if (response.status >= 200 && response.status < 300) {
                     resolve('File deleted');
                 } else {
-                    reject('Failedt to delete file');
+                    reject('Failed to delete file');
                 }
             }).catch((e) => {
                 reject(e || 'Failed to delete file');

@@ -1,5 +1,6 @@
 import Immutable from 'immutable';
 import * as actions from './actionTypes';
+import secureLocalStorage from "../../common/security/SecureLocalStorage";
 
 const { Map } = Immutable;
 
@@ -17,6 +18,9 @@ function staffReducer(state = staffInitialState, action) {
       const staffResponse = action.payload.entity;
       const hasStaffDetails = staffResponse && staffResponse.length !== 0;
       const staff = hasStaffDetails ? Immutable.fromJS(staffResponse[0]) : null;
+      if (staff) {
+        secureLocalStorage.set(`staffContext::${staff.get('email')}`, staff.toJS());
+      }
       return state.set('isFetchingStaffDetails', false)
         .set('staffDetails', staff);
     case actions.FETCH_STAFF_DETAILS_FAILURE:

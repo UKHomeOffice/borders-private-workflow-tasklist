@@ -88,8 +88,6 @@ export class DashboardPanel extends React.Component {
 
   componentWillUnmount() {
     this.retryCount = 0;
-    const user = this.props.kc.tokenParsed.email;
-
     if (this.client) {
       this.client.deactivate();
     }

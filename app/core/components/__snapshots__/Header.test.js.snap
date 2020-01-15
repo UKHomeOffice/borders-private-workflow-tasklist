@@ -45,7 +45,7 @@ exports[`Header matches snapshot 1`] = `
           </a>
           <a
             className="govuk-header__link header-nav__link"
-            href="https://support.cop.homeoffice.gov.uk/servicedesk/customer/portal/3"
+            href="test"
             id="support"
             rel="noopener noreferrer"
             target="_blank"

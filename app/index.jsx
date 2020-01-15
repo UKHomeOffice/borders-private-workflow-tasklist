@@ -172,6 +172,12 @@ const unavailable = () => {
     );
 };
 
+const serviceDeskBaseUrl = 'https://support.cop.homeoffice.gov.uk/servicedesk';
+const serviceDeskUrls = {
+    feedback: `${serviceDeskBaseUrl}/customer/portal/3/create/54`,
+    support: `${serviceDeskBaseUrl}/customer/portal/3`,
+};
+
 if (process.env.NODE_ENV === 'production') {
     fetch('/api/config')
         .then(response => {
@@ -194,6 +200,8 @@ if (process.env.NODE_ENV === 'production') {
             reportServiceUrl: data.REPORT_URI,
             analyticsUrl: data.ANALYTICS_URL,
             analyticsSiteId: data.ANALYTICS_SITE_ID,
+            apiRefUrl: data.API_REF_URI,
+            serviceDeskUrls: serviceDeskUrls
         };
         renderApp(App);
     }).catch(err => {
@@ -212,7 +220,9 @@ if (process.env.NODE_ENV === 'production') {
         operationalDataUrl: process.env.API_COP_URI,
         workflowServiceUrl: process.env.ENGINE_URI,
         formUrl: process.env.API_FORM_URI,
-        reportServiceUrl: process.env.REPORT_URI
+        reportServiceUrl: process.env.REPORT_URI,
+        apiRefUrl: process.env.API_REF_URI,
+        serviceDeskUrls: serviceDeskUrls
     };
     renderApp(App);
 }

@@ -162,7 +162,7 @@ export class CompleteTaskForm extends React.Component {
                            message="Submitting data..."/></div>}
                        hideContentOnLoad={submissionStatus === SUBMITTING}
                        foregroundStyle={{color: 'black'}}
-                       backgroundStyle={{backgroundColor: 'white'}}><TaskForm
+                       backgroundStyle={{backgroundColor: 'white'}}><TaskForm {...this.props}
             task={task}
             variables={variables}
             form={form}

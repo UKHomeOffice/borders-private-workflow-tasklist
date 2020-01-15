@@ -37,6 +37,35 @@ exports[`CompleteTaskForm Component renders task form 1`] = `
   show={false}
 >
   <TaskForm
+    customEvent={[MockFunction]}
+    fetchTaskForm={
+      [MockFunction] {
+        "calls": Array [
+          Array [
+            Immutable.Map {
+              "assignee": null,
+              "name": "testTask",
+            },
+          ],
+          Array [
+            Immutable.Map {
+              "assignee": null,
+              "name": "testTask",
+            },
+          ],
+        ],
+        "results": Array [
+          Object {
+            "isThrow": false,
+            "value": undefined,
+          },
+          Object {
+            "isThrow": false,
+            "value": undefined,
+          },
+        ],
+      }
+    }
     form={
       Object {
         "access": Array [
@@ -156,15 +185,42 @@ exports[`CompleteTaskForm Component renders task form 1`] = `
         "type": "form",
       }
     }
+    formName="testForm"
     formReference={[Function]}
+    loadingTaskForm={false}
     onCustomEvent={[Function]}
     onSubmitTaskForm={[Function]}
+    resetForm={
+      [MockFunction] {
+        "calls": Array [
+          Array [],
+        ],
+        "results": Array [
+          Object {
+            "isThrow": false,
+            "value": undefined,
+          },
+        ],
+      }
+    }
+    store={
+      Object {
+        "clearActions": [Function],
+        "dispatch": [Function],
+        "getActions": [Function],
+        "getState": [Function],
+        "replaceReducer": [Function],
+        "subscribe": [Function],
+      }
+    }
+    submitTaskForm={[MockFunction]}
     task={
       Immutable.Map {
         "assignee": null,
         "name": "testTask",
       }
     }
+    unclaimTask={[MockFunction]}
     variables={Object {}}
   />
 </Loader>

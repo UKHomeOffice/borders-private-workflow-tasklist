@@ -18,6 +18,21 @@ describe('Shift page', () => {
       shiftForm: {
 
       },
+      appConfig: {
+        apiRefUrl: 'apiRefUrl',
+        workflowUrl: 'workflow',
+        operationalDataUrl: 'operational',
+      },
+      kc:  {
+        token : 'token',
+        refreshToken: 'refreshToken',
+        tokenParsed: {
+          session_state: 'sessionState',
+          email: 'email',
+          given_name: 'given_name',
+          family_name: 'familyName'
+        }
+      }
     };
     const wrapper = await mount(<ShiftPage
       {...props}
@@ -78,6 +93,21 @@ describe('Shift page', () => {
       shiftForm: {
 
       },
+      appConfig: {
+        apiRefUrl: 'apiRefUrl',
+        workflowUrl: 'workflow',
+        operationalDataUrl: 'operational',
+      },
+      kc:  {
+        token : 'token',
+        refreshToken: 'refreshToken',
+        tokenParsed: {
+          session_state: 'sessionState',
+          email: 'email',
+          given_name: 'given_name',
+          family_name: 'familyName'
+        }
+      }
     };
     const wrapper = await mount(<ShiftPage
       {...props}
@@ -149,6 +179,21 @@ describe('Shift page', () => {
         replace: jest.fn(),
       },
       shiftForm: form,
+      appConfig: {
+        apiRefUrl: 'apiRefUrl',
+        workflowUrl: 'workflow',
+        operationalDataUrl: 'operational',
+      },
+      kc:  {
+        token : 'token',
+        refreshToken: 'refreshToken',
+        tokenParsed: {
+          session_state: 'sessionState',
+          email: 'email',
+          given_name: 'given_name',
+          family_name: 'familyName'
+        }
+      }
     };
 
     const wrapper = await mount(<ShiftPage

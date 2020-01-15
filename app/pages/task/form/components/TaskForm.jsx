@@ -3,6 +3,7 @@ import {Form} from 'react-formio';
 import AppConstants from '../../../../common/AppConstants';
 import GovUKDetailsObserver from "../../../../core/util/GovUKDetailsObserver";
 import FormioEventListener from "../../../../core/util/FormioEventListener";
+import FileService from "../../../../core/FileService";
 
 export default class TaskForm extends React.Component {
 
@@ -30,7 +31,7 @@ export default class TaskForm extends React.Component {
 
 
     render() {
-        const {onCustomEvent, variables, task, onSubmitTaskForm, formReference, form} = this.props;
+        const {onCustomEvent, variables, task, onSubmitTaskForm, formReference, form, kc} = this.props;
         const formVariableSubmissionName = `${form.name}::submissionData`;
         const options = {
             noAlerts: true,
@@ -38,6 +39,7 @@ export default class TaskForm extends React.Component {
                 beforeCancel: (...args) => {
                     this.handleCancel(args);
                 },
+                fileService: new FileService(kc),
                 beforeSubmit: (submission, next) => {
                     submission.data.meta = {
                         formVersionId: form.versionId,
@@ -45,7 +47,7 @@ export default class TaskForm extends React.Component {
                         title: form.title,
                         name: form.name,
                         submissionDate: new Date(),
-                        submittedBy: this.props.kc.tokenParsed.email
+                        submittedBy: kc.tokenParsed.email
                     };
                     next();
                 }

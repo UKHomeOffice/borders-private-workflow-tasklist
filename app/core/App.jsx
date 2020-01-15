@@ -4,23 +4,20 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 
-// local imports
+
 import DataSpinner from './components/DataSpinner';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import Main from './Main';
-import config from '../config/core';
 import withLog from './error/component/withLog';
 import { clearAllExceptShift } from '../common/security/SecureLocalStorage';
 
 const SubmissionBanner = lazy(() => import('./components/SubmissionBanner'));
-const { serviceDesk } = config;
 
 export class App extends React.Component {
   componentDidMount() {
     const { kc, location, log } = this.props;
     const user = kc.tokenParsed.email;
-
     log(
       [
         {
@@ -99,7 +96,7 @@ const AppBanner = props => {
         </strong>
         {environment()}
         <span className="govuk-phase-banner__text">
-          This is a new service – your <a className="govuk-link" href={`${serviceDesk.feedback}`} target="_blank" rel="noopener noreferrer">feedback</a> will help us to improve it.
+          This is a new service – your <a className="govuk-link" href={`${appConfig.serviceDeskUrls.feedback}`} target="_blank" rel="noopener noreferrer">feedback</a> will help us to improve it.
         </span>
       </p>
     </div>

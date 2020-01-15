@@ -104,6 +104,8 @@ export default withRouter(connect((state) => ({
         shiftForm: shiftForm(state),
         loadingShiftForm: loadingShiftForm(state),
         staffDetails: staffDetails(state),
-        isFetchingStaffDetails: isFetchingStaffDetails(state)
+        isFetchingStaffDetails: isFetchingStaffDetails(state),
+        kc: state.keycloak,
+        appConfig: state.appConfig
 
     }), mapDispatchToProps)(ShiftPage));
