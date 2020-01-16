@@ -180,13 +180,14 @@ export class ProcessStartPage extends React.Component {
                                 <span className="govuk-caption-l">Operational form</span>
                                 <h2 className="govuk-heading-l">{processDefinition.getIn(['process-definition', 'name'])}</h2>
                                 {
-                                    this.props.submissionResponse && (this.props.submissionResponse.tasks &&this.props.submissionResponse.tasks.length !== 0) ?
+                                    this.props.submissionResponse && (this.props.submissionResponse.tasks && this.props.submissionResponse.tasks.length !== 0) ?
                                         <CompleteTaskForm
-                                            variables={this.props.submissionResponse.variables}
+                                            variables={this.props.submissionResponse.processInstance.variables}
                                             fromProcedure={true}
                                             task={new Map({
                                                 fromProcedure: true,
                                                 processName: processDefinition.getIn(['process-definition', 'name']),
+                                                processDefinitionId:  processDefinition.getIn(['process-definition', 'id']),
                                                 formKey: this.props.submissionResponse.tasks[0].formKey,
                                                 id: this.props.submissionResponse.tasks[0].id,
                                                 assignee: this.props.submissionResponse.tasks[0].assignee,

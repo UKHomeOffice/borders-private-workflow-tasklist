@@ -53,7 +53,11 @@ describe('Start Form Reducer', () => {
     expect(state.get('submissionStatus')).toEqual('SUBMITTING');
   });
   it('captures successful submit to workflow', () => {
-    const state = reducer(initialState, actions.submitToWorkflowSuccess({}));
+    const state = reducer(initialState, actions.submitToWorkflowSuccess({
+       entity : {
+         processInstance: {}
+       }
+    }));
     expect(state.get('submissionStatus')).toEqual('SUBMISSION_SUCCESSFUL');
   });
   it('captures failure to submit to workflow', () => {

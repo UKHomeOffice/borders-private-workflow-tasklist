@@ -20,7 +20,7 @@ const fetchProcessDefinition = (action$, store, { client }) => action$.ofType(ty
 const fetchForm = (action$, store, { client }) => action$.ofType(types.FETCH_FORM)
   .mergeMap(action => client({
     method: 'GET',
-    path: `${store.getState().appConfig.formUrl}/form/${action.formName}`,
+    path: `${store.getState().appConfig.formUrl}/form/name/${action.formName}`,
     headers: {
       Accept: 'application/json',
       Authorization: `Bearer ${store.getState().keycloak.token}`,

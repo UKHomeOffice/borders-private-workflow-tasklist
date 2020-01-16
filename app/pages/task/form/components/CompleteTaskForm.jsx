@@ -138,8 +138,8 @@ export class CompleteTaskForm extends React.Component {
 
     render() {
         const {loadingTaskForm, form, fromProcedure, submissionStatus, nextTask, nextVariables} = this.props;
-        const task = nextTask ? nextTask: this.props.task;
-        const variables = nextVariables? nextVariables: this.props.variables;
+        const task = nextTask ? nextTask : this.props.task;
+        const variables = nextVariables ? nextVariables : this.props.variables;
         if (loadingTaskForm) {
             return <DataSpinner
                 message={fromProcedure ? "Loading next form to complete" : "Loading form for task..."}/>;
@@ -163,15 +163,15 @@ export class CompleteTaskForm extends React.Component {
                        hideContentOnLoad={submissionStatus === SUBMITTING}
                        foregroundStyle={{color: 'black'}}
                        backgroundStyle={{backgroundColor: 'white'}}><TaskForm {...this.props}
-            task={task}
-            variables={variables}
-            form={form}
-            onSubmitTaskForm={(submissionData, variableName) => {
-                this.props.submitTaskForm(form.id, task.get('id'),
-                    submissionData, variableName);
-            }}
-            onCustomEvent={(event) => this.handleCustomEvent(event)}
-            formReference={(form) => this.form = form}/></Loader>
+                                                                              task={task}
+                                                                              variables={variables}
+                                                                              form={form}
+                                                                              onSubmitTaskForm={(submissionData, variableName) => {
+                                                                                  this.props.submitTaskForm(form.id, task.get('id'),
+                                                                                      submissionData, variableName);
+                                                                              }}
+                                                                              onCustomEvent={(event) => this.handleCustomEvent(event)}
+                                                                              formReference={(form) => this.form = form}/></Loader>
     }
 }
 
@@ -201,6 +201,7 @@ export default withRouter(connect((state) => {
         submissionResponse: submissionResponse(state),
         nextTask: nextTask(state),
         nextVariables: nextVariables(state),
-        kc: state.keycloak
+        kc: state.keycloak,
+        appConfig: state.appConfig
     };
 }, mapDispatchToProps)(withLog(CompleteTaskForm)));

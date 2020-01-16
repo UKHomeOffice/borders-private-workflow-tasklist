@@ -43,6 +43,16 @@ function reducer(state = initialState, action) {
     case actions.SUBMIT_TO_WORKFLOW || actions.SUBMIT_TO_WORKFLOW_NON_SHIFT:
       return state.set('submissionStatus', SUBMITTING);
     case actions.SUBMIT_TO_WORKFLOW_SUCCESS:
+      const rawVariables = action.payload.entity.processInstance.variables ? action.payload.entity.processInstance.variables : {};
+      const variables = {};
+      Object.keys(rawVariables).forEach(key => {
+        if (rawVariables[key].type === 'Json') {
+          variables[key] = JSON.parse(rawVariables[key].value);
+        } else {
+          variables[key] = rawVariables[key].value;
+        }
+      });
+      action.payload.entity.processInstance.variables = variables;
       return state.set('submissionStatus', SUBMISSION_SUCCESSFUL)
           .set('submissionResponse', action.payload.entity);
     case actions.SUBMIT_TO_WORKFLOW_FAILURE:
