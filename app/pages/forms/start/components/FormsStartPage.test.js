@@ -91,6 +91,21 @@ describe('Submit a form page', () => {
       processDefinition: Immutable.fromJS({
         formKey: 'formKey',
       }),
+      appConfig: {
+        apiRefUrl: 'apiRefUrl',
+        workflowUrl: 'workflow',
+        operationalDataUrl: 'operational',
+      },
+      kc:  {
+        token : 'token',
+        refreshToken: 'refreshToken',
+        tokenParsed: {
+          session_state: 'sessionState',
+          email: 'email',
+          given_name: 'given_name',
+          family_name: 'familyName'
+        }
+      },
       match: {
         params: {
           processKey: 'processKey',
@@ -114,6 +129,11 @@ describe('Submit a form page', () => {
       loadingForm: true,
       submissionStatus: null,
       isFetchingProcessDefinition: true,
+      appConfig: {
+        apiRefUrl: 'apiRefUrl',
+        workflowUrl: 'workflow',
+        operationalDataUrl: 'operational',
+      },
       history: {
         location: {
           pathname: '/path',
@@ -172,6 +192,11 @@ describe('Submit a form page', () => {
           name: 'procedure',
         },
       }),
+      appConfig: {
+        apiRefUrl: 'apiRefUrl',
+        workflowUrl: 'workflow',
+        operationalDataUrl: 'operational',
+      },
       match: {
         params: {
           processKey: 'processKey',
@@ -202,6 +227,11 @@ describe('Submit a form page', () => {
         tokenParsed: {
           email: 'email',
         },
+      },
+      appConfig: {
+        apiRefUrl: 'apiRefUrl',
+        workflowUrl: 'workflow',
+        operationalDataUrl: 'operational',
       },
       loadingForm: false,
       submissionStatus: 'SUBMITTING',
@@ -260,6 +290,11 @@ describe('Submit a form page', () => {
           id: 'id',
         },
       }),
+      appConfig: {
+        apiRefUrl: 'apiRefUrl',
+        workflowUrl: 'workflow',
+        operationalDataUrl: 'operational',
+      },
       match: {
         params: {
           processKey: 'processKey',
@@ -300,6 +335,11 @@ describe('Submit a form page', () => {
           id: 'id',
         },
       }),
+      appConfig: {
+        apiRefUrl: 'apiRefUrl',
+        workflowUrl: 'workflow',
+        operationalDataUrl: 'operational',
+      },
       match: {
         params: {
           processKey: 'processKey',

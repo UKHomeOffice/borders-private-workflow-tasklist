@@ -78,7 +78,7 @@ export class YourTasksContainer extends React.Component {
 
   componentDidMount() {
     this.loadYourTasks(false, 'sort=due,desc');
-     this.connect(this.props.kc.tokenParsed.email);
+     // this.connect(this.props.kc.tokenParsed.email);
   }
 
   loadYourTasks(skipLoading, yourTasksSortValue, yourTasksFilterValue = null) {

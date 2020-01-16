@@ -3,11 +3,14 @@ import {Form} from 'react-formio';
 import AppConstants from '../../../../common/AppConstants';
 import GovUKDetailsObserver from '../../../../core/util/GovUKDetailsObserver';
 import FileService from '../../../../core/FileService';
+import secureLocalStorage from "../../../../common/security/SecureLocalStorage";
+import FormioInterpolator from '../../../../core/FormioInterpolator';
 
 class StartForm extends React.Component {
     constructor(props) {
         super(props);
         this.formNode = React.createRef();
+        this.formioInterpolator = new FormioInterpolator();
     }
 
     componentDidMount() {
@@ -24,8 +27,46 @@ class StartForm extends React.Component {
     };
 
     render() {
-        const {dataChange, submission, formReference, handleSubmit, onCustomEvent, startForm, kc, processDefinition} = this.props;
-        console.log('p', processDefinition.toJS());
+        const {
+            dataChange, formReference, handleSubmit, onCustomEvent, appConfig,
+            startForm, kc, processDefinition
+        } = this.props;
+        let submission = secureLocalStorage.get(processDefinition.getIn(['process-definition', 'id']));
+        if (!submission) {
+            submission = {};
+        }
+        submission = {
+            ...submission, keycloakContext: {
+                accessToken: kc.token,
+                refreshToken: kc.refreshToken,
+                sessionId: kc.tokenParsed.session_state,
+                email: kc.tokenParsed.email,
+                givenName: kc.tokenParsed.given_name,
+                familyName: kc.tokenParsed.family_name
+            }
+        };
+
+        if (!submission.shiftDetailsContext) {
+            submission = {
+                ...submission, shiftDetailsContext: secureLocalStorage.get('shift')
+            }
+        }
+        if (!submission.staffDetailsDataContext) {
+            submission = {
+                ...submission, staffDetailsDataContext:
+                    secureLocalStorage.get(`staffContext::${kc.tokenParsed.email}`)
+            };
+        }
+        if (!submission.environmentContext) {
+            submission = {
+                ...submission, environmentContext: {
+                    referenceDataUrl: appConfig.apiRefUrl,
+                    workflowUrl: appConfig.workflowServiceUrl,
+                    operationalDataUrl: appConfig.operationalDataUrl,
+                    privateUiUrl: window.location.origin
+                }
+            };
+        }
         const options = {
             noAlerts: true,
             language: 'en',
@@ -35,6 +76,10 @@ class StartForm extends React.Component {
                     this.handleCancel(args);
                 },
                 beforeSubmit: (submission, next) => {
+                    const toDelete = ['keycloakContext', 'staffDetailsDataContext', 'environmentContext'];
+                    toDelete.forEach(key => {
+                        delete submission.data[key];
+                    });
                     submission.data.form = {
                         formVersionId: startForm.versionId,
                         formId: startForm.id,
@@ -47,7 +92,6 @@ class StartForm extends React.Component {
                             name: processDefinition.getIn(['process-definition', 'name']),
                         }
                     };
-                    console.log("submission", submission);
                     next();
                 }
             },
@@ -67,6 +111,7 @@ class StartForm extends React.Component {
             }
         };
 
+        this.formioInterpolator.interpolate(startForm, submission);
         return <Form
             submission={{
                 data: submission

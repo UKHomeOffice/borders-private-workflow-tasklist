@@ -61,6 +61,13 @@ exports[`Submit a form page renders the form and process definition 1`] = `
             procedure
           </h2>
           <StartForm
+            appConfig={
+              Object {
+                "apiRefUrl": "apiRefUrl",
+                "operationalDataUrl": "operational",
+                "workflowUrl": "workflow",
+              }
+            }
             clearProcessDefinition={[MockFunction]}
             dataChange={[Function]}
             fetchProcessDefinition={
