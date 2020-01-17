@@ -48,7 +48,7 @@ describe('withAuthCheck', () => {
     const newProps = {
       extendedStaffDetails: List([
         Map({
-          linemanager_delegate_email: 'email',
+          linemanager_delegate_email: ['email'],
           linemanager_email: 'email',
         }),
       ]),

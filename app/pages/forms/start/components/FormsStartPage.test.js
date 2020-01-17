@@ -241,7 +241,7 @@ describe('Submit a form page', () => {
           processKey: 'mandatory-declaration-report',
         },
         url:
-          'http://www.lodev.xyz:8080/view-mandatory-declaration/mandatory-declaration-report-test/1234',
+          'http://www.lodev.xyz:8080/view-mandatory-declaration/mandatory-declaration-report/1234',
       },
     };
     const clearProcessDefinition = jest.fn();
