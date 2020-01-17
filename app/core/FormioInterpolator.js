@@ -12,10 +12,22 @@ export default class FormioInterpolator {
                     data: submission
                 });
             }
+            if (component.type === 'htmlelement') {
+                component.content = FormioUtils.interpolate(component.content, {
+                    data: submission
+                });
+            }
             if (component.defaultValue) {
                 component.defaultValue = FormioUtils.interpolate(component.defaultValue, {
                     data: submission
                 });
+            }
+            if (component.customDefaultValue && component.customDefaultValue !== '') {
+                component.defaultValue = FormioUtils.evaluate(component.customDefaultValue, {
+                    data: submission
+                }, "value");
+                component.customDefaultValue = "";
+
             }
         });
     }

@@ -21,8 +21,11 @@ export class ErrorHandlingComponent extends React.Component {
   componentDidMount() {
     this.mounted = true;
     PubSub.subscribe('formSubmissionError', (msg,  payload) => {
-      const errors = payload.errors;
+      let errors = payload.errors;
       const form = payload.form;
+      if (!errors) {
+         errors = []
+      }
       const updated = errors.map(error => {
         return {message: error.message, instance: form.formio.getComponent(error.component.key)};
       });
@@ -114,6 +117,7 @@ export default withRouter(connect((state) => {
     hasError: hasError(state),
     errors: errors(state),
     unauthorised: unauthorised(state),
+    appConfig: state.appConfig
 
   };
 }, mapDispatchToProps)(ErrorHandlingComponent));

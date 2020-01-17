@@ -11,11 +11,26 @@ export default class ErrorPanel extends React.Component {
         }
         const items = [];
         const buildMessageFrom = (err) => {
-            if (!err.get('url')) {
-                return <li key={uuidv4()}>{err.get('message')}</li>
+            const code = err.get('status');
+            let itemMessage;
+            switch (code) {
+                case 409:
+                    itemMessage = `The form with reference '${err.get('payload')}' has already been submitted.`;
+                    break;
+                case 404:
+                    itemMessage = `${err.get('message')}`;
+                    break;
+                case 401:
+                case 403:
+                    itemMessage = 'Unable to complete your request due to authorization issues.';
+                    break;
+                case 400:
+                    itemMessage = 'Unable to complete your request due to form submission issues.';
+                    break;
+                default:
+                    itemMessage = 'Internal system error.';
             }
-            return <li key={uuidv4()}>{err.get('url')} - [{err.get('status')} {err.get('error')}]
-                - {err.get('message')}</li>
+            return <li key={uuidv4()}><h4 style={{'color' : '#d4351c'}} className="govuk-heading-s">{itemMessage}</h4></li>
         };
         errors.forEach((err) => {
             items.push(buildMessageFrom(err));
@@ -26,7 +41,15 @@ export default class ErrorPanel extends React.Component {
                 <h2 className="govuk-error-summary__title" id="error-summary-title">
                     We are experiencing technical problems
                 </h2>
-                <h4 className="govuk-heading-s">The technical issue has been logged for support to investigate.</h4>
+
+                <div className="govuk-error-summary__body">
+                    <ul className="govuk-list govuk-error-summary__list">
+                        {items}
+                    </ul>
+                </div>
+
+                <h4 className="govuk-heading-s">Please contact support by clicking <a className="govuk-link" target="_blank" href={this.props.appConfig.serviceDeskUrls.support}>here</a></h4>
+
                 <details className="govuk-details">
                     <summary className="govuk-details__summary">
                         <span className="govuk-details__summary-text">
@@ -36,7 +59,9 @@ export default class ErrorPanel extends React.Component {
                     <div className="govuk-details__text">
                         <div className="govuk-error-summary__body">
                             <ul className="govuk-list govuk-list--bullet govuk-error-summary__list">
-                                {items}
+                               {errors.map(error => {
+                                   return <li key={uuidv4()}>URL: {error.get('url')} - Code: {error.get('status')}</li>
+                               })}
                             </ul>
                         </div>
                     </div>

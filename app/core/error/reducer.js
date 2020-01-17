@@ -17,8 +17,10 @@ function reducer(state = initialState, action) {
       const error = action.payload;
       const errorToReturn = {};
       errorToReturn.status = error.status.code;
+
       errorToReturn.url = error.request ? `${error.request.method} -> ${error.request.path}` : '';
       if (error.entity) {
+        errorToReturn.payload = error.entity.payload;
         errorToReturn.error = error.entity.error;
         if (error.entity.message) {
           errorToReturn.message = error.entity.message;

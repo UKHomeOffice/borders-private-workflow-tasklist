@@ -42,9 +42,16 @@ describe('Error Handling Component', () => {
     };
     const mockStore = configureStore();
     const store = mockStore(initialState);
-
+  const props = {
+    appConfig: {
+      serviceDeskUrls: {
+        support : "support"
+      }
+    }
+  }
     const wrapper = await mount(
       <ErrorHandlingComponent
+          {...props}
         store={store}
         hasError
         errors={Immutable.fromJS([{
@@ -55,7 +62,7 @@ describe('Error Handling Component', () => {
         <div>Hello</div>
       </ErrorHandlingComponent>,
     );
-    expect(wrapper.html()).toEqual('<div class=\"govuk-error-summary\" role=\"alert\" aria-labelledby=\"error-summary-title\" tabindex=\"-1\"><h2 class=\"govuk-error-summary__title\" id=\"error-summary-title\">We are experiencing technical problems</h2><h4 class=\"govuk-heading-s\">The technical issue has been logged for support to investigate.</h4><details class=\"govuk-details\"><summary class=\"govuk-details__summary\"><span class=\"govuk-details__summary-text\">Error details</span></summary><div class=\"govuk-details__text\"><div class=\"govuk-error-summary__body\"><ul class=\"govuk-list govuk-list--bullet govuk-error-summary__list\"><li>/api/test - [400 ] - </li></ul></div></div></details></div><div>Hello</div>');
+    expect(wrapper.html()).toEqual('<div class="govuk-error-summary" role="alert" aria-labelledby="error-summary-title" tabindex="-1"><h2 class="govuk-error-summary__title" id="error-summary-title">We are experiencing technical problems</h2><div class="govuk-error-summary__body"><ul class="govuk-list govuk-error-summary__list"><li><h4 style="color: rgb(212, 53, 28);" class="govuk-heading-s">Unable to complete your request due to form submission issues.</h4></li></ul></div><h4 class="govuk-heading-s">Please contact support by clicking <a class="govuk-link" target="_blank" href="support">here</a></h4><details class="govuk-details"><summary class="govuk-details__summary"><span class="govuk-details__summary-text">Error details</span></summary><div class="govuk-details__text"><div class="govuk-error-summary__body"><ul class="govuk-list govuk-list--bullet govuk-error-summary__list"><li>URL: /api/test - Code: 400</li></ul></div></div></details></div><div>Hello</div>')
   });
   it('redirect to dashboard if unauthorised', () => {
     const initialState = {

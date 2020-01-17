@@ -46,7 +46,9 @@ export default class TaskForm extends React.Component {
                 },
                 fileService: new FileService(kc),
                 beforeSubmit: (submission, next) => {
-                    ['keycloakContext', 'staffDetailsDataContext', 'environmentContext', 'processContext']
+                    ['keycloakContext', 'staffDetailsDataContext', 'environmentContext',
+                        'taskContext',
+                        'processContext']
                         .forEach(k => {
                             delete submission.data[k];
                         });
@@ -98,7 +100,8 @@ export default class TaskForm extends React.Component {
                 operationalDataUrl: appConfig.operationalDataUrl,
                 privateUiUrl: window.location.origin
             },
-            processContext: variables
+            processContext: variables,
+            taskContext: task.toJS()
         };
 
 
@@ -119,12 +122,13 @@ export default class TaskForm extends React.Component {
                                  new FormioEventListener(this.form, this.props);
                              });
                          }
-                     }
+                        }
                      }
                      onCustomEvent={(event) => onCustomEvent(event, variableName)}
                      submission={submission} onSubmit={(submission) => {
-            onSubmitTaskForm(submission.data, variableName);
-        }}/>;
+                            onSubmitTaskForm(submission.data, variableName);}
+                     }
+        />;
     }
 
 }

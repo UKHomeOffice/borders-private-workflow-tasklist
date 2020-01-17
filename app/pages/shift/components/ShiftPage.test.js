@@ -56,8 +56,14 @@ describe('Shift page', () => {
       loadingShiftForm: false,
       failedToCreateShift: true,
       submittingActiveShift: false,
+      appConfig: {
+        serviceDeskUrls: {
+          support: "http://test.com"
+        }
+      }
     };
     const wrapper = await mount(<ErrorHandlingComponent
+        {...props}
       skipAuth
       hasError
       errors={
