@@ -3,6 +3,7 @@ import FormioUtils from 'formiojs/utils';
 export default class FormioInterpolator {
 
     interpolate(form, submission) {
+
         FormioUtils.eachComponent(form.components, component => {
             component.label = FormioUtils.interpolate(component.label, {
                 data: submission

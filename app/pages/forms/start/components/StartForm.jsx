@@ -1,5 +1,5 @@
 import React from 'react';
-import {Form} from 'react-formio';
+import {Form, Formio} from 'react-formio';
 import AppConstants from '../../../../common/AppConstants';
 import GovUKDetailsObserver from '../../../../core/util/GovUKDetailsObserver';
 import FileService from '../../../../core/FileService';
@@ -110,6 +110,21 @@ class StartForm extends React.Component {
                 }
             }
         };
+        const that = this;
+        Formio.registerPlugin({
+            priority: 0,
+            requestResponse: function (response) {
+                return {
+                    ok: response.ok,
+                    json: () => response.json().then((result) => {
+                        that.formioInterpolator.interpolate(result, submission);
+                        return result;
+                    }),
+                    status: response.status,
+                    headers: response.headers
+                };
+            }
+        }, 'processSubFormInterpolation');
 
         this.formioInterpolator.interpolate(startForm, submission);
         return <Form
@@ -119,6 +134,7 @@ class StartForm extends React.Component {
             onChange={(instance) => dataChange(instance)}
             form={startForm}
             ref={form => {
+                console.log('form', form);
                 this.formNode = form;
                 formReference(form);
             }}
@@ -128,6 +144,8 @@ class StartForm extends React.Component {
     }
 
     componentWillUnmount() {
+        const startFormDeregister = Formio.deregisterPlugin('processSubFormInterpolation');
+        console.log('startFormDeregister', startFormDeregister);
         this.observer.destroy();
     }
 

@@ -1,5 +1,5 @@
 import React from 'react';
-import {Form} from 'react-formio';
+import {Form, Formio} from 'react-formio';
 import AppConstants from '../../../../common/AppConstants';
 import GovUKDetailsObserver from "../../../../core/util/GovUKDetailsObserver";
 import FormioEventListener from "../../../../core/util/FormioEventListener";
@@ -20,6 +20,8 @@ export default class TaskForm extends React.Component {
     }
 
     componentWillUnmount() {
+        const taskFormDeregister = Formio.deregisterPlugin('taskSubProcessInterpolation');
+        console.log('taskFormDeregister', taskFormDeregister);
         this.observer.destroy();
     }
 
@@ -103,6 +105,21 @@ export default class TaskForm extends React.Component {
             processContext: variables,
             taskContext: task.toJS()
         };
+        const that = this;
+        Formio.registerPlugin({
+            priority: 0,
+            requestResponse: function (response) {
+                return {
+                    ok: response.ok,
+                    json: () => response.json().then((result) => {
+                        that.formioInterpolator.interpolate(result, submission.data);
+                        return result;
+                    }),
+                    status: response.status,
+                    headers: response.headers
+                };
+            }
+        }, 'taskSubProcessInterpolation');
 
 
         const variableInput = form.components.find(c => c.key === 'submitVariableName');
