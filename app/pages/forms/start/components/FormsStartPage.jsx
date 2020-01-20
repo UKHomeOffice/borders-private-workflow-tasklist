@@ -191,7 +191,8 @@ export class ProcessStartPage extends React.Component {
                                                 formKey: this.props.submissionResponse.tasks[0].formKey,
                                                 id: this.props.submissionResponse.tasks[0].id,
                                                 assignee: this.props.submissionResponse.tasks[0].assignee,
-                                                processInstanceId: this.props.submissionResponse.tasks[0].processInstanceId
+                                                processInstanceId: this.props.submissionResponse.tasks[0].processInstanceId,
+                                                    ...this.props.submissionResponse.tasks[0]
                                             })}/>
                                         : <StartForm {...this.props}
                                                      startForm={form}

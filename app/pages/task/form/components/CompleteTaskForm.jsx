@@ -56,7 +56,7 @@ export class CompleteTaskForm extends React.Component {
 
 
     handleSubmission(submissionStatus) {
-        const taskName = this.props.task.get('name');
+        const taskName = this.props.task ? this.props.task.get('name') : (this.props.nextTask ? this.props.nextTask.get('name') : '');
         const path = this.props.history.location.pathname;
         const user = this.props.kc.tokenParsed.email;
         switch (submissionStatus) {
