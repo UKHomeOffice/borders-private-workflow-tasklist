@@ -110,21 +110,23 @@ class StartForm extends React.Component {
                 }
             }
         };
-        const that = this;
-        Formio.registerPlugin({
-            priority: 0,
-            requestResponse: function (response) {
-                return {
-                    ok: response.ok,
-                    json: () => response.json().then((result) => {
-                        that.formioInterpolator.interpolate(result, submission);
-                        return result;
-                    }),
-                    status: response.status,
-                    headers: response.headers
-                };
-            }
-        }, 'processSubFormInterpolation');
+        if (startForm) {
+            const that = this;
+            Formio.registerPlugin({
+                priority: 0,
+                requestResponse: function (response) {
+                    return {
+                        ok: response.ok,
+                        json: () => response.json().then((result) => {
+                            that.formioInterpolator.interpolate(result, submission);
+                            return result;
+                        }),
+                        status: response.status,
+                        headers: response.headers
+                    };
+                }
+            }, 'processSubFormInterpolation');
+        }
 
         this.formioInterpolator.interpolate(startForm, submission);
         return <Form

@@ -105,22 +105,23 @@ export default class TaskForm extends React.Component {
             processContext: variables,
             taskContext: task.toJS()
         };
-        const that = this;
-        Formio.registerPlugin({
-            priority: 0,
-            requestResponse: function (response) {
-                return {
-                    ok: response.ok,
-                    json: () => response.json().then((result) => {
-                        that.formioInterpolator.interpolate(result, submission.data);
-                        return result;
-                    }),
-                    status: response.status,
-                    headers: response.headers
-                };
-            }
-        }, 'taskSubProcessInterpolation');
-
+        if (form) {
+            const that = this;
+            Formio.registerPlugin({
+                priority: 0,
+                requestResponse: function (response) {
+                    return {
+                        ok: response.ok,
+                        json: () => response.json().then((result) => {
+                            that.formioInterpolator.interpolate(result, submission.data);
+                            return result;
+                        }),
+                        status: response.status,
+                        headers: response.headers
+                    };
+                }
+            }, 'taskSubProcessInterpolation');
+        }
 
         const variableInput = form.components.find(c => c.key === 'submitVariableName');
         const variableName = variableInput ? variableInput.defaultValue : form.name;
