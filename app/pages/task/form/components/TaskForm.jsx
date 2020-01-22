@@ -61,6 +61,9 @@ export default class TaskForm extends React.Component {
                         title: form.title,
                         name: form.name,
                         submissionDate: new Date(),
+                        process: {
+                            definitionId: task.get('processDefinitionId')
+                        }
                     };
                     next();
                 }
