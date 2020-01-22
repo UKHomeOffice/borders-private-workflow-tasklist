@@ -68,25 +68,11 @@ const fetchActiveShift = (action$, store, { client }) => action$.ofType(types.FE
     store.getState().keycloak.token,
     store.getState().appConfig.workflowServiceUrl,
     client,
-  )
-    .retryWhen(retry)
-    .map(payload => {
-      if (payload.status.code === 200 && payload.entity.length === 0) {
-        console.log('No data');
-        throw {
-          status: {
-            code: 403,
-          },
-        };
-      } else {
+  ).map(payload => {
         return actions.fetchActiveShiftSuccess(payload);
-      }
-    })
-    .retryWhen(errors => errors
-      .takeWhile(error => error.status.code === 403)
-      .take(0)
-      .concat(errors.flatMap(s => Rx.Observable.throw(s))))
-    .catch(error => errorObservable(actions.fetchActiveShiftFailure(), error)));
+    }).retryWhen(retry)
+      .catch(error => errorObservable(actions.fetchActiveShiftFailure(), error)));
+
 
 
 const submit = (action$, store, { client }) => action$.ofType(types.SUBMIT_VALIDATION)

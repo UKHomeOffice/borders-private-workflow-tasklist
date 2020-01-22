@@ -5,6 +5,7 @@ import GovUKDetailsObserver from '../../../../core/util/GovUKDetailsObserver';
 import FileService from '../../../../core/FileService';
 import secureLocalStorage from "../../../../common/security/SecureLocalStorage";
 import FormioInterpolator from '../../../../core/FormioInterpolator';
+import _ from 'lodash';
 
 class StartForm extends React.Component {
     constructor(props) {
@@ -118,7 +119,10 @@ class StartForm extends React.Component {
                     return {
                         ok: response.ok,
                         json: () => response.json().then((result) => {
-                            that.formioInterpolator.interpolate(result, submission);
+                            if (!Array.isArray(result) && _.has(result, 'display')) {
+                                that.formioInterpolator.interpolate(result, submission);
+                                return result;
+                            }
                             return result;
                         }),
                         status: response.status,

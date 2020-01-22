@@ -144,34 +144,6 @@ describe('shift epic', () => {
         done();
       });
   });
-  it('can fetchActiveShift throws 403 if no data returned', done => {
-    const action$ = ActionsObservable.of(
-      { type: types.FETCH_ACTIVE_SHIFT, payload: {} },
-    );
-    const payload = {
-      status: {
-        code: 200,
-      },
-      entity: [],
-    };
-    const client = () => Observable.of(payload);
-
-    Observable.concat(epic(action$, store, { client }))
-      .toArray()
-      .subscribe(data => {
-        const submitFailure = data[0];
-        const error = data[1];
-        expect(submitFailure)
-          .toEqual({
-            type: 'HANDLE_UNAUTHORISED',
-          });
-        expect(error)
-          .toEqual({
-            type: 'FETCH_ACTIVE_SHIFT_FAILURE',
-          });
-        done();
-      });
-  });
   it('can fetchActiveShift retry if 503', done => {
     const action$ = ActionsObservable.of(
       { type: types.FETCH_ACTIVE_SHIFT, payload: {} },

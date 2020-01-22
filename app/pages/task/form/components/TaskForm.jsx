@@ -6,6 +6,7 @@ import FormioEventListener from "../../../../core/util/FormioEventListener";
 import FileService from "../../../../core/FileService";
 import secureLocalStorage from "../../../../common/security/SecureLocalStorage";
 import FormioInterpolator from "../../../../core/FormioInterpolator";
+import _ from "lodash";
 
 export default class TaskForm extends React.Component {
 
@@ -113,7 +114,10 @@ export default class TaskForm extends React.Component {
                     return {
                         ok: response.ok,
                         json: () => response.json().then((result) => {
-                            that.formioInterpolator.interpolate(result, submission.data);
+                            if (!Array.isArray(result) && _.has(result, 'display')) {
+                                that.formioInterpolator.interpolate(result, submission.data);
+                                return result;
+                            }
                             return result;
                         }),
                         status: response.status,
