@@ -49,7 +49,7 @@ export default class TaskForm extends React.Component {
                 },
                 fileService: new FileService(kc),
                 beforeSubmit: (submission, next) => {
-                    ['keycloakContext', 'staffDetailsDataContext', 'environmentContext',
+                    ['keycloakContext', 'staffDetailsDataContext',
                         'taskContext',
                         'processContext']
                         .forEach(k => {
