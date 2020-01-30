@@ -11,6 +11,12 @@
       "rules": {
         "max-len": 0
       }
+    },
+    {
+      "files": ["TaskForm.jsx"],
+      "rules": {
+        "react/static-property-placement": [2, "static public field"]
+      }
     }
   ],
   "parser": "babel-eslint",
