@@ -137,9 +137,9 @@ export class CompleteTaskForm extends React.Component {
     }
 
     render() {
-        const {loadingTaskForm, form, fromProcedure, submissionStatus, nextTask, nextVariables} = this.props;
-        const task = nextTask ? nextTask : this.props.task;
-        const variables = nextVariables ? nextVariables : this.props.variables;
+        const {loadingTaskForm, form, fromProcedure, history, submissionStatus, nextTask, nextVariables} = this.props;
+        const task = nextTask ? nextTask: this.props.task;
+        const variables = nextVariables? nextVariables: this.props.variables;
         if (loadingTaskForm) {
             return <DataSpinner
                 message={fromProcedure ? "Loading next form to complete" : "Loading form for task..."}/>;
@@ -162,16 +162,14 @@ export class CompleteTaskForm extends React.Component {
                            message="Submitting data..."/></div>}
                        hideContentOnLoad={submissionStatus === SUBMITTING}
                        foregroundStyle={{color: 'black'}}
-                       backgroundStyle={{backgroundColor: 'white'}}><TaskForm {...this.props}
-                                                                              task={task}
-                                                                              variables={variables}
-                                                                              form={form}
-                                                                              onSubmitTaskForm={(submissionData, variableName) => {
-                                                                                  this.props.submitTaskForm(form.id, task.get('id'),
-                                                                                      submissionData, variableName);
-                                                                              }}
-                                                                              onCustomEvent={(event) => this.handleCustomEvent(event)}
-                                                                              formReference={(form) => this.form = form}/></Loader>
+                       backgroundStyle={{backgroundColor: 'white'}}><TaskForm
+            { ...{ form, history, task, variables } }
+            onSubmitTaskForm={(submissionData, variableName) => {
+                this.props.submitTaskForm(form.id, task.get('id'),
+                    submissionData, variableName);
+            }}
+            onCustomEvent={(event) => this.handleCustomEvent(event)}
+            formReference={(form) => this.form = form}/></Loader>
     }
 }
 

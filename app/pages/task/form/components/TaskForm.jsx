@@ -10,6 +10,12 @@ import _ from "lodash";
 
 export default class TaskForm extends React.Component {
 
+    static propTypes = {
+        history: PropTypes.shape({
+            replace: PropTypes.func.isRequired,
+        }).isRequired,
+    }
+
     constructor(props) {
         super(props);
         this.formNode = React.createRef();

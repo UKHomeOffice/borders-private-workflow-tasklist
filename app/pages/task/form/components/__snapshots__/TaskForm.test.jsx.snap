@@ -1,0 +1,142 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`TaskForm Component matches snapshot 1`] = `
+<Form
+  form={
+    Object {
+      "access": Array [
+        Object {
+          "roles": Array [
+            "XXXX",
+            "XXXX",
+            "XXXXX",
+          ],
+          "type": "read_all",
+        },
+      ],
+      "components": Array [
+        Object {
+          "autofocus": false,
+          "clearOnHide": true,
+          "conditional": Object {
+            "eq": "",
+            "show": "",
+            "when": null,
+          },
+          "defaultValue": "",
+          "hidden": false,
+          "id": "id",
+          "input": true,
+          "inputMask": "",
+          "inputType": "text",
+          "key": "text",
+          "label": "Text",
+          "labelPosition": "top",
+          "multiple": false,
+          "persistent": true,
+          "placeholder": "",
+          "prefix": "",
+          "properties": Object {},
+          "protected": false,
+          "spellcheck": true,
+          "suffix": "",
+          "tableView": true,
+          "tags": Array [],
+          "type": "textfield",
+          "unique": false,
+          "validate": Object {
+            "custom": "",
+            "customPrivate": false,
+            "maxLength": "",
+            "minLength": "",
+            "pattern": "",
+            "required": false,
+          },
+        },
+        Object {
+          "action": "event",
+          "autofocus": false,
+          "block": false,
+          "conditional": Object {
+            "eq": "",
+            "show": "",
+            "when": null,
+          },
+          "disableOnInvalid": false,
+          "event": "cancel-operation",
+          "id": "canceloperation",
+          "input": true,
+          "key": "canceloperation",
+          "label": "Cancel operation",
+          "leftIcon": "",
+          "properties": Object {
+            "success-message": "Operation successfully cancelled",
+          },
+          "rightIcon": "",
+          "size": "md",
+          "tableView": false,
+          "tags": Array [],
+          "theme": "primary",
+          "type": "button",
+        },
+      ],
+      "created": "2019-02-01T07:13:35.002Z",
+      "display": "form",
+      "id": "XXXXX",
+      "machineName": "customButtonEvent",
+      "modified": "2019-02-01T07:13:35.069Z",
+      "name": "customButtonEvent",
+      "owner": "XXXXX",
+      "path": "custombuttonevent",
+      "submissionAccess": Array [
+        Object {
+          "roles": Array [
+            "5b0fa1b2769993003d6fba6f",
+          ],
+          "type": "create_own",
+        },
+        Object {
+          "roles": Array [
+            "XXXXX",
+          ],
+          "type": "read_own",
+        },
+        Object {
+          "roles": Array [
+            "XXXX",
+          ],
+          "type": "update_own",
+        },
+        Object {
+          "roles": Array [
+            "XXXXX",
+          ],
+          "type": "delete_own",
+        },
+      ],
+      "tags": Array [
+        "common",
+      ],
+      "title": "Custom Button Event",
+      "type": "form",
+    }
+  }
+  onCustomEvent={[Function]}
+  onSubmit={[Function]}
+  options={
+    Object {
+      "hooks": Object {
+        "beforeCancel": [Function],
+      },
+      "i18n": Object {
+        "en": Object {
+          "submit": "Submit",
+        },
+      },
+      "noAlerts": true,
+      "readOnly": true,
+    }
+  }
+  submission={null}
+/>
+`;
