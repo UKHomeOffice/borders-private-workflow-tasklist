@@ -1,5 +1,6 @@
 import React from 'react';
 import uuid from 'uuid';
+import parse from 'html-react-parser';
 
 const FormErrorPanel = ({errors}) => {
     return errors && errors.length !== 0 ? <div className="container">
@@ -15,7 +16,7 @@ const FormErrorPanel = ({errors}) => {
                                 <a href="" onClick={(e) => {
                                     e.preventDefault();
                                     instance.focus();
-                                }}>{message}</a>
+                                }}><div>{parse(message)}</div></a>
                             </li>
                         })}
                     </ul>
