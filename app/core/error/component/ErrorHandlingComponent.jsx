@@ -54,7 +54,7 @@ export class ErrorHandlingComponent extends React.Component {
             if (this.mounted) {
                 if (this.state.formErrors.length !== 0) {
                     let instance;
-                    if (form._instance.display === 'wizard') {
+                    if (form.instance._form.display === 'wizard') {
                         instance = form.formio.currentPage;
                     } else {
                         instance = form.formio;
@@ -65,7 +65,7 @@ export class ErrorHandlingComponent extends React.Component {
                         });
                     } else {
                         this.setState({
-                            formErrors: _.filter(this.state.formErrorsform.formformf, ({message, instance}) => {
+                            formErrors: _.filter(this.state.formErrors, ({message, instance}) => {
                                 return instance.component.key !== value.changed.component.key;
                             })
                         })
