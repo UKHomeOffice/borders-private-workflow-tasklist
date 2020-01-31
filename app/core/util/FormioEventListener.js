@@ -19,7 +19,8 @@ class FormioEventListener {
             PubSub.publish('formSubmissionSuccessful');
         });
         this.form.formio.on('change', (value) => {
-            PubSub.publish('formChange', value);
+            const form = this.form;
+            PubSub.publish('formChange', {value, form});
         });
         this.form.formio.on('prevPage', () => {
             window.scrollTo(0, 0);
