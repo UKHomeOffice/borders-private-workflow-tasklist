@@ -53,13 +53,19 @@ export class ErrorHandlingComponent extends React.Component {
         PubSub.subscribe('formChange', (msg, {value, form}) => {
             if (this.mounted) {
                 if (this.state.formErrors.length !== 0) {
-                    if (form.formio.isValid(value.data, true)) {
+                    let instance;
+                    if (form._instance.display === 'wizard') {
+                        instance = form.formio.currentPage;
+                    } else {
+                        instance = form.formio;
+                    }
+                    if (instance.isValid(value.data, true)) {
                         this.setState({
-                          formErrors: []
+                            formErrors: []
                         });
                     } else {
                         this.setState({
-                          formErrors: _.filter(this.state.formErrors, ({message, instance}) => {
+                            formErrors: _.filter(this.state.formErrorsform.formformf, ({message, instance}) => {
                                 return instance.component.key !== value.changed.component.key;
                             })
                         })
