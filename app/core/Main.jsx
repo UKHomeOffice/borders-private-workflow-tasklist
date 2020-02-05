@@ -26,7 +26,7 @@ const NonShiftCheckProcedurePage = withOnboardingCheck(lazy(() => import('../pag
 const ProcessStartPage = withOnboardingCheck(withShiftCheck(lazy(() => import('../pages/forms/start/components/FormsStartPage'))));
 const ProcessDiagramPage = withOnboardingCheck(withShiftCheck(lazy(() => import('../pages/forms/diagram/components/ProcessDiagramPage'))));
 const TaskPage =  withOnboardingCheck(withShiftCheck(lazy(() => import('../pages/task/display/component/TaskPage'))));
-
+const CasesPage =  withOnboardingCheck(withShiftCheck(lazy(() => import('../pages/cases/components/CasesPage'))));
 
 const UnauthorizedPage = lazy(() => import('../core/components/UnauthorizedPage'));
 const NoOpDashboardPage = lazy(() => import ('../pages/dashboard/components/NoOpDashboardPage'));
@@ -38,6 +38,7 @@ const Main = () => (
         <Route name="Accessibility Statement" exact path={"/accessibility-statement"} component={AccessibilityStatement}/>
         <Route name="Privacy Policy" exact path={"/privacy-policy"} component={PrivacyPolicy}/>
         <Route name="Dashboard" exact path={AppConstants.DASHBOARD_PATH} component={() => <DashboardPage />}/>
+        <Route name="Cases" exact path={AppConstants.CASES_PATH} component={() => <CasesPage/>} />
         <Route name="Shift" exact path={AppConstants.SHIFT_PATH} component={() => <ErrorHandlingComponent skipAuthError={true}><ShiftPage/></ErrorHandlingComponent>}/>
         <Route name="Your tasks" exact path={AppConstants.YOUR_TASKS_PATH} component={() => <YourTasksPage />}/>
         <Route name="Your group tasks" exact path={AppConstants.YOUR_GROUP_TASKS_PATH} component={() => <YourGroupTaskPage/>}/>
