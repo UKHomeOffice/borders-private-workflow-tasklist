@@ -19,4 +19,30 @@ const findCasesByKey = (action$, store, { client }) => action$.ofType(types.FIND
         .map(payload => actions.findCasesByKeySuccess(payload))
         .catch(error => errorObservable(actions.findCasesByKeyFailure(), error)));
 
-export default combineEpics(findCasesByKey);
+
+const getCaseByKey = (action$, store, { client }) => action$.ofType(types.GET_CASE_BY_KEY)
+    .mergeMap(action => client({
+        method: 'GET',
+        path: `${store.getState().appConfig.workflowServiceUrl}/api/workflow/cases/${action.key}`,
+        headers: {
+            Accept: 'application/json',
+            Authorization: `Bearer ${store.getState().keycloak.token}`,
+        },
+    }).retryWhen(retry)
+        .map(payload => actions.getCaseByKeySuccess(payload))
+        .catch(error => errorObservable(actions.getCaseByKeyFailure(), error)));
+
+
+const getFormVersion = (action$, store, { client }) => action$.ofType(types.GET_FORM_VERSION)
+    .mergeMap(action => client({
+        method: 'GET',
+        path: `${store.getState().appConfig.formUrl}/form/version/${action.versionId}`,
+        headers: {
+            Accept: 'application/json',
+            Authorization: `Bearer ${store.getState().keycloak.token}`,
+        },
+    }).retryWhen(retry)
+        .map(payload => actions.getFormVersionSuccess(payload))
+        .catch(error => errorObservable(actions.getFormVersionFailure(), error)));
+
+export default combineEpics(findCasesByKey, getCaseByKey, getFormVersion);

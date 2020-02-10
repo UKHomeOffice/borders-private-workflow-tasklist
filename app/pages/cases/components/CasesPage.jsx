@@ -8,7 +8,7 @@ import {withRouter} from "react-router";
 import {connect} from "react-redux";
 import withLog from "../../../core/error/component/withLog";
 import {businessKeyQuery, caseSearchResults, searching} from "../selectors";
-import {debounce, throttle} from 'throttle-debounce';
+import {debounce} from 'throttle-debounce';
 
 class CasesPage extends React.Component {
 
@@ -83,7 +83,5 @@ export default withRouter(connect((state) => {
         businessKeyQuery: businessKeyQuery(state),
         caseSearchResults: caseSearchResults(state),
         searching: searching(state)
-
-
     }
 }, mapDispatchToProps)(withLog(CasesPage)));

@@ -8,7 +8,9 @@ export default class GovUKDetailsObserver {
   create() {
     this.observer = new MutationObserver(() => {
       this.node.querySelectorAll('[data-module="govuk-details"]')
-        .forEach(element => new Details(element).init());
+        .forEach(element => {
+          new Details(element).init()
+        });
     });
     this.observer.observe(this.node, { childList: true, attributes: false });
     return this;
