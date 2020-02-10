@@ -86,7 +86,10 @@ input:disabled {
 .govuk-header__link--service-name {
   margin-left: -15px;
 }
-//
-//li.govuk-breadcrumbs__list-item.active {
-//  text-decoration: underline;
-//}
+
+
+.govuk-width-container {
+  max-width: 1260px !important;
+  margin-right: 15px;
+  margin-left: 15px;
+}

@@ -7,11 +7,10 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 
-// local imports
 import DataSpinner from '../../../core/components/DataSpinner';
 import withLog from '../../../core/error/component/withLog';
 
-const CalendarDashboardPanel = React.lazy(() => import('./CalendarDashboardPanel'));
+const CasesDashboardPanel = React.lazy(() => import('./CasesDashboardPanel'));
 const MessagesPanel = React.lazy(() => import('./MessagesPanel'));
 const ProceduresDashboardPanel = React.lazy(() => import('./FormsDashboardPanel'));
 const ReportsDashboardPanel = React.lazy(() => import('./ReportsDashboardPanel'));
@@ -110,7 +109,7 @@ export class DashboardPanel extends React.Component {
             <ul className="govuk-list">
               <ProceduresDashboardPanel {...this.props}/>
               <ReportsDashboardPanel {...this.props}/>
-              <CalendarDashboardPanel {...this.props}/>
+              <CasesDashboardPanel {...this.props}/>
             </ul>
           </Suspense>
         </div>
