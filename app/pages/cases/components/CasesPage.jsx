@@ -8,6 +8,7 @@ import {withRouter} from "react-router";
 import {connect} from "react-redux";
 import withLog from "../../../core/error/component/withLog";
 import {businessKeyQuery, caseSearchResults, searching} from "../selectors";
+import {debounce, throttle} from 'throttle-debounce';
 
 class CasesPage extends React.Component {
 
@@ -32,7 +33,13 @@ class CasesPage extends React.Component {
                 <div className="govuk-grid-column-one-third">
                     <div className="govuk-form-group input-icon">
                         <input className="govuk-input" placeholder="Search using a BF number" id="bfNumber"
-                               onChange={(event) => this.props.findCasesByKey(event.target.value)}
+                               onChange={(event) => {
+                                   const that = this;
+                                   const query = event.target.value;
+                                   debounce(500, () => {
+                                       that.props.findCasesByKey(query);
+                                   })()
+                               }}
                                name="bfNumber" type="text"/><i className="fa fa-search fa-lg"
                                                                style={{marginLeft: '5px'}}/>
 
@@ -51,7 +58,10 @@ CasesPage.propTypes = {
     searching: PropTypes.bool,
     caseSearchResults: PropTypes.shape({
         _embedded: PropTypes.shape({
-            cases: PropTypes.array
+            cases: PropTypes.arrayOf(PropTypes.shape({
+                businessKey: PropTypes.string,
+                processInstances: PropTypes.arrayOf(PropTypes.object)
+            }))
         }),
         _links: PropTypes.object,
         page: PropTypes.shape({
