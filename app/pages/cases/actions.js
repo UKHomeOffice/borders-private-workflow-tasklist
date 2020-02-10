@@ -46,9 +46,25 @@ const getFormVersionFailure = () => ({
     type: types.GET_FORM_VERSION_FAILURE
 });
 
-const setSelectedVersionId = (versionId) => ({
-    type: types.SET_SELECTED_VERSION_ID,
-    versionId
+const setSelectedFormReference = (formReference) => ({
+    type: types.SET_SELECTED_FORM_REFERENCE,
+    formReference
+});
+
+const getFormSubmissionData = (businessKey, submissionDataKey) => ({
+    type: types.GET_FORM_SUBMISSION_DATA,
+    businessKey,
+    submissionDataKey
+});
+
+
+const getFormSubmissionDataSuccess = (payload) => ({
+    type: types.GET_FORM_SUBMISSION_DATA_SUCCESS,
+    payload
+});
+
+const getFormSubmissionDataFailure = () => ({
+    type: types.GET_FORM_SUBMISSION_DATA_FAILURE,
 });
 
 export {
@@ -62,5 +78,8 @@ export {
     getFormVersion,
     getFormVersionSuccess,
     getFormVersionFailure,
-    setSelectedVersionId
+    setSelectedFormReference,
+    getFormSubmissionData,
+    getFormSubmissionDataSuccess,
+    getFormSubmissionDataFailure
 }

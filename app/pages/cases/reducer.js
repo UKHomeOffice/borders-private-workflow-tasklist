@@ -12,7 +12,9 @@ const initialState = new Map({
     businessKey: null,
     loadingFormVersion: false,
     formVersionDetails: null,
-    selectedVersionId: null
+    selectedFormReference: null,
+    loadingFormSubmissionData: false,
+    formSubmissionData: null
 });
 
 function reducer(state = initialState, action) {
@@ -42,8 +44,8 @@ function reducer(state = initialState, action) {
                 .set('formVersionDetails', action.payload.entity);
         case actions.GET_FORM_VERSION_FAILURE:
             return state.set('loadingFormVersion', false);
-        case actions.SET_SELECTED_VERSION_ID:
-            return state.set('selectedVersionId', action.versionId);
+        case actions.SET_SELECTED_FORM_REFERENCE:
+            return state.set('selectedFormReference', action.formReference);
         case actions.RESET:
             return initialState;
         default:

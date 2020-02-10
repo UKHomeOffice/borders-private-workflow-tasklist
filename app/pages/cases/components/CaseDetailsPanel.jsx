@@ -4,10 +4,10 @@ import moment from 'moment'
 import FormDetailsPanel from "./FormDetailsPanel";
 import PropTypes from "prop-types";
 import {bindActionCreators} from "redux";
-import {getFormVersion, setSelectedVersionId} from "../actions";
+import {getFormVersion, setSelectedFormReference} from "../actions";
 import {withRouter} from "react-router";
 import {connect} from "react-redux";
-import {selectedVersionId} from "../selectors";
+import {selectedFormReference} from "../selectors";
 import withLog from "../../../core/error/component/withLog";
 import GovUKDetailsObserver from "../../../core/util/GovUKDetailsObserver";
 
@@ -30,7 +30,7 @@ class CaseDetailsPanel extends React.Component {
     }
 
     render() {
-        const {caseDetails} = this.props;
+        const {caseDetails, selectedFormReference} = this.props;
 
         return <div id="caseDetails" className="govuk-accordion" data-module="govuk-accordion">
             {caseDetails.processInstances.map(processInstance => {
@@ -68,8 +68,8 @@ class CaseDetailsPanel extends React.Component {
                                             className="govuk-details" data-module="govuk-details"
                                             onClick={(event) => {
                                                 const isOpen = event.currentTarget.getAttribute("open");
-                                                if (!isOpen && (this.props.selectedVersionId !== formVersionId)) {
-                                                    this.props.setSelectedVersionId(formVersionId);
+                                                if (!isOpen && (!selectedFormReference || selectedFormReference.versionId !== formVersionId)) {
+                                                    this.props.setSelectedFormReference(formReference);
                                                     const details = document.getElementsByTagName("details");
                                                     details.forEach(detail => {
                                                         if (detail !== event.currentTarget) {
@@ -84,11 +84,13 @@ class CaseDetailsPanel extends React.Component {
                                             </span>
                                             </summary>
                                             <div>
-                                                {(this.props.selectedVersionId
-                                                    && this.props.selectedVersionId === formVersionId) ?
+                                                {(selectedFormReference
+                                                    && selectedFormReference.versionId === formVersionId) ?
                                                     <FormDetailsPanel
                                                         key={formVersionId}
-                                                        {...{formVersionId: this.props.selectedVersionId}} /> : null}
+                                                        {...{formReference: this.props.selectedFormReference,
+                                                            businessKey: caseDetails.businessKey
+                                                            }} /> : null}
                                             </div>
                                         </details>
                                     </th>
@@ -106,17 +108,17 @@ class CaseDetailsPanel extends React.Component {
 }
 
 CaseDetailsPanel.propTypes = {
-    setSelectedVersionId: PropTypes.func.isRequired,
-    selectedVersionId: PropTypes.string
+    setSelectedFormReference: PropTypes.func.isRequired,
+    selectedFormReference: PropTypes.object
 };
 
-const mapDispatchToProps = dispatch => bindActionCreators({getFormVersion, setSelectedVersionId}, dispatch);
+const mapDispatchToProps = dispatch => bindActionCreators({getFormVersion, setSelectedFormReference}, dispatch);
 
 export default withRouter(connect((state) => {
     return {
         kc: state.keycloak,
         appConfig: state.appConfig,
-        selectedVersionId: selectedVersionId(state),
+        selectedFormReference: selectedFormReference(state),
     }
 }, mapDispatchToProps)(withLog(CaseDetailsPanel)));
 

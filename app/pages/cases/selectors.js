@@ -14,4 +14,8 @@ export const loadingFormVersion = state => state[NAME].get('loadingFormVersion')
 
 export const formVersionDetails = state => state[NAME].get('formVersionDetails');
 
-export const selectedVersionId = state => state[NAME].get('selectedVersionId');
+export const selectedFormReference = state => state[NAME].get('selectedFormReference');
+
+export const loadingFormSubmissionData = state => state[NAME].get('loadingFormSubmissionData');
+
+export const formSubmissionData = state => state[NAME].get('formSubmissionData');

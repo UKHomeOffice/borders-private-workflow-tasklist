@@ -45,4 +45,16 @@ const getFormVersion = (action$, store, { client }) => action$.ofType(types.GET_
         .map(payload => actions.getFormVersionSuccess(payload))
         .catch(error => errorObservable(actions.getFormVersionFailure(), error)));
 
-export default combineEpics(findCasesByKey, getCaseByKey, getFormVersion);
+const getFormSubmissionData = (action$, store, { client }) => action$.ofType(types.GET_FORM_SUBMISSION_DATA)
+    .mergeMap(action => client({
+        method: 'GET',
+        path: `${store.getState().appConfig.workflowServiceUrl}/case/${action.businessKey}/submission?key=${action.submissionDataKey}`,
+        headers: {
+            Accept: 'application/json',
+            Authorization: `Bearer ${store.getState().keycloak.token}`,
+        },
+    }).retryWhen(retry)
+        .map(payload => actions.getFormSubmissionDataSuccess(payload))
+        .catch(error => errorObservable(actions.getFormSubmissionDataFailure(), error)));
+
+export default combineEpics(findCasesByKey, getCaseByKey, getFormVersion, getFormSubmissionData);
