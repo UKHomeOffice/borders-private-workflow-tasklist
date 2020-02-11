@@ -48,7 +48,7 @@ const getFormVersion = (action$, store, { client }) => action$.ofType(types.GET_
 const getFormSubmissionData = (action$, store, { client }) => action$.ofType(types.GET_FORM_SUBMISSION_DATA)
     .mergeMap(action => client({
         method: 'GET',
-        path: `${store.getState().appConfig.workflowServiceUrl}/case/${action.businessKey}/submission?key=${action.submissionDataKey}`,
+        path: `${store.getState().appConfig.workflowServiceUrl}/api/workflow/cases/${action.businessKey}/submission?key=${action.submissionDataKey}`,
         headers: {
             Accept: 'application/json',
             Authorization: `Bearer ${store.getState().keycloak.token}`,

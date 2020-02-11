@@ -1,6 +1,6 @@
 import React from 'react';
 import {bindActionCreators} from "redux";
-import {getFormVersion, getFormSubmissionData} from "../actions";
+import {getFormVersion, getFormSubmissionData, resetForm} from "../actions";
 import {withRouter} from "react-router";
 import {connect} from "react-redux";
 import {formSubmissionData, formVersionDetails, loadingFormSubmissionData, loadingFormVersion} from "../selectors";
@@ -11,14 +11,22 @@ import {Form} from "react-formio";
 class FormDetailsPanel extends React.Component {
 
     componentDidMount() {
-
         this.props.getFormVersion(this.props.formReference.versionId);
+        this.props.getFormSubmissionData(this.props.businessKey, this.props.formReference.dataPath);
+    }
+
+    componentWillUnmount() {
+        this.props.resetForm();
     }
 
     render() {
-        const {loadingFormVersion, formVersionDetails} = this.props;
+        const {
+            loadingFormVersion, formVersionDetails,
+            loadingFormSubmissionData,
+            formSubmissionData
+        } = this.props;
 
-        if (loadingFormVersion) {
+        if (loadingFormVersion && loadingFormSubmissionData) {
             return <div style={{justifyContent: 'center', paddingTop: '20px'}}>Loading form...</div>
         }
         if (!formVersionDetails) {
@@ -27,6 +35,7 @@ class FormDetailsPanel extends React.Component {
 
         return <Form
             form={formVersionDetails.schema}
+            submission={{data: formSubmissionData}}
             options={{
                 readOnly: true,
                 buttonSettings: {
@@ -42,17 +51,26 @@ class FormDetailsPanel extends React.Component {
 
 FormDetailsPanel.propTypes = {
     getFormSubmissionData: PropTypes.func.isRequired,
+    resetForm: PropTypes.func.isRequired,
     getFormVersion: PropTypes.func.isRequired,
     loadingFormVersion: PropTypes.bool,
     formVersionDetails: PropTypes.object,
-    formVersionId: PropTypes.string,
+    formReference: PropTypes.shape({
+        name: PropTypes.string,
+        title: PropTypes.string,
+        versionId: PropTypes.string,
+        dataPath: PropTypes.string,
+        submissionDate: PropTypes.string,
+        submittedBy: PropTypes.string
+    }),
     submissionDataKey: PropTypes.string,
     loadingSubmissionFormData: PropTypes.bool,
     formSubmissionData: PropTypes.object,
     businessKey: PropTypes.string
 };
 
-const mapDispatchToProps = dispatch => bindActionCreators({getFormVersion, getFormSubmissionData},
+const mapDispatchToProps = dispatch => bindActionCreators({getFormVersion,
+        getFormSubmissionData, resetForm},
     dispatch);
 
 export default withRouter(connect((state) => {

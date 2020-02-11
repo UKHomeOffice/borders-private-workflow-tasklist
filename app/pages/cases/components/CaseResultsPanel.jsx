@@ -20,28 +20,30 @@ class CaseResultsPanel extends React.Component {
             return <div/>
         }
 
-        if (caseSearchResults.page.totalElements === 0) {
-            return <h4 className="govuk-heading-s">No cases found with with reference {businessKeyQuery}</h4>
-        }
         const businessKeys = caseSearchResults._embedded.cases.map(c => {
             return <li key={c.businessKey}><a className="govuk-link" href="" onClick={(event) => {
                 event.preventDefault();
                 this.props.getCaseByKey(c.businessKey)
             }}>{c.businessKey}</a></li>
         });
-        return <div className="govuk-grid-row mt-2">
-            <div className="govuk-grid-column-one-quarter mt-1">
+        return <div className="govuk-grid-row">
+            <div className="govuk-grid-column-one-quarter">
+                <h3 className="govuk-heading-m">Search results</h3>
                 {caseSearchResults ?
                     <React.Fragment>
-                        <p className="govuk-body govuk-!-font-weight-bold">Number of cases
-                            found: {caseSearchResults.page.totalElements}</p>
-                        <hr className="govuk-section-break govuk-section-break--m govuk-section-break--visible"/>
-                        <ul className="govuk-list">
+                        <span className="govuk-caption-m">Number of cases found</span>
+                        <h3 className="govuk-heading-m">{caseSearchResults.page.totalElements}</h3>
+
+                        {caseSearchResults.page.totalElements > 0 ? <ul className="govuk-list">
                             {businessKeys}
-                        </ul>
+                        </ul> : null}
+                        {caseSearchResults.page.totalElements > caseSearchResults.page.size ?
+                            <button className="govuk-button" onClick={(event) => {
+
+                            }}>Load more</button> : null}
                     </React.Fragment> : null}
             </div>
-            <div className="govuk-grid-column-three-quarters mt-4">
+            <div className="govuk-grid-column-three-quarters">
                 {
                     loadingCaseDetails ? <div style={{justifyContent: 'center', paddingTop: '20px'}}>
                             <DataSpinner

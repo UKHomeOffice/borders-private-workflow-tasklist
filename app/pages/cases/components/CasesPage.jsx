@@ -29,6 +29,9 @@ class CasesPage extends React.Component {
             <div className="govuk-grid-row">
                 <div className="govuk-grid-column-two-thirds">
                     <h3 className="govuk-heading-l">Cases</h3>
+                    <div className="govuk-inset-text">
+                        Enter a BF number to search for cases. <strong>Please note all actions are audited.</strong>
+                    </div>
                 </div>
                 <div className="govuk-grid-column-one-third">
                     <div className="govuk-form-group input-icon">
@@ -37,7 +40,11 @@ class CasesPage extends React.Component {
                                    const that = this;
                                    const query = event.target.value;
                                    debounce(500, () => {
-                                       that.props.findCasesByKey(query);
+                                       if (query === '') {
+                                           that.props.reset();
+                                       } else {
+                                           that.props.findCasesByKey(query);
+                                       }
                                    })()
                                }}
                                name="bfNumber" type="text"/><i className="fa fa-search fa-lg"

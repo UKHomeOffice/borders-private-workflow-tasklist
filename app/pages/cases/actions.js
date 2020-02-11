@@ -67,6 +67,9 @@ const getFormSubmissionDataFailure = () => ({
     type: types.GET_FORM_SUBMISSION_DATA_FAILURE,
 });
 
+const resetForm = () => ({
+    type: types.RESET_FORM
+})
 export {
     findCasesByKey,
     findCasesByKeySuccess,
@@ -81,5 +84,6 @@ export {
     setSelectedFormReference,
     getFormSubmissionData,
     getFormSubmissionDataSuccess,
-    getFormSubmissionDataFailure
+    getFormSubmissionDataFailure,
+    resetForm
 }

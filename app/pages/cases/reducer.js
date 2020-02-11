@@ -46,6 +46,16 @@ function reducer(state = initialState, action) {
             return state.set('loadingFormVersion', false);
         case actions.SET_SELECTED_FORM_REFERENCE:
             return state.set('selectedFormReference', action.formReference);
+        case actions.GET_FORM_SUBMISSION_DATA:
+            return state.set('loadingFormSubmissionData', true);
+        case actions.GET_FORM_SUBMISSION_DATA_SUCCESS:
+            return state.set('loadingFormSubmissionData', false)
+                .set('formSubmissionData', action.payload.entity);
+        case actions.GET_FORM_SUBMISSION_DATA_FAILURE:
+            return state.set('loadingFormSubmissionData', false);
+        case actions.RESET_FORM:
+            return state.set('formSubmissionData', null)
+                .set('formVersionDetails', null);
         case actions.RESET:
             return initialState;
         default:
