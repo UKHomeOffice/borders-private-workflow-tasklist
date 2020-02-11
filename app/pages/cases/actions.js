@@ -69,7 +69,22 @@ const getFormSubmissionDataFailure = () => ({
 
 const resetForm = () => ({
     type: types.RESET_FORM
+});
+
+const loadNextSearchResults = (url) => ({
+    type: types.LOAD_NEXT_SEARCH_RESULTS,
+    url
+});
+
+const loadNextSearchResultsSuccess = (payload) => ({
+    type: types.LOAD_NEXT_SEARCH_RESULTS_SUCCESS,
+    payload
+});
+
+const loadNextSearchResultsFailure = () => ({
+    type: types.LOAD_NEXT_SEARCH_RESULTS_FAILURE
 })
+
 export {
     findCasesByKey,
     findCasesByKeySuccess,
@@ -85,5 +100,8 @@ export {
     getFormSubmissionData,
     getFormSubmissionDataSuccess,
     getFormSubmissionDataFailure,
-    resetForm
+    resetForm,
+    loadNextSearchResults,
+    loadNextSearchResultsFailure,
+    loadNextSearchResultsSuccess
 }

@@ -19,3 +19,5 @@ export const selectedFormReference = state => state[NAME].get('selectedFormRefer
 export const loadingFormSubmissionData = state => state[NAME].get('loadingFormSubmissionData');
 
 export const formSubmissionData = state => state[NAME].get('formSubmissionData');
+
+export const loadingNextSearchResults = state => state[NAME].get('loadingNextSearchResults');

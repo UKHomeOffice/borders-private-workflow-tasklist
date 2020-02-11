@@ -3,11 +3,11 @@ import './CasePages.scss';
 import CaseResultsPanel from "./CaseResultsPanel";
 import PropTypes from "prop-types";
 import {bindActionCreators} from "redux";
-import * as actions from '../actions';
+import {findCasesByKey, reset, loadNextSearchResults} from '../actions';
 import {withRouter} from "react-router";
 import {connect} from "react-redux";
 import withLog from "../../../core/error/component/withLog";
-import {businessKeyQuery, caseSearchResults, searching} from "../selectors";
+import {businessKeyQuery, caseSearchResults, loadingNextSearchResults, searching} from "../selectors";
 import {debounce} from 'throttle-debounce';
 
 class CasesPage extends React.Component {
@@ -53,7 +53,14 @@ class CasesPage extends React.Component {
                     </div>
                 </div>
             </div>
-            <CaseResultsPanel {...{caseSearchResults, searching, businessKeyQuery}}/>
+            <CaseResultsPanel {...{
+                caseSearchResults, searching, businessKeyQuery, loadNext: () => {
+                    const links = caseSearchResults._links;
+                    if ('next' in links) {
+                        this.props.loadNextSearchResults(links.next.href)
+                    }
+                }
+            }}/>
         </React.Fragment>
     }
 }
@@ -61,6 +68,7 @@ class CasesPage extends React.Component {
 CasesPage.propTypes = {
     findCasesByKey: PropTypes.func.isRequired,
     reset: PropTypes.func.isRequired,
+    loadNextSearchResults: PropTypes.func,
     businessKeyQuery: PropTypes.string,
     searching: PropTypes.bool,
     caseSearchResults: PropTypes.shape({
@@ -81,7 +89,7 @@ CasesPage.propTypes = {
 
 };
 
-const mapDispatchToProps = dispatch => bindActionCreators(actions, dispatch);
+const mapDispatchToProps = dispatch => bindActionCreators({findCasesByKey, reset, loadNextSearchResults}, dispatch);
 
 export default withRouter(connect((state) => {
     return {
@@ -89,6 +97,7 @@ export default withRouter(connect((state) => {
         appConfig: state.appConfig,
         businessKeyQuery: businessKeyQuery(state),
         caseSearchResults: caseSearchResults(state),
-        searching: searching(state)
+        searching: searching(state),
+        loadingNextSearchResults: loadingNextSearchResults(state)
     }
 }, mapDispatchToProps)(withLog(CasesPage)));

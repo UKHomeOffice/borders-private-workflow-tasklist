@@ -1,6 +1,6 @@
 import Immutable from 'immutable';
 import * as actions from './actionTypes';
-
+import _ from 'lodash';
 const {Map} = Immutable;
 
 const initialState = new Map({
@@ -14,7 +14,8 @@ const initialState = new Map({
     formVersionDetails: null,
     selectedFormReference: null,
     loadingFormSubmissionData: false,
-    formSubmissionData: null
+    formSubmissionData: null,
+    loadingNextSearchResults: false
 });
 
 function reducer(state = initialState, action) {
@@ -53,6 +54,23 @@ function reducer(state = initialState, action) {
                 .set('formSubmissionData', action.payload.entity);
         case actions.GET_FORM_SUBMISSION_DATA_FAILURE:
             return state.set('loadingFormSubmissionData', false);
+
+        case actions.LOAD_NEXT_SEARCH_RESULTS:
+            return state.set('loadingNextSearchResults', true);
+
+        case actions.LOAD_NEXT_SEARCH_RESULTS_SUCCESS:
+            const results = action.payload.entity._embedded? action.payload.entity._embedded.cases: [];
+            const caseSearchResults = state.get('caseSearchResults');
+
+            const cases = caseSearchResults._embedded.cases;
+            const updatedResults = _.unionBy(cases, results, 'businessKey');
+
+            caseSearchResults._embedded.cases = updatedResults;
+            caseSearchResults._links = action.payload.entity._links;
+            return state.set('loadingNextSearchResults', false)
+                .set('caseSearchResults', caseSearchResults);
+        case actions.LOAD_NEXT_SEARCH_RESULTS_FAILURE:
+            return state.set('loadingNextSearchResults', false);
         case actions.RESET_FORM:
             return state.set('formSubmissionData', null)
                 .set('formVersionDetails', null);

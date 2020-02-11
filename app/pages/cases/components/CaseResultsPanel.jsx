@@ -2,7 +2,7 @@ import React from 'react';
 import {getCaseByKey} from '../actions';
 import {withRouter} from "react-router";
 import {connect} from "react-redux";
-import {caseDetails, loadingCaseDetails} from "../selectors";
+import {caseDetails, loadingCaseDetails, loadingNextSearchResults} from "../selectors";
 import {bindActionCreators} from "redux";
 import withLog from "../../../core/error/component/withLog";
 import PropTypes from "prop-types";
@@ -11,7 +11,11 @@ import DataSpinner from "../../../core/components/DataSpinner";
 
 class CaseResultsPanel extends React.Component {
     render() {
-        const {searching, caseSearchResults, businessKeyQuery, loadingCaseDetails, caseDetails} = this.props;
+        const {
+            searching, caseSearchResults,
+            businessKeyQuery, loadingCaseDetails, caseDetails,
+            loadingNextSearchResults
+        } = this.props;
 
         if (searching) {
             return <h4 className="govuk-heading-s">Searching cases with reference {businessKeyQuery}...</h4>
@@ -38,9 +42,12 @@ class CaseResultsPanel extends React.Component {
                             {businessKeys}
                         </ul> : null}
                         {caseSearchResults.page.totalElements > caseSearchResults.page.size ?
-                            <button className="govuk-button" onClick={(event) => {
-
-                            }}>Load more</button> : null}
+                            <button className="govuk-button"
+                                    disabled={loadingNextSearchResults}
+                                    onClick={(event) => {
+                                        event.preventDefault();
+                                        this.props.loadNext();
+                                    }}>{loadingNextSearchResults ? 'Loading more': 'Load more'}</button> : null}
                     </React.Fragment> : null}
             </div>
             <div className="govuk-grid-column-three-quarters">
@@ -58,6 +65,8 @@ class CaseResultsPanel extends React.Component {
 
 CaseResultsPanel.propTypes = {
     getCaseByKey: PropTypes.func.isRequired,
+    loadNext: PropTypes.func,
+    loadingNextSearchResults: PropTypes.bool,
     loadingCaseDetails: PropTypes.bool,
     caseDetails: PropTypes.shape({
         businessKey: PropTypes.string,
@@ -73,5 +82,7 @@ export default withRouter(connect((state) => {
         appConfig: state.appConfig,
         caseDetails: caseDetails(state),
         loadingCaseDetails: loadingCaseDetails(state),
+        loadingNextSearchResults: loadingNextSearchResults(state)
+
     }
 }, mapDispatchToProps)(withLog(CaseResultsPanel)));
