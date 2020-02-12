@@ -8,6 +8,7 @@ import withLog from "../../../core/error/component/withLog";
 import PropTypes from "prop-types";
 import CaseDetailsPanel from "./CaseDetailsPanel";
 import DataSpinner from "../../../core/components/DataSpinner";
+import _ from "lodash";
 
 class CaseResultsPanel extends React.Component {
     render() {
@@ -23,7 +24,7 @@ class CaseResultsPanel extends React.Component {
         if (!caseSearchResults) {
             return <div/>
         }
-
+        const hasMoreData = _.has(caseSearchResults._links, 'next');
         const businessKeys = caseSearchResults._embedded.cases.map(c => {
             return <li key={c.businessKey}><a className="govuk-link" href="" onClick={(event) => {
                 event.preventDefault();
@@ -41,13 +42,13 @@ class CaseResultsPanel extends React.Component {
                         {caseSearchResults.page.totalElements > 0 ? <ul className="govuk-list">
                             {businessKeys}
                         </ul> : null}
-                        {caseSearchResults.page.totalElements > caseSearchResults.page.size ?
+                        {hasMoreData ?
                             <button className="govuk-button"
                                     disabled={loadingNextSearchResults}
                                     onClick={(event) => {
                                         event.preventDefault();
                                         this.props.loadNext();
-                                    }}>{loadingNextSearchResults ? 'Loading more': 'Load more'}</button> : null}
+                                    }}>{loadingNextSearchResults ? 'Loading more' : 'Load more'}</button> : null}
                     </React.Fragment> : null}
             </div>
             <div className="govuk-grid-column-three-quarters">
