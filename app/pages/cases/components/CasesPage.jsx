@@ -20,7 +20,6 @@ class CasesPage extends React.Component {
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
-
     }
 
     render() {
@@ -35,7 +34,7 @@ class CasesPage extends React.Component {
                 </div>
                 <div className="govuk-grid-column-one-third">
                     <div className="govuk-form-group input-icon">
-                        <input className="govuk-input" placeholder="Search using a BF number" id="bfNumber"
+                        <input className="govuk-input" placeholder="Search using a BF prefixed number" id="bfNumber"
                                onChange={(event) => {
                                    const that = this;
                                    const query = event.target.value;
@@ -47,7 +46,9 @@ class CasesPage extends React.Component {
                                        }
                                    })()
                                }}
-                               name="bfNumber" type="text"/><i className="fa fa-search fa-lg"
+                               name="bfNumber"
+                               spellCheck="false"
+                               type="text"/><i className="fa fa-search fa-lg"
                                                                style={{marginLeft: '5px'}}/>
 
                     </div>
@@ -66,6 +67,7 @@ class CasesPage extends React.Component {
 }
 
 CasesPage.propTypes = {
+    log: PropTypes.func,
     findCasesByKey: PropTypes.func.isRequired,
     reset: PropTypes.func.isRequired,
     loadNextSearchResults: PropTypes.func,

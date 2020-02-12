@@ -11,7 +11,6 @@ import {selectedFormReference} from "../selectors";
 import withLog from "../../../core/error/component/withLog";
 import GovUKDetailsObserver from "../../../core/util/GovUKDetailsObserver";
 import _ from 'lodash';
-import uuid4 from "uuid";
 
 class CaseDetailsPanel extends React.Component {
     constructor(props) {
@@ -79,9 +78,9 @@ class CaseDetailsPanel extends React.Component {
                                                 <details id={formName} className="govuk-details"
                                                          data-module="govuk-details">
                                                     <summary className="govuk-details__summary">
-                                                                    <span className="govuk-details__summary-text">
-                                                                        {formName}
-                                                                    </span>
+                                                        <span className="govuk-details__summary-text">
+                                                            {formName}
+                                                        </span>
                                                     </summary>
                                                     <div>
                                                         {forms.map((form, index) => {
@@ -116,25 +115,25 @@ class CaseDetailsPanel extends React.Component {
                                                                                  className="govuk-details"
                                                                                  onClick={(event) => {
                                                                                      const isOpen = event.currentTarget.getAttribute("open");
-                                                                                     const keyFromSelectedReference = selectedFormReference ? `${selectedFormReference.versionId}-${selectedFormReference.submissionDate}`: null;
+                                                                                     const keyFromSelectedReference = selectedFormReference ?
+                                                                                         `${selectedFormReference.versionId}-${selectedFormReference.submissionDate}` : null;
                                                                                      if (!isOpen && (!selectedFormReference || (keyFromSelectedReference && keyFromSelectedReference !== key))) {
                                                                                          this.props.setSelectedFormReference(form);
                                                                                          console.log(form);
                                                                                          const details = document.getElementsByTagName("details");
                                                                                          details.forEach(detail => {
-                                                                                             if ( detail.id === 'formDetails' && detail !== event.currentTarget) {
+                                                                                             if (detail.id === 'formDetails' && detail !== event.currentTarget) {
                                                                                                  detail.removeAttribute("open");
                                                                                              }
                                                                                          });
                                                                                      }
                                                                                  }}
                                                                                  data-module="govuk-details">
-                                                                            <summary
-                                                                                className="govuk-details__summary">
-                                                                                                <span
-                                                                                                    className="govuk-details__summary-text">
-                                                                                                  View details
-                                                                                                </span>
+                                                                            <summary className="govuk-details__summary">
+                                                                                <span
+                                                                                    className="govuk-details__summary-text">
+                                                                                  View details
+                                                                                </span>
                                                                             </summary>
                                                                             <div>
                                                                                 {(selectedFormReference
@@ -157,7 +156,10 @@ class CaseDetailsPanel extends React.Component {
                                                     </div>
                                                 </details>
                                                 {(Object.keys(groupedForms).length - 1) !== index ?
-                                                    <hr style={{borderBottom: '2px solid #1d70b8', borderTop: 'none'}}/> : null}
+                                                    <hr style={{
+                                                        borderBottom: '2px solid #1d70b8',
+                                                        borderTop: 'none'
+                                                    }}/> : null}
                                             </React.Fragment>
                                         })}
                                     </div> : <h4 className="govuk-heading-s">No forms available</h4>}
