@@ -10,15 +10,19 @@ import {connect} from "react-redux";
 import {selectedFormReference} from "../selectors";
 import withLog from "../../../core/error/component/withLog";
 import GovUKDetailsObserver from "../../../core/util/GovUKDetailsObserver";
+import _ from 'lodash';
+import uuid4 from "uuid";
 
 class CaseDetailsPanel extends React.Component {
     constructor(props) {
         super(props);
+        this.groupForms = this.groupForms.bind(this);
     }
 
     componentDidMount() {
-        this.observer = new GovUKDetailsObserver(document.getElementById("caseDetails")).create();
-        new Accordion(document.getElementById("caseDetails")).init();
+        const {caseDetails} = this.props;
+        this.observer = new GovUKDetailsObserver(document.getElementById(`caseDetails-${caseDetails.businessKey}`)).create();
+        new Accordion(document.getElementById(`caseDetails-${caseDetails.businessKey}`)).init();
     }
 
     componentWillUnmount() {
@@ -28,8 +32,15 @@ class CaseDetailsPanel extends React.Component {
     componentDidUpdate(prevProps, prevState, snapshot) {
     }
 
+    groupForms = (formReferences) => {
+        return _.mapValues(_.groupBy(formReferences, "title"), v => _.orderBy(v, (d) => {
+            return moment(d.submissionDate)
+        }, ['desc']));
+    };
+
     render() {
         const {caseDetails, selectedFormReference} = this.props;
+
 
         return <React.Fragment>
             <div className="govuk-row">
@@ -39,16 +50,16 @@ class CaseDetailsPanel extends React.Component {
             </div>
             <div className="govuk-row">
                 <div className="govuk-grid-column-full">
-                    <div id="caseDetails" className="govuk-accordion" data-module="govuk-accordion">
+                    <div id={`caseDetails-${caseDetails.businessKey}`} className="govuk-accordion"
+                         data-module="govuk-accordion">
                         {caseDetails.processInstances.map(processInstance => {
-                            if (!processInstance.formReferences || processInstance.formReferences.length === 0) {
-                                return <div key={processInstance.id}/>
-                            }
+                            const groupedForms = this.groupForms(processInstance.formReferences);
                             return <div className="govuk-accordion__section" key={processInstance.id}>
                                 <div className="govuk-accordion__section-header">
                                     <h4 className="govuk-accordion__section-heading">
-                            <span className="govuk-accordion__section-button" id={`heading-${processInstance.id}`}>
-                                {processInstance.name}</span>
+                                         <span className="govuk-accordion__section-button"
+                                               id={`heading-${processInstance.id}`}>
+                                        {processInstance.name}</span>
                                     </h4>
                                 </div>
                                 <div id={`accordion-with-summary-sections-content-${processInstance.id}`}
@@ -59,72 +70,97 @@ class CaseDetailsPanel extends React.Component {
                                         className="govuk-tag">{processInstance.endDate ? 'Completed' : 'Active'}</span>
                                     </h3>
                                     <span className="govuk-caption-m">Forms</span>
-                                    <h3 className="govuk-heading-m">{processInstance.formReferences.length} completed</h3>
+                                    <h3 className="govuk-heading-m">{Object.keys(groupedForms).length} completed</h3>
                                     <hr className="govuk-section-break govuk-section-break--l govuk-section-break--visible"/>
-                                    <div>
-                                        {processInstance.formReferences.map((form, index) => {
-                                            const formVersionId = form.versionId;
-                                            return <React.Fragment key={form.name}>
-                                                <dl className="govuk-summary-list  govuk-summary-list--no-border">
-                                                    <div className="govuk-summary-list__row">
-                                                        <dt className="govuk-summary-list__key">
-                                                            Form name
-                                                        </dt>
-                                                        <dd className="govuk-summary-list__value">
-                                                            <details
-                                                                className="govuk-details" data-module="govuk-details"
-                                                                onClick={(event) => {
-                                                                    const isOpen = event.currentTarget.getAttribute("open");
-                                                                    if (!isOpen && (!selectedFormReference || selectedFormReference.versionId !== formVersionId)) {
-                                                                        this.props.setSelectedFormReference(form);
-                                                                        const details = document.getElementsByTagName("details");
-                                                                        details.forEach(detail => {
-                                                                            if (detail !== event.currentTarget) {
-                                                                                detail.removeAttribute("open");
-                                                                            }
-                                                                        });
-                                                                    }
-                                                                }}>
-                                                                <summary className="govuk-details__summary">
-                                                        <span className="govuk-details__summary-text">
-                                                    {form.title}
-                                                        </span>
-                                                                </summary>
-                                                                <div>
-                                                                    {(selectedFormReference
-                                                                        && selectedFormReference.versionId === formVersionId) ?
-                                                                        <FormDetailsPanel
-                                                                            key={formVersionId}
-                                                                            {...{
-                                                                                formReference: this.props.selectedFormReference,
-                                                                                businessKey: caseDetails.businessKey
-                                                                            }} /> : null}
+                                    {processInstance.formReferences.length !== 0 ? <div>
+                                        {Object.keys(groupedForms).map((formName, index) => {
+                                            const forms = groupedForms[formName];
+                                            return <React.Fragment key={formName}>
+                                                <details id={formName} className="govuk-details"
+                                                         data-module="govuk-details">
+                                                    <summary className="govuk-details__summary">
+                                                                    <span className="govuk-details__summary-text">
+                                                                        {formName}
+                                                                    </span>
+                                                    </summary>
+                                                    <div>
+                                                        {forms.map((form, index) => {
+                                                            const formVersionId = form.versionId;
+                                                            const key = `${formVersionId}-${form.submissionDate}`;
+                                                            return <dl key={key}
+                                                                       className="govuk-summary-list govuk-summary-list--no-border">
+                                                                <div className="govuk-summary-list__row">
+                                                                    <dt className="govuk-summary-list__key">
+                                                                        Submitted by
+                                                                    </dt>
+                                                                    <dd className="govuk-summary-list__value">
+                                                                        {form.submittedBy}
+                                                                    </dd>
                                                                 </div>
-                                                            </details>
-                                                        </dd>
+                                                                <div className="govuk-summary-list__row">
+                                                                    <dt className="govuk-summary-list__key">
+                                                                        Submitted on
+                                                                    </dt>
+                                                                    <dd className="govuk-summary-list__value">
+                                                                        {moment(form.submissionDate).format('DD/MM/YYYY HH:mm')}
+                                                                    </dd>
+                                                                </div>
+
+                                                                <div className="govuk-summary-list__row">
+                                                                    <dt className="govuk-summary-list__key">
+                                                                        {index === 0 ? <span
+                                                                            className="govuk-tag">Latest</span> : null}
+                                                                    </dt>
+                                                                    <dd className="govuk-summary-list__value">
+                                                                        <details id="formDetails"
+                                                                                 className="govuk-details"
+                                                                                 onClick={(event) => {
+                                                                                     const isOpen = event.currentTarget.getAttribute("open");
+                                                                                     const keyFromSelectedReference = selectedFormReference ? `${selectedFormReference.versionId}-${selectedFormReference.submissionDate}`: null;
+                                                                                     if (!isOpen && (!selectedFormReference || (keyFromSelectedReference && keyFromSelectedReference !== key))) {
+                                                                                         this.props.setSelectedFormReference(form);
+                                                                                         console.log(form);
+                                                                                         const details = document.getElementsByTagName("details");
+                                                                                         details.forEach(detail => {
+                                                                                             if ( detail.id === 'formDetails' && detail !== event.currentTarget) {
+                                                                                                 detail.removeAttribute("open");
+                                                                                             }
+                                                                                         });
+                                                                                     }
+                                                                                 }}
+                                                                                 data-module="govuk-details">
+                                                                            <summary
+                                                                                className="govuk-details__summary">
+                                                                                                <span
+                                                                                                    className="govuk-details__summary-text">
+                                                                                                  View details
+                                                                                                </span>
+                                                                            </summary>
+                                                                            <div>
+                                                                                {(selectedFormReference
+                                                                                    &&
+                                                                                    `${selectedFormReference.versionId}-${selectedFormReference.submissionDate}`
+                                                                                    === key) ?
+                                                                                    <FormDetailsPanel
+                                                                                        key={key}
+                                                                                        {...{
+                                                                                            formReference: this.props.selectedFormReference,
+                                                                                            businessKey: caseDetails.businessKey
+                                                                                        }} /> : null}
+                                                                            </div>
+                                                                        </details>
+                                                                    </dd>
+                                                                </div>
+
+                                                            </dl>
+                                                        })}
                                                     </div>
-                                                    <div className="govuk-summary-list__row">
-                                                        <dt className="govuk-summary-list__key">
-                                                            Submitted by
-                                                        </dt>
-                                                        <dd className="govuk-summary-list__value">
-                                                            {form.submittedBy}
-                                                        </dd>
-                                                    </div>
-                                                    <div className="govuk-summary-list__row">
-                                                        <dt className="govuk-summary-list__key">
-                                                            Submitted on
-                                                        </dt>
-                                                        <dd className="govuk-summary-list__value">
-                                                            {moment(form.submissionDate).format('DD/MM/YYYY HH:mm')}
-                                                        </dd>
-                                                    </div>
-                                                </dl>
-                                                {(processInstance.formReferences.length - 1) !== index ?
-                                                    <hr className="govuk-section-break govuk-section-break--l govuk-section-break--visible"/> : null}
+                                                </details>
+                                                {(Object.keys(groupedForms).length - 1) !== index ?
+                                                    <hr style={{borderBottom: '2px solid #1d70b8', borderTop: 'none'}}/> : null}
                                             </React.Fragment>
                                         })}
-                                    </div>
+                                    </div> : <h4 className="govuk-heading-s">No forms available</h4>}
                                 </div>
                             </div>
                         })}
