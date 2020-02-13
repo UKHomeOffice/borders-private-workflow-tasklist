@@ -119,7 +119,6 @@ class CaseDetailsPanel extends React.Component {
                                                                                          `${selectedFormReference.versionId}-${selectedFormReference.submissionDate}` : null;
                                                                                      if (!isOpen && (!selectedFormReference || (keyFromSelectedReference && keyFromSelectedReference !== key))) {
                                                                                          this.props.setSelectedFormReference(form);
-                                                                                         console.log(form);
                                                                                          const details = document.getElementsByTagName("details");
                                                                                          details.forEach(detail => {
                                                                                              if (detail.id === 'formDetails' && detail !== event.currentTarget) {

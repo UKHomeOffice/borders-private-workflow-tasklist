@@ -3,7 +3,7 @@ import * as actions from './actionTypes';
 import _ from 'lodash';
 const {Map} = Immutable;
 
-const initialState = new Map({
+export const initialState = new Map({
     searching: false,
     businessKeyQuery: null,
     caseSearchResults: null,
