@@ -50,11 +50,11 @@ export default class TaskForm extends React.Component {
 
         const options = {
             noAlerts: true,
+            fileService: new FileService(kc),
             hooks: {
                 beforeCancel: (...args) => {
                     this.handleCancel(args);
                 },
-                fileService: new FileService(kc),
                 beforeSubmit: (submission, next) => {
                     ['keycloakContext', 'staffDetailsDataContext',
                         'taskContext',
