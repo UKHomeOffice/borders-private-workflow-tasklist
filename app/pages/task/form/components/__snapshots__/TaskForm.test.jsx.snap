@@ -125,20 +125,20 @@ exports[`TaskForm Component matches snapshot 1`] = `
   onSubmit={[Function]}
   options={
     Object {
+      "fileService": FileService {
+        "keycloak": Object {
+          "token": "token",
+          "tokenParsed": Object {
+            "email": "yesy",
+            "family_name": "test",
+            "given_name": "name",
+            "session_state": "state",
+          },
+        },
+      },
       "hooks": Object {
         "beforeCancel": [Function],
         "beforeSubmit": [Function],
-        "fileService": FileService {
-          "keycloak": Object {
-            "token": "token",
-            "tokenParsed": Object {
-              "email": "yesy",
-              "family_name": "test",
-              "given_name": "name",
-              "session_state": "state",
-            },
-          },
-        },
       },
       "i18n": Object {
         "en": Object {
