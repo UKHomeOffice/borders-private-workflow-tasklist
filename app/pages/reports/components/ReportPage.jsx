@@ -24,7 +24,7 @@ export class ReportPage extends React.Component {
                 justifyContent: 'center',
                 height: '100vh'
             }}>
-                <Iframe url={`${this.props.appConfig.reportServiceUrl}/api/reports/${reportName}`}
+                <Iframe url='https://app.powerbi.com/reportEmbed?reportId=542dee73-4ccf-4642-8b56-f26e02a74358&autoAuth=true&ctid=f24d93ec-b291-4192-a08a-f182245945c2&config=eyJjbHVzdGVyVXJsIjoiaHR0cHM6Ly93YWJpLXVrLXNvdXRoLXJlZGlyZWN0LmFuYWx5c2lzLndpbmRvd3MubmV0LyJ9'
                         id="report"
                         width="100%"
                         height="100%"
