@@ -9,6 +9,7 @@ import 'rxjs/add/operator/mergeMap';
 import epic from './epic';
 import 'rxjs';
 import PubSub from 'pubsub-js';
+import secureLocalStorage from '../../common/security/SecureLocalStorage';
 
 jest.setTimeout(50000);
 
@@ -18,6 +19,11 @@ jest.mock('pubsub-js', () => ({
   publish: jest.fn(),
 }));
 
+jest.mock('../../common/security/SecureLocalStorage', () => {
+  return {
+    remove: jest.fn()
+  }
+});
 
 describe('shift epic', () => {
   const store = configureMockStore()({
@@ -205,6 +211,8 @@ describe('shift epic', () => {
       .subscribe(actualOutput => {
         const createActiveShift = actualOutput[0];
         expect(createActiveShift.type).toEqual('CREATE_ACTIVE_SHIFT_SUCCESS');
+        expect(secureLocalStorage.remove).toHaveBeenCalledTimes(1);
+        expect(secureLocalStorage.remove).toHaveBeenCalledWith('shift');
         done();
       });
   });

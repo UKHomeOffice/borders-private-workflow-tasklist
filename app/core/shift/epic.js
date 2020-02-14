@@ -5,6 +5,7 @@ import * as types from './actionTypes';
 import * as actions from './actions';
 import { errorObservable } from '../error/epicUtil';
 import { retry } from '../util/retry';
+import secureLocalStorage from '../../common/security/SecureLocalStorage';
 
 const shift = (email, token, workflowUrl, client) => {
   return client({
@@ -103,6 +104,7 @@ const submit = (action$, store, { client }) => action$.ofType(types.SUBMIT_VALID
         'Content-Type': 'application/json',
       },
     }).map(payload => {
+        secureLocalStorage.remove('shift');
         PubSub.publish('submission', {
             submission: true,
             autoDismiss: true,
