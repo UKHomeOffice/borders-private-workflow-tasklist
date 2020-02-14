@@ -198,6 +198,7 @@ if (process.env.NODE_ENV === 'production') {
             workflowServiceUrl: data.ENGINE_URI,
             formUrl: data.API_FORM_URI,
             reportServiceUrl: data.REPORT_URI,
+            attachmentServiceUrl: data.API_ATTACHMENT_URI,
             analyticsUrl: data.ANALYTICS_URL,
             analyticsSiteId: data.ANALYTICS_SITE_ID,
             apiRefUrl: data.API_REF_URI,
@@ -220,6 +221,7 @@ if (process.env.NODE_ENV === 'production') {
         operationalDataUrl: process.env.API_COP_URI,
         workflowServiceUrl: process.env.ENGINE_URI,
         formUrl: process.env.API_FORM_URI,
+        attachmentServiceUrl: process.env.API_ATTACHMENT_URI,
         reportServiceUrl: process.env.REPORT_URI,
         apiRefUrl: process.env.API_REF_URI,
         serviceDeskUrls: serviceDeskUrls

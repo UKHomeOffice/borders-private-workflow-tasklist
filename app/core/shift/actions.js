@@ -1,6 +1,5 @@
 import * as types from './actionTypes';
 
-
 const fetchShiftForm = () => ({
   type: types.FETCH_SHIFT_FORM,
 });
@@ -13,7 +12,6 @@ const fetchShiftFormSuccess = payload => ({
 const fetchShiftFormFailure = () => ({
   type: types.FETCH_SHIFT_FORM_FAILURE,
 });
-
 
 const fetchActiveShift = () => ({
   type: types.FETCH_ACTIVE_SHIFT,
@@ -60,6 +58,7 @@ const submitFailure = () => ({
 const fetchStaffDetails = () => ({
   type: types.FETCH_STAFF_DETAILS,
 });
+
 const fetchStaffDetailsSuccess = payload => ({
   type: types.FETCH_STAFF_DETAILS_SUCCESS,
   payload,
@@ -69,6 +68,18 @@ const fetchStaffDetailsFailure = () => ({
   type: types.FETCH_STAFF_DETAILS_FAILURE,
 });
 
+const fetchExtendedStaffDetails = (payload) => ({
+  type: types.FETCH_EXTENDED_STAFF_DETAILS,
+});
+
+const fetchExtendedStaffDetailsSuccess = payload => ({
+  type: types.FETCH_EXTENDED_STAFF_DETAILS_SUCCESS,
+  payload,
+});
+
+const fetchExtendedStaffDetailsFailure = () => ({
+  type: types.FETCH_EXTENDED_STAFF_DETAILS_FAILURE,
+});
 
 const endShift = () => ({
   type: types.END_SHIFT,
@@ -96,7 +107,6 @@ const onboardingCheckCompete = () => ({
   type: types.PERFORM_ONBOARDING_CHECK_COMPLETE,
 });
 
-
 export {
   submit,
   submitSuccess,
@@ -113,6 +123,9 @@ export {
   fetchStaffDetails,
   fetchStaffDetailsSuccess,
   fetchStaffDetailsFailure,
+  fetchExtendedStaffDetails,
+  fetchExtendedStaffDetailsSuccess,
+  fetchExtendedStaffDetailsFailure,
   endShift,
   endShiftFailure,
   endShiftSuccess,

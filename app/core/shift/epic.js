@@ -30,7 +30,6 @@ const endShift = (action$, store, { client }) => action$.ofType(types.END_SHIFT)
     .map(payload => actions.endShiftSuccess(payload))
     .catch(error => errorObservable(actions.endShiftFailure(), error)));
 
-
 const fetchStaffDetails = (action$, store, { client }) => action$.ofType(types.FETCH_STAFF_DETAILS)
   .mergeMap(() => client({
     method: 'POST',
@@ -48,6 +47,24 @@ const fetchStaffDetails = (action$, store, { client }) => action$.ofType(types.F
     .map(payload => actions.fetchStaffDetailsSuccess(payload))
     .catch(error => errorObservable(actions.fetchStaffDetailsFailure(), error)));
 
+const fetchExtendedStaffDetails = (action$, store, { client }) => action$.ofType(types.FETCH_EXTENDED_STAFF_DETAILS)
+  .mergeMap(() => client({
+    method: 'POST',
+    path: `${store.getState().appConfig.operationalDataUrl}/v1/rpc/extendedstaffdetails`,
+    entity: {
+      argstaffemail: `${store.getState().keycloak.tokenParsed.email}`,
+    },
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${store.getState().keycloak.token}`,
+    },
+  })
+    .retryWhen(retry)
+    .map(payload => {
+      return actions.fetchExtendedStaffDetailsSuccess(payload)
+    })
+    .catch(error => errorObservable(actions.fetchExtendedStaffDetailsFailure(), error)));
 
 const fetchShiftForm = (action$, store, { client }) => action$.ofType(types.FETCH_SHIFT_FORM)
   .mergeMap(() => client({
@@ -73,8 +90,6 @@ const fetchActiveShift = (action$, store, { client }) => action$.ofType(types.FE
     }).retryWhen(retry)
       .catch(error => errorObservable(actions.fetchActiveShiftFailure(), error)));
 
-
-
 const submit = (action$, store, { client }) => action$.ofType(types.SUBMIT_VALIDATION)
   .mergeMap(action => {
     const shiftData = action.submissionData;
@@ -98,5 +113,11 @@ const submit = (action$, store, { client }) => action$.ofType(types.SUBMIT_VALID
       .catch(error => errorObservable(actions.submitFailure(), error));
   });
 
-
-export default combineEpics(fetchActiveShift, submit, fetchShiftForm, fetchStaffDetails, endShift);
+export default combineEpics(
+  fetchActiveShift,
+  submit,
+  fetchShiftForm,
+  fetchStaffDetails,
+  fetchExtendedStaffDetails,
+  endShift,
+);

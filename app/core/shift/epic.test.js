@@ -100,6 +100,25 @@ describe('shift epic', () => {
         done();
       });
   });
+  it('can fetchExtendedStaffDetails', done => {
+    const action$ = ActionsObservable.of(
+      { type: types.FETCH_EXTENDED_STAFF_DETAILS, payload: {} },
+    );
+    const payload = {
+      email: 'officer@homeoffice.gov.uk',
+    };
+    const client = () => Observable.of(payload);
+    const expectedOutput = {
+      type: types.FETCH_EXTENDED_STAFF_DETAILS_SUCCESS, payload,
+    };
+
+    epic(action$, store, { client })
+      .subscribe(actualOutput => {
+        expect(actualOutput)
+          .toEqual(expectedOutput);
+        done();
+      });
+  });
   it('can fetchShiftForm', done => {
     const action$ = ActionsObservable.of(
       { type: types.FETCH_SHIFT_FORM, payload: {} },

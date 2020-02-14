@@ -8,11 +8,13 @@ describe('Shift page', () => {
   const fetchActiveShift = jest.fn();
   const fetchShiftForm = jest.fn();
   const fetchStaffDetails = jest.fn();
+  const fetchExtendedStaffDetails = jest.fn();
 
   it('renders loading page for props', async () => {
     const props = {
       isFetchingShift: true,
       isFetchingStaffDetails: true,
+      isFetchingExtendedStaffDetails: true,
       loadingShiftForm: true,
       submittingActiveShift: false,
       shiftForm: {
@@ -39,11 +41,13 @@ describe('Shift page', () => {
       fetchActiveShift={fetchActiveShift}
       fetchShiftForm={fetchShiftForm}
       fetchStaffDetails={fetchStaffDetails}
+      fetchExtendedStaffDetails={fetchExtendedStaffDetails}
     />);
 
     expect(fetchStaffDetails).toHaveBeenCalled();
     expect(fetchShiftForm).toHaveBeenCalled();
     expect(fetchStaffDetails).toHaveBeenCalled();
+    expect(fetchExtendedStaffDetails).toHaveBeenCalled();
 
     expect(wrapper.find('#dataSpinner').exists()).toEqual(true);
     expect(wrapper.find('.loader-message').text()).toEqual('Loading your shift details');
@@ -77,12 +81,14 @@ describe('Shift page', () => {
         fetchActiveShift={fetchActiveShift}
         fetchShiftForm={fetchShiftForm}
         fetchStaffDetails={fetchStaffDetails}
+        fetchExtendedStaffDetails={fetchExtendedStaffDetails}
       />
     </ErrorHandlingComponent>);
 
     expect(fetchStaffDetails).toHaveBeenCalled();
     expect(fetchShiftForm).toHaveBeenCalled();
     expect(fetchStaffDetails).toHaveBeenCalled();
+    expect(fetchExtendedStaffDetails).toHaveBeenCalled();
 
     console.log(wrapper.html());
 
@@ -120,6 +126,7 @@ describe('Shift page', () => {
       fetchActiveShift={fetchActiveShift}
       fetchShiftForm={fetchShiftForm}
       fetchStaffDetails={fetchStaffDetails}
+      fetchExtendedStaffDetails={fetchExtendedStaffDetails}
     />);
 
     wrapper.setProps({ submittingActiveShift: true });
@@ -207,6 +214,7 @@ describe('Shift page', () => {
       fetchActiveShift={fetchActiveShift}
       fetchShiftForm={fetchShiftForm}
       fetchStaffDetails={fetchStaffDetails}
+      fetchExtendedStaffDetails={fetchExtendedStaffDetails}
     />);
 
     const emit = jest.fn(args => console.log(`Event ${args}`));
