@@ -38,7 +38,7 @@ class CasesPage extends React.Component {
                                onChange={(event) => {
                                    const that = this;
                                    const query = event.target.value;
-                                   debounce(500, () => {
+                                   debounce(500, false, () => {
                                        if (query === '') {
                                            that.props.reset();
                                        } else {
