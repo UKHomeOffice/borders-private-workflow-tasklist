@@ -90,6 +90,7 @@ app.get('/api/config', (req, res) => {
     API_COP_URI: process.env.API_COP_URI,
     ENGINE_URI: process.env.ENGINE_URI,
     API_FORM_URI: process.env.API_FORM_URI,
+    API_ATTACHMENT_URI: process.env.API_ATTACHMENT_URI,
     REPORT_URI: process.env.REPORT_URI,
     ANALYTICS_URL: process.env.ANALYTICS_URL,
     ANALYTICS_SITE_ID: process.env.ANALYTICS_SITE_ID,

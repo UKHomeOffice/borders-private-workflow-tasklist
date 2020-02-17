@@ -10,19 +10,15 @@ class FileService {
 
     async uploadFile(storage, file, fileName, dir, evt, url, options) {
         const fd = new FormData();
+
         const data = {
             file: file,
             name: fileName,
             dir: dir
         };
-        const json = (typeof data === 'string');
-
-        if (!json) {
-            for (const key in data) {
-                fd.append(key, data[key]);
-            }
+        for (const key in data) {
+            fd.append(key, data[key]);
         }
-
         const token = await this.getToken();
         const config = {
             headers: {
@@ -36,7 +32,7 @@ class FileService {
                 });
             }
         };
-        const response = await axios.post(url, data, config);
+        const response = await axios.post(url, fd, config);
         return {
             storage: 'url',
             fileName,
