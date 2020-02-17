@@ -8,8 +8,8 @@ import {withRouter} from "react-router";
 import {connect} from "react-redux";
 import withLog from "../../../core/error/component/withLog";
 import {businessKeyQuery, caseSearchResults, loadingNextSearchResults, searching} from "../selectors";
-import {throttle} from 'throttle-debounce';
 import {DebounceInput} from 'react-debounce-input';
+
 
 class CasesPage extends React.Component {
 
@@ -55,10 +55,7 @@ class CasesPage extends React.Component {
                     if ('next' in links) {
                         const that = this;
                         const nextUrl = links.next.href;
-                        throttle(300, false, () => {
-                            that.props.loadNextSearchResults(nextUrl)
-                        })();
-
+                        _.throttle(that.props.loadNextSearchResults(nextUrl), 300);
                     }
                 }
             }}/>

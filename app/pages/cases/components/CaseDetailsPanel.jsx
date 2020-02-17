@@ -71,7 +71,7 @@ class CaseDetailsPanel extends React.Component {
                                     <span className="govuk-caption-m">Forms</span>
                                     <h3 className="govuk-heading-m">{Object.keys(groupedForms).length} completed</h3>
                                     <hr className="govuk-section-break govuk-section-break--m govuk-section-break--visible"/>
-                                    {processInstance.formReferences.length !== 0 ? <div>
+                                    {processInstance.formReferences && processInstance.formReferences.length !== 0 ? <div>
                                         {Object.keys(groupedForms).map((formName, index) => {
                                             const forms = groupedForms[formName];
                                             return <React.Fragment key={formName}>
