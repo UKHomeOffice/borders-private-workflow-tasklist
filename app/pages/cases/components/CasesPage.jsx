@@ -41,7 +41,7 @@ class CasesPage extends React.Component {
                                 if (query === '') {
                                     that.props.reset();
                                 } else {
-                                    that.props.findCasesByKey(query);
+                                    that.props.findCasesByKey(query.toUpperCase());
                                 }
                             }} /><i className="fa fa-search fa-lg" style={{marginLeft: '5px'}}/>
 
