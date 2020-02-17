@@ -71,74 +71,67 @@ class CaseDetailsPanel extends React.Component {
                                     <span className="govuk-caption-m">Forms</span>
                                     <h3 className="govuk-heading-m">{Object.keys(groupedForms).length} completed</h3>
                                     <hr className="govuk-section-break govuk-section-break--m govuk-section-break--visible"/>
-                                    {processInstance.formReferences && processInstance.formReferences.length !== 0 ? <div>
-                                        {Object.keys(groupedForms).map((formName, index) => {
-                                            const forms = groupedForms[formName];
-                                            return <React.Fragment key={formName}>
-                                                <details id={formName} className="govuk-details"
-                                                         data-module="govuk-details">
-                                                    <summary className="govuk-details__summary">
+                                    {processInstance.formReferences && processInstance.formReferences.length !== 0 ?
+                                        <div>
+                                            {Object.keys(groupedForms).map((formName, index) => {
+                                                const forms = groupedForms[formName];
+                                                return <React.Fragment key={formName}>
+                                                    <details id={formName} className="govuk-details"
+                                                             data-module="govuk-details">
+                                                        <summary className="govuk-details__summary">
                                                         <span className="govuk-details__summary-text">
                                                             {formName}
                                                         </span>
-                                                    </summary>
-                                                    <div>
-                                                        {forms.map((form, index) => {
-                                                            const formVersionId = form.versionId;
-                                                            const key = `${formVersionId}-${form.submissionDate}`;
-                                                            return <dl key={key}
-                                                                       className="govuk-summary-list govuk-summary-list--no-border">
-                                                                <div className="govuk-summary-list__row">
-                                                                    <dt className="govuk-summary-list__key">
-                                                                        Submitted by
-                                                                    </dt>
-                                                                    <dd className="govuk-summary-list__value">
-                                                                        {form.submittedBy}
-                                                                    </dd>
-                                                                </div>
-                                                                <div className="govuk-summary-list__row">
-                                                                    <dt className="govuk-summary-list__key">
-                                                                        Submitted on
-                                                                    </dt>
-                                                                    <dd className="govuk-summary-list__value">
-                                                                        {moment(form.submissionDate).format('DD/MM/YYYY HH:mm')}
-                                                                    </dd>
-                                                                </div>
+                                                        </summary>
+                                                        <div>
+                                                            {forms.map((form, index) => {
+                                                                const formVersionId = form.versionId;
+                                                                const key = `${formVersionId}-${form.submissionDate}`;
+                                                                const selectedVersionAndKey = selectedFormReference &&
+                                                                    `${selectedFormReference.versionId}-${selectedFormReference.submissionDate}` === key;
+                                                                return <dl key={key}
+                                                                           className="govuk-summary-list govuk-summary-list--no-border">
+                                                                    <div className="govuk-summary-list__row">
+                                                                        <dt className="govuk-summary-list__key">
+                                                                            Submitted by
+                                                                        </dt>
+                                                                        <dd className="govuk-summary-list__value">
+                                                                            {form.submittedBy}
+                                                                        </dd>
+                                                                    </div>
+                                                                    <div className="govuk-summary-list__row">
+                                                                        <dt className="govuk-summary-list__key">
+                                                                            Submitted on
+                                                                        </dt>
+                                                                        <dd className="govuk-summary-list__value">
+                                                                            {moment(form.submissionDate).format('DD/MM/YYYY HH:mm')}
+                                                                        </dd>
+                                                                    </div>
 
-                                                                <div className="govuk-summary-list__row">
-                                                                    <dt className="govuk-summary-list__key">
-                                                                        {index === 0 ? <span
-                                                                            className="govuk-tag">Latest</span> : null}
-                                                                    </dt>
-                                                                    <dd className="govuk-summary-list__value">
-                                                                        <details id="formDetails"
-                                                                                 className="govuk-details"
-                                                                                 onClick={(event) => {
-                                                                                     const isOpen = event.currentTarget.getAttribute("open");
-                                                                                     const keyFromSelectedReference = selectedFormReference ?
-                                                                                         `${selectedFormReference.versionId}-${selectedFormReference.submissionDate}` : null;
-                                                                                     if (!isOpen && (!selectedFormReference || (keyFromSelectedReference && keyFromSelectedReference !== key))) {
-                                                                                         this.props.setSelectedFormReference(form);
-                                                                                         const details = document.getElementsByTagName("details");
-                                                                                         details.forEach(detail => {
-                                                                                             if (detail.id === 'formDetails' && detail !== event.currentTarget) {
-                                                                                                 detail.removeAttribute("open");
-                                                                                             }
-                                                                                         });
-                                                                                     }
-                                                                                 }}
-                                                                                 data-module="govuk-details">
-                                                                            <summary className="govuk-details__summary">
-                                                                                <span
-                                                                                    className="govuk-details__summary-text">
-                                                                                  View details
-                                                                                </span>
-                                                                            </summary>
+                                                                    <div className="govuk-summary-list__row">
+                                                                        <dt className="govuk-summary-list__key">
+                                                                            {index === 0 ? <span
+                                                                                className="govuk-tag">Latest</span> : null}
+                                                                        </dt>
+                                                                        <dd className="govuk-summary-list__value">
+                                                                            <a href="#" onClick={event => {
+                                                                                event.preventDefault();
+                                                                                const keyFromSelectedReference = selectedFormReference ?
+                                                                                    `${selectedFormReference.versionId}-${selectedFormReference.submissionDate}` : null;
+
+                                                                                if ((!selectedFormReference || (keyFromSelectedReference && keyFromSelectedReference !== key))) {
+                                                                                    this.props.setSelectedFormReference(form)
+                                                                                } else {
+                                                                                    this.props.setSelectedFormReference(null)
+                                                                                }
+
+                                                                            }} role="button" draggable="false"
+                                                                               className="govuk-button"
+                                                                               data-module="govuk-button">
+                                                                                {selectedVersionAndKey ? `Hide details` : `Show details`}
+                                                                            </a>
                                                                             <div>
-                                                                                {(selectedFormReference
-                                                                                    &&
-                                                                                    `${selectedFormReference.versionId}-${selectedFormReference.submissionDate}`
-                                                                                    === key) ?
+                                                                                {selectedVersionAndKey ?
                                                                                     <FormDetailsPanel
                                                                                         key={key}
                                                                                         {...{
@@ -146,22 +139,21 @@ class CaseDetailsPanel extends React.Component {
                                                                                             businessKey: caseDetails.businessKey
                                                                                         }} /> : null}
                                                                             </div>
-                                                                        </details>
-                                                                    </dd>
-                                                                </div>
+                                                                        </dd>
+                                                                    </div>
 
-                                                            </dl>
-                                                        })}
-                                                    </div>
-                                                </details>
-                                                {(Object.keys(groupedForms).length - 1) !== index ?
-                                                    <hr style={{
-                                                        borderBottom: '2px solid #1d70b8',
-                                                        borderTop: 'none'
-                                                    }}/> : null}
-                                            </React.Fragment>
-                                        })}
-                                    </div> : <h4 className="govuk-heading-s">No forms available</h4>}
+                                                                </dl>
+                                                            })}
+                                                        </div>
+                                                    </details>
+                                                    {(Object.keys(groupedForms).length - 1) !== index ?
+                                                        <hr style={{
+                                                            borderBottom: '2px solid #1d70b8',
+                                                            borderTop: 'none'
+                                                        }}/> : null}
+                                                </React.Fragment>
+                                            })}
+                                        </div> : <h4 className="govuk-heading-s">No forms available</h4>}
                                 </div>
                             </div>
                         })}
