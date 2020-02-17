@@ -149,6 +149,7 @@
     "query-string": "^5.1.1",
     "react": "^16.7.0",
     "react-collapsible": "^2.3.2",
+    "react-debounce-input": "^3.2.2",
     "react-device-detect": "^1.6.1",
     "react-dom": "^16.6.3",
     "react-formio": "^4.2.3",

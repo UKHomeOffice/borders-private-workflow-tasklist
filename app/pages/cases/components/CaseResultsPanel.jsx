@@ -25,6 +25,12 @@ class CaseResultsPanel extends React.Component {
             return <div/>
         }
         const hasMoreData = _.has(caseSearchResults._links, 'next');
+
+        if (!caseSearchResults._embedded) {
+           caseSearchResults['_embedded'] = {
+               cases: []
+           }
+        }
         const businessKeys = caseSearchResults._embedded.cases.map(c => {
             return <li key={c.businessKey}><a className="govuk-link" href="" onClick={(event) => {
                 event.preventDefault();

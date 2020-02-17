@@ -8,20 +8,14 @@ import {withRouter} from "react-router";
 import {connect} from "react-redux";
 import withLog from "../../../core/error/component/withLog";
 import {businessKeyQuery, caseSearchResults, loadingNextSearchResults, searching} from "../selectors";
-import {debounce, throttle} from 'throttle-debounce';
+import {throttle} from 'throttle-debounce';
+import {DebounceInput} from 'react-debounce-input';
 
 class CasesPage extends React.Component {
-
-    componentDidMount() {
-    }
 
     componentWillUnmount() {
         this.props.reset();
     }
-
-    componentDidUpdate(prevProps, prevState, snapshot) {
-    }
-
     render() {
         const {caseSearchResults, searching, businessKeyQuery} = this.props;
         return <React.Fragment>
@@ -34,22 +28,23 @@ class CasesPage extends React.Component {
                 </div>
                 <div className="govuk-grid-column-one-third">
                     <div className="govuk-form-group input-icon">
-                        <input className="govuk-input" placeholder="Search using a BF prefixed number" id="bfNumber"
-                               onChange={(event) => {
-                                   const that = this;
-                                   const query = event.target.value;
-                                   debounce(500, () => {
-                                       if (query === '') {
-                                           that.props.reset();
-                                       } else {
-                                           that.props.findCasesByKey(query);
-                                       }
-                                   })()
-                               }}
-                               name="bfNumber"
-                               spellCheck="false"
-                               type="text"/><i className="fa fa-search fa-lg"
-                                                               style={{marginLeft: '5px'}}/>
+
+                        <DebounceInput
+                            minLength={3}
+                            debounceTimeout={500}
+                            spellCheck="false"
+                            type="text"
+                            className="govuk-input" placeholder="Search using a BF prefixed number" id="bfNumber"
+                            onChange={event => {
+                                const that = this;
+                                const query = event.target.value;
+                                if (query === '') {
+                                    that.props.reset();
+                                } else {
+                                    that.props.findCasesByKey(query);
+                                }
+                            }} /><i className="fa fa-search fa-lg" style={{marginLeft: '5px'}}/>
+
 
                     </div>
                 </div>
