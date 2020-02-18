@@ -11,6 +11,7 @@ import {selectedFormReference} from "../selectors";
 import withLog from "../../../core/error/component/withLog";
 import GovUKDetailsObserver from "../../../core/util/GovUKDetailsObserver";
 import _ from 'lodash';
+import CaseActions from "../actions/components/CaseActions";
 
 class CaseDetailsPanel extends React.Component {
     constructor(props) {
@@ -19,13 +20,22 @@ class CaseDetailsPanel extends React.Component {
     }
 
     componentDidMount() {
-        const {caseDetails} = this.props;
-        this.observer = new GovUKDetailsObserver(document.getElementById(`caseDetails-${caseDetails.businessKey}`)).create();
+        this.observer = new GovUKDetailsObserver(document.getElementById(`case`)).create();
         new Accordion(document.querySelector("[data-module='govuk-accordion']")).init();
+        this.clearAccordionStorage();
+    }
+
+    clearAccordionStorage() {
+        _.forIn(window.sessionStorage, (value, key) => {
+            if (true === _.startsWith(key, 'caseDetails-')) {
+                window.sessionStorage.removeItem(key);
+            }
+        });
     }
 
     componentWillUnmount() {
         this.observer.destroy();
+        this.clearAccordionStorage()
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
@@ -40,15 +50,16 @@ class CaseDetailsPanel extends React.Component {
     render() {
         const {caseDetails, selectedFormReference} = this.props;
 
-
-        return <React.Fragment>
-            <div className="govuk-row">
+        return <div id="case">
+            <div className="govuk-grid-row">
                 <div className="govuk-grid-column-full govuk-card">
                     <h3 className="govuk-heading-m">{caseDetails.businessKey}</h3>
                 </div>
             </div>
-            <div className="govuk-row">
+            <CaseActions {...{caseDetails}} />
+            <div className="govuk-grid-row">
                 <div className="govuk-grid-column-full">
+                    <h3 className="govuk-heading-m">Case history</h3>
                     <div id={`caseDetails-${caseDetails.businessKey}`} className="govuk-accordion"
                          data-module="govuk-accordion">
                         {caseDetails.processInstances.map(processInstance => {
@@ -65,8 +76,8 @@ class CaseDetailsPanel extends React.Component {
                                      className="govuk-accordion__section-content"
                                      aria-labelledby={`accordion-with-summary-sections-heading-${processInstance.id}`}>
 
-                                    <div className="govuk-row mb-2">
-                                        <div className="govuk-grid-column-full" style={{padding: '0'}}>
+                                    <div className="govuk-grid-row mb-2">
+                                        <div className="govuk-grid-column-full">
                                             <div className="govuk-grid-row">
                                                 <div className="govuk-grid-column-one-half">
                                                     <span className="govuk-caption-m">Status</span>
@@ -95,7 +106,7 @@ class CaseDetailsPanel extends React.Component {
                                         </div>
                                     </div>
                                     {processInstance.formReferences && processInstance.formReferences.length !== 0 ?
-                                        <div>
+                                        <React.Fragment>
                                             {Object.keys(groupedForms).map((formName, index) => {
                                                 const forms = groupedForms[formName];
                                                 return <React.Fragment key={formName}>
@@ -176,14 +187,16 @@ class CaseDetailsPanel extends React.Component {
                                                         }}/> : null}
                                                 </React.Fragment>
                                             })}
-                                        </div> : <h4 className="govuk-heading-s">No forms available</h4>}
+                                        </React.Fragment> : <h4 className="govuk-heading-s">No forms available</h4>}
+
                                 </div>
+
                             </div>
                         })}
                     </div>
                 </div>
             </div>
-        </React.Fragment>
+        </div>
     }
 }
 
