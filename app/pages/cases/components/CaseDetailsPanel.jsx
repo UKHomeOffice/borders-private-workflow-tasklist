@@ -21,7 +21,7 @@ class CaseDetailsPanel extends React.Component {
     componentDidMount() {
         const {caseDetails} = this.props;
         this.observer = new GovUKDetailsObserver(document.getElementById(`caseDetails-${caseDetails.businessKey}`)).create();
-        new Accordion(document.getElementById(`caseDetails-${caseDetails.businessKey}`)).init();
+        new Accordion(document.querySelector("[data-module='govuk-accordion']")).init();
     }
 
     componentWillUnmount() {
@@ -64,13 +64,36 @@ class CaseDetailsPanel extends React.Component {
                                 <div id={`accordion-with-summary-sections-content-${processInstance.id}`}
                                      className="govuk-accordion__section-content"
                                      aria-labelledby={`accordion-with-summary-sections-heading-${processInstance.id}`}>
-                                    <span className="govuk-caption-m">Status</span>
-                                    <h3 className="govuk-heading-m"><span
-                                        className="govuk-tag">{processInstance.endDate ? 'Completed' : 'Active'}</span>
-                                    </h3>
-                                    <span className="govuk-caption-m">Forms</span>
-                                    <h3 className="govuk-heading-m">{Object.keys(groupedForms).length} completed</h3>
-                                    <hr className="govuk-section-break govuk-section-break--m govuk-section-break--visible"/>
+
+                                    <div className="govuk-row mb-2">
+                                        <div className="govuk-grid-column-full" style={{padding: '0'}}>
+                                            <div className="govuk-grid-row">
+                                                <div className="govuk-grid-column-one-half">
+                                                    <span className="govuk-caption-m">Status</span>
+                                                    <h3 className="govuk-heading-m"><span
+                                                        className="govuk-tag">{processInstance.endDate ? 'Completed' : 'Active'}</span>
+                                                    </h3>
+                                                </div>
+                                                <div className="govuk-grid-column-one-half">
+                                                    <span className="govuk-caption-m">Forms</span>
+                                                    <h3 className="govuk-heading-m">{Object.keys(groupedForms).length} completed</h3>
+
+                                                </div>
+                                                <div className="govuk-grid-column-one-half">
+                                                    <span className="govuk-caption-m">Start date</span>
+                                                    <h3 className="govuk-heading-m">{moment(processInstance.startDate).format('DD/MM/YYYY HH:mm')}</h3>
+                                                </div>
+                                                <div className="govuk-grid-column-one-half">
+                                                    <span className="govuk-caption-m">End date</span>
+
+                                                    <h3 className="govuk-heading-m">
+                                                        {processInstance.endDate ? moment(processInstance.endDate).format('DD/MM/YYYY HH:mm') :
+                                                            'Active'}
+                                                    </h3>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                     {processInstance.formReferences && processInstance.formReferences.length !== 0 ?
                                         <div>
                                             {Object.keys(groupedForms).map((formName, index) => {

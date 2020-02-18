@@ -7,16 +7,31 @@ import {formSubmissionData, formVersionDetails, loadingFormSubmissionData, loadi
 import withLog from "../../../core/error/component/withLog";
 import PropTypes from "prop-types";
 import {Form} from "react-formio";
+import GovUKDetailsObserver from "../../../core/util/GovUKDetailsObserver";
 
 class FormDetailsPanel extends React.Component {
+
+    constructor(props) {
+        super(props);
+        this.formNode = React.createRef();
+    }
 
     componentDidMount() {
         this.props.getFormVersion(this.props.formReference.versionId);
         this.props.getFormSubmissionData(this.props.businessKey, this.props.formReference.dataPath);
     }
 
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        if (this.props.formVersionDetails && this.formNode.element) {
+            this.observer = new GovUKDetailsObserver(this.formNode.element).create();
+        }
+    }
+
     componentWillUnmount() {
         this.props.resetForm();
+        if (this.observer) {
+            this.observer.destroy();
+        }
     }
 
     render() {
@@ -36,6 +51,9 @@ class FormDetailsPanel extends React.Component {
         return <Form
             form={formVersionDetails.schema}
             submission={{data: formSubmissionData}}
+            ref={form => {
+                this.formNode = form;
+            }}
             options={{
                 readOnly: true,
                 buttonSettings: {
