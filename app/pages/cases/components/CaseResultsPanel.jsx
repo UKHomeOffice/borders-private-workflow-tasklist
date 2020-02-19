@@ -11,6 +11,13 @@ import DataSpinner from "../../../core/components/DataSpinner";
 import _ from "lodash";
 
 class CaseResultsPanel extends React.Component {
+
+    componentDidMount() {
+        if (this.props.businessKey) {
+            this.props.getCaseByKey(this.props.businessKey);
+        }
+    }
+
     render() {
         const {
             searching, caseSearchResults,
@@ -34,7 +41,7 @@ class CaseResultsPanel extends React.Component {
         const businessKeys = caseSearchResults._embedded.cases.map(c => {
             return <li key={c.businessKey}><a className="govuk-link" href="" onClick={(event) => {
                 event.preventDefault();
-                this.props.getCaseByKey(c.businessKey)
+                this.props.getCaseByKey(c.businessKey);
             }}>{c.businessKey}</a></li>
         });
         return <div className="govuk-grid-row">
@@ -75,6 +82,7 @@ CaseResultsPanel.propTypes = {
     loadNext: PropTypes.func,
     loadingNextSearchResults: PropTypes.bool,
     loadingCaseDetails: PropTypes.bool,
+    businessKey: PropTypes.string,
     caseDetails: PropTypes.shape({
         businessKey: PropTypes.string,
         processInstances: PropTypes.arrayOf(PropTypes.object)

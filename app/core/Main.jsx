@@ -39,6 +39,7 @@ const Main = () => (
         <Route name="Privacy Policy" exact path={"/privacy-policy"} component={PrivacyPolicy}/>
         <Route name="Dashboard" exact path={AppConstants.DASHBOARD_PATH} component={() => <DashboardPage />}/>
         <Route name="Cases" exact path={AppConstants.CASES_PATH} component={() => <CasesPage/>} />
+        <Route name="Case" exact path={AppConstants.CASES_PATH + "/:businessKey"} component={() => <CasesPage />} />
         <Route name="Shift" exact path={AppConstants.SHIFT_PATH} component={() => <ErrorHandlingComponent skipAuthError={true}><ShiftPage/></ErrorHandlingComponent>}/>
         <Route name="Your tasks" exact path={AppConstants.YOUR_TASKS_PATH} component={() => <YourTasksPage />}/>
         <Route name="Your group tasks" exact path={AppConstants.YOUR_GROUP_TASKS_PATH} component={() => <YourGroupTaskPage/>}/>

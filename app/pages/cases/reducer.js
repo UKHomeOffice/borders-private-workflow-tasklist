@@ -15,7 +15,7 @@ export const initialState = new Map({
     selectedFormReference: null,
     loadingFormSubmissionData: false,
     formSubmissionData: null,
-    loadingNextSearchResults: false
+    loadingNextSearchResults: false,
 });
 
 function reducer(state = initialState, action) {

@@ -12,11 +12,16 @@ import withLog from "../../../core/error/component/withLog";
 import GovUKDetailsObserver from "../../../core/util/GovUKDetailsObserver";
 import _ from 'lodash';
 import CaseActions from "../actions/components/CaseActions";
+import {CopyToClipboard} from 'react-copy-to-clipboard';
 
 class CaseDetailsPanel extends React.Component {
     constructor(props) {
         super(props);
         this.groupForms = this.groupForms.bind(this);
+        this.state = {
+            caseReferenceUrl: `${window.location.origin}/cases/${this.props.caseDetails.businessKey}`,
+            caseReferenceUrlCopied: false
+        }
     }
 
     componentDidMount() {
@@ -53,7 +58,19 @@ class CaseDetailsPanel extends React.Component {
         return <div id="case">
             <div className="govuk-grid-row">
                 <div className="govuk-grid-column-full govuk-card">
-                    <h3 className="govuk-heading-m">{caseDetails.businessKey}</h3>
+                    <div className="govuk-grid-row">
+                        <div className="govuk-grid-column-one-half">
+                            <h3 className="govuk-heading-m">{caseDetails.businessKey}</h3>
+                        </div>
+                        <div className="govuk-grid-column-one-half">
+                            <CopyToClipboard text={this.state.caseReferenceUrl}
+                                             onCopy={() => this.setState({caseReferenceUrlCopied: true})}>
+                                <button style={{float: 'right'}} className="govuk-button govuk-button--secondary">
+                                    { this.state.caseReferenceUrlCopied ? 'Copied case link' : 'Copy case link'}
+                                </button>
+                            </CopyToClipboard>
+                        </div>
+                    </div>
                 </div>
             </div>
             <CaseActions {...{caseDetails}} />

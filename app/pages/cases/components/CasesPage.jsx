@@ -13,11 +13,21 @@ import {DebounceInput} from 'react-debounce-input';
 
 class CasesPage extends React.Component {
 
+    componentDidMount() {
+        const {match: {params}} = this.props;
+        const businessKey = params.businessKey;
+        if (businessKey) {
+            this.props.findCasesByKey(businessKey.toUpperCase());
+        }
+    }
+
     componentWillUnmount() {
         this.props.reset();
     }
+
     render() {
-        const {caseSearchResults, searching, businessKeyQuery} = this.props;
+        const {caseSearchResults, searching, businessKeyQuery, match: {params}} = this.props;
+        const businessKey = params.businessKey;
         return <React.Fragment>
             <div className="govuk-grid-row">
                 <div className="govuk-grid-column-two-thirds">
@@ -38,18 +48,20 @@ class CasesPage extends React.Component {
                             onChange={event => {
                                 const that = this;
                                 const query = event.target.value;
+                                window.history.pushState({}, null, "/cases");
                                 if (query === '') {
                                     that.props.reset();
                                 } else {
                                     that.props.findCasesByKey(query.toUpperCase());
                                 }
-                            }} /><i className="fa fa-search fa-lg" style={{marginLeft: '5px'}}/>
+                            }}/><i className="fa fa-search fa-lg" style={{marginLeft: '5px'}}/>
 
 
                     </div>
                 </div>
             </div>
             <CaseResultsPanel {...{
+                businessKey,
                 caseSearchResults, searching, businessKeyQuery, loadNext: () => {
                     const links = caseSearchResults._links;
                     if ('next' in links) {
@@ -64,6 +76,7 @@ class CasesPage extends React.Component {
 }
 
 CasesPage.propTypes = {
+    setBusinessKey: PropTypes.func,
     log: PropTypes.func,
     findCasesByKey: PropTypes.func.isRequired,
     reset: PropTypes.func.isRequired,
