@@ -60,7 +60,7 @@ export class App extends React.Component {
     return (
       <React.Fragment>
         <Header />
-        <div className="govuk-width-container" style={{ height: '100%' }}>
+        <div className="app-container" style={{ height: '100%' }}>
           <AppBanner {...this.props} />
           <Suspense fallback={<div style={{ display: 'flex', justifyContent: 'center', paddingTop: '20px' }}><DataSpinner message="..." /></div>}>
             <SubmissionBanner />

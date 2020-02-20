@@ -11,7 +11,7 @@ import {selectedFormReference} from "../selectors";
 import withLog from "../../../core/error/component/withLog";
 import GovUKDetailsObserver from "../../../core/util/GovUKDetailsObserver";
 import _ from 'lodash';
-import CaseActions from "../actions/components/CaseActions";
+import CaseActions from "../case-actions/components/CaseActions";
 import {CopyToClipboard} from 'react-copy-to-clipboard';
 
 class CaseDetailsPanel extends React.Component {
@@ -74,7 +74,7 @@ class CaseDetailsPanel extends React.Component {
                 </div>
             </div>
             <CaseActions {...{caseDetails}} />
-            <div className="govuk-grid-row">
+            <div className="govuk-grid-row mt-4">
                 <div className="govuk-grid-column-full">
                     <h3 className="govuk-heading-m">Case history</h3>
                     <div id={`caseDetails-${caseDetails.businessKey}`} className="govuk-accordion"

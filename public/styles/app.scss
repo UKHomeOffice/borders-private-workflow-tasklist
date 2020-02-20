@@ -1,3 +1,5 @@
+$govuk-page-width: 1400px;
+
 @import "../../node_modules/bootstrap/dist/css/bootstrap.css";
 @import "../../node_modules/formiojs/dist/formio.full.css";
 @import "../../node_modules/govuk-frontend/govuk/all";
@@ -88,8 +90,6 @@ input:disabled {
 }
 
 
-.govuk-width-container {
-  max-width: 1400px !important;
-  margin-right: 15px;
-  margin-left: 15px;
+.app-container {
+  @include govuk-width-container(1400px);
 }

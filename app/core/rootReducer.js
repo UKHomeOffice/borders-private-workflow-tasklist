@@ -14,6 +14,8 @@ import tasks from '../pages/tasks/index';
 import taskForm from '../pages/task/form';
 import reports from '../pages/reports/index';
 import cases from '../pages/cases/index'
+import caseActions from '../pages/cases/case-actions/index';
+
 
 import dashboard from '../pages/dashboard';
 import appConfigReducer from '../common/appConfigReducer';
@@ -30,7 +32,8 @@ export const rootEpic = combineEpics(
     reports.epic,
     dashboard.epic,
     error.epic,
-    cases.epic
+    cases.epic,
+    caseActions.epic
 );
 
 export const rootReducer = combineReducers({
@@ -49,5 +52,6 @@ export const rootReducer = combineReducers({
     [taskForm.constants.NAME]: taskForm.reducer,
     [reports.constants.NAME]: reports.reducer,
     [dashboard.constants.NAME]: dashboard.reducer,
-    [cases.constants.NAME]: cases.reducer
+    [cases.constants.NAME]: cases.reducer,
+    [caseActions.constants.NAME]: caseActions.reducer
 });

@@ -48,7 +48,7 @@ const fetchFormWithContext = (action$, store, { client }) => action$.ofType(type
     .map(payload => actions.fetchFormSuccess(payload))
     .catch(error => errorObservable(actions.fetchFormFailure(), error)));
 
-const createVariable = (submissionData, variableName, email) => {
+export const createVariable = (submissionData, variableName, email) => {
   const variables = {};
   variables[variableName] = {
     value: JSON.stringify(submissionData),
