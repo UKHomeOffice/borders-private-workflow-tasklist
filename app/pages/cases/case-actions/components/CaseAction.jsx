@@ -54,7 +54,7 @@ class CaseAction extends React.Component {
         }
 
         if (executingAction) {
-            return <div>Submitted action...</div>
+            return <div>Submitting action...</div>
         }
 
         const submission = {
