@@ -2,7 +2,7 @@ import React from 'react';
 import {Form} from "react-formio";
 import PropTypes from "prop-types";
 import {bindActionCreators} from "redux";
-import {fetchActionForm, reset, executeAction ,clearActionResponse} from "../actions";
+import {fetchActionForm, reset, executeAction, clearActionResponse} from "../actions";
 import {withRouter} from "react-router";
 import {connect} from "react-redux";
 import {actionForm, actionResponse, executingAction, loadingActionForm} from "../selectors";
@@ -94,9 +94,10 @@ class CaseAction extends React.Component {
                       readOnly: this.props.executingAction,
                       hooks: {
                           beforeSubmit: (submission, next) => {
-                              ['keycloakContext', 'staffDetailsDataContext',
-                                  'taskContext',
-                                  'processContext']
+                              ['keycloakContext',
+                                  'staffDetailsDataContext',
+                                  'selectedAction',
+                                  'caseDetails']
                                   .forEach(k => {
                                       delete submission.data[k];
                                   });
@@ -160,8 +161,10 @@ CaseAction.propTypes = {
 };
 
 
-const mapDispatchToProps = dispatch => bindActionCreators({fetchActionForm,
-    reset, executeAction, clearActionResponse}, dispatch);
+const mapDispatchToProps = dispatch => bindActionCreators({
+    fetchActionForm,
+    reset, executeAction, clearActionResponse
+}, dispatch);
 
 export default withRouter(connect((state) => {
     return {
