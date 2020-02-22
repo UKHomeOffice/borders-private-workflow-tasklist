@@ -1,3 +1,5 @@
+@import "../../../../node_modules/govuk-frontend/govuk/helpers/colour";
+
 .input-icon {
   position: relative;
 }
@@ -31,9 +33,10 @@
       margin-bottom: 0;
       font-size: inherit;
       text-decoration: none;
+      border-bottom: 2px solid #0B0C0C !important;
       &:hover {
         color: #0B0C0C;
-        border-bottom: 3px solid #0B0C0C !important;
+        border-bottom: 4px solid #0B0C0C !important;
       }
       &:focus {
         outline: 0;
@@ -42,8 +45,27 @@
     &.active a,
     &.active a:hover {
       color: #0B0C0C;
-      border-bottom: 3px solid #0B0C0C !important;
+      border-bottom: 4px solid #0B0C0C !important;
       font-weight: bold;
     }
+  }
+}
+
+.metrics-card {
+  display: block;
+  float: left;
+  margin-bottom: 30px;
+  width: 100%;
+}
+
+.metrics-card-body {
+  display: block;
+  background-color: govuk-colour("blue");
+  padding: 1em;
+  color: govuk-colour("white");
+  text-decoration: none;
+
+  span {
+    display: block;
   }
 }

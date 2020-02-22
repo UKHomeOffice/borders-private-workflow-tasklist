@@ -13,6 +13,7 @@ import GovUKDetailsObserver from "../../../core/util/GovUKDetailsObserver";
 import _ from 'lodash';
 import CaseActions from "../case-actions/components/CaseActions";
 import {CopyToClipboard} from 'react-copy-to-clipboard';
+import CaseMetrics from "./CaseMetrics";
 
 class CaseDetailsPanel extends React.Component {
     constructor(props) {
@@ -74,7 +75,8 @@ class CaseDetailsPanel extends React.Component {
                 </div>
             </div>
             <CaseActions {...{caseDetails}} />
-            <div className="govuk-grid-row mt-4">
+            {caseDetails.metrics ?<CaseMetrics {...{caseDetails}} /> : null}
+            <div className="govuk-grid-row govuk-card mt-4">
                 <div className="govuk-grid-column-full">
                     <h3 className="govuk-heading-m">Case history</h3>
                     <div id={`caseDetails-${caseDetails.businessKey}`} className="govuk-accordion"

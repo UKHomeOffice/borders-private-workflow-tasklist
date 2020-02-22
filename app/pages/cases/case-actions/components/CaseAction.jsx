@@ -80,7 +80,7 @@ class CaseAction extends React.Component {
         };
 
         this.formioInterpolator.interpolate(actionForm, submission);
-        return <div className="govuk-card">
+        return <div>
             {actionResponse ? <div className="govuk-panel govuk-panel--confirmation">
                     <div className="govuk-panel__body govuk-!-font-size-24 govuk-!-font-weight-bold">
                         {selectedAction.completionMessage}
