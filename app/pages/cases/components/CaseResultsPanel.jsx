@@ -34,14 +34,16 @@ class CaseResultsPanel extends React.Component {
         const hasMoreData = _.has(caseSearchResults._links, 'next');
 
         if (!caseSearchResults._embedded) {
-           caseSearchResults['_embedded'] = {
-               cases: []
-           }
+            caseSearchResults['_embedded'] = {
+                cases: []
+            }
         }
         const businessKeys = caseSearchResults._embedded.cases.map(c => {
             return <li key={c.businessKey}><a className="govuk-link" href="" onClick={(event) => {
                 event.preventDefault();
-                this.props.getCaseByKey(c.businessKey);
+                if (this.props.businessKey !== c.businessKey) {
+                    this.props.getCaseByKey(c.businessKey);
+                }
             }}>{c.businessKey}</a></li>
         });
         return <div className="govuk-grid-row">
