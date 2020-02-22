@@ -23,7 +23,7 @@ export default class CaseMetrics extends React.Component {
                 <details className="govuk-details" data-module="govuk-details">
                     <summary className="govuk-details__summary">
                         <span className="govuk-details__summary-text">
-                           Provides basic metrics related to {caseDetails.businessKey}
+                           Basic metrics related to {caseDetails.businessKey}
                         </span>
                     </summary>
                     <div className="govuk-grid-row mt-4">
