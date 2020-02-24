@@ -74,8 +74,8 @@ class CaseDetailsPanel extends React.Component {
                     </div>
                 </div>
             </div>
-            <CaseActions {...{caseDetails}} />
-            {caseDetails.metrics ?<CaseMetrics {...{caseDetails}} /> : null}
+            {caseDetails.actions && caseDetails.actions.length > 0 ? <CaseActions {...{caseDetails}} /> : null}
+            {caseDetails.metrics ? <CaseMetrics {...{caseDetails}} /> : null}
             <div className="govuk-grid-row govuk-card mt-4">
                 <div className="govuk-grid-column-full">
                     <h3 className="govuk-heading-m">Case history</h3>
