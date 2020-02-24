@@ -1,7 +1,7 @@
 import reducer, { initialState } from './reducer';
 import Immutable from 'immutable';
 const {Map} = Immutable;
-import * as actions from './case-actions';
+import * as actions from './actions';
 
 describe('Case reducer', () => {
    it ('can handle find cases by key', () => {
