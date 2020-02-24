@@ -4,61 +4,51 @@ import AppConstants from '../../../../common/AppConstants';
 import TaskForm from './TaskForm';
 import form from './fixtures';
 
-let formReference, onCustomEvent, onSubmitTaskForm, history;
-const task = Immutable.fromJS({
-  assignee: null,
-  name: 'testTask',
-});
-
-const getWrapper = () =>
-  shallow(
-    <TaskForm
-      {...{
-        appConfig: {
-
-        },
-        kc: {
-          token: "token",
-          tokenParsed: {
-            session_state: "state",
-            given_name: "name",
-            family_name: "test",
-            email: "yesy"
-          }
-        },
-        form,
-        formReference,
-        history,
-        onCustomEvent,
-        onSubmitTaskForm,
-        task,
-      }}
-    />,
-  );
+let props;
 
 describe('TaskForm Component', () => {
   beforeEach(() => {
-    formReference = jest.fn();
-    onCustomEvent = jest.fn();
-    onSubmitTaskForm = jest.fn();
-    history = {
-      replace: jest.fn(),
+    props = {
+      appConfig: {},
+      form,
+      formReference: jest.fn(),
+      history: {
+        replace: jest.fn(),
+      },
+      kc: {
+        token: 'token',
+        tokenParsed: {
+          email: 'yesy',
+          family_name: 'test',
+          given_name: 'name',
+          session_state: 'state',
+        },
+      },
+      onCustomEvent: jest.fn(),
+      onSubmitTaskForm: jest.fn(),
+      task: Immutable.fromJS({
+        assignee: null,
+        name: 'testTask',
+      }),
     };
   });
 
   it('renders without crashing', () => {
-    const wrapper = getWrapper();
+    const wrapper = shallow(<TaskForm {...props} />);
+    expect(wrapper.exists()).toBe(true);
   });
 
   it('changes history prop when handleCancel called', () => {
-    const wrapper = getWrapper();
+    const wrapper = shallow(<TaskForm {...props} />);
     wrapper.instance().handleCancel(() => {});
-    expect(history.replace).toHaveBeenCalledTimes(1);
-    expect(history.replace).toHaveBeenCalledWith(AppConstants.DASHBOARD_PATH);
+    expect(props.history.replace).toHaveBeenCalledTimes(1);
+    expect(props.history.replace).toHaveBeenCalledWith(
+      AppConstants.DASHBOARD_PATH,
+    );
   });
 
   it('matches snapshot', () => {
-    const wrapper = getWrapper();
+    const wrapper = shallow(<TaskForm {...props} />);
     expect(wrapper).toMatchSnapshot();
   });
 });

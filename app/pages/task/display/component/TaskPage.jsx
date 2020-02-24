@@ -11,7 +11,7 @@ import {withRouter} from "react-router";
 import DataSpinner from "../../../../core/components/DataSpinner";
 import TaskDetailsPage from "./TaskDetailsPage";
 import NotFound from "../../../../core/components/NotFound";
-
+import AppConstants from '../../../../common/AppConstants';
 
 class TaskPage extends React.Component {
 
@@ -19,11 +19,16 @@ class TaskPage extends React.Component {
         const { match: { params } } = this.props;
         this.taskId = params.taskId;
         this.props.fetchTask(this.taskId);
+        document.title = AppConstants.APP_NAME;
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
+        const { task } = this.props;
         if (prevProps.taskId !== this.props.taskId) {
             this.props.fetchTask(this.props.taskId);
+        }
+        if (task && task !== prevProps.task) {
+            document.title = `${task.isEmpty() ? 'Task not found' : task.get('name')} | ${AppConstants.APP_NAME}`;
         }
     }
 

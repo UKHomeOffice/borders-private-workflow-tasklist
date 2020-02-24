@@ -1,5 +1,4 @@
 import React from 'react';
-import { mount } from 'enzyme';
 import Immutable from 'immutable';
 import Pagination from './Pagination';
 

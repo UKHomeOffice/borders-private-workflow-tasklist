@@ -1,5 +1,4 @@
 import React from 'react';
-import { mount } from 'enzyme';
 import configureStore from 'redux-mock-store';
 import PubSub from 'pubsub-js';
 import { createMemoryHistory } from 'history';

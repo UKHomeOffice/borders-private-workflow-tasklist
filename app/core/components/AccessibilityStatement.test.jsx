@@ -1,5 +1,4 @@
 import React from 'react';
-import { shallow } from 'enzyme';
 import AccessibilityStatement from './AccessibilityStatement';
 
 describe('Accessibility Statement page', () => {

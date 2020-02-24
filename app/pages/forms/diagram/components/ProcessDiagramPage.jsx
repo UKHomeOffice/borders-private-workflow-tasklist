@@ -12,7 +12,7 @@ import { connect } from 'react-redux';
 import Spinner from 'react-spinkit';
 import { isMobile } from 'react-device-detect';
 import { isFetchingProcessDefinitionXml, processDefinitionXml } from '../selectors';
-import AppConstants from "../../../../common/AppConstants";
+import AppConstants from '../../../../common/AppConstants';
 
 class ProcessDiagramPage extends React.Component {
 

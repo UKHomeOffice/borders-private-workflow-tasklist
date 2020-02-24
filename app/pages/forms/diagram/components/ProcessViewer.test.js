@@ -1,6 +1,5 @@
 import React from 'react';
 import Immutable from 'immutable';
-import { mount } from 'enzyme';
 import ProcessViewer from './ProcessViewer';
 
 const xmlStr = `<?xml version="1.0" encoding="UTF-8"?>

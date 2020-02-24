@@ -23,6 +23,7 @@ export class YourGroupTasksContainer extends React.Component {
     }
 
     componentDidMount() {
+        document.title = `Tasks assigned to your team | ${AppConstants.APP_NAME}`;
         this.loadYourGroupTasks(false, 'sort=due,desc');
         const that = this;
         this.timeoutId = setInterval(() => {

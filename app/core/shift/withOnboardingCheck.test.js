@@ -1,5 +1,4 @@
 import configureStore from 'redux-mock-store';
-import { shallow } from 'enzyme';
 import React from 'react';
 import Immutable from 'immutable';
 import DataSpinner from '../components/DataSpinner';

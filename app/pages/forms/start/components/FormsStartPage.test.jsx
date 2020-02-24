@@ -1,15 +1,14 @@
-
-import { mount } from 'enzyme/build';
 import React from 'react';
 import Immutable from 'immutable';
 import { ProcessStartPage } from './FormsStartPage';
 import secureLocalStorage from '../../../../common/security/SecureLocalStorage';
+import AppConstants from '../../../../common/AppConstants';
 
 jest.mock('../../../../common/security/SecureLocalStorage', () => ({
   get: jest.fn(),
   set: jest.fn(),
   removeAll: jest.fn(),
-  remove: jest.fn()
+  remove: jest.fn(),
 }));
 
 const form = {
@@ -59,6 +58,23 @@ const form = {
 };
 
 describe('Submit a form page', () => {
+  it('sets document title as expected while processDefinition loading', () => {
+    const props = {
+      loadingForm: true,
+      submissionStatus: null,
+      match: {
+        params: {
+          processKey: 'processKey',
+        },
+      },
+      clearProcessDefinition: jest.fn(),
+      fetchProcessDefinition: jest.fn(),
+    };
+
+    shallow(<ProcessStartPage {...props} />);
+    expect(global.window.document.title).toBe(AppConstants.APP_NAME);
+  });
+
   it('renders loading bar if form is loading', async () => {
     const props = {
       loadingForm: true,
@@ -72,11 +88,13 @@ describe('Submit a form page', () => {
     const fetchProcessDefinition = jest.fn();
     const clearProcessDefinition = jest.fn();
 
-    const wrapper = await mount(<ProcessStartPage
-      {...props}
-      clearProcessDefinition={clearProcessDefinition}
-      fetchProcessDefinition={fetchProcessDefinition}
-    />);
+    const wrapper = await mount(
+      <ProcessStartPage
+        {...props}
+        clearProcessDefinition={clearProcessDefinition}
+        fetchProcessDefinition={fetchProcessDefinition}
+      />,
+    );
 
     expect(fetchProcessDefinition).toHaveBeenCalled();
     expect(wrapper.find('#dataSpinner').exists()).toEqual(true);
@@ -96,15 +114,15 @@ describe('Submit a form page', () => {
         workflowUrl: 'workflow',
         operationalDataUrl: 'operational',
       },
-      kc:  {
-        token : 'token',
+      kc: {
+        token: 'token',
         refreshToken: 'refreshToken',
         tokenParsed: {
           session_state: 'sessionState',
           email: 'email',
           given_name: 'given_name',
-          family_name: 'familyName'
-        }
+          family_name: 'familyName',
+        },
       },
       match: {
         params: {
@@ -115,15 +133,66 @@ describe('Submit a form page', () => {
     const fetchProcessDefinition = jest.fn();
     const clearProcessDefinition = jest.fn();
 
-    const wrapper = await mount(<ProcessStartPage
-      {...props}
-      clearProcessDefinition={clearProcessDefinition}
-      fetchProcessDefinition={fetchProcessDefinition}
-    />);
+    const wrapper = await mount(
+      <ProcessStartPage
+        {...props}
+        clearProcessDefinition={clearProcessDefinition}
+        fetchProcessDefinition={fetchProcessDefinition}
+      />,
+    );
     expect(fetchProcessDefinition).toHaveBeenCalled();
 
-    expect(wrapper.find('div').text()).toEqual('Form with identifier formKey was not found');
+    expect(wrapper.find('div').text()).toEqual(
+      'Form with identifier formKey was not found',
+    );
   });
+
+  it('sets document title as expected when processDefinition loaded', () => {
+    const props = {
+      loadingForm: true,
+      submissionStatus: null,
+      isFetchingProcessDefinition: false,
+      appConfig: {
+        apiRefUrl: 'apiRefUrl',
+        workflowUrl: 'workflow',
+        operationalDataUrl: 'operational',
+      },
+      history: {
+        location: {
+          pathname: '/path',
+        },
+      },
+      kc: {
+        tokenParsed: {
+          email: 'email',
+        },
+      },
+      form: null,
+      processDefinition: Immutable.fromJS({
+        formKey: 'formKey',
+        'process-definition': {
+          name: 'procedure',
+        },
+      }),
+      match: {
+        params: {
+          processKey: 'processKey',
+        },
+      },
+      fetchProcessDefinition: jest.fn(),
+      clearProcessDefinition: jest.fn(),
+      fetchForm: jest.fn(),
+    };
+
+    const wrapper = shallow(<ProcessStartPage {...props} />);
+    wrapper.setProps({
+      isFetchingProcessDefinition: false,
+    });
+    expect(global.window.document.title).toBe(
+      `procedure | ${AppConstants.APP_NAME}`,
+    );
+  });
+
   it('fetches form after loading process definition', async () => {
     const props = {
       loadingForm: true,
@@ -158,12 +227,14 @@ describe('Submit a form page', () => {
     const clearProcessDefinition = jest.fn();
     const fetchForm = jest.fn();
 
-    const wrapper = await mount(<ProcessStartPage
-      {...props}
-      clearProcessDefinition={clearProcessDefinition}
-      fetchProcessDefinition={fetchProcessDefinition}
-      fetchForm={fetchForm}
-    />);
+    const wrapper = await mount(
+      <ProcessStartPage
+        {...props}
+        clearProcessDefinition={clearProcessDefinition}
+        fetchProcessDefinition={fetchProcessDefinition}
+        fetchForm={fetchForm}
+      />,
+    );
     expect(fetchProcessDefinition).toHaveBeenCalled();
     wrapper.setProps({
       isFetchingProcessDefinition: false,
@@ -206,12 +277,13 @@ describe('Submit a form page', () => {
     const fetchProcessDefinition = jest.fn();
     const clearProcessDefinition = jest.fn();
 
-    const wrapper = await shallow(<ProcessStartPage
-      {...props}
-      clearProcessDefinition={clearProcessDefinition}
-      fetchProcessDefinition={fetchProcessDefinition}
-    />);
-    console.log(wrapper.html());
+    const wrapper = await shallow(
+      <ProcessStartPage
+        {...props}
+        clearProcessDefinition={clearProcessDefinition}
+        fetchProcessDefinition={fetchProcessDefinition}
+      />,
+    );
     expect(fetchProcessDefinition).toHaveBeenCalled();
     expect(wrapper).toMatchSnapshot();
   });
@@ -251,11 +323,13 @@ describe('Submit a form page', () => {
     const fetchProcessDefinition = jest.fn();
     const clearProcessDefinition = jest.fn();
 
-    const wrapper = await mount(<ProcessStartPage
-      {...props}
-      clearProcessDefinition={clearProcessDefinition}
-      fetchProcessDefinition={fetchProcessDefinition}
-    />);
+    const wrapper = await mount(
+      <ProcessStartPage
+        {...props}
+        clearProcessDefinition={clearProcessDefinition}
+        fetchProcessDefinition={fetchProcessDefinition}
+      />,
+    );
     wrapper.setProps({ submittingToWorkflow: true });
 
     const loaderContent = wrapper.find('.Loader__content');
@@ -300,16 +374,17 @@ describe('Submit a form page', () => {
           processKey: 'processKey',
         },
       },
-
     };
     const fetchProcessDefinition = jest.fn();
     const clearProcessDefinition = jest.fn();
 
-    const wrapper = await mount(<ProcessStartPage
-      {...props}
-      clearProcessDefinition={clearProcessDefinition}
-      fetchProcessDefinition={fetchProcessDefinition}
-    />);
+    const wrapper = await mount(
+      <ProcessStartPage
+        {...props}
+        clearProcessDefinition={clearProcessDefinition}
+        fetchProcessDefinition={fetchProcessDefinition}
+      />,
+    );
 
     const emit = jest.fn(args => console.log(`Event ${args}`));
     wrapper.instance().form.formio = {
@@ -360,11 +435,13 @@ describe('Submit a form page', () => {
     const fetchProcessDefinition = jest.fn();
     const clearProcessDefinition = jest.fn();
 
-    const wrapper = await mount(<ProcessStartPage
-      {...props}
-      clearProcessDefinition={clearProcessDefinition}
-      fetchProcessDefinition={fetchProcessDefinition}
-    />);
+    const wrapper = await mount(
+      <ProcessStartPage
+        {...props}
+        clearProcessDefinition={clearProcessDefinition}
+        fetchProcessDefinition={fetchProcessDefinition}
+      />,
+    );
 
     const emit = jest.fn(args => console.log(`Event ${args}`));
     const submission = {

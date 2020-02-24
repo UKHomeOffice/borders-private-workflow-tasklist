@@ -9,10 +9,12 @@ import {acknowledgingTaskIds, hasMoreItems, isFetching, nextPage, notifications,
 import InfiniteScroll from 'react-infinite-scroller';
 import moment from 'moment';
 import './MessagesPage.scss';
+import AppConstants from '../../../common/AppConstants';
 
 export class MessagesPage extends React.Component {
 
     componentDidMount() {
+        document.title = `Messages | ${AppConstants.APP_NAME}`;
         this.props.fetchNotifications();
     }
 

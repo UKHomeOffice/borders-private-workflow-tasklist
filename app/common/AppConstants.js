@@ -1,5 +1,8 @@
 
 export default class AppConstants {
+
+    static APP_NAME = 'Central Operations Platform';
+
     static DASHBOARD_PATH = '/dashboard';
 
     static YOUR_TASKS_PATH = '/your-tasks';

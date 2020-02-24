@@ -1,6 +1,5 @@
 import Immutable, { List, Map } from 'immutable';
 import configureStore from 'redux-mock-store';
-import { mount, shallow } from 'enzyme';
 import React from 'react';
 
 

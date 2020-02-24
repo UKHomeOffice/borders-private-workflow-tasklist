@@ -1,8 +1,6 @@
 import PubSub from 'pubsub-js';
 import React from 'react';
 
-import { shallow } from 'enzyme';
-
 // local imports
 import SubmissionBanner from './SubmissionBanner';
 

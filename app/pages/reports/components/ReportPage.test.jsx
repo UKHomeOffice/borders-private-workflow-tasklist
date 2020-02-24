@@ -1,7 +1,5 @@
-import { shallow } from 'enzyme/build/index';
 import React from 'react';
 import { ReportPage } from './ReportPage';
-
 
 describe('Report Page', () => {
   it('renders iframe for report', () => {

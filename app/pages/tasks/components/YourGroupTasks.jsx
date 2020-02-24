@@ -10,7 +10,7 @@ import moment from 'moment';
 import './YourGroupTasks.scss';
 import FilterTaskName from './FilterTaskName';
 import SortTasks from './SortTasks';
-import AppConstants from "../../../common/AppConstants";
+import AppConstants from '../../../common/AppConstants';
 
 const YourGroupTasks = props => {
   const {
