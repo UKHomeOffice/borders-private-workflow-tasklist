@@ -22,6 +22,7 @@ import Loader from 'react-loader-advanced';
 import DataSpinner from '../../../core/components/DataSpinner';
 import ShiftForm from './ShiftForm';
 import secureLocalStorage from "../../../common/security/SecureLocalStorage";
+import AppConstants from '../../../common/AppConstants';
 
 export class ShiftPage extends React.Component {
   constructor(props) {
@@ -30,6 +31,8 @@ export class ShiftPage extends React.Component {
     }
 
   componentDidMount() {
+      const { shift } = this.props;
+      document.title = `${shift ? 'Edit shift' : 'Start shift'} | ${AppConstants.APP_NAME}`;
       this.props.fetchActiveShift();
       this.props.fetchShiftForm();
       this.props.fetchStaffDetails();

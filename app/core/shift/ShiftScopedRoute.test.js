@@ -1,7 +1,5 @@
 import { Redirect, Route } from 'react-router';
-
 import React from 'react';
-import { shallow } from 'enzyme';
 import configureStore from 'redux-mock-store';
 import Immutable from 'immutable';
 import ShiftScopedRoute from './withShiftCheck';

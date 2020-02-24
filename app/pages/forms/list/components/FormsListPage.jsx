@@ -13,11 +13,12 @@ import { withRouter } from 'react-router';
 import ReactHyperResponsiveTable from 'react-hyper-responsive-table';
 import * as types  from "react-device-detect";
 import './FormsListPage.css';
-import AppConstants from "../../../../common/AppConstants";
+import AppConstants from '../../../../common/AppConstants';
 
 export class FormsListPage extends React.Component {
 
   componentDidMount() {
+    document.title = `Forms | ${AppConstants.APP_NAME}`;
     this.props.fetchProcessDefinitions();
     this.process = this.process.bind(this);
     this.viewProcessDiagram = this.viewProcessDiagram.bind(this);
@@ -71,6 +72,7 @@ export class FormsListPage extends React.Component {
 
     </div>;
   }
+
 }
 
 FormsListPage.propTypes = {

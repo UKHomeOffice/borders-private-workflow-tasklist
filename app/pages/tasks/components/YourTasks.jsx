@@ -10,8 +10,12 @@ import moment from 'moment';
 import './YourTasks.scss';
 import FilterTaskName from './FilterTaskName';
 import SortTasks from './SortTasks';
+import AppConstants from '../../../common/AppConstants';
 
 const YourTasks = props => {
+
+  document.title = `Tasks assigned to you | ${AppConstants.APP_NAME}`;
+
   const {
     yourTasks,
     sortYourTasks,

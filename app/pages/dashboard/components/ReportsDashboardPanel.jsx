@@ -1,6 +1,6 @@
 import React from "react";
 import {withRouter} from "react-router";
-import AppConstants from "../../../common/AppConstants";
+import AppConstants from '../../../common/AppConstants';
 
 export class ReportsDashboardPanel extends React.Component {
 

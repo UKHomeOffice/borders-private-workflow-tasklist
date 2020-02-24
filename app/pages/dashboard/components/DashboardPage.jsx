@@ -1,5 +1,6 @@
 import React from 'react';
 import { withRouter } from 'react-router';
+import AppConstants from '../../../common/AppConstants';
 import DashboardTitle from './DashboardTitle';
 import DashboardPanel from './DashboardPanel';
 import { bindActionCreators } from 'redux';
@@ -10,6 +11,10 @@ import ImmutablePropTypes from 'react-immutable-proptypes';
 import "./Dashboard.scss";
 
 export class DashboardPage extends React.Component {
+
+    componentDidMount() {
+        document.title = `Operational dashboard | ${AppConstants.APP_NAME}`;
+    }
 
     render() {
         return <div id="dashboardContent">

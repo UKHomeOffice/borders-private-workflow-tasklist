@@ -7,12 +7,14 @@ import {bindActionCreators} from "redux";
 import {connect} from "react-redux";
 import {loadingReports, reports} from "../selectors";
 import DataSpinner from '../../../core/components/DataSpinner';
+import AppConstants from '../../../common/AppConstants';
 
 const uuidv4 = require('uuid/v4');
 
 
 export class ReportsPage extends React.Component {
     componentDidMount() {
+        document.title = `Reports | ${AppConstants.APP_NAME}`;
         this.props.fetchReportsList();
     }
 

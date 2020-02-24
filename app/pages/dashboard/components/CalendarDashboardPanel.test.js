@@ -1,5 +1,4 @@
 import React from 'react';
-import { mount } from 'enzyme';
 import configureStore from 'redux-mock-store';
 import { Router } from 'react-router-dom';
 import { createMemoryHistory } from 'history';

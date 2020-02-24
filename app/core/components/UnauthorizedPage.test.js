@@ -1,7 +1,6 @@
 /* eslint-disable react/jsx-filename-extension */
 
 import React from 'react';
-import { shallow } from 'enzyme';
 import UnauthorizedPage from './UnauthorizedPage';
 
 describe('Unauthorized page', () => {

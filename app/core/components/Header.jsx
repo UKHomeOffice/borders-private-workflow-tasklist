@@ -39,7 +39,7 @@ export class Header extends React.Component {
                                 href={AppConstants.DASHBOARD_PATH}
                                 onClick={event => this.dashboard(event)}
                                 className="govuk-header__link govuk-header__link--service-name"
-                            >Central Operations Platform</a>
+                            >{AppConstants.APP_NAME}</a>
                         </div>
                         <div className="govuk-grid-column-one-half header-nav">
                             <a
