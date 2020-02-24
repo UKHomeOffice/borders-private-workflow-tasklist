@@ -1,18 +1,9 @@
 import React from 'react';
 import PropTypes from "prop-types";
-import GovUKDetailsObserver from "../../../core/util/GovUKDetailsObserver";
 import moment from 'moment';
 
 export default class CaseMetrics extends React.Component {
 
-    componentDidMount() {
-        this.observer = new GovUKDetailsObserver(document.getElementById(`caseMetrics`)).create();
-    }
-
-
-    componentWillUnmount() {
-        this.observer.destroy();
-    }
 
     render() {
         const {caseDetails} = this.props;

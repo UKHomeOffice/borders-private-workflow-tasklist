@@ -26,7 +26,7 @@ class CaseDetailsPanel extends React.Component {
     }
 
     componentDidMount() {
-        this.observer = new GovUKDetailsObserver(document.getElementById(`case`)).create();
+        this.observer = new GovUKDetailsObserver(document.getElementById(`case`)).create(true);
         new Accordion(document.querySelector("[data-module='govuk-accordion']")).init();
         this.clearAccordionStorage();
     }
