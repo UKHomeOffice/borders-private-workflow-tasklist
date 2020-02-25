@@ -28,16 +28,16 @@ class CaseActions extends React.Component {
                                         const key = action.process['process-definition'].key;
                                         const isSelected = selectedAction &&
                                             selectedAction.process['process-definition'].key === key;
-                                         return <li key={key} className={isSelected ? 'active' : ''} >
-                                            <a  href="#" onClick={event => {
+                                        return <li key={key} className={isSelected ? 'active' : ''}>
+                                            <a href="#" onClick={event => {
                                                 event.preventDefault();
-                                                 this.props.setSelectedAction(action);
+                                                this.props.setSelectedAction(action);
                                             }}> {action.process['process-definition'].name}</a></li>
                                     })}
                                 </ul>
                             </div>
                         </nav>
-                       { selectedAction ? <CaseAction {...{selectedAction, caseDetails}} /> : null }
+                        {selectedAction ? <CaseAction {...{selectedAction, caseDetails}} /> : null}
                     </React.Fragment>
                     : <h4 className="govuk-heading-s">No actions available</h4>
                 }

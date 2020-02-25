@@ -4,6 +4,7 @@ import {createMemoryHistory} from "history";
 import {Router} from "react-router";
 import configureStore from "redux-mock-store";
 import {Map} from "immutable";
+import fixtures from "./fixtures";
 
 describe('CaseAction', () => {
     let props;
@@ -102,14 +103,12 @@ describe('CaseAction', () => {
         expect(emptyForm.exists()).toEqual(true);
     });
 
-    it ('renders submitting action', async() => {
+    it('renders submitting action', async () => {
         const history = createMemoryHistory('/case');
         store = configureStore()({
             'case-action-page': new Map({
                 loadingActionForm: false,
-                actionForm: {
-
-                },
+                actionForm: fixtures,
                 executingAction: true
             }),
         });
@@ -129,5 +128,34 @@ describe('CaseAction', () => {
         );
         const submittingAction = wrapper.find('#submittingAction').first();
         expect(submittingAction.exists()).toEqual(true);
-    })
+    });
+
+    it('renders form for action', async () => {
+        const history = createMemoryHistory('/case');
+        store = configureStore()({
+            'case-action-page': Map({
+                loadingActionForm: false,
+                actionForm: fixtures,
+                executingAction: false,
+            }),
+            keycloak: props.kc,
+            appConfig: props.appConfig
+        });
+        props = {
+            ...props,
+            selectedAction: {
+                process: {}
+            }
+        };
+        const wrapper = await mount(
+            <Router history={history}>
+                <CaseAction
+                    store={store}
+                    {...props}
+                />
+            </Router>,
+        );
+        const formio = wrapper.find('Form');
+        expect(formio.exists()).toEqual(true);
+    });
 });

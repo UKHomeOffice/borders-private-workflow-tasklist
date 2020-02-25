@@ -138,6 +138,7 @@ class CaseAction extends React.Component {
 
 CaseAction.propTypes = {
     clearActionResponse: PropTypes.func,
+    appConfig: PropTypes.object,
     executingAction: PropTypes.bool,
     actionResponse: PropTypes.object,
     executeAction: PropTypes.func,
@@ -145,6 +146,7 @@ CaseAction.propTypes = {
     actionForm: PropTypes.object,
     fetchActionForm: PropTypes.func,
     loadingActionForm: PropTypes.bool,
+    kc: PropTypes.object,
     caseDetails: PropTypes.shape({
         businessKey: PropTypes.string
     }),
