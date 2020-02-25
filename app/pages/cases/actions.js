@@ -1,7 +1,7 @@
 import * as types from './actionTypes';
 
-const reset = () => ({
-    type: types.RESET
+const resetCase = () => ({
+    type: types.RESET_CASE
 })
 
 const findCasesByKey = key => ({
@@ -89,7 +89,7 @@ export {
     findCasesByKey,
     findCasesByKeySuccess,
     findCasesByKeyFailure,
-    reset,
+    resetCase,
     getCaseByKey,
     getCaseByKeySuccess,
     getCaseByKeyFailure,

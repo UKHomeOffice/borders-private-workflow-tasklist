@@ -18,8 +18,8 @@ const setSelectedAction = action => ({
     type: types.SELECT_ACTION,
     action
 });
-const reset = () => ({
-    type: types.RESET
+const resetSelectedAction = () => ({
+    type: types.RESET_SELECTED_ACTION
 });
 
 
@@ -48,7 +48,7 @@ export {
     fetchActionFormSuccess,
     fetchActionFormFailure,
     setSelectedAction,
-    reset,
+    resetSelectedAction,
     executeAction,
     executeActionSuccess,
     executeActionFailure,

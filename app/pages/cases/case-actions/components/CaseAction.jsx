@@ -2,7 +2,7 @@ import React from 'react';
 import {Form} from "react-formio";
 import PropTypes from "prop-types";
 import {bindActionCreators} from "redux";
-import {fetchActionForm, reset, executeAction, clearActionResponse} from "../actions";
+import {fetchActionForm, resetSelectedAction, executeAction, clearActionResponse} from "../actions";
 import {withRouter} from "react-router";
 import {connect} from "react-redux";
 import {actionForm, actionResponse, executingAction, loadingActionForm} from "../selectors";
@@ -31,7 +31,7 @@ class CaseAction extends React.Component {
     }
 
     componentWillUnmount() {
-        this.props.reset();
+        this.props.resetSelectedAction();
         if (this.timer) {
             clearTimeout(this.timer);
         }
@@ -139,7 +139,7 @@ CaseAction.propTypes = {
     executingAction: PropTypes.bool,
     actionResponse: PropTypes.object,
     executeAction: PropTypes.func,
-    reset: PropTypes.func,
+    resetSelectedAction: PropTypes.func,
     actionForm: PropTypes.object,
     fetchActionForm: PropTypes.func,
     loadingActionForm: PropTypes.bool,
@@ -163,7 +163,7 @@ CaseAction.propTypes = {
 
 const mapDispatchToProps = dispatch => bindActionCreators({
     fetchActionForm,
-    reset, executeAction, clearActionResponse
+    resetSelectedAction, executeAction, clearActionResponse
 }, dispatch);
 
 export default withRouter(connect((state) => {

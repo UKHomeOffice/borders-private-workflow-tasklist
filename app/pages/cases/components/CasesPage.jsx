@@ -3,7 +3,7 @@ import './CasePages.scss';
 import CaseResultsPanel from "./CaseResultsPanel";
 import PropTypes from "prop-types";
 import {bindActionCreators} from "redux";
-import {findCasesByKey, reset, loadNextSearchResults} from '../actions';
+import {findCasesByKey, resetCase, loadNextSearchResults} from '../actions';
 import {withRouter} from "react-router";
 import {connect} from "react-redux";
 import withLog from "../../../core/error/component/withLog";
@@ -24,7 +24,7 @@ class CasesPage extends React.Component {
     }
 
     componentWillUnmount() {
-        this.props.reset();
+        this.props.resetCase();
     }
 
     render() {
@@ -52,7 +52,7 @@ class CasesPage extends React.Component {
                                 const query = event.target.value;
                                 window.history.pushState({}, null, "/cases");
                                 if (query === '') {
-                                    that.props.reset();
+                                    that.props.resetCase();
                                 } else {
                                     that.props.findCasesByKey(query.toUpperCase());
                                 }
@@ -81,7 +81,7 @@ CasesPage.propTypes = {
     setBusinessKey: PropTypes.func,
     log: PropTypes.func,
     findCasesByKey: PropTypes.func.isRequired,
-    reset: PropTypes.func.isRequired,
+    resetCase: PropTypes.func.isRequired,
     loadNextSearchResults: PropTypes.func,
     businessKeyQuery: PropTypes.string,
     searching: PropTypes.bool,
@@ -103,7 +103,7 @@ CasesPage.propTypes = {
 
 };
 
-const mapDispatchToProps = dispatch => bindActionCreators({findCasesByKey, reset, loadNextSearchResults}, dispatch);
+const mapDispatchToProps = dispatch => bindActionCreators({findCasesByKey, resetCase, loadNextSearchResults}, dispatch);
 
 export default withRouter(connect((state) => {
     return {

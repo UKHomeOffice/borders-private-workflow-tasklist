@@ -31,6 +31,8 @@ function reducer(state = initialState, action) {
             return state.set('executingAction', false);
         case actions.CLEAR_ACTION_RESPONSE:
             return state.set('actionResponse', null);
+        case actions.RESET_SELECTED_ACTION:
+            return initialState;
         default:
             return state;
     }

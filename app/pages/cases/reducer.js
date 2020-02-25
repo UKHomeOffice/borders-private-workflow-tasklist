@@ -74,7 +74,7 @@ function reducer(state = initialState, action) {
         case actions.RESET_FORM:
             return state.set('formSubmissionData', null)
                 .set('formVersionDetails', null);
-        case actions.RESET:
+        case actions.RESET_CASE:
             return initialState;
         default:
             return state;
