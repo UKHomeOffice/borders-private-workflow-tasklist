@@ -70,7 +70,7 @@ export default class CaseMetrics extends React.Component {
                                     <div className="metrics-card">
                                         <div className="metrics-card-body ">
                                             <span className="govuk-!-font-size-36 govuk-!-font-weight-bold">
-                                              a few seconds
+                                              {moment.duration(metrics.overallTimeInSeconds, 'seconds').humanize()}
                                             </span>
                                             <span className="govuk-!-font-size-19">Total time</span>
                                         </div>

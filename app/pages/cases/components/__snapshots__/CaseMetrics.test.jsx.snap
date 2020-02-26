@@ -1,0 +1,178 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`CaseMetrics renders metrics 1`] = `
+<div
+  className="govuk-grid-row govuk-card"
+  id="caseMetrics"
+>
+  <div
+    className="govuk-grid-column-full"
+  >
+    <h3
+      className="govuk-heading-m"
+    >
+      Case metrics
+    </h3>
+    <details
+      className="govuk-details"
+      data-module="govuk-details"
+    >
+      <summary
+        className="govuk-details__summary"
+      >
+        <span
+          className="govuk-details__summary-text"
+        >
+          Basic metrics related to 
+          businessKey
+        </span>
+      </summary>
+      <div
+        className="govuk-grid-row mt-4"
+      >
+        <div
+          className="govuk-grid-column-full"
+        >
+          <div
+            className="govuk-grid-row"
+          >
+            <div
+              className="govuk-grid-column-one-third"
+            >
+              <div
+                className="metrics-card"
+              >
+                <div
+                  className="metrics-card-body "
+                >
+                  <span
+                    className="govuk-!-font-size-36 govuk-!-font-weight-bold"
+                  >
+                    1
+                  </span>
+                  <span
+                    className="govuk-!-font-size-19"
+                  >
+                    Open processes
+                  </span>
+                </div>
+              </div>
+            </div>
+            <div
+              className="govuk-grid-column-one-third"
+            >
+              <div
+                className="metrics-card"
+              >
+                <div
+                  className="metrics-card-body"
+                >
+                  <span
+                    className="govuk-!-font-size-36 govuk-!-font-weight-bold"
+                  >
+                    1
+                  </span>
+                  <span
+                    className="govuk-!-font-size-19"
+                  >
+                    Completed processes
+                  </span>
+                </div>
+              </div>
+            </div>
+            <div
+              className="govuk-grid-column-one-third"
+            >
+              <div
+                className="metrics-card"
+              >
+                <div
+                  className="metrics-card-body "
+                >
+                  <span
+                    className="govuk-!-font-size-36 govuk-!-font-weight-bold"
+                  >
+                    1
+                  </span>
+                   
+                  <span
+                    className="govuk-!-font-size-19"
+                  >
+                    Completed tasks
+                  </span>
+                </div>
+              </div>
+            </div>
+            <div
+              className="govuk-grid-column-one-third"
+            >
+              <div
+                className="metrics-card"
+              >
+                <div
+                  className="metrics-card-body "
+                >
+                  <span
+                    className="govuk-!-font-size-36 govuk-!-font-weight-bold"
+                  >
+                    0
+                  </span>
+                  <span
+                    className="govuk-!-font-size-19"
+                  >
+                    Open tasks
+                  </span>
+                </div>
+              </div>
+            </div>
+            <div
+              className="govuk-grid-column-one-third"
+            >
+              <div
+                className="metrics-card"
+              >
+                <div
+                  className="metrics-card-body "
+                >
+                  <span
+                    className="govuk-!-font-size-36 govuk-!-font-weight-bold"
+                  >
+                    3 hours
+                  </span>
+                  <span
+                    className="govuk-!-font-size-19"
+                  >
+                    Total time
+                  </span>
+                </div>
+              </div>
+            </div>
+            <div
+              className="govuk-grid-column-one-third"
+            >
+              <div
+                className="metrics-card"
+              >
+                <div
+                  className="metrics-card-body "
+                >
+                  <span
+                    className="govuk-!-font-size-36 govuk-!-font-weight-bold"
+                  >
+                    a day
+                  </span>
+                  <span
+                    className="govuk-!-font-size-19"
+                  >
+                    Average process completion
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </details>
+  </div>
+</div>
+`;
