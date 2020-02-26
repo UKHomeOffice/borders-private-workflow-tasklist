@@ -31,7 +31,11 @@ class CaseActions extends React.Component {
                                         return <li key={key} className={isSelected ? 'active' : ''}>
                                             <a href="#" onClick={event => {
                                                 event.preventDefault();
-                                                setSelectedAction(action);
+                                                if (!isSelected) {
+                                                    setSelectedAction(action);
+                                                } else {
+                                                    setSelectedAction(null);
+                                                }
                                             }}> {action.process['process-definition'].name}</a></li>
                                     })}
                                 </ul>

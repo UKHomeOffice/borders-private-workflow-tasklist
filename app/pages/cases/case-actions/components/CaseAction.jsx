@@ -24,6 +24,11 @@ class CaseAction extends React.Component {
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
+        if (this.props.selectedAction.process['process-definition'].key !==
+            prevProps.selectedAction.process['process-definition'].key) {
+            this.props.clearActionResponse();
+            this.props.fetchActionForm(this.props.selectedAction.process.formKey);
+        }
         if (this.props.actionResponse) {
             const that = this;
             this.timer = setTimeout(() => {
