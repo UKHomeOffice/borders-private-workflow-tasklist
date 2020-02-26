@@ -14,7 +14,7 @@ class CaseActions extends React.Component {
     }
 
     render() {
-        const {caseDetails, selectedAction} = this.props;
+        const {caseDetails, selectedAction, setSelectedAction} = this.props;
 
         return <div className="govuk-grid-row govuk-card" id="caseActions">
             <div className="govuk-grid-column-full">
@@ -31,7 +31,7 @@ class CaseActions extends React.Component {
                                         return <li key={key} className={isSelected ? 'active' : ''}>
                                             <a href="#" onClick={event => {
                                                 event.preventDefault();
-                                                this.props.setSelectedAction(action);
+                                                setSelectedAction(action);
                                             }}> {action.process['process-definition'].name}</a></li>
                                     })}
                                 </ul>

@@ -5,6 +5,11 @@ import fixtures from "./fixtures";
 import {Router} from "react-router";
 import React from "react";
 import CaseActions from "./CaseActions";
+import * as actionTypes from '../actionTypes';
+import {combineReducers, createStore} from 'redux';
+import caseActions from "../index";
+import CaseAction from "./CaseAction";
+import {Provider} from "react-redux";
 
 describe('CaseActions', () => {
     let props;
@@ -74,4 +79,26 @@ describe('CaseActions', () => {
         expect(actions.exists()).toEqual(true);
         expect(actions.length).toEqual(2)
     });
+
+    it('renders action when selected', async () => {
+        const history = createMemoryHistory('/case');
+
+        const store = createStore(combineReducers({[caseActions.constants.NAME]: caseActions.reducer}),
+            {});
+
+        let wrapper = await mount(
+            <Router history={history}>
+                <Provider store={store}>
+                    <CaseActions
+                        {...props}
+                    />
+                </Provider>
+            </Router>,
+        );
+        wrapper.find('a').at(0).prop('onClick')({
+            preventDefault() {
+            }
+        });
+        expect(wrapper.html()).toEqual('<div class="govuk-grid-row govuk-card" id="caseActions"><div class="govuk-grid-column-full"><h3 class="govuk-heading-m">Case actions</h3><nav id="case-action-nav"><div class="case-action-navbar"><ul class="case-action-navbar__list-items"><li class="active"><a href="#"> test</a></li><li class=""><a href="#"> test2</a></li></ul></div></nav><div id="loadingActionForm">Loading</div></div></div>')
+    })
 });
