@@ -146,7 +146,6 @@ class StartForm extends React.Component {
             onChange={(instance) => dataChange(instance)}
             form={startForm}
             ref={form => {
-                console.log('form', form);
                 this.formNode = form;
                 formReference(form);
             }}
