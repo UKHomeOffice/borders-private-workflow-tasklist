@@ -7,11 +7,6 @@ import configureStore from "redux-mock-store";
 import {Map} from "immutable";
 
 describe('CaseResultsPanel', () => {
-    it('renders without crashing', () => {
-        const wrapper = shallow(<CaseResultsPanel/>);
-        expect(wrapper).toMatchSnapshot();
-    });
-
     it('renders searching text', async () => {
         const history = createMemoryHistory('/case');
         const props = {
