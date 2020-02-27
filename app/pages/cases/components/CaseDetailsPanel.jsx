@@ -85,9 +85,9 @@ class CaseDetailsPanel extends React.Component {
                         </label>
                         <select className="govuk-select" id="sort" name="sort" onChange={e => {
                             this.props.setProcessStartSort(e.target.value)
-                        }}>
-                            <option value="desc" selected={processStartSort === 'desc'}>Latest process start date</option>
-                            <option value="acs" selected={processStartSort === 'asc'}>Earliest process start date</option>
+                        }} defaultValue={processStartSort}>
+                            <option value="desc">Latest process start date</option>
+                            <option value="acs">Earliest process start date</option>
                         </select>
                     </div>
                     <div id={`caseDetails-${caseDetails.businessKey}`} className="govuk-accordion"
