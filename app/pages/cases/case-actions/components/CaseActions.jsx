@@ -11,40 +11,40 @@ import {selectedAction} from "../selectors";
 class CaseActions extends React.Component {
 
     componentDidMount() {
+        const {caseDetails} = this.props;
+        if (caseDetails.actions && caseDetails.actions.length !== 0) {
+            this.props.setSelectedAction(caseDetails.actions[0]);
+        }
     }
 
     render() {
         const {caseDetails, selectedAction, setSelectedAction} = this.props;
-
         return <div className="govuk-grid-row govuk-card" id="caseActions">
             <div className="govuk-grid-column-full">
                 <h3 className="govuk-heading-m">Case actions</h3>
                 {caseDetails.actions.length !== 0 ?
-                    <React.Fragment>
-                        <nav id="case-action-nav">
-                            <div className="case-action-navbar">
-                                <ul className="case-action-navbar__list-items">
-                                    {caseDetails.actions.map(action => {
-                                        const key = action.process['process-definition'].key;
-                                        const isSelected = selectedAction &&
-                                            selectedAction.process['process-definition'].key === key;
-                                        return <li key={key} className={isSelected ? 'active' : ''}>
-                                            <a href="#" onClick={event => {
-                                                event.preventDefault();
-                                                if (!isSelected) {
-                                                    setSelectedAction(action);
-                                                } else {
-                                                    setSelectedAction(null);
-                                                }
-                                            }}> {action.process['process-definition'].name}</a></li>
-                                    })}
-                                </ul>
-                            </div>
-                        </nav>
-                        {selectedAction ? <CaseAction {...{selectedAction, caseDetails}} /> : null}
-                    </React.Fragment>
-                    : <h4 className="govuk-heading-s">No actions available</h4>
-                }
+                    <div className="govuk-tabs" data-module="govuk-tabs">
+                        <ul className="govuk-tabs__list">
+                            {caseDetails.actions.map(action => {
+                                const key = action.process['process-definition'].key;
+                                const isSelected = selectedAction &&
+                                    selectedAction.process['process-definition'].key === key;
+                                return <li key={key}
+                                           className={`govuk-tabs__list-item ${isSelected ? ' govuk-tabs__list-item--selected' : ''}`}>
+                                    <a className="govuk-tabs__tab" href={`#${key}`} onClick={event => {
+                                        event.preventDefault();
+                                        setSelectedAction(action);
+                                    }}> {action.process['process-definition'].name}</a></li>
+                            })}
+                        </ul>
+
+                        {selectedAction ? <section className="govuk-tabs__panel"
+                                                   id={selectedAction.process['process-definition'].key}>
+                            <CaseAction {...{selectedAction, caseDetails}} />
+
+                        </section> : null }
+                    </div>
+                    : <h4 className="govuk-heading-s">No actions available</h4>}
             </div>
         </div>
     }

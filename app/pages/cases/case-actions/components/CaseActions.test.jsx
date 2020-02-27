@@ -5,10 +5,8 @@ import fixtures from "./fixtures";
 import {Router} from "react-router";
 import React from "react";
 import CaseActions from "./CaseActions";
-import * as actionTypes from '../actionTypes';
 import {combineReducers, createStore} from 'redux';
 import caseActions from "../index";
-import CaseAction from "./CaseAction";
 import {Provider} from "react-redux";
 
 describe('CaseActions', () => {
@@ -99,6 +97,6 @@ describe('CaseActions', () => {
             preventDefault() {
             }
         });
-        expect(wrapper.html()).toEqual('<div class="govuk-grid-row govuk-card" id="caseActions"><div class="govuk-grid-column-full"><h3 class="govuk-heading-m">Case actions</h3><nav id="case-action-nav"><div class="case-action-navbar"><ul class="case-action-navbar__list-items"><li class="active"><a href="#"> test</a></li><li class=""><a href="#"> test2</a></li></ul></div></nav><div id="loadingActionForm">Loading</div></div></div>')
+        expect(wrapper.html()).toEqual('<div class="govuk-grid-row govuk-card" id="caseActions"><div class="govuk-grid-column-full"><h3 class="govuk-heading-m">Case actions</h3><div class="govuk-tabs" data-module="govuk-tabs"><ul class="govuk-tabs__list"><li class="govuk-tabs__list-item  govuk-tabs__list-item--selected"><a class="govuk-tabs__tab" href="#test"> test</a></li><li class="govuk-tabs__list-item "><a class="govuk-tabs__tab" href="#test2"> test2</a></li></ul><section class="govuk-tabs__panel" id="test"><div id="loadingActionForm">Loading</div></section></div></div></div>')
     })
 });
