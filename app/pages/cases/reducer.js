@@ -2,7 +2,6 @@ import Immutable from 'immutable';
 import * as actions from './actionTypes';
 import _ from 'lodash';
 const {Map} = Immutable;
-import moment from 'moment';
 
 export const initialState = new Map({
     searching: false,
@@ -17,7 +16,7 @@ export const initialState = new Map({
     loadingFormSubmissionData: false,
     formSubmissionData: null,
     loadingNextSearchResults: false,
-    processStartSort: null
+    processStartSort: 'acs'
 });
 
 function reducer(state = initialState, action) {
@@ -36,7 +35,11 @@ function reducer(state = initialState, action) {
             return state.set('businessKey', action.key)
                 .set('loadingCaseDetails', true);
         case actions.GET_CASE_BY_KEY_SUCCESS:
-            return state.set('caseDetails', action.payload.entity)
+            const caseLoaded = action.payload.entity;
+            caseLoaded.processInstances =  _.orderBy(caseLoaded.processInstances, (instance) => {
+                return new Date(instance.startDate);
+            }, [state.get('processStartSort')]);
+            return state.set('caseDetails', caseLoaded)
                 .set('loadingCaseDetails', false);
         case actions.GET_CASE_BY_KEY_FAILURE:
             return state.set('loadingCaseDetails', false);
