@@ -2,7 +2,7 @@ import * as types from './actionTypes';
 
 const resetCase = () => ({
     type: types.RESET_CASE
-})
+});
 
 const findCasesByKey = key => ({
     type: types.FIND_CASES_BY_KEY,
@@ -83,7 +83,12 @@ const loadNextSearchResultsSuccess = (payload) => ({
 
 const loadNextSearchResultsFailure = () => ({
     type: types.LOAD_NEXT_SEARCH_RESULTS_FAILURE
-})
+});
+
+const setProcessStartSort = (sort) => ({
+    type: types.SET_PROCESS_START_DATE_SORT,
+    sort
+});
 
 export {
     findCasesByKey,
@@ -103,5 +108,6 @@ export {
     resetForm,
     loadNextSearchResults,
     loadNextSearchResultsFailure,
-    loadNextSearchResultsSuccess
+    loadNextSearchResultsSuccess,
+    setProcessStartSort
 }

@@ -4,10 +4,10 @@ import moment from 'moment'
 import FormDetailsPanel from "./FormDetailsPanel";
 import PropTypes from "prop-types";
 import {bindActionCreators} from "redux";
-import {getFormVersion, setSelectedFormReference} from "../actions";
+import {getFormVersion, setSelectedFormReference, setProcessStartSort} from "../actions";
 import {withRouter} from "react-router";
 import {connect} from "react-redux";
-import {selectedFormReference} from "../selectors";
+import {processStartSort, selectedFormReference} from "../selectors";
 import withLog from "../../../core/error/component/withLog";
 import GovUKDetailsObserver from "../../../core/util/GovUKDetailsObserver";
 import _ from 'lodash';
@@ -54,7 +54,7 @@ class CaseDetailsPanel extends React.Component {
     };
 
     render() {
-        const {caseDetails, selectedFormReference} = this.props;
+        const {caseDetails, selectedFormReference, processStartSort} = this.props;
 
         return <div id="case">
             <div className="govuk-grid-row">
@@ -79,6 +79,17 @@ class CaseDetailsPanel extends React.Component {
             <div className="govuk-grid-row govuk-card mt-4">
                 <div className="govuk-grid-column-full">
                     <h3 className="govuk-heading-m">Case history</h3>
+                    <div className="govuk-form-group">
+                        <label className="govuk-label" htmlFor="sort">
+                            Order by
+                        </label>
+                        <select className="govuk-select" id="sort" name="sort" onChange={e => {
+                            this.props.setProcessStartSort(e.target.value)
+                        }}>
+                            <option value="desc" selected={processStartSort === 'desc'}>Latest process start date</option>
+                            <option value="acs" selected={processStartSort === 'asc'}>Earliest process start date</option>
+                        </select>
+                    </div>
                     <div id={`caseDetails-${caseDetails.businessKey}`} className="govuk-accordion"
                          data-module="govuk-accordion">
                         {caseDetails.processInstances.map(processInstance => {
@@ -220,17 +231,20 @@ class CaseDetailsPanel extends React.Component {
 }
 
 CaseDetailsPanel.propTypes = {
+    processStartSort: PropTypes.string,
+    setProcessStartSort: PropTypes.func,
     setSelectedFormReference: PropTypes.func.isRequired,
     selectedFormReference: PropTypes.object
 };
 
-const mapDispatchToProps = dispatch => bindActionCreators({getFormVersion, setSelectedFormReference}, dispatch);
+const mapDispatchToProps = dispatch => bindActionCreators({getFormVersion, setSelectedFormReference, setProcessStartSort}, dispatch);
 
 export default withRouter(connect((state) => {
     return {
         kc: state.keycloak,
         appConfig: state.appConfig,
         selectedFormReference: selectedFormReference(state),
+        processStartSort: processStartSort(state)
     }
 }, mapDispatchToProps)(withLog(CaseDetailsPanel)));
 

@@ -21,3 +21,5 @@ export const loadingFormSubmissionData = state => state[NAME].get('loadingFormSu
 export const formSubmissionData = state => state[NAME].get('formSubmissionData');
 
 export const loadingNextSearchResults = state => state[NAME].get('loadingNextSearchResults');
+
+export const processStartSort = state => state[NAME].get('processStartSort');

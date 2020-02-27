@@ -2,6 +2,7 @@ import Immutable from 'immutable';
 import * as actions from './actionTypes';
 import _ from 'lodash';
 const {Map} = Immutable;
+import moment from 'moment';
 
 export const initialState = new Map({
     searching: false,
@@ -16,6 +17,7 @@ export const initialState = new Map({
     loadingFormSubmissionData: false,
     formSubmissionData: null,
     loadingNextSearchResults: false,
+    processStartSort: null
 });
 
 function reducer(state = initialState, action) {
@@ -74,6 +76,15 @@ function reducer(state = initialState, action) {
         case actions.RESET_FORM:
             return state.set('formSubmissionData', null)
                 .set('formVersionDetails', null);
+
+        case actions.SET_PROCESS_START_DATE_SORT:
+            const processStartSort = action.sort;
+            const caseDetails = state.get('caseDetails');
+
+            caseDetails.processInstances =  _.orderBy(caseDetails.processInstances, (instance) => {
+                return new Date(instance.startDate);
+            }, [processStartSort]);
+            return state.set('caseDetails', caseDetails).set('processStartSort', processStartSort);
         case actions.RESET_CASE:
             return initialState;
         default:
