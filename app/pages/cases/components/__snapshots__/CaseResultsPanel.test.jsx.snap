@@ -11,7 +11,7 @@ exports[`CaseResultsPanel renders search result keys 1`] = `
       "entries": Array [
         Object {
           "hash": "",
-          "key": "9f95f9",
+          "key": "trigs2",
           "pathname": "/",
           "search": "",
           "state": undefined,
@@ -25,7 +25,7 @@ exports[`CaseResultsPanel renders search result keys 1`] = `
       "listen": [Function],
       "location": Object {
         "hash": "",
-        "key": "9f95f9",
+        "key": "trigs2",
         "pathname": "/",
         "search": "",
         "state": undefined,
@@ -106,7 +106,7 @@ exports[`CaseResultsPanel renders search result keys 1`] = `
             "entries": Array [
               Object {
                 "hash": "",
-                "key": "9f95f9",
+                "key": "trigs2",
                 "pathname": "/",
                 "search": "",
                 "state": undefined,
@@ -120,7 +120,7 @@ exports[`CaseResultsPanel renders search result keys 1`] = `
             "listen": [Function],
             "location": Object {
               "hash": "",
-              "key": "9f95f9",
+              "key": "trigs2",
               "pathname": "/",
               "search": "",
               "state": undefined,
@@ -132,7 +132,7 @@ exports[`CaseResultsPanel renders search result keys 1`] = `
         location={
           Object {
             "hash": "",
-            "key": "9f95f9",
+            "key": "trigs2",
             "pathname": "/",
             "search": "",
             "state": undefined,
@@ -183,7 +183,7 @@ exports[`CaseResultsPanel renders search result keys 1`] = `
               "entries": Array [
                 Object {
                   "hash": "",
-                  "key": "9f95f9",
+                  "key": "trigs2",
                   "pathname": "/",
                   "search": "",
                   "state": undefined,
@@ -197,7 +197,7 @@ exports[`CaseResultsPanel renders search result keys 1`] = `
               "listen": [Function],
               "location": Object {
                 "hash": "",
-                "key": "9f95f9",
+                "key": "trigs2",
                 "pathname": "/",
                 "search": "",
                 "state": undefined,
@@ -209,7 +209,7 @@ exports[`CaseResultsPanel renders search result keys 1`] = `
           location={
             Object {
               "hash": "",
-              "key": "9f95f9",
+              "key": "trigs2",
               "pathname": "/",
               "search": "",
               "state": undefined,
@@ -262,7 +262,7 @@ exports[`CaseResultsPanel renders search result keys 1`] = `
                 "entries": Array [
                   Object {
                     "hash": "",
-                    "key": "9f95f9",
+                    "key": "trigs2",
                     "pathname": "/",
                     "search": "",
                     "state": undefined,
@@ -276,7 +276,7 @@ exports[`CaseResultsPanel renders search result keys 1`] = `
                 "listen": [Function],
                 "location": Object {
                   "hash": "",
-                  "key": "9f95f9",
+                  "key": "trigs2",
                   "pathname": "/",
                   "search": "",
                   "state": undefined,
@@ -288,7 +288,7 @@ exports[`CaseResultsPanel renders search result keys 1`] = `
             location={
               Object {
                 "hash": "",
-                "key": "9f95f9",
+                "key": "trigs2",
                 "pathname": "/",
                 "search": "",
                 "state": undefined,
@@ -345,7 +345,7 @@ exports[`CaseResultsPanel renders search result keys 1`] = `
                   "entries": Array [
                     Object {
                       "hash": "",
-                      "key": "9f95f9",
+                      "key": "trigs2",
                       "pathname": "/",
                       "search": "",
                       "state": undefined,
@@ -359,7 +359,7 @@ exports[`CaseResultsPanel renders search result keys 1`] = `
                   "listen": [Function],
                   "location": Object {
                     "hash": "",
-                    "key": "9f95f9",
+                    "key": "trigs2",
                     "pathname": "/",
                     "search": "",
                     "state": undefined,
@@ -371,7 +371,7 @@ exports[`CaseResultsPanel renders search result keys 1`] = `
               location={
                 Object {
                   "hash": "",
-                  "key": "9f95f9",
+                  "key": "trigs2",
                   "pathname": "/",
                   "search": "",
                   "state": undefined,
