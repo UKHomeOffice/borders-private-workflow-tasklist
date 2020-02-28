@@ -2,8 +2,12 @@ import { scrollToMainContent } from './scrollToMainContent';
 
 describe('scrollToMainContent', () => {
   const preventDefault = jest.fn();
-  const scrollIntoView = jest.fn();
-  window.HTMLElement.prototype.scrollIntoView = scrollIntoView;
+  const setAttribute = jest.fn();
+  const focus = jest.fn();
+  const removeAttribute = jest.fn();
+  window.HTMLElement.prototype.setAttribute = setAttribute;
+  window.HTMLElement.prototype.focus = focus;
+  window.HTMLElement.prototype.removeAttribute = removeAttribute;
 
   afterEach(() => {
     jest.resetAllMocks();
@@ -14,15 +18,21 @@ describe('scrollToMainContent', () => {
     expect(preventDefault).toHaveBeenCalledTimes(1);
   });
 
-  it('fires scrollIntoView if div found', () => {
+  it('fires methods if div found', () => {
     document.body.innerHTML = '<div id="main-content">Hello!</div>';
     scrollToMainContent({ preventDefault });
-    expect(scrollIntoView).toHaveBeenCalledTimes(1);
+    expect(setAttribute).toHaveBeenCalledTimes(1);
+    expect(setAttribute).toHaveBeenLastCalledWith('tabindex', '-1');
+    expect(focus).toHaveBeenCalledTimes(1);
+    expect(removeAttribute).toHaveBeenCalledTimes(1);
+    expect(removeAttribute).toHaveBeenLastCalledWith('tabindex');
   });
 
-  it('does not fire scrollIntoView if div not found', () => {
+  it('does not fire methods if div not found', () => {
     document.body.innerHTML = '<div>Hello!</div>';
     scrollToMainContent({ preventDefault });
-    expect(scrollIntoView).not.toHaveBeenCalled();
+    expect(setAttribute).not.toHaveBeenCalled();
+    expect(focus).not.toHaveBeenCalled();
+    expect(removeAttribute).not.toHaveBeenCalled();
   });
 });
