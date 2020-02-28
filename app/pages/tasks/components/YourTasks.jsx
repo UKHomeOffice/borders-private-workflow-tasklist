@@ -46,16 +46,17 @@ const YourTasks = props => {
                     const dueLabel = moment().to(due);
                     return <div key={task.id} className="govuk-grid-row">
                         <div className="govuk-grid-column-one-half">
-                            <span className="govuk-!-font-size-19">{task.name}</span>
+                            <span className="govuk-caption-m">{val.businessKey}</span>
+                            <span className="govuk-!-font-size-19 govuk-!-font-weight-bold">{task.name}</span>
                         </div>
                         <div className="govuk-grid-column-one-half">
                             <div className="govuk-grid-row">
                                 <div className="govuk-grid-column-two-thirds">
                                     {
-                                        moment(task.due).isAfter() ?  <div
-                                            className={`govuk-!-font-size-19 govuk-!-font-weight-bold mb-3`} style={{color: '#00703c'}}>{`due ${dueLabel}`}</div>
-                                             : <div
-                                                className={`govuk-!-font-size-19 govuk-!-font-weight-bold mb-3`} style={{color: '#d4351c'}}>Overdue {dueLabel}</div>
+                                        moment(task.due).isAfter() ?  <span aria-label={`due ${dueLabel}`}
+                                            className={`govuk-!-font-size-19 govuk-!-font-weight-bold mb-3 not-over-due-date`} style={{color: '#00703c'}}>{`Due ${dueLabel}`}</span>
+                                             : <span aria-label={`Urgent overdue ${dueLabel}`}
+                                                className={`govuk-!-font-size-19 govuk-!-font-weight-bold mb-3 over-due-date`} style={{color: '#d4351c'}}>Overdue {dueLabel}</span>
                                     }
 
                                 </div>
