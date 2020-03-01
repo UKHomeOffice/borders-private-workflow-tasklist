@@ -102,7 +102,7 @@ export class DashboardPanel extends React.Component {
           </ul>
         </div>
         <hr className="govuk-section-break govuk-section-break--m govuk-section-break--visible"/>
-        <div className="govuk-grid-row" style={{paddingTop: '10px'}}>
+        <div className="govuk-grid-row govuk-!-padding-top-3">
           <Suspense
             fallback={<div style={{display: 'flex', justifyContent: 'center', paddingTop: '20px'}}><DataSpinner
                 message="Loading panels..."/></div>}>

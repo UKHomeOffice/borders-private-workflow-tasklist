@@ -7,6 +7,7 @@ import Immutable, { Map } from 'immutable';
 import AppConstants from '../../../common/AppConstants';
 import { YourTasksContainer } from './YourTasksContainer';
 import YourTasks from './YourTasks';
+import TaskUtils from "./TaskUtils";
 
 jest.useFakeTimers();
 
@@ -103,13 +104,23 @@ describe('YourTasks Page', () => {
   const fetchTasksAssignedToYou = jest.fn();
 
   it('sets document title as expected', () => {
+    const taskUtil = new TaskUtils();
     const props = {
       filterTasksByName: jest.fn(),
       goToTask: jest.fn(),
       sortYourTasks: jest.fn(),
-      yourTasks: Immutable.fromJS({
-        isFetchingTasksAssignedToYou: true,
-      }),
+      yourTasks: taskUtil.applyGrouping('category',
+          [{
+            task: {
+              id: 'idZoo',
+              name: 'test',
+              priority: 1000,
+              due: date,
+              created: date,
+            },
+            'process-definition': {
+              category: 'Zoo'
+            }}])
     };
     shallow(<YourTasks {...props} />);
     expect(global.window.document.title).toBe(

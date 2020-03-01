@@ -82,7 +82,7 @@ class DashboardTitle extends React.Component {
     };
 
     return (
-      <div className="govuk-grid-row" style={{ paddingTop: '10px' }}>
+      <div className="govuk-grid-row govuk-!-padding-top-3">
         <div className="govuk-grid-column-one-half">
           <h1 className="govuk-heading-l">
             <span className="govuk-caption-l">{kc.tokenParsed.given_name} {kc.tokenParsed.family_name}</span>

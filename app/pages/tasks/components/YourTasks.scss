@@ -33,9 +33,9 @@ table.widetable-yourtasks tr td:nth-child(2) {
 
 
 .over-due-date {
-  color: govuk-colour("red")
+  color: #d4351c !important;
 }
 
 .not-over-due-date {
-  color: govuk-colour("green")
+  color: #00703c !important;
 }

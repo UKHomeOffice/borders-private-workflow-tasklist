@@ -1,5 +1,4 @@
 import _ from 'lodash';
-import ImmutablePropTypes from 'react-immutable-proptypes';
 import PropTypes from 'prop-types';
 import React from 'react';
 import moment from 'moment';
@@ -8,6 +7,22 @@ import FilterTaskName from './FilterTaskName';
 import SortTasks from './SortTasks';
 import AppConstants from '../../../common/AppConstants';
 
+const caption = (grouping, val) => {
+    let caption;
+    switch (grouping) {
+        case 'category':
+        case 'priority':
+            caption= val.businessKey;
+            break;
+        case 'reference':
+            caption = val['process-definition'].category;
+            break;
+        default:
+            caption = '';
+
+    }
+    return caption;
+}
 const YourTasks = props => {
 
     document.title = `Tasks assigned to you | ${AppConstants.APP_NAME}`;
@@ -17,25 +32,14 @@ const YourTasks = props => {
         sortYourTasks,
         filterTasksByName,
         goToTask,
+        groupTasks,
+        total,
+        sortValue,
+        filterValue,
+        grouping = 'category'
     } = props;
-    let groupedTasks = [];
 
-    if (yourTasks && yourTasks.get('tasks')) {
-        groupedTasks = _.groupBy(yourTasks.get('tasks').toJS(), data => {
-            const groupKey = data['process-definition'] ? data['process-definition'].category : 'Other';
-            return groupKey;
-        });
-    }
-
-    const sortByKeys = object => {
-        const keys = Object.keys(object);
-        const initialSort = _.sortBy(keys);
-        const sortedKeys = _.sortBy(initialSort, key => (key === 'Other' ? 1 : 0));
-        return _.fromPairs(_.map(sortedKeys, key => [key, object[key]]));
-    };
-    const sortedData = sortByKeys(groupedTasks);
-
-    const dataToDisplay = _.map(sortedData, (value, key) => {
+    const dataToDisplay = _.map(yourTasks, (value, key) => {
         const tasks = value.length === 1 ? 'task' : 'tasks';
         return <div id="taskGroups" key={key} className="govuk-grid-row">
             <div className="govuk-grid-column-full">
@@ -46,17 +50,20 @@ const YourTasks = props => {
                     const dueLabel = moment().to(due);
                     return <div key={task.id} className="govuk-grid-row">
                         <div className="govuk-grid-column-one-half">
-                            <span className="govuk-caption-m">{val.businessKey}</span>
+
+                            <span className="govuk-caption-m">{caption(grouping, val)}</span>
                             <span className="govuk-!-font-size-19 govuk-!-font-weight-bold">{task.name}</span>
                         </div>
                         <div className="govuk-grid-column-one-half">
                             <div className="govuk-grid-row">
-                                <div className="govuk-grid-column-two-thirds">
+                                <div className="govuk-grid-column-two-thirds govuk-!-margin-bottom-3">
                                     {
-                                        moment(task.due).isAfter() ?  <span aria-label={`due ${dueLabel}`}
-                                            className={`govuk-!-font-size-19 govuk-!-font-weight-bold mb-3 not-over-due-date`} style={{color: '#00703c'}}>{`Due ${dueLabel}`}</span>
-                                             : <span aria-label={`Urgent overdue ${dueLabel}`}
-                                                className={`govuk-!-font-size-19 govuk-!-font-weight-bold mb-3 over-due-date`} style={{color: '#d4351c'}}>Overdue {dueLabel}</span>
+                                        moment(task.due).isAfter() ? <span aria-label={`due ${dueLabel}`}
+                                                                           className={`govuk-!-font-size-19 govuk-!-font-weight-bold not-over-due-date`}
+                                                                           >{`Due ${dueLabel}`}</span>
+                                            : <span aria-label={`Urgent overdue ${dueLabel}`}
+                                                    className={`govuk-!-font-size-19 govuk-!-font-weight-bold over-due-date`}
+                                                    >Overdue {dueLabel}</span>
                                     }
 
                                 </div>
@@ -79,9 +86,9 @@ const YourTasks = props => {
         </div>
     });
 
-    let totalTasks = yourTasks.get('total');
-    totalTasks = totalTasks === 1 ? `${totalTasks} task` : `${totalTasks} tasks`;
 
+    const totalTasks = total === 1 ? `${total} task` : `${total} tasks`;
+    console.log(yourTasks);
     return (
         <div className="govuk-grid-row">
             <div className="govuk-grid-column-full">
@@ -92,12 +99,31 @@ const YourTasks = props => {
                       </span>
                     </div>
                 </div>
-                <div className="govuk-grid-row" style={{paddingTop: '10px'}}>
-                    <div className="govuk-grid-column-one-half">
-                        <SortTasks tasks={yourTasks} sortTasks={sortYourTasks}/>
+                <div className="govuk-grid-row govuk-!-padding-top-3">
+                    <div className="govuk-grid-column-two-thirds">
+                        <div className="govuk-grid-row">
+                            <div className="govuk-grid-column-one-half">
+                                <SortTasks sortValue={sortValue} sortTasks={sortYourTasks}/>
+                            </div>
+                            <div className="govuk-grid-column-one-half">
+                                <div className="govuk-form-group">
+                                    <label className="govuk-label" htmlFor="groupBy">
+                                        Group tasks by:
+                                    </label>
+                                    <select
+                                        defaultValue={grouping}
+                                        onChange={e => groupTasks(e.target.value)}
+                                        className="govuk-select" id="groupBy" name="groupBy">
+                                        <option value="category">Category</option>
+                                        <option value="reference">BF Reference</option>
+                                        <option value="priority">Priority</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <div className="govuk-grid-column-one-half">
-                        <FilterTaskName tasks={yourTasks} filterTasksByName={filterTasksByName}/>
+                    <div className="govuk-grid-column-one-third">
+                        <FilterTaskName filterValue={filterValue} filterTasksByName={filterTasksByName}/>
                     </div>
                 </div>
                 <div className="govuk-grid-row">
@@ -115,7 +141,7 @@ YourTasks.propTypes = {
     filterTasksByName: PropTypes.func.isRequired,
     goToTask: PropTypes.func.isRequired,
     sortYourTasks: PropTypes.func.isRequired,
-    yourTasks: ImmutablePropTypes.map.isRequired,
+    yourTasks: PropTypes.object,
 };
 
 export default YourTasks;

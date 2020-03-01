@@ -9,7 +9,7 @@ const secureLocalStorage = new SecureLS({
 export const clearAllExceptDefault = () => {
     secureLocalStorage
         .getAllKeys()
-        .filter(key => !['shift', 'extendedStaffDetails'].includes(key))
+        .filter(key => !['shift', 'extendedStaffDetails', 'yourTasksGrouping'].includes(key))
         .forEach(key => secureLocalStorage.remove(key));
 };
 
