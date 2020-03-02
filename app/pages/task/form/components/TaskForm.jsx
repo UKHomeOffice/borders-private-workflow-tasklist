@@ -117,6 +117,11 @@ export default class TaskForm extends React.Component {
             processContext: variables,
             taskContext: task.toJS()
         };
+
+        if (submission.data.processContext) {
+            delete submission.data.processContext.submissionData;
+        }
+
         if (form) {
             const that = this;
             Formio.registerPlugin({
