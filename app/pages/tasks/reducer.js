@@ -76,7 +76,10 @@ function reducer(state = initialState, action) {
                 .setIn(['yourTasks', 'yourTasksFilterValue'], null);
 
         case actions.GROUP_YOUR_TASKS :
-            return  state.setIn(['yourTasks', 'groupBy'], action.groupBy);
+            return state.setIn(['yourTasks', 'groupBy'], action.groupBy);
+
+        case actions.GROUP_YOUR_TEAM_TASKS :
+            return state.setIn(['yourGroupTasks', 'groupBy'], action.groupBy);
         default:
             return state;
     }

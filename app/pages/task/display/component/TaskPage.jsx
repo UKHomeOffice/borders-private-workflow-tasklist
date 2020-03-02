@@ -12,18 +12,19 @@ import DataSpinner from "../../../../core/components/DataSpinner";
 import TaskDetailsPage from "./TaskDetailsPage";
 import NotFound from "../../../../core/components/NotFound";
 import AppConstants from '../../../../common/AppConstants';
+import queryString from 'query-string';
 
 class TaskPage extends React.Component {
 
     componentDidMount() {
-        const { match: { params } } = this.props;
+        const {match: {params}} = this.props;
         this.taskId = params.taskId;
         this.props.fetchTask(this.taskId);
         document.title = AppConstants.APP_NAME;
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
-        const { task } = this.props;
+        const {task} = this.props;
         if (prevProps.taskId !== this.props.taskId) {
             this.props.fetchTask(this.props.taskId);
         }
@@ -38,14 +39,33 @@ class TaskPage extends React.Component {
     }
 
     render() {
-        const {task, isFetchingTask} = this.props;
+        const {task, isFetchingTask, location} = this.props;
         if (isFetchingTask) {
             return <DataSpinner message="Fetching task information"/>
         } else {
             if (task.isEmpty()) {
-               return <NotFound resource="Task" id={this.taskId}/>
+                return <NotFound resource="Task" id={this.taskId}/>
             }
-            return task.get('assignee') && task.get('assignee') === this.props.kc.tokenParsed.email ? <TaskDetailsPage {...this.props} /> : <TaskSummaryPage {...this.props}/>
+            const from = queryString.parse(location.search).from;
+            return from ? <React.Fragment>
+                <div className="govuk-grid-row">
+                    <div className="govuk-grid-column-full">
+                        <a href={AppConstants.DASHBOARD_PATH} style={{textDecoration: 'none'}}
+                           className="govuk-back-link govuk-!-font-size-19"
+                           onClick={(event) => {
+                               event.preventDefault();
+                               if (from === 'yourTasks') {
+                                   this.props.history.replace(AppConstants.YOUR_TASKS_PATH)
+                               } else {
+                                   this.props.history.replace(AppConstants.YOUR_GROUP_TASKS_PATH)
+                               }
+                           }}>Back to your {from === 'yourTasks' ? 'tasks' : 'team tasks'} </a>
+                    </div>
+                </div>
+                {task.get('assignee') && task.get('assignee') === this.props.kc.tokenParsed.email ?
+                    <TaskDetailsPage {...this.props} /> : <TaskSummaryPage {...this.props}/>}
+            </React.Fragment> :  task.get('assignee') && task.get('assignee') === this.props.kc.tokenParsed.email ?
+                    <TaskDetailsPage {...this.props} /> : <TaskSummaryPage {...this.props}/>
         }
 
     }

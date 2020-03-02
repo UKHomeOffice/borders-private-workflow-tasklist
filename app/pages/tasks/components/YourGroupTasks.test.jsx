@@ -130,20 +130,8 @@ describe('YourGroupTasksContainer Page', () => {
     expect(wrapper.find('#yourGroupTasksTotalCount').text()).toEqual(
       '1 task allocated to your team',
     );
-    const tableWrapper = wrapper.find('table');
-    expect(tableWrapper.exists()).toEqual(true);
-
-    const rows = wrapper.find('.widetable-yourgrouptasks');
+    const rows = wrapper.find('#taskGroups');
     expect(rows.length).toEqual(1);
-
-    const firstRowColumns = rows
-      .first()
-      .find('td')
-      .map(column => column.text());
-    expect(firstRowColumns.length).toEqual(4);
-    expect(firstRowColumns[0]).toEqual('test');
-    expect(firstRowColumns[1]).toEqual('due a few seconds ago');
-    expect(firstRowColumns[2]).toEqual('Assigned to you');
   });
 
   it('renders your group tasks on filter value', async () => {

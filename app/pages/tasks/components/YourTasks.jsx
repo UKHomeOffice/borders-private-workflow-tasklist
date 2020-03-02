@@ -6,23 +6,10 @@ import './YourTasks.scss';
 import FilterTaskName from './FilterTaskName';
 import SortTasks from './SortTasks';
 import AppConstants from '../../../common/AppConstants';
+import TaskUtils from "./TaskUtils";
+import GroupTasks from "./GroupTasks";
 
-const caption = (grouping, val) => {
-    let caption;
-    switch (grouping) {
-        case 'category':
-        case 'priority':
-            caption= val.businessKey;
-            break;
-        case 'reference':
-            caption = val['process-definition'].category;
-            break;
-        default:
-            caption = '';
-
-    }
-    return caption;
-}
+const taskUtils = new TaskUtils();
 const YourTasks = props => {
 
     document.title = `Tasks assigned to you | ${AppConstants.APP_NAME}`;
@@ -51,8 +38,15 @@ const YourTasks = props => {
                     return <div key={task.id} className="govuk-grid-row">
                         <div className="govuk-grid-column-one-half">
 
-                            <span className="govuk-caption-m">{caption(grouping, val)}</span>
-                            <span className="govuk-!-font-size-19 govuk-!-font-weight-bold">{task.name}</span>
+                            <span className="govuk-caption-m">{taskUtils.generateCaption(grouping, val)}</span>
+                            <span className="govuk-!-font-size-19 govuk-!-font-weight-bold">
+                                 <a href={`${AppConstants.TASK_PATH}/${task.id}`}
+                                    style={{textDecoration: 'underline'}}
+                                    className="govuk-link govuk-!-font-size-19" onClick={(e) => {
+                                     e.preventDefault();
+                                     goToTask(task.id)
+                                 }}>{task.name}</a>
+                            </span>
                         </div>
                         <div className="govuk-grid-column-one-half">
                             <div className="govuk-grid-row">
@@ -60,10 +54,10 @@ const YourTasks = props => {
                                     {
                                         moment(task.due).isAfter() ? <span aria-label={`due ${dueLabel}`}
                                                                            className={`govuk-!-font-size-19 govuk-!-font-weight-bold not-over-due-date`}
-                                                                           >{`Due ${dueLabel}`}</span>
+                                            >{`Due ${dueLabel}`}</span>
                                             : <span aria-label={`Urgent overdue ${dueLabel}`}
                                                     className={`govuk-!-font-size-19 govuk-!-font-weight-bold over-due-date`}
-                                                    >Overdue {dueLabel}</span>
+                                            >Overdue {dueLabel}</span>
                                     }
 
                                 </div>
@@ -85,10 +79,7 @@ const YourTasks = props => {
 
         </div>
     });
-
-
     const totalTasks = total === 1 ? `${total} task` : `${total} tasks`;
-    console.log(yourTasks);
     return (
         <div className="govuk-grid-row">
             <div className="govuk-grid-column-full">
@@ -106,19 +97,7 @@ const YourTasks = props => {
                                 <SortTasks sortValue={sortValue} sortTasks={sortYourTasks}/>
                             </div>
                             <div className="govuk-grid-column-one-half">
-                                <div className="govuk-form-group">
-                                    <label className="govuk-label" htmlFor="groupBy">
-                                        Group tasks by:
-                                    </label>
-                                    <select
-                                        defaultValue={grouping}
-                                        onChange={e => groupTasks(e.target.value)}
-                                        className="govuk-select" id="groupBy" name="groupBy">
-                                        <option value="category">Category</option>
-                                        <option value="reference">BF Reference</option>
-                                        <option value="priority">Priority</option>
-                                    </select>
-                                </div>
+                                <GroupTasks groupTasks={groupTasks} grouping={grouping}/>
                             </div>
                         </div>
                     </div>

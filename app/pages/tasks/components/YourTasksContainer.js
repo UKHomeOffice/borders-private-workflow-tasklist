@@ -94,14 +94,13 @@ export class YourTasksContainer extends React.Component {
     }
 
     goToTask(taskId) {
-        this.props.history.replace(`/task/${taskId}`);
+        this.props.history.replace(`/task/${taskId}?from=yourTasks`);
     }
 
     componentWillUnmount() {
         if (this.client) {
             this.client.deactivate();
         }
-
         this.props.resetYourTasks();
     }
 

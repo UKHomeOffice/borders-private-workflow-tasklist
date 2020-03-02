@@ -35,4 +35,21 @@ export default class TaskUtils {
                 }));
         }
     }
+
+    generateCaption(grouping, val) {
+        let caption;
+        switch (grouping) {
+            case 'category':
+            case 'priority':
+                caption = val.businessKey;
+                break;
+            case 'reference':
+                caption = val['process-definition'].category;
+                break;
+            default:
+                caption = '';
+
+        }
+        return caption;
+    };
 }

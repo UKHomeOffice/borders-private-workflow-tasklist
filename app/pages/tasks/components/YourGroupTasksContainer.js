@@ -12,6 +12,8 @@ import DataSpinner from '../../../core/components/DataSpinner';
 import YourGroupTasks from './YourGroupTasks';
 import AppConstants from '../../../common/AppConstants';
 import {claimSuccessful, unclaimSuccessful} from '../../task/display/selectors';
+import secureLocalStorage from "../../../common/security/SecureLocalStorage";
+import TaskUtils from "./TaskUtils";
 
 export class YourGroupTasksContainer extends React.Component {
     constructor(props) {
@@ -20,6 +22,7 @@ export class YourGroupTasksContainer extends React.Component {
         this.sortYourGroupTasks = this.sortYourGroupTasks.bind(this);
         this.filterTasksByName = this.filterTasksByName.bind(this);
         this.debounceSearch = this.debounceSearch.bind(this);
+        this.taskUtils = new TaskUtils();
     }
 
     componentDidMount() {
@@ -30,6 +33,10 @@ export class YourGroupTasksContainer extends React.Component {
             const {yourGroupTasks} = that.props;
             this.loadYourGroupTasks(true, yourGroupTasks.get('yourGroupTasksSortValue'), yourGroupTasks.get('yourGroupTasksFilterValue'));
         }, AppConstants.ONE_MINUTE);
+
+        if (secureLocalStorage.get('yourTeamTasksGrouping')) {
+            this.props.groupYourTeamTasks(secureLocalStorage.get('yourTeamTasksGrouping'));
+        }
     }
 
     loadYourGroupTasks(skipLoading, yourGroupTasksSortValue, yourGroupTasksFilterValue = null) {
@@ -37,7 +44,7 @@ export class YourGroupTasksContainer extends React.Component {
     }
 
     goToTask(taskId) {
-        this.props.history.replace(`/task/${taskId}`);
+        this.props.history.replace(`/task/${taskId}?from=yourGroupTasks`);
     }
 
     componentWillUnmount() {
@@ -86,14 +93,23 @@ export class YourGroupTasksContainer extends React.Component {
         if (yourGroupTasks.get('isFetchingYourGroupTasks')) {
             return <DataSpinner message="Fetching your group tasks"/>;
         }
+        const groupBy = yourGroupTasks.get('groupBy');
 
         return (
             <YourGroupTasks
+                grouping={groupBy}
+                total={yourGroupTasks.get('total')}
+                sortValue={yourGroupTasks.get('sortValue')}
+                filterValue={yourGroupTasks.get('yourTasksFilterValue')}
                 filterTasksByName={this.filterTasksByName}
-                yourGroupTasks={yourGroupTasks}
+                yourGroupTasks={this.taskUtils.applyGrouping(groupBy, yourGroupTasks.get('tasks').toJS())}
                 sortYourGroupTasks={this.sortYourGroupTasks}
                 userId={this.props.kc.tokenParsed.email}
                 goToTask={this.goToTask}
+                groupTasks={(grouping) => {
+                    secureLocalStorage.set('yourTeamTasksGrouping', grouping);
+                    this.props.groupYourTeamTasks(grouping);
+                }}
                 claimTask={taskId => {
                     if (this.selectedTask) {
                         this.selectedTask = null;
@@ -114,6 +130,7 @@ export class YourGroupTasksContainer extends React.Component {
 }
 
 YourGroupTasksContainer.propTypes = {
+    groupYourTeamTasks: PropTypes.func,
     handleUnclaim: PropTypes.func,
     unclaimTask: PropTypes.func,
     fetchYourGroupTasks: PropTypes.func.isRequired,

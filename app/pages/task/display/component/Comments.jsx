@@ -6,14 +6,12 @@ import {comments, isFetchingComments} from "../selectors";
 import {bindActionCreators} from "redux";
 import * as actions from "../actions";
 import {connect} from "react-redux";
-import {createStructuredSelector} from "reselect";
 import moment from "moment";
 import Pagination from "../../../../core/components/Pagination";
 import ShowMore from 'react-show-more';
 import Collapsible from 'react-collapsible';
 import {withRouter} from 'react-router';
-import {customEventSubmissionStatus, form, submissionStatus} from '../../form/selectors';
-import {TaskDetailsPage} from './TaskDetailsPage';
+
 
 const uuidv4 = require('uuid/v4');
 

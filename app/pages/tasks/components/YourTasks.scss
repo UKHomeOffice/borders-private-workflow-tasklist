@@ -1,37 +1,3 @@
-table.narrowtable-yourtasks {
-  width: 100%;
-  word-wrap: break-word;
-}
-
-table.narrowtable-yourtasks tr td,
-table.narrowtable-yourtasks tr th {
-  border: none;
-  padding: 5px 0 0;
-
-}
-
-table.widetable-yourtasks td button {
-  margin: 10px 0;
-  text-align: right;
-}
-
-table.widetable-yourtasks {
-  width: 100%;
-}
-
-table.widetable-yourtasks th, td {
-  border-bottom: 1px solid #bfc1c3;
-}
-
-table.widetable-yourtasks tr td:nth-child(1) {
-  width: 700px;
-}
-
-table.widetable-yourtasks tr td:nth-child(2) {
-  width: 400px;
-}
-
-
 .over-due-date {
   color: #d4351c !important;
 }

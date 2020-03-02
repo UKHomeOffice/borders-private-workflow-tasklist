@@ -10,8 +10,6 @@ import ImmutablePropTypes from 'react-immutable-proptypes';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import {withRouter} from 'react-router';
-import ReactHyperResponsiveTable from 'react-hyper-responsive-table';
-import * as types from "react-device-detect";
 import './FormsListPage.css';
 import AppConstants from '../../../../common/AppConstants';
 

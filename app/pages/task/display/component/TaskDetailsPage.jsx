@@ -34,6 +34,7 @@ export class TaskDetailsPage extends React.Component {
             hideContentOnLoad={showSubmittingLoader}
             foregroundStyle={{color: 'black'}}
             backgroundStyle={{backgroundColor: 'white'}}>
+
             <TaskTitle {...this.props} />
             <div className="govuk-grid-row">
                 <div className="govuk-grid-column-two-thirds" style={{paddingTop: '10px'}}>
