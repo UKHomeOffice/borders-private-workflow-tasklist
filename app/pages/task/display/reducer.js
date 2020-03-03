@@ -17,7 +17,9 @@ const initialState = new Map({
   completeSuccessful: false,
   variables: null,
   candidateGroups: new List([]),
-
+  businessKey: null,
+  processDefinition: null,
+  extensionData: null
 });
 
 function reducer(state = initialState, action) {
@@ -28,7 +30,7 @@ function reducer(state = initialState, action) {
     case actions.FETCH_TASK:
       return initialState;
     case actions.FETCH_TASK_SUCCESS:
-      const { task } = action.payload.entity;
+      const { task, businessKey, candidateGroups, extensionData} = action.payload.entity;
       const rawVariables = action.payload.entity.variables ? action.payload.entity.variables : {};
       const variables = {};
       Object.keys(rawVariables).forEach(key => {
@@ -40,8 +42,11 @@ function reducer(state = initialState, action) {
       });
       return state.set('isFetchingTask', false)
         .set('task', Immutable.fromJS(task))
-        .set('candidateGroups', action.payload.entity.candidateGroups
-          ? Immutable.fromJS(action.payload.entity.candidateGroups) : new List([]))
+        .set('businessKey', businessKey)
+          .set('extensionData', Immutable.fromJS(extensionData))
+        .set('processDefinition', Immutable.fromJS(action.payload.entity['process-definition']))
+        .set('candidateGroups', candidateGroups
+          ? Immutable.fromJS(candidateGroups) : new List([]))
         .set('variables', variables);
     case actions.FETCH_TASK_FAILURE:
       return state.set('isFetchingTask', false);

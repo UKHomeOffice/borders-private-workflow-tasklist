@@ -65,11 +65,8 @@ export class Comments extends React.Component {
                 {this.state.pageOfItems.map((comment) => {
                     return <div className="govuk-card" key={uuidv4()}>
                         <div className="govuk-card__content">
-                            <h4 className="govuk-heading-s">
-                                <span
-                                    className="govuk-caption-s">{moment(comment.get('createdon')).fromNow(false)}</span>
-                                {comment.get('email')}
-                            </h4>
+                            <span className="govuk-caption-m">{moment(comment.get('createdon')).fromNow(false)}</span>
+                            <h4 className="govuk-heading-s">g{comment.get('email')}</h4>
                             <ShowMore
                                 lines={2}
                                 more='Show more'

@@ -1,7 +1,15 @@
 import React from "react";
 import PropTypes from 'prop-types';
 import TaskSummaryPage from "./TaskSummaryPage";
-import {candidateGroups, isFetchingTask, task, variables} from "../selectors";
+import {
+    businessKey,
+    candidateGroups,
+    processDefinition,
+    isFetchingTask,
+    task,
+    variables,
+    extensionData
+} from "../selectors";
 import * as actions from "../actions";
 import {bindActionCreators} from "redux";
 import {connect} from "react-redux";
@@ -75,7 +83,10 @@ TaskPage.propTypes = {
     fetchTask: PropTypes.func.isRequired,
     clearTask: PropTypes.func.isRequired,
     isFetchingTask: PropTypes.bool,
-    task: ImmutablePropTypes.map
+    task: ImmutablePropTypes.map,
+    businessKey: PropTypes.string,
+    processDefinition: ImmutablePropTypes.map,
+    extensionData: ImmutablePropTypes.map
 };
 
 
@@ -84,6 +95,9 @@ const mapStateToProps = createStructuredSelector({
     task: task,
     candidateGroups: candidateGroups,
     variables: variables,
+    businessKey: businessKey,
+    processDefinition: processDefinition,
+    extensionData: extensionData,
     kc: (state) => state.keycloak
 });
 

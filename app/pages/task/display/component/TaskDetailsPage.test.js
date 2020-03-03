@@ -11,6 +11,9 @@ describe('TaskDetailsPage', () => {
   const updateDueDate = jest.fn();
   const dueDate = moment();
   const props = {
+    processDefinition : Immutable.fromJS({
+      'category' : 'test'
+    }),
     task: Immutable.fromJS({
       name: 'test',
       formKey: null,

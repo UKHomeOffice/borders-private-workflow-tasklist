@@ -14,3 +14,6 @@ export const claimSuccessful = state => state[NAME].get('claimSuccessful');
 export const completeSuccessful = state => state[NAME].get('completeSuccessful');
 export const candidateGroups = state => state[NAME].get('candidateGroups');
 export const variables = state => state[NAME].get('variables');
+export const businessKey = state => state[NAME].get('businessKey');
+export const processDefinition = state => state[NAME].get('processDefinition');
+export const extensionData = state => state[NAME].get('extensionData');

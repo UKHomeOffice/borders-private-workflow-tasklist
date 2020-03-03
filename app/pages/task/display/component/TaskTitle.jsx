@@ -7,12 +7,8 @@ import moment from 'moment';
 import { priority } from '../../../../core/util/priority';
 
 const TaskTitle = props => {
-  const { kc, task } = props;
+  const { kc, task, businessKey, processDefinition} = props;
   const taskPriority = priority(task.get('priority'));
-  // datetime format
-  const utcDateTime = moment.utc(task.get('due')).format();
-  const localDateTime = moment(utcDateTime).local().format();
-  const dueDateTime = moment().to(localDateTime);
   let assignee = 'You are the current assignee';
 
   if (!task.get('assignee')) {
@@ -20,26 +16,39 @@ const TaskTitle = props => {
   } else if (task.get('assignee') && task.get('assignee') !== kc.tokenParsed.email) {
     assignee = kc.tokenParsed.email;
   }
-
+  const due = moment(task.get('due'));
+  const dueLabel = moment().to(due);
   return (
     <div>
       <div className="govuk-grid-row">
         <div className="govuk-grid-column-full" id="taskName">
-          <h1 className="govuk-heading-m" style={{ width: '100%' }}>{task.get('name')}</h1>
+          <span className="govuk-caption-l">{businessKey}</span>
+          <h2 className="govuk-heading-l">{task.get('name')}</h2>
+
         </div>
       </div>
       <div className="govuk-grid-row">
-        <div className="govuk-grid-column-one-third" id="taskDueDate">
-          <span className="govuk-caption-m govuk-!-font-size-19">Due</span>
-          <h4 className="govuk-heading-m govuk-!-font-size-19">{dueDateTime}</h4>
+        <div className="govuk-grid-column-one-quarter" id="category">
+          <span className="govuk-caption-m govuk-!-font-size-19">Category</span>
+          <h4 className="govuk-heading-m govuk-!-font-size-19">{processDefinition.get('category')}</h4>
         </div>
-        <div className="govuk-grid-column-one-third" id="taskPriority">
+        <div className="govuk-grid-column-one-quarter" id="taskDueDate">
+          <span className="govuk-caption-m govuk-!-font-size-19">Due</span>
+
+          {
+            moment(task.due).isAfter() ? <h4 aria-label={`due ${dueLabel}`}
+                                               className={`govuk-!-font-size-19 govuk-!-font-weight-bold not-over-due-date`}
+                >{`Due ${dueLabel}`}</h4>
+                : <h4 aria-label={`Urgent overdue ${dueLabel}`}
+                        className={`govuk-!-font-size-19 govuk-!-font-weight-bold over-due-date`}
+                >Overdue {dueLabel}</h4>
+          }
+        </div>
+        <div className="govuk-grid-column-one-quarter" id="taskPriority">
           <span className="govuk-caption-m govuk-!-font-size-19">Priority</span>
           <h4 className="govuk-heading-m govuk-!-font-size-19">{taskPriority}</h4>
         </div>
-      </div>
-      <div className="govuk-grid-row">
-        <div className="govuk-grid-column-one-third" id="taskAssignee">
+        <div className="govuk-grid-column-one-quarter" id="taskAssignee">
           <span className="govuk-caption-m govuk-!-font-size-19">Assignee</span>
           <h4 className="govuk-heading-m govuk-!-font-size-19">{assignee}</h4>
         </div>
