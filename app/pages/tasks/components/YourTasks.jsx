@@ -2,7 +2,6 @@ import _ from 'lodash';
 import PropTypes from 'prop-types';
 import React from 'react';
 import moment from 'moment';
-import './YourTasks.scss';
 import FilterTaskName from './FilterTaskName';
 import SortTasks from './SortTasks';
 import AppConstants from '../../../common/AppConstants';

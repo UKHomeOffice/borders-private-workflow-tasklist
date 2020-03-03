@@ -93,3 +93,11 @@ input:disabled {
 .app-container {
   @include govuk-width-container(1400px);
 }
+
+.over-due-date {
+  color: #d4351c !important;
+}
+
+.not-over-due-date {
+  color: #00703c !important;
+}

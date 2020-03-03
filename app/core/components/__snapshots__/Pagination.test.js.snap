@@ -266,12 +266,7 @@ exports[`Pagination renders pagination 1`] = `
   pageSize={10}
 >
   <div
-    className="govuk-grid-row"
-    style={
-      Object {
-        "display": "flex",
-      }
-    }
+    className="govuk-grid-row govuk-!-margin-bottom-2"
   >
     <div
       className="govuk-grid-column-full"
@@ -281,14 +276,17 @@ exports[`Pagination renders pagination 1`] = `
       >
         Showing 1 - 5 of 50 results
       </div>
+    </div>
+  </div>
+  <div
+    className="govuk-grid-row pagination-center"
+  >
+    <div
+      className="govuk-grid-column-full"
+    >
       <nav
         aria-label="comments-pagination"
         role="navigation"
-        style={
-          Object {
-            "textAlign": "center",
-          }
-        }
       >
         <ul
           className="pagination govuk-!-font-size-19"

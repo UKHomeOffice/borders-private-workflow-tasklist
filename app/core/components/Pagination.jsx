@@ -116,35 +116,45 @@ class Pagination extends React.Component {
         }
         const summary = `Showing ${pager.currentPage} - ${pager.totalPages} of ${pager.totalItems} results`;
         return (
-            <div className="govuk-grid-row" style={{display: 'flex'}}>
-                <div className="govuk-grid-column-full">
-                    <div className="pagination__summary govuk-!-font-size-19">{summary}</div>
-                    <nav role="navigation" aria-label="comments-pagination" style={{textAlign:'center'}}>
-                        <ul className="pagination govuk-!-font-size-19">
-                            <li className="pagination__item">
-                                <a className="pagination__link" onClick={() => this.setPage(pager.currentPage - 1)}><span aria-hidden="true" role="presentation">&laquo;</span> Previous</a>
-                            </li>
-                            {pager.pages.map((page, index) => {
-                                    const current = pager.currentPage === page ? 'current' : '';
-                                    const paginationLink = `pagination__link ${current}`;
-                                    return <li key={index} className="pagination__item">
-                                        <a className={paginationLink}
-                                           onClick={() => this.setPage(page)}>{page}</a>
-                                    </li>
-
-                                }
-                            )}
-                            <li className="pagination__item">
-                                <a className="pagination__link" onClick={() => this.setPage(pager.currentPage + 1)}>Next <span aria-hidden="true" role="presentation">&raquo;</span> </a>
-                            </li>
-                        </ul>
-                    </nav>
-
+            <React.Fragment>
+                <div className="govuk-grid-row govuk-!-margin-bottom-2">
+                    <div className="govuk-grid-column-full">
+                        <div className="pagination__summary govuk-!-font-size-19">{summary}</div>
+                    </div>
                 </div>
-            </div>
+                <div className="govuk-grid-row pagination-center">
+                    <div className="govuk-grid-column-full">
+                        <nav role="navigation" aria-label="comments-pagination">
+                            <ul className="pagination govuk-!-font-size-19">
+                                <li className="pagination__item">
+                                    <a className="pagination__link" onClick={() => this.setPage(pager.currentPage - 1)}><span aria-hidden="true"
+                                                                                                                              role="presentation">&laquo;</span> Previous</a>
+                                </li>
+                                {pager.pages.map((page, index) => {
+                                        const current = pager.currentPage === page ? 'current' : '';
+                                        const paginationLink = `pagination__link ${current}`;
+                                        return <li key={index} className="pagination__item">
+                                            <a className={paginationLink}
+                                               onClick={() => this.setPage(page)}>{page}</a>
+                                        </li>
+
+                                    }
+                                )}
+                                <li className="pagination__item">
+                                    <a className="pagination__link" onClick={() => this.setPage(pager.currentPage + 1)}>Next <span
+                                        aria-hidden="true" role="presentation">&raquo;</span> </a>
+                                </li>
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </React.Fragment>
+
         );
     }
 }
+
+
 
 Pagination.propTypes = propTypes;
 Pagination.defaultProps = defaultProps;
