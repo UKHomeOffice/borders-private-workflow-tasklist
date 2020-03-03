@@ -20,7 +20,7 @@ export class TaskDetailsPage extends React.Component {
         const showSubmittingLoader = submissionStatus === SUBMITTING || customEventSubmissionStatus === SUBMITTING;
 
         const hasFormKey = task && task.get('formKey');
-        const allowComments = extensionData ? extensionData.get('allowComments') === 'true' : false;
+        const allowComments = extensionData ? extensionData.get('allowComments') : false;
 
         return <div><Loader
             show={showSubmittingLoader}
