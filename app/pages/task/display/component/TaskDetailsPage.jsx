@@ -43,7 +43,11 @@ export class TaskDetailsPage extends React.Component {
             <div className="govuk-grid-row govuk-!-padding-top-3">
                 <div className={allowComments ? "govuk-grid-column-two-thirds" : 'govuk-grid-column-full'}>
                     {hasFormKey ? <CompleteTaskForm task={task} variables={variables}/> :
-                        <Actions task={task} variables={variables}/>}
+                        <React.Fragment>
+                            <p className="govuk-body-l">{task.get('description')}</p>
+                            <Actions task={task} variables={variables}/>
+                        </React.Fragment>
+                    }
                 </div>
                 {allowComments ? <div className="govuk-grid-column-one-third">
                     <Comments taskId={task.get('id')} {...this.props} />

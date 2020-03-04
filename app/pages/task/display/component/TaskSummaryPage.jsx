@@ -7,29 +7,29 @@ import Actions from './Actions';
 import TaskTitle from './TaskTitle';
 
 const TaskSummaryPage = props => {
-  const { candidateGroups, kc, task, variables } = props;
+    const {task, variables} = props;
 
-  return (
-    <div>
-      <TaskTitle candidateGroups={candidateGroups} kc={kc} task={task} />
-      <div className="govuk-grid-row">
-        <div className="govuk-column-two-thirds" style={{ paddingTop: '10px' }}>
-          <p>{ task.get('description') }</p>
-          <Actions task={task} variables={variables} />
-        </div>
-      </div>
-    </div>
-  );
+    return (
+        <React.Fragment>
+            <TaskTitle {...props} />
+            <div className="govuk-grid-row govuk-!-padding-top-3">
+                <div className="govuk-grid-column-full ">
+                    <p className="govuk-body-l">{task.get('description')}</p>
+                    <Actions task={task} variables={variables}/>
+                </div>
+            </div>
+        </React.Fragment>
+    );
 };
 
 TaskSummaryPage.propTypes = {
-  candidateGroups: ImmutablePropTypes.list.isRequired,
-  task: ImmutablePropTypes.map.isRequired,
-  variables: PropTypes.any,
+    candidateGroups: ImmutablePropTypes.list.isRequired,
+    task: ImmutablePropTypes.map.isRequired,
+    variables: PropTypes.any,
 };
 
 TaskSummaryPage.defaultProps = {
-  variables: '',
+    variables: null,
 };
 
 export default TaskSummaryPage;

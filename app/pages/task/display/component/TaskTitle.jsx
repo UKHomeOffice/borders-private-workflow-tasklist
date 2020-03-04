@@ -19,7 +19,7 @@ const TaskTitle = props => {
   const due = moment(task.get('due'));
   const dueLabel = moment().to(due);
   return (
-    <div>
+    <React.Fragment>
       <div className="govuk-grid-row">
         <div className="govuk-grid-column-full" id="taskName">
           <span className="govuk-caption-l">{businessKey}</span>
@@ -53,7 +53,7 @@ const TaskTitle = props => {
           <h4 className="govuk-heading-m govuk-!-font-size-19">{assignee}</h4>
         </div>
       </div>
-    </div>
+    </React.Fragment>
   );
 };
 
