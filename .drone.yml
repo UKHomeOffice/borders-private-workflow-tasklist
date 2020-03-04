@@ -85,6 +85,22 @@ pipeline:
       branch: master
       event: push
 
+  open-snow-change-dev:
+    image: quay.io/ukhomeofficedigital/snowtify:latest
+    secrets:
+      - source: DEV_SERVICE_NOW_PASSWORD
+        target: SNOW_TEST_PASS
+      - source: DEV_SERVICE_NOW_USERNAME
+        target: SNOW_TEST_USER
+    environment:
+      - SNOW_DESC=${DRONE_COMMIT_SHA}
+      - SNOW_ENDPOINT=https://cto-change-dev.internal.cto-notprod.homeoffice.gov.uk/create
+      - SNOW_INT_ID_FILE=/build/internal-id
+      - SNOW_EXTERNAL_ID=${DRONE_REPO}:${DRONE_COMMIT_SHA}
+    when:
+      branch: master
+      event: push
+
   deploy_to_dev:
     image: quay.io/ukhomeofficedigital/kd
     secrets:
@@ -160,6 +176,42 @@ pipeline:
     when:
       branch: master
       event: push
+
+  complete-snow-change-dev:
+    image: quay.io/ukhomeofficedigital/snowtify:latest
+    secrets:
+      - source: DEV_SERVICE_NOW_PASSWORD
+        target: SNOW_TEST_PASS
+      - source: DEV_SERVICE_NOW_USERNAME
+        target: SNOW_TEST_USER
+    environment:
+      - SNOW_DESC=${DRONE_COMMIT_SHA}
+      - SNOW_ENDPOINT=https://cto-change-dev.internal.cto-notprod.homeoffice.gov.uk/update
+      - SNOW_INT_ID_FILE=/build/internal-id
+    comments: Successful deployment of ${DRONE_REPO}:${DRONE_COMMIT_SHA}
+    deployment_outcome: success
+    when:
+      branch: master
+      event: push
+      status: success
+
+  cancel-snow-change-dev:
+    image: quay.io/ukhomeofficedigital/snowtify:latest
+    secrets:
+      - source: DEV_SERVICE_NOW_PASSWORD
+        target: SNOW_TEST_PASS
+      - source: DEV_SERVICE_NOW_USERNAME
+        target: SNOW_TEST_USER
+    environment:
+      - SNOW_DESC=${DRONE_COMMIT_SHA}
+      - SNOW_ENDPOINT=https://cto-change-dev.internal.cto-notprod.homeoffice.gov.uk/update
+      - SNOW_INT_ID_FILE=/build/internal-id
+    comments: Failed deployment of ${DRONE_REPO}:${DRONE_COMMIT_SHA}
+    deployment_outcome: fail
+    when:
+      branch: master
+      event: push
+      status: failure
 
   # CB-936 Moved here whilst we investigate slow build times and timing out vulnerability scans
   vulnerability-scan:
