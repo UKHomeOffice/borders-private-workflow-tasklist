@@ -75,7 +75,7 @@ const YourGroupTasks = props => {
 
                                 </div>
                                 <div className="govuk-grid-column-one-third text-right">
-                                    {task.assignee === null ?
+                                    {task.assignee === null || task.assignee !== userId ?
                                         <button type="submit" id="actionButton" className="govuk-button"
                                                 onClick={() => claimTask(task.id)}>Claim</button> :
                                         <button type="submit" id="actionButton" className="govuk-button"
