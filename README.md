@@ -94,3 +94,4 @@ www_keycloak_client_id|keycloak client name
 www_name|www
 www_port|8080
 www_ui_version|BETA
+
