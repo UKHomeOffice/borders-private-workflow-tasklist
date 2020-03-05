@@ -40,12 +40,12 @@ export class FormsListPage extends React.Component {
     const { isFetchingProcessDefinitions, processDefinitions } = this.props;
     return (
       <React.Fragment>
-        <div className="govuk-grid-row">
+        <div className="govuk-grid-row" id="proceduresCountLabel">
           <div className="govuk-grid-column-one-half">
-            <h1 className="govuk-heading-l" id="proceduresCountLabel">
-              <span className="govuk-caption-l">Operational forms</span>
+            <span className="govuk-caption-l">Operational forms</span>
+            <h2 className="govuk-heading-l">
               {processDefinitions.size} forms
-            </h1>
+            </h2>
           </div>
         </div>
         <div className="govuk-grid-row">

@@ -50,16 +50,16 @@ exports[`Submit a form page renders the form and process definition 1`] = `
         className="govuk-grid-column-full"
       >
         <div>
-          <h1
+          <span
+            className="govuk-caption-l"
+          >
+            Operational form
+          </span>
+          <h2
             className="govuk-heading-l"
           >
-            <span
-              className="govuk-caption-l"
-            >
-              Operational form
-            </span>
             procedure
-          </h1>
+          </h2>
           <StartForm
             appConfig={
               Object {

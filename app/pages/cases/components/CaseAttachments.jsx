@@ -33,16 +33,16 @@ class CaseAttachments extends React.Component {
                         </summary>
                         <div className="govuk-grid-row govuk-!-margin-top-4">
                             <div className="govuk-grid-column-full">
-                                <table className="govuk-table">
+                                <table className="govuk-table" style={{tableLayout: 'fixed'}}>
                                     <caption className="govuk-table__caption">File details</caption>
                                     <thead className="govuk-table__head">
                                     <tr className="govuk-table__row">
-                                        <th scope="col" className="govuk-table__header govuk-!-width-one-half">Name</th>
+                                        <th scope="col" className="govuk-table__header">Name</th>
                                         <th scope="col"
-                                            className="govuk-table__header govuk-!-width-one-quarter">Uploaded on
+                                            className="govuk-table__header">Uploaded on
                                         </th>
                                         <th scope="col"
-                                            className="govuk-table__header govuk-!-width-one-quarter">Uploaded by
+                                            className="govuk-table__header">Uploaded by
                                         </th>
                                     </tr>
                                     </thead>
@@ -57,7 +57,7 @@ class CaseAttachments extends React.Component {
                                                    }}>{attachment.submittedFilename}</a>
                                             </th>
                                             <td className="govuk-table__cell">{moment(attachment.submittedDateTime).format('DD-MM-YYYY HH:mm')}</td>
-                                            <td className="govuk-table__cell">{attachment.submittedEmail}</td>
+                                            <td className="govuk-table__cell" style={{wordWrap: 'break-word'}}>{attachment.submittedEmail}</td>
                                         </tr>
                                     }) : <h4 className="govuk-heading-s govuk-!-margin-top-4">
                                         No attachments associated with case

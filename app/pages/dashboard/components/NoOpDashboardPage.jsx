@@ -10,8 +10,8 @@ export class NoOpDashboardPage extends React.Component {
   render() {
       return (<div className="govuk-grid-row" style={{ width: '100%', height: '230px' }}>
             <div className="govuk-grid-column-full">
+                <span className="govuk-caption-l">{this.props.kc.tokenParsed.given_name} {this.props.kc.tokenParsed.family_name}</span>
                 <h2 className="govuk-heading-l">
-                    <span className="govuk-caption-l">{this.props.kc.tokenParsed.given_name} {this.props.kc.tokenParsed.family_name}</span>
                     Operational dashboard
                 </h2>
             </div>
