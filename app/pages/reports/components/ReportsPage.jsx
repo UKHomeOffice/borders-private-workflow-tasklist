@@ -44,12 +44,12 @@ export class ReportsPage extends React.Component {
 
     return (
       <div>
-        <div className="govuk-grid-row">
+        <div className="govuk-grid-row" id="reportsCountLabel">
           <div className="govuk-grid-column-one-half">
-            <h1 className="govuk-heading-l" id="reportsCountLabel">
-              <span className="govuk-caption-l">Operational reports</span>
+            <span className="govuk-caption-l">Operational reports</span>
+            <h2 className="govuk-heading-l" >
               {reports.size} {reports.size === 1 ? 'report' : 'reports'}
-            </h1>
+            </h2>
           </div>
         </div>
         {loadingReports ? (

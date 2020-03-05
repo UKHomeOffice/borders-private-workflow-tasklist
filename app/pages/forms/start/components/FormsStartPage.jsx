@@ -241,10 +241,10 @@ export class ProcessStartPage extends React.Component {
           <div className="govuk-grid-row">
             <div className="govuk-grid-column-full">
               <div>
-                <h1 className="govuk-heading-l">
-                  <span className="govuk-caption-l">Operational form</span>
+                <span className="govuk-caption-l">Operational form</span>
+                <h2 className="govuk-heading-l">
                   {processDefinition.getIn(['process-definition', 'name'])}
-                </h1>
+                </h2>
                 {this.props.submissionResponse &&
                 this.props.submissionResponse.tasks &&
                 this.props.submissionResponse.tasks.length !== 0 ? (

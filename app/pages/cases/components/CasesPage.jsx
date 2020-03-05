@@ -44,10 +44,10 @@ class CasesPage extends React.Component {
       <React.Fragment>
         <div className="govuk-grid-row">
           <div className="govuk-grid-column-two-thirds">
-            <h1 className="govuk-heading-l">
-              <span className="govuk-caption-l">Case view</span>
+            <span className="govuk-caption-l">Case view</span>
+            <h2 className="govuk-heading-l">
               Cases
-            </h1>
+            </h2>
             <div className="govuk-inset-text">
               Enter a BF number to search for cases.{' '}
               <strong>Please note all actions are audited.</strong>

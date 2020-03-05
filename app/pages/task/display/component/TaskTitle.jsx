@@ -23,10 +23,10 @@ const TaskTitle = props => {
     <React.Fragment>
       <div className="govuk-grid-row">
         <div className="govuk-grid-column-full" id="taskName">
-          <h1 className="govuk-heading-l">
-            <span className="govuk-caption-l">{businessKey}</span>
+          <span className="govuk-caption-l">{businessKey}</span>
+          <h2 className="govuk-heading-l">
             {task.get('name')}
-          </h1>
+          </h2>
         </div>
       </div>
       <div className="govuk-grid-row">

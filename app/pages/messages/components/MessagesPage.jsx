@@ -53,12 +53,12 @@ export class MessagesPage extends React.Component {
             Loading messages...
           </h4>
         ) : (
-          <div className="govuk-grid-row">
+          <div className="govuk-grid-row" id="numberOfMessages">
             <div className="govuk-grid-column-one-half">
-              <h1 className="govuk-heading-l" id="numberOfMessages">
-                <span className="govuk-caption-l">Operational messages</span>
+              <span className="govuk-caption-l">Operational messages</span>
+              <h2 className="govuk-heading-l" >
                 {this.props.total} messages
-              </h1>
+              </h2>
             </div>
           </div>
         )}
