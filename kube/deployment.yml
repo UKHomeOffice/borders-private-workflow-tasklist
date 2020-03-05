@@ -71,6 +71,8 @@ spec:
           value: "{{.REPORT_PROTOCOL}}{{.REPORT_URL}}"
         - name: API_FORM_URI
           value: "{{.API_FORM_PROTOCOL}}{{.API_FORM_URL}}"
+        - name: API_ATTACHMENT_URI
+          value: "{{.API_ATTACHMENT_PROTOCOL}}{{.API_ATTACHMENT_URL}}"
         - name: ANALYTICS_URL
           value: "{{.ANALYTICS_URL}}"
         - name: ANALYTICS_SITE_ID
