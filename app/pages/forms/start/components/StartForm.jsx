@@ -6,6 +6,7 @@ import FileService from '../../../../core/FileService';
 import secureLocalStorage from "../../../../common/security/SecureLocalStorage";
 import FormioInterpolator from '../../../../core/FormioInterpolator';
 import _ from 'lodash';
+import FormioUtils from 'formiojs/utils';
 
 class StartForm extends React.Component {
     constructor(props) {
@@ -137,7 +138,14 @@ class StartForm extends React.Component {
                 }
             }, 'processSubFormInterpolation');
         }
+        const businessKeyComponent = FormioUtils.getComponent(startForm.components, 'businessKey');
 
+        if (businessKeyComponent && businessKeyComponent.defaultValue !== '') {
+            submission = {
+                ...submission,
+                businessKey: businessKeyComponent.defaultValue
+            }
+        }
         this.formioInterpolator.interpolate(startForm, submission);
         return <Form
             submission={{
