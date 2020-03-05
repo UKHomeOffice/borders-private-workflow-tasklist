@@ -53,7 +53,27 @@ class CaseAttachments extends React.Component {
                                                 <a className="govuk-link" href="#"
                                                    onClick={(e) => {
                                                        e.preventDefault();
-                                                       window.open(attachment.url);
+                                                       fetch(attachment.url, {
+                                                           headers: {
+                                                               'Authorization': this.props.kc.token
+                                                           }
+                                                       }).then((response) => response.blob())
+                                                           .then((blob) => {
+                                                               const url = window.URL.createObjectURL(new Blob([blob]));
+                                                               const link = document.createElement('a');
+                                                               link.href = url;
+                                                               link.setAttribute('download', `${attachment.submittedFilename}`);
+                                                               document.body.appendChild(link);
+                                                               link.click();
+                                                               link.parentNode.removeChild(link);
+                                                           }).catch(error => {
+                                                           this.props.log([
+                                                               {
+                                                                 message: `Failed to download file ${attachment.submittedFilename}`,
+                                                                 error: error.toString()
+                                                               }
+                                                           ])
+                                                       })
                                                    }}>{attachment.submittedFilename}</a>
                                             </th>
                                             <td className="govuk-table__cell">{moment(attachment.submittedDateTime).format('DD-MM-YYYY HH:mm')}</td>
@@ -91,6 +111,7 @@ const mapDispatchToProps = dispatch => bindActionCreators({getCaseAttachments},
 
 export default withRouter(connect((state) => {
     return {
+        kc: state.keycloak,
         fetchingCaseAttachments: fetchingCaseAttachments(state),
         attachments: attachments(state),
     }
