@@ -14,6 +14,7 @@ import _ from 'lodash';
 import CaseActions from "../case-actions/components/CaseActions";
 import {CopyToClipboard} from 'react-copy-to-clipboard';
 import CaseMetrics from "./CaseMetrics";
+import CaseAttachments from "./CaseAttachments";
 
 class CaseDetailsPanel extends React.Component {
     constructor(props) {
@@ -67,7 +68,7 @@ class CaseDetailsPanel extends React.Component {
                             <CopyToClipboard text={this.state.caseReferenceUrl}
                                              onCopy={() => this.setState({caseReferenceUrlCopied: true})}>
                                 <button style={{float: 'right'}} className="govuk-button govuk-button--secondary">
-                                    { this.state.caseReferenceUrlCopied ? 'Copied case link' : 'Copy case link'}
+                                    {this.state.caseReferenceUrlCopied ? 'Copied case link' : 'Copy case link'}
                                 </button>
                             </CopyToClipboard>
                         </div>
@@ -75,8 +76,9 @@ class CaseDetailsPanel extends React.Component {
                 </div>
             </div>
             {caseDetails.actions && caseDetails.actions.length > 0 ? <CaseActions {...{caseDetails}} /> : null}
+            <CaseAttachments businessKey={caseDetails.businessKey}/>
             {caseDetails.metrics ? <CaseMetrics {...{caseDetails}} /> : null}
-            <div className="govuk-grid-row govuk-card mt-4">
+            <div className="govuk-grid-row govuk-card govuk-!-margin-top-4">
                 <div className="govuk-grid-column-full">
                     <h3 className="govuk-heading-m">Case history</h3>
                     <div className="govuk-form-group">
@@ -87,7 +89,7 @@ class CaseDetailsPanel extends React.Component {
                             this.props.setProcessStartSort(e.target.value)
                         }} defaultValue={processStartSort}>
                             <option value="desc">Latest process start date</option>
-                            <option value="acs" selected={!processStartSort}>Earliest process start date</option>
+                            <option value="acs">Earliest process start date</option>
                         </select>
                     </div>
                     <div id={`caseDetails-${caseDetails.businessKey}`} className="govuk-accordion"
@@ -237,7 +239,11 @@ CaseDetailsPanel.propTypes = {
     selectedFormReference: PropTypes.object
 };
 
-const mapDispatchToProps = dispatch => bindActionCreators({getFormVersion, setSelectedFormReference, setProcessStartSort}, dispatch);
+const mapDispatchToProps = dispatch => bindActionCreators({
+    getFormVersion,
+    setSelectedFormReference,
+    setProcessStartSort
+}, dispatch);
 
 export default withRouter(connect((state) => {
     return {

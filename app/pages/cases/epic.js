@@ -57,6 +57,17 @@ const getFormSubmissionData = (action$, store, {client}) => action$.ofType(types
         .map(payload => actions.getFormSubmissionDataSuccess(payload))
         .catch(error => errorObservable(actions.getFormSubmissionDataFailure(), error)));
 
+const getCaseAttachments = (action$, store, {client}) => action$.ofType(types.GET_CASE_ATTACHMENTS)
+    .mergeMap(action => client({
+        method: 'GET',
+        path: `${store.getState().appConfig.attachmentServiceUrl}/files/${action.businessKey}`,
+        headers: {
+            Accept: 'application/json',
+            Authorization: `Bearer ${store.getState().keycloak.token}`,
+        },
+    }).retryWhen(retry)
+        .map(payload => actions.getCaseAttachmentsSuccess(payload))
+        .catch(error => errorObservable(actions.getCaseAttachmentsFailure(), error)));
 
 const loadNextSearchResults = (action$, store, {client}) => action$.ofType(types.LOAD_NEXT_SEARCH_RESULTS)
     .mergeMap(action => client({
@@ -71,4 +82,4 @@ const loadNextSearchResults = (action$, store, {client}) => action$.ofType(types
         .catch(error => errorObservable(actions.loadNextSearchResultsFailure(), error)));
 
 export default combineEpics(findCasesByKey, getCaseByKey, getFormVersion, getFormSubmissionData,
-    loadNextSearchResults);
+    loadNextSearchResults, getCaseAttachments);

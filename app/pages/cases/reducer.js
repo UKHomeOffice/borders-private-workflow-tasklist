@@ -16,7 +16,9 @@ export const initialState = new Map({
     loadingFormSubmissionData: false,
     formSubmissionData: null,
     loadingNextSearchResults: false,
-    processStartSort: 'acs'
+    processStartSort: 'acs',
+    fetchingCaseAttachments: true,
+    attachments: null
 });
 
 function reducer(state = initialState, action) {
@@ -88,6 +90,14 @@ function reducer(state = initialState, action) {
                 return new Date(instance.startDate);
             }, [processStartSort]);
             return state.set('caseDetails', caseDetails).set('processStartSort', processStartSort);
+
+        case actions.GET_CASE_ATTACHMENTS:
+            return state.set('fetchingCaseAttachments', true);
+        case actions.GET_CASE_ATTACHMENTS_SUCCESS:
+            return state.set('fetchingCaseAttachments', false)
+                .set('attachments', action.payload.entity);
+        case actions.GET_CASE_ATTACHMENTS_FAILURE:
+            return state.set('fetchingCaseAttachments', false);
         case actions.RESET_CASE:
             return initialState;
         default:

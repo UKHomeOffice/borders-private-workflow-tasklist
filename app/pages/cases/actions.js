@@ -90,6 +90,19 @@ const setProcessStartSort = (sort) => ({
     sort
 });
 
+const getCaseAttachments = (businessKey) => ({
+    type: types.GET_CASE_ATTACHMENTS,
+    businessKey
+});
+
+const getCaseAttachmentsSuccess = (payload) => ({
+    type: types.GET_CASE_ATTACHMENTS_SUCCESS,
+    payload
+});
+
+const getCaseAttachmentsFailure = () => ({
+    type: types.GET_CASE_ATTACHMENTS_FAILURE
+});
 export {
     findCasesByKey,
     findCasesByKeySuccess,
@@ -109,5 +122,8 @@ export {
     loadNextSearchResults,
     loadNextSearchResultsFailure,
     loadNextSearchResultsSuccess,
-    setProcessStartSort
+    setProcessStartSort,
+    getCaseAttachments,
+    getCaseAttachmentsSuccess,
+    getCaseAttachmentsFailure
 }

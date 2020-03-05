@@ -23,3 +23,7 @@ export const formSubmissionData = state => state[NAME].get('formSubmissionData')
 export const loadingNextSearchResults = state => state[NAME].get('loadingNextSearchResults');
 
 export const processStartSort = state => state[NAME].get('processStartSort');
+
+export const fetchingCaseAttachments = state => state[NAME].get('fetchingCaseAttachments');
+
+export const attachments = state => state[NAME].get('attachments');
