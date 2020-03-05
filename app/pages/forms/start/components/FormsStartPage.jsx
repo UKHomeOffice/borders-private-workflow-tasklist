@@ -1,5 +1,23 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
+import { bindActionCreators } from 'redux';
+import ImmutablePropTypes from 'react-immutable-proptypes';
+import { connect } from 'react-redux';
+import { withRouter } from 'react-router';
+import { Formio } from 'react-formio';
+import Loader from 'react-loader-advanced';
+import PubSub from 'pubsub-js';
+import Immutable from 'immutable';
+import StartForm from './StartForm';
+import NotFound from '../../../../core/components/NotFound';
+import secureLocalStorage from '../../../../common/security/SecureLocalStorage';
+import withLog from '../../../../core/error/component/withLog';
+import { FAILED, SUBMISSION_SUCCESSFUL, SUBMITTING } from '../constants';
+import AppConstants from '../../../../common/AppConstants';
+import DataSpinner from '../../../../core/components/DataSpinner';
+import CompleteTaskForm from '../../../task/form/components/CompleteTaskForm';
+import FormioEventListener from '../../../../core/util/FormioEventListener';
+import * as actions from '../actions';
 import {
   form,
   isFetchingProcessDefinition,
@@ -8,25 +26,6 @@ import {
   submissionResponse,
   submissionStatus,
 } from '../selectors';
-import { bindActionCreators } from 'redux';
-import * as actions from '../actions';
-import ImmutablePropTypes from 'react-immutable-proptypes';
-import { connect } from 'react-redux';
-import { withRouter } from 'react-router';
-import { Formio } from 'react-formio';
-import AppConstants from '../../../../common/AppConstants';
-
-import DataSpinner from '../../../../core/components/DataSpinner';
-import Loader from 'react-loader-advanced';
-import StartForm from './StartForm';
-import NotFound from '../../../../core/components/NotFound';
-import secureLocalStorage from '../../../../common/security/SecureLocalStorage';
-import withLog from '../../../../core/error/component/withLog';
-import { FAILED, SUBMISSION_SUCCESSFUL, SUBMITTING } from '../constants';
-import PubSub from 'pubsub-js';
-import CompleteTaskForm from '../../../task/form/components/CompleteTaskForm';
-import Immutable from 'immutable';
-import FormioEventListener from '../../../../core/util/FormioEventListener';
 
 const { Map } = Immutable;
 
@@ -69,7 +68,8 @@ export class ProcessStartPage extends React.Component {
     const { submissionStatus } = this.props;
     if (
       submissionStatus !== prevProps.submissionStatus &&
-      this.form && this.form.formio
+      this.form &&
+      this.form.formio
     ) {
       const path = this.props.history.location.pathname;
       const user = this.props.kc.tokenParsed.email;
@@ -77,6 +77,29 @@ export class ProcessStartPage extends React.Component {
       this.handleSubmission(submissionStatus, user, path, processKey);
     }
   }
+
+  componentWillUnmount() {
+    this.props.clearProcessDefinition();
+    if (this.props.processDefinition.getIn(['process-definition', 'id'])) {
+      this.secureLocalStorage.remove(
+        this.props.processDefinition.getIn(['process-definition', 'id']),
+      );
+    }
+  }
+
+  handleCustomEvent = event => {
+    switch (event.type) {
+      case 'cancel':
+        this.secureLocalStorage.remove(
+          this.props.processDefinition.getIn(['process-definition', 'id']),
+        );
+        this.props.history.replace(AppConstants.DASHBOARD_PATH);
+        break;
+      case 'save-draft':
+        break;
+      default:
+    }
+  };
 
   handleSubmission(submissionStatus, user, path, processKey) {
     switch (submissionStatus) {
@@ -151,20 +174,6 @@ export class ProcessStartPage extends React.Component {
     }
   }
 
-  handleCustomEvent = event => {
-    switch (event.type) {
-      case 'cancel':
-        this.secureLocalStorage.remove(
-          this.props.processDefinition.getIn(['process-definition', 'id']),
-        );
-        this.props.history.replace(AppConstants.DASHBOARD_PATH);
-        break;
-      case 'save-draft':
-        break;
-      default:
-    }
-  };
-
   render() {
     const {
       form,
@@ -191,139 +200,121 @@ export class ProcessStartPage extends React.Component {
 
     if (loadingForm) {
       return <DataSpinner message="Loading form..." />;
-    } else {
-      if (!form) {
-        return (
-          <NotFound resource="Form" id={processDefinition.get('formKey')} />
-        );
-      }
-      const procedureKey = processDefinition.getIn([
-        'process-definition',
-        'key',
-      ]);
-      const variableInput = form.components.find(
-        c => c.key === 'submitVariableName',
-      );
-      const variableName = variableInput
-        ? variableInput.defaultValue
-        : form.name;
-      const process = processDefinition.getIn(['process-definition', 'name'])
-        ? processDefinition.getIn(['process-definition', 'name'])
-        : procedureKey;
+    }
+    if (!form) {
+      return <NotFound resource="Form" id={processDefinition.get('formKey')} />;
+    }
+    const procedureKey = processDefinition.getIn(['process-definition', 'key']);
+    const variableInput = form.components.find(
+      c => c.key === 'submitVariableName',
+    );
+    const variableName = variableInput ? variableInput.defaultValue : form.name;
+    const process = processDefinition.getIn(['process-definition', 'name'])
+      ? processDefinition.getIn(['process-definition', 'name'])
+      : procedureKey;
 
-      return (
-        <div>
-          {backToFormsLink()}
-          <Loader
-            show={submissionStatus === SUBMITTING}
-            message={
-              <div
-                style={{
-                  justifyContent: 'center',
-                  zIndex: 100,
-                  borderRadius: 0,
-                  position: 'absolute',
-                  left: 0,
-                  right: 0,
-                  top: '-20px',
-                  margin: 'auto',
-                }}
-              >
-                <DataSpinner message="Submitting form..." />
-              </div>
-            }
-            hideContentOnLoad={submissionStatus === SUBMITTING}
-            foregroundStyle={{ color: 'black' }}
-            backgroundStyle={{ backgroundColor: 'white' }}
-          >
-            <div className="govuk-grid-row">
-              <div className="govuk-grid-column-full">
-                <div>
+    return (
+      <div>
+        {backToFormsLink()}
+        <Loader
+          show={submissionStatus === SUBMITTING}
+          message={
+            <div
+              style={{
+                justifyContent: 'center',
+                zIndex: 100,
+                borderRadius: 0,
+                position: 'absolute',
+                left: 0,
+                right: 0,
+                top: '-20px',
+                margin: 'auto',
+              }}
+            >
+              <DataSpinner message="Submitting form..." />
+            </div>
+          }
+          hideContentOnLoad={submissionStatus === SUBMITTING}
+          foregroundStyle={{ color: 'black' }}
+          backgroundStyle={{ backgroundColor: 'white' }}
+        >
+          <div className="govuk-grid-row">
+            <div className="govuk-grid-column-full">
+              <div>
+                <h1 className="govuk-heading-l">
                   <span className="govuk-caption-l">Operational form</span>
-                  <h2 className="govuk-heading-l">
-                    {processDefinition.getIn(['process-definition', 'name'])}
-                  </h2>
-                  {this.props.submissionResponse &&
-                  this.props.submissionResponse.tasks &&
-                    this.props.submissionResponse.tasks.length !== 0 ? (
-                    <CompleteTaskForm
-                      variables={
-                        this.props.submissionResponse.processInstance.variables
+                  {processDefinition.getIn(['process-definition', 'name'])}
+                </h1>
+                {this.props.submissionResponse &&
+                this.props.submissionResponse.tasks &&
+                this.props.submissionResponse.tasks.length !== 0 ? (
+                  <CompleteTaskForm
+                    variables={
+                      this.props.submissionResponse.processInstance.variables
+                    }
+                    fromProcedure={true}
+                    task={
+                      new Map({
+                        fromProcedure: true,
+                        processName: processDefinition.getIn([
+                          'process-definition',
+                          'name',
+                        ]),
+                        processDefinitionId: processDefinition.getIn([
+                          'process-definition',
+                          'id',
+                        ]),
+                        formKey: this.props.submissionResponse.tasks[0].formKey,
+                        id: this.props.submissionResponse.tasks[0].id,
+                        assignee: this.props.submissionResponse.tasks[0]
+                          .assignee,
+                        processInstanceId: this.props.submissionResponse
+                          .tasks[0].processInstanceId,
+                        ...this.props.submissionResponse.tasks[0],
+                      })
+                    }
+                  />
+                ) : (
+                  <StartForm
+                    {...this.props}
+                    startForm={form}
+                    formReference={formLoaded => {
+                      this.form = formLoaded;
+                      if (this.form) {
+                        this.form.createPromise.then(() => {
+                          new FormioEventListener(this.form, this.props);
+                        });
                       }
-                      fromProcedure={true}
-                      task={
-                        new Map({
-                          fromProcedure: true,
-                          processName: processDefinition.getIn([
-                            'process-definition',
-                            'name',
-                          ]),
-                          processDefinitionId: processDefinition.getIn([
-                            'process-definition',
-                            'id',
-                          ]),
-                          formKey: this.props.submissionResponse.tasks[0]
-                            .formKey,
-                          id: this.props.submissionResponse.tasks[0].id,
-                          assignee: this.props.submissionResponse.tasks[0]
-                            .assignee,
-                          processInstanceId: this.props.submissionResponse
-                            .tasks[0].processInstanceId,
-                          ...this.props.submissionResponse.tasks[0],
-                        })
+                    }}
+                    dataChange={instance => {
+                      this.secureLocalStorage.set(
+                        processDefinition.getIn(['process-definition', 'id']),
+                        instance.data,
+                      );
+                    }}
+                    onCustomEvent={event => this.handleCustomEvent(event)}
+                    handleSubmit={submission => {
+                      if (this.form && this.form.formio) {
+                        this.form.formio.submitted = true;
+                        this.form.formio.submitting = true;
                       }
-                    />
-                  ) : (
-                    <StartForm
-                      {...this.props}
-                      startForm={form}
-                      formReference={formLoaded => {
-                        this.form = formLoaded;
-                        if (this.form) {
-                          this.form.createPromise.then(() => {
-                            new FormioEventListener(this.form, this.props);
-                          });
-                        }
-                      }}
-                      dataChange={instance => {
-                        this.secureLocalStorage.set(
-                          processDefinition.getIn(['process-definition', 'id']),
-                          instance.data,
-                        );
-                      }}
-                      onCustomEvent={event => this.handleCustomEvent(event)}
-                      handleSubmit={submission => {
-                        if (this.form && this.form.formio) {
-                          this.form.formio.submitted = true;
-                          this.form.formio.submitting = true;
-                        }
-                        this.props.submit(
-                          form.id,
-                          procedureKey,
-                          variableName,
-                          submission.data,
-                          process,
-                          this.props.nonShiftApiCall,
-                        );
-                      }}
-                    />
-                  )}
-                </div>
+                      this.props.submit(
+                        form.id,
+                        procedureKey,
+                        variableName,
+                        submission.data,
+                        process,
+                        this.props.nonShiftApiCall,
+                      );
+                    }}
+                  />
+                )}
               </div>
             </div>
-          </Loader>
-        </div>
-      );
-    }
-  }
-
-  componentWillUnmount() {
-    this.props.clearProcessDefinition();
-    if (this.props.processDefinition.getIn(['process-definition', 'id'])) {
-      this.secureLocalStorage.remove(
-        this.props.processDefinition.getIn(['process-definition', 'id']),
-      );
-    }
+          </div>
+        </Loader>
+      </div>
+    );
   }
 }
 

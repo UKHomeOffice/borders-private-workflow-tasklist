@@ -74,7 +74,7 @@ describe('YourGroupTasksContainer Page', () => {
       />,
     );
     expect(global.window.document.title).toBe(
-      `Tasks assigned to your team | ${AppConstants.APP_NAME}`,
+      `Your team’s tasks | ${AppConstants.APP_NAME}`,
     );
   });
 
@@ -128,7 +128,7 @@ describe('YourGroupTasksContainer Page', () => {
     expect(fetchYourGroupTasks).toBeCalled();
     expect(wrapper.find('.loader-content').exists()).toEqual(false);
     expect(wrapper.find('#yourGroupTasksTotalCount').text()).toEqual(
-      '1 task allocated to your team',
+      'Your team’s tasks1 task assigned to your team',
     );
     const rows = wrapper.find('#taskGroups');
     expect(rows.length).toEqual(1);

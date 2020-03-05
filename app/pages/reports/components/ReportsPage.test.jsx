@@ -23,7 +23,7 @@ describe('Reports Page', () => {
     };
     shallow(<ReportsPage {...props} />);
     expect(global.window.document.title).toBe(
-      `Reports | ${AppConstants.APP_NAME}`,
+      `Operational reports | ${AppConstants.APP_NAME}`,
     );
   });
 
@@ -38,7 +38,7 @@ describe('Reports Page', () => {
       <ReportsPage {...props} />,
     );
     expect(props.fetchReportsList).toBeCalled();
-    expect(wrapper.find('#reportsCountLabel').text()).toEqual('0 reports');
+    expect(wrapper.find('#reportsCountLabel').text()).toEqual('Operational reports0 reports');
     expect(wrapper.containsMatchingElement(Spinner)).toEqual(true);
   });
 
@@ -59,7 +59,7 @@ describe('Reports Page', () => {
       <ReportsPage {...props} />,
     );
     expect(props.fetchReportsList).toBeCalled();
-    expect(wrapper.find('#reportsCountLabel').text()).toEqual('1 report');
+    expect(wrapper.find('#reportsCountLabel').text()).toEqual('Operational reports1 report');
 
     const tableWrapper = wrapper.find('table');
     expect(tableWrapper.exists()).toEqual(true);

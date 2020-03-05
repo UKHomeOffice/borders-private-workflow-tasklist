@@ -37,7 +37,7 @@ describe('MessagesPage', () => {
     };
     shallow(<MessagesPage {...props} />);
     expect(global.window.document.title).toBe(
-      `Messages | ${AppConstants.APP_NAME}`,
+      `Operational messages | ${AppConstants.APP_NAME}`,
     );
   });
 
@@ -82,7 +82,7 @@ describe('MessagesPage', () => {
     );
 
     const messagesCountWrapper = wrapper.find('#numberOfMessages');
-    expect(messagesCountWrapper.text()).toEqual('1 messages');
+    expect(messagesCountWrapper.text()).toEqual('Operational messages1 messages');
 
     const flashCardWrapper = wrapper.find('#messageName');
     expect(flashCardWrapper.find('h3').text()).toEqual(

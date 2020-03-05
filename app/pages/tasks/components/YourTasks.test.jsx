@@ -7,7 +7,7 @@ import Immutable, { Map } from 'immutable';
 import AppConstants from '../../../common/AppConstants';
 import { YourTasksContainer } from './YourTasksContainer';
 import YourTasks from './YourTasks';
-import TaskUtils from "./TaskUtils";
+import TaskUtils from './TaskUtils';
 
 jest.useFakeTimers();
 
@@ -109,22 +109,24 @@ describe('YourTasks Page', () => {
       filterTasksByName: jest.fn(),
       goToTask: jest.fn(),
       sortYourTasks: jest.fn(),
-      yourTasks: taskUtil.applyGrouping('category',
-          [{
-            task: {
-              id: 'idZoo',
-              name: 'test',
-              priority: 1000,
-              due: date,
-              created: date,
-            },
-            'process-definition': {
-              category: 'Zoo'
-            }}])
+      yourTasks: taskUtil.applyGrouping('category', [
+        {
+          task: {
+            id: 'idZoo',
+            name: 'test',
+            priority: 1000,
+            due: date,
+            created: date,
+          },
+          'process-definition': {
+            category: 'Zoo',
+          },
+        },
+      ]),
     };
     shallow(<YourTasks {...props} />);
     expect(global.window.document.title).toBe(
-      `Tasks assigned to you | ${AppConstants.APP_NAME}`,
+      `Your tasks | ${AppConstants.APP_NAME}`,
     );
   });
 
@@ -180,7 +182,7 @@ describe('YourTasks Page', () => {
     expect(fetchTasksAssignedToYou).toBeCalled();
     expect(wrapper.find('.loader-content').exists()).toEqual(false);
     expect(wrapper.find('#yourTasksTotalCount').text()).toEqual(
-      '1 task assigned to you',
+      'Your tasks1 task assigned to you',
     );
     const rows = wrapper.find('#taskGroups');
     expect(rows.length).toEqual(5);
