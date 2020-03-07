@@ -39,7 +39,7 @@ const TaskTitle = props => {
         <div className="govuk-grid-column-one-quarter" id="taskDueDate">
           <span className="govuk-caption-m govuk-!-font-size-19">Due</span>
 
-          {moment(task.due).isAfter() ? (
+          {due.isAfter() ? (
             <h4
               aria-label={`due ${dueLabel}`}
               className="govuk-!-font-size-19 govuk-!-font-weight-bold not-over-due-date"
