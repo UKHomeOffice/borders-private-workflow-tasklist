@@ -45,6 +45,6 @@ describe('TaskDetailsPage', () => {
     console.log(wrapper.html());
     expect(wrapper.find('#taskName').text()).toEqual('test');
     expect(wrapper.find('#taskAssignee').text()).toEqual('AssigneeUnassigned');
-    expect(wrapper.find('#taskPriority').text()).toEqual('PriorityHigh');
+    expect(wrapper.find('#taskPriority').text()).toEqual('Priority (change)High');
   });
 });

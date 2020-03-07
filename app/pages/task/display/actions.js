@@ -20,17 +20,18 @@ const createComment = ({ taskId, comment }) => ({
   comment,
 });
 
-const updateDueDate = ({ taskId, dueDate }) => ({
-  type: types.UPDATE_DUE_DATE,
+const updateTask = ({ taskId, dueDate, priority }) => ({
+  type: types.UPDATE_TASK,
   taskId,
   dueDate,
+  priority
 });
 
-const updateDueDateSuccess = () => ({
-  type: types.UPDATE_DUE_DATE_SUCCESS,
+const updateTaskSuccess = () => ({
+  type: types.UPDATE_TASK_SUCCESS,
 });
-const updateDueDateFailure = () => ({
-  type: types.UPDATE_DUE_DATE_FAILURE,
+const updateTaskFailure = () => ({
+  type: types.UPDATE_TASK_FAILURE,
 });
 const createCommentSuccess = payload => ({
   type: types.CREATE_COMMENT_SUCCESS,
@@ -140,7 +141,7 @@ export {
   completeTaskSuccess,
   completeTaskFailure,
   clearTask,
-  updateDueDate,
-  updateDueDateSuccess,
-  updateDueDateFailure,
+  updateTask,
+  updateTaskSuccess,
+  updateTaskFailure,
 };

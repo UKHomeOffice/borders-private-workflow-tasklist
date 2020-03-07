@@ -61,7 +61,7 @@ export class TaskDetailsPage extends React.Component {
 
 
 TaskDetailsPage.propTypes = {
-    updateDueDate: PropTypes.func.isRequired,
+    updateTask: PropTypes.func.isRequired,
     submissionStatus: PropTypes.string,
     customEventSubmissionStatus: PropTypes.string,
 };

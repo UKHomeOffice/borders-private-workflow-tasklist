@@ -5,13 +5,14 @@ import * as types from './actionTypes';
 import * as actions from './actions';
 import { retry } from '../../../core/util/retry';
 
-const updateDueDate = (action$, store, { client }) => action$.ofType(types.UPDATE_DUE_DATE)
+const updateTask = (action$, store, { client }) => action$.ofType(types.UPDATE_TASK)
   .mergeMap(action => client({
     method: 'PUT',
     path: `${store.getState().appConfig.workflowServiceUrl}/api/workflow/tasks/${action.taskId}`,
     entity: {
       id: action.taskId,
       due: moment(action.dueDate, 'DD-MM-YYYY HH:mm').utc(),
+      priority: action.priority
     },
     headers: {
       'Content-Type': 'application/json',
@@ -19,7 +20,7 @@ const updateDueDate = (action$, store, { client }) => action$.ofType(types.UPDAT
       Authorization: `Bearer ${store.getState().keycloak.token}`,
     },
   }).map(() => actions.fetchTask(action.taskId))
-    .catch(error => errorObservable(actions.updateDueDateFailure(), error)));
+    .catch(error => errorObservable(actions.updateTaskFailure(), error)));
 
 
 const fetchComments = (action$, store, { client }) => action$.ofType(types.FETCH_COMMENTS)
@@ -124,4 +125,4 @@ export default combineEpics(fetchComments,
   claimTask,
   unclaimTask,
   completeTask,
-  updateDueDate);
+  updateTask);
