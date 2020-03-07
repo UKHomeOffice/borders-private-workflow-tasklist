@@ -16,7 +16,7 @@ import Comments from "./Comments";
 export class TaskDetailsPage extends React.Component {
 
     render() {
-        const {task, variables, submissionStatus, extensionData} = this.props;
+        const {task, variables, submissionStatus, extensionData, customEventSubmissionStatus} = this.props;
         const showSubmittingLoader = submissionStatus === SUBMITTING || customEventSubmissionStatus === SUBMITTING;
 
         const hasFormKey = task && task.get('formKey');
