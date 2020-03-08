@@ -100,10 +100,11 @@ export default class TaskForm extends React.Component {
         submission = variables[formVariableSubmissionName];
       }
     }
-    if (!submission.data) {
-      submission = {
-        data: {},
-      };
+    if (secureLocalStorage.get(task.get('id'))) {
+      submission.data = {
+        ...submission.data,
+        ...secureLocalStorage.get(task.get('id'))
+      }
     }
     submission.data = {
       ...submission.data,
@@ -181,6 +182,16 @@ export default class TaskForm extends React.Component {
               new FormioEventListener(this.form, this.props);
             });
           }
+        }}
+        onChange={instance => {
+          secureLocalStorage.set(task.get('id'),
+              _.omit(instance.data,
+                  ['keycloakContext',
+                   'shiftDetailsContext',
+                  'staffDetailsDataContext',
+                  'extendedStaffDetailsContext',
+                  'environmentContext',
+                  'processContext', 'taskContext']))
         }}
         onCustomEvent={event => onCustomEvent(event, variableName)}
         submission={submission}
