@@ -19,7 +19,8 @@ const initialState = new Map({
   candidateGroups: new List([]),
   businessKey: null,
   processDefinition: null,
-  extensionData: null
+  extensionData: null,
+  isUpdatingTask: false
 });
 
 function reducer(state = initialState, action) {
@@ -43,7 +44,8 @@ function reducer(state = initialState, action) {
       return state.set('isFetchingTask', false)
         .set('task', Immutable.fromJS(task))
         .set('businessKey', businessKey)
-          .set('extensionData', Immutable.fromJS(extensionData))
+          .set('isUpdatingTask', false)
+        .set('extensionData', Immutable.fromJS(extensionData))
         .set('processDefinition', Immutable.fromJS(action.payload.entity['process-definition']))
         .set('candidateGroups', candidateGroups
           ? Immutable.fromJS(candidateGroups) : new List([]))
@@ -99,8 +101,13 @@ function reducer(state = initialState, action) {
     case actions.COMPLETE_TASK_SUCCESS:
       return state.set('completeSuccessful', true);
     case actions.COMPLETE_TASK_FAILURE:
-
       return state.set('completeSuccessful', false);
+
+    case actions.UPDATE_TASK:
+      return state.set('isUpdatingTask', true);
+    case actions.UPDATE_TASK_FAILURE:
+      return state.set('isUpdatingTask', false);
+
     default:
       return state;
   }

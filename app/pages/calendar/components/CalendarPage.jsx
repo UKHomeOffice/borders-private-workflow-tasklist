@@ -4,12 +4,11 @@ import $ from 'jquery';
 import 'fullcalendar/dist/fullcalendar.css';
 import 'fullcalendar/dist/fullcalendar.js';
 import 'fullcalendar/dist/locale/en-gb';
-import AppConstants from '../../../common/AppConstants';
+
 
 class CalendarPage extends React.Component {
 
     componentDidMount() {
-        document.title = `Calendar | ${AppConstants.APP_NAME}`;
         const {calendar} = this.refs;
 
         $(calendar).fullCalendar({

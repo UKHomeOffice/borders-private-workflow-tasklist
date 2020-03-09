@@ -12,7 +12,6 @@ import uuid from 'uuid';
 
 export class ReportsPage extends React.Component {
   componentDidMount() {
-    document.title = `Operational reports | ${AppConstants.APP_NAME}`;
     this.props.fetchReportsList();
   }
 

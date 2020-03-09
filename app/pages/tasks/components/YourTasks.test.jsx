@@ -1,6 +1,6 @@
 import moment from 'moment';
 import { createMemoryHistory } from 'history';
-import { Router } from 'react-router-dom';
+import {MemoryRouter, Router, Switch} from 'react-router-dom';
 import React from 'react';
 import configureStore from 'redux-mock-store';
 import Immutable, { Map } from 'immutable';
@@ -8,6 +8,7 @@ import AppConstants from '../../../common/AppConstants';
 import { YourTasksContainer } from './YourTasksContainer';
 import YourTasks from './YourTasks';
 import TaskUtils from './TaskUtils';
+import {RouteWithTitle} from "../../../core/Main";
 
 jest.useFakeTimers();
 
@@ -103,7 +104,7 @@ describe('YourTasks Page', () => {
   });
   const fetchTasksAssignedToYou = jest.fn();
 
-  it('sets document title as expected', () => {
+  it('sets document title as expected', (done) => {
     const taskUtil = new TaskUtils();
     const props = {
       filterTasksByName: jest.fn(),
@@ -124,10 +125,22 @@ describe('YourTasks Page', () => {
         },
       ]),
     };
-    shallow(<YourTasks {...props} />);
-    expect(global.window.document.title).toBe(
-      `Your tasks | ${AppConstants.APP_NAME}`,
-    );
+
+    mount(<MemoryRouter initialEntries={['/your-tasks']}>
+      <Switch>
+        <RouteWithTitle name="Your tasks"
+                        title={`Your tasks | ${AppConstants.APP_NAME}` }
+                        exact path={AppConstants.YOUR_TASKS_PATH}
+                        component={() => <YourTasks {...props} />}/>
+
+      </Switch>
+    </MemoryRouter>);
+    requestAnimationFrame(() => {
+      expect(document.title).toBe(
+          `Your tasks | ${AppConstants.APP_NAME}`,
+      );
+      done();
+    });
   });
 
   it('renders loading when getting your tasks', async () => {

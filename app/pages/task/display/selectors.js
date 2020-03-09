@@ -17,3 +17,4 @@ export const variables = state => state[NAME].get('variables');
 export const businessKey = state => state[NAME].get('businessKey');
 export const processDefinition = state => state[NAME].get('processDefinition');
 export const extensionData = state => state[NAME].get('extensionData');
+export const isUpdatingTask = state => state[NAME].get('isUpdatingTask');

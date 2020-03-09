@@ -9,6 +9,7 @@ import withOnboardingCheck from './shift/withOnboardingCheck';
 import withShiftCheck from './shift/withShiftCheck';
 import ErrorHandlingComponent from './error/component/ErrorHandlingComponent';
 import PrivacyPolicy from './components/PrivacyPolicy';
+import {Helmet} from "react-helmet";
 
 
 const ShiftPage = withOnboardingCheck(lazy(() => import ('../pages/shift/components/ShiftPage')));
@@ -31,29 +32,38 @@ const CasesPage = withOnboardingCheck(withShiftCheck(lazy(() => import('../pages
 const UnauthorizedPage = lazy(() => import('../core/components/UnauthorizedPage'));
 const NoOpDashboardPage = lazy(() => import ('../pages/dashboard/components/NoOpDashboardPage'));
 
+export const RouteWithTitle =({ title, ...props }) => {
+  return <React.Fragment>
+        <Helmet>
+          <title>{title}</title>
+        </Helmet>
+        <Route {...props} />
+  </React.Fragment>;
+};
+
 const Main = () => (
   <main className="govuk-main-wrapper govuk-!-padding-top-3" id="main-content" role="main">
     <Suspense fallback={<div style={{ justifyContent: 'center'}}><DataSpinner message="Loading routes"/></div>}>
       <Switch>
-        <Route name="Accessibility Statement" exact path={"/accessibility-statement"} component={AccessibilityStatement}/>
-        <Route name="Privacy Policy" exact path={"/privacy-policy"} component={PrivacyPolicy}/>
-        <Route name="Dashboard" exact path={AppConstants.DASHBOARD_PATH} component={() => <DashboardPage />}/>
-        <Route name="Cases" exact path={AppConstants.CASES_PATH} component={() => <CasesPage/>} />
-        <Route name="Case" exact path={AppConstants.CASES_PATH + "/:businessKey"} component={() => <CasesPage />} />
+        <RouteWithTitle name="Accessibility Statement" title={`Accessibility Statement | ${AppConstants.APP_NAME}`} exact path={"/accessibility-statement"} component={AccessibilityStatement}/>
+        <RouteWithTitle name="Privacy Policy" exact path={"/privacy-policy"} title={`Privacy Policy | ${AppConstants.APP_NAME}`} component={PrivacyPolicy}/>
+        <RouteWithTitle name="Dashboard" title={`Operational dashboard | ${AppConstants.APP_NAME}`} exact path={AppConstants.DASHBOARD_PATH} component={() => <DashboardPage />}/>
+        <RouteWithTitle name="Cases" title={`Case view | ${AppConstants.APP_NAME}`} exact path={AppConstants.CASES_PATH} component={() => <CasesPage/>} />
+        <RouteWithTitle name="Case" title={`Case view | ${AppConstants.APP_NAME}`}  exact path={AppConstants.CASES_PATH + "/:businessKey"} component={() => <CasesPage />} />
         <Route name="Shift" exact path={AppConstants.SHIFT_PATH} component={() => <ErrorHandlingComponent skipAuthError={true}><ShiftPage/></ErrorHandlingComponent>}/>
-        <Route name="Your tasks" exact path={AppConstants.YOUR_TASKS_PATH} component={() => <YourTasksPage />}/>
-        <Route name="Your group tasks" exact path={AppConstants.YOUR_GROUP_TASKS_PATH} component={() => <YourGroupTaskPage/>}/>
-        <Route name="Procedures" exact path={AppConstants.FORMS_PATH} component={() =><ProceduresPage/>}/>
-        <Route name="Reports" exact path={AppConstants.REPORTS_PATH} component={() =><ReportsPage/>} />
-        <Route exact path={AppConstants.REPORT_PATH} component={() => <ReportPage/>}/>
-        <Route name="Messages" exact path={AppConstants.MESSAGES_PATH} component={() => <MessagesPage/>}/>
-        <Route name="Calendar" exact path={AppConstants.CALENDAR_PATH} component={() => <CalendarPage/>}/>
-        <Route name="Procedure Start Page" exact path={AppConstants.SUBMIT_A_FORM + "/:processKey"} component={() =><ProcessStartPage/>}/>
-        <Route name="Procedure Diagram Page" exact path={AppConstants.PROCEDURE_DIAGRAM_PATH + "/:processKey"} component={() =><ProcessDiagramPage/>}/>
-        <Route name="Task Details Page" exact path={AppConstants.TASK_PATH + "/:taskId"} component={() =><TaskPage/>}/>
-        <Route name="Unauthorized path" exact path={"/unauthorized"} component={() => <UnauthorizedPage/> }/>
-        <Route name="On board User" exact path={AppConstants.ONBOARD_USER_PATH} component={() => <ErrorHandlingComponent skipAuthError={true}><NonShiftCheckProcedurePage processKey="onboard-user" noBackLink={true} nonShiftApiCall={true} redirectPath={"/noop-dashboard"}/></ErrorHandlingComponent>} />
-        <Route name="No-Op Dashboard" exact path={"/noop-dashboard"} component={() => <NoOpDashboardPage/>} />
+        <RouteWithTitle name="Your tasks" title={`Your tasks | ${AppConstants.APP_NAME}`} exact path={AppConstants.YOUR_TASKS_PATH} component={() => <YourTasksPage />}/>
+        <RouteWithTitle name="Your group tasks" title={`Your team’s tasks | ${AppConstants.APP_NAME}` } exact path={AppConstants.YOUR_GROUP_TASKS_PATH} component={() => <YourGroupTaskPage/>}/>
+        <RouteWithTitle name="Forms" title={`Operational forms | ${AppConstants.APP_NAME}` } exact path={AppConstants.FORMS_PATH} component={() =><ProceduresPage/>}/>
+        <RouteWithTitle name="Reports" title={ `Operational reports | ${AppConstants.APP_NAME}` } exact path={AppConstants.REPORTS_PATH} component={() =><ReportsPage/>} />
+        <RouteWithTitle exact path={AppConstants.REPORT_PATH} title={ `Operational report | ${AppConstants.APP_NAME}` } component={() => <ReportPage/>}/>
+        <RouteWithTitle name="Messages" title={ `Operational messages | ${AppConstants.APP_NAME}`} exact path={AppConstants.MESSAGES_PATH} component={() => <MessagesPage/>}/>
+        <RouteWithTitle name="Calendar" title={`Calendar | ${AppConstants.APP_NAME}` } exact path={AppConstants.CALENDAR_PATH} component={() => <CalendarPage/>}/>
+        <RouteWithTitle name="Procedure Start Page" title={ `Operational form | ${AppConstants.APP_NAME}`} exact path={AppConstants.SUBMIT_A_FORM + "/:processKey"} component={() =><ProcessStartPage/>}/>
+        <RouteWithTitle name="Procedure Diagram Page" title={ `Operational process | ${AppConstants.APP_NAME}`} exact path={AppConstants.PROCEDURE_DIAGRAM_PATH + "/:processKey"} component={() =><ProcessDiagramPage/>}/>
+        <RouteWithTitle name="Task Details Page" title={ `${AppConstants.APP_NAME}`} exact path={AppConstants.TASK_PATH + "/:taskId"} component={() =><TaskPage/>}/>
+        <RouteWithTitle name="Unauthorized path" title={`Unauthorized | ${AppConstants.APP_NAME}` } exact path={"/unauthorized"} component={() => <UnauthorizedPage/> }/>
+        <RouteWithTitle name="On board User" title={`Operational on-boarding | ${AppConstants.APP_NAME}` } exact path={AppConstants.ONBOARD_USER_PATH} component={() => <ErrorHandlingComponent skipAuthError={true}><NonShiftCheckProcedurePage processKey="onboard-user" noBackLink={true} nonShiftApiCall={true} redirectPath={"/noop-dashboard"}/></ErrorHandlingComponent>} />
+        <RouteWithTitle name="No-Op Dashboard"  title={`${AppConstants.APP_NAME}`} exact path={"/noop-dashboard"} component={() => <NoOpDashboardPage/>} />
         <Redirect to={AppConstants.DASHBOARD_PATH}/>
       </Switch>
     </Suspense>

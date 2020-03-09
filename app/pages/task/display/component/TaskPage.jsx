@@ -29,7 +29,6 @@ class TaskPage extends React.Component {
     } = this.props;
     this.taskId = params.taskId;
     this.props.fetchTask(this.taskId);
-    document.title = AppConstants.APP_NAME;
   }
 
   componentDidUpdate(prevProps, prevState, snapshot) {

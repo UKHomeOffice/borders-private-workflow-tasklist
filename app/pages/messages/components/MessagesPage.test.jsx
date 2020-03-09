@@ -4,6 +4,8 @@ import Immutable, { Map, List, Set } from 'immutable';
 import moment from 'moment';
 import AppConstants from '../../../common/AppConstants';
 import { MessagesPage } from './MessagesPage';
+import {MemoryRouter, Switch} from "react-router";
+import {RouteWithTitle} from "../../../core/Main";
 
 describe('MessagesPage', () => {
   const initialState = {
@@ -29,16 +31,28 @@ describe('MessagesPage', () => {
     };
   });
 
-  it('sets document title as expected', () => {
+  it('sets document title as expected', (done) => {
     const props = {
       isFetching: true,
       notifications: new List([]),
       ...mocks,
     };
-    shallow(<MessagesPage {...props} />);
-    expect(global.window.document.title).toBe(
-      `Operational messages | ${AppConstants.APP_NAME}`,
-    );
+
+    mount(<MemoryRouter initialEntries={['/messages']}>
+      <Switch>
+        <RouteWithTitle name="Message"
+                        title={`Operational messages | ${AppConstants.APP_NAME}` }
+                        exact path={AppConstants.MESSAGES_PATH}
+                        component={() => <MessagesPage {...props} />}/>
+
+      </Switch>
+    </MemoryRouter>);
+    requestAnimationFrame(() => {
+      expect(document.title).toBe(
+          `Operational messages | ${AppConstants.APP_NAME}`,
+      );
+      done();
+    });
   });
 
   it('renders loading when fetching messages', async () => {
