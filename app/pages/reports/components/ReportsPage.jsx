@@ -8,8 +8,7 @@ import { loadingReports, reports } from '../selectors';
 import DataSpinner from '../../../core/components/DataSpinner';
 import AppConstants from '../../../common/AppConstants';
 import * as actions from '../actions';
-
-const uuidv4 = require('uuid/v4');
+import uuid from 'uuid';
 
 export class ReportsPage extends React.Component {
   componentDidMount() {
@@ -19,25 +18,39 @@ export class ReportsPage extends React.Component {
 
   render() {
     const { loadingReports, reports } = this.props;
-    const pointerStyle = { cursor: 'pointer' };
     const items = [];
     if (reports) {
       reports.forEach(report => {
         items.push(
-          <tr
-            key={uuidv4()}
-            id="report"
-            style={pointerStyle}
-            onClick={() => {
-              this.props.history.push(
-                `/report?reportName=${report.get('htmlName')}`,
-              );
-            }}
-            className="govuk-table__row"
-          >
-            <td className="govuk-table__header">{report.get('name')}</td>
-            <td className="govuk-table__cell">{report.get('description')}</td>
-          </tr>,
+            <div
+                id="report"
+                className="govuk-grid-row"
+                key={uuid()}
+            >
+              <div className="govuk-grid-column-full govuk-card">
+                <h4 className="govuk-heading-s">{report.get('name')}</h4>
+                <p
+                    id="formDescription"
+                    className="govuk-body"
+                >
+                  {report.get('description')}
+                </p>
+                <div
+                    className="govuk-grid-row">
+                  <div className="govuk-grid-column-one-third">
+                    <button
+                        id="actionButton"
+                        className="govuk-button"
+                        onClick={() => {
+                          this.props.history.push(
+                            `/report?reportName=${report.get('htmlName')}`,
+                        );}}
+                        type="submit"
+                    >View</button>
+                  </div>
+                </div>
+              </div>
+            </div>
         );
       });
     }
@@ -63,11 +76,7 @@ export class ReportsPage extends React.Component {
             <DataSpinner message="Loading reports" />
           </div>
         ) : (
-          <div>
-            <table className="govuk-table">
-              <tbody className="govuk-table__body">{items}</tbody>
-            </table>
-          </div>
+            <React.Fragment>{items}</React.Fragment>
         )}
       </div>
     );

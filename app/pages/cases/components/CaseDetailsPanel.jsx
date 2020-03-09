@@ -9,12 +9,12 @@ import {withRouter} from "react-router";
 import {connect} from "react-redux";
 import {processStartSort, selectedFormReference} from "../selectors";
 import withLog from "../../../core/error/component/withLog";
-import GovUKDetailsObserver from "../../../core/util/GovUKDetailsObserver";
 import _ from 'lodash';
 import CaseActions from "../case-actions/components/CaseActions";
 import {CopyToClipboard} from 'react-copy-to-clipboard';
 import CaseMetrics from "./CaseMetrics";
 import CaseAttachments from "./CaseAttachments";
+import { Details } from 'govuk-frontend';
 
 class CaseDetailsPanel extends React.Component {
     constructor(props) {
@@ -27,7 +27,10 @@ class CaseDetailsPanel extends React.Component {
     }
 
     componentDidMount() {
-        this.observer = new GovUKDetailsObserver(document.getElementById(`case`)).create(true);
+        document.querySelectorAll('[data-module="govuk-details"]')
+            .forEach(element => {
+                new Details(element).init()
+            });
         new Accordion(document.querySelector("[data-module='govuk-accordion']")).init();
         this.clearAccordionStorage();
     }
@@ -41,7 +44,6 @@ class CaseDetailsPanel extends React.Component {
     }
 
     componentWillUnmount() {
-        this.observer.destroy();
         this.clearAccordionStorage()
     }
 
@@ -108,7 +110,7 @@ class CaseDetailsPanel extends React.Component {
                                      className="govuk-accordion__section-content"
                                      aria-labelledby={`accordion-with-summary-sections-heading-${processInstance.id}`}>
 
-                                    <div className="govuk-grid-row mb-2">
+                                    <div className="govuk-grid-row govuk-!-margin-bottom-2">
                                         <div className="govuk-grid-column-full">
                                             <div className="govuk-grid-row">
                                                 <div className="govuk-grid-column-one-half">
@@ -142,7 +144,7 @@ class CaseDetailsPanel extends React.Component {
                                             {Object.keys(groupedForms).map((formName, index) => {
                                                 const forms = groupedForms[formName];
                                                 return <React.Fragment key={formName}>
-                                                    <details id={formName} className="govuk-details"
+                                                    <details className="govuk-details"
                                                              data-module="govuk-details">
                                                         <summary className="govuk-details__summary">
                                                         <span className="govuk-details__summary-text">

@@ -121,6 +121,7 @@ exports[`TaskForm Component matches snapshot 1`] = `
       "type": "form",
     }
   }
+  onChange={[Function]}
   onCustomEvent={[Function]}
   onSubmit={[Function]}
   options={

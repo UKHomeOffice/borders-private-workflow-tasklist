@@ -24,6 +24,7 @@ import {unclaimSuccessful} from '../../display/selectors';
 import PubSub from "pubsub-js";
 import Immutable from 'immutable';
 import Loader from "react-loader-advanced";
+import secureLocalStorage from "../../../../common/security/SecureLocalStorage";
 
 const {Map} = Immutable;
 
@@ -56,7 +57,8 @@ export class CompleteTaskForm extends React.Component {
 
 
     handleSubmission(submissionStatus) {
-        const taskName = this.props.task ? this.props.task.get('name') : (this.props.nextTask ? this.props.nextTask.get('name') : '');
+        const taskId = this.props.task ? this.props.task.get('id') : (this.props.nextTask ? this.props.nextTask.get('id') : null);
+        const taskName = this.props.task ? this.props.task.get('name') : (this.props.nextTask ? this.props.nextTask.get('name') : null);
         const path = this.props.history.location.pathname;
         const user = this.props.kc.tokenParsed.email;
         switch (submissionStatus) {
@@ -69,7 +71,11 @@ export class CompleteTaskForm extends React.Component {
                 }]);
                 break;
             case SUBMISSION_SUCCESSFUL:
+                window.scrollTo(0, 0);
                 Formio.clearCache();
+                if (taskId) {
+                    secureLocalStorage.remove(taskId);
+                }
                 if (this.props.submissionResponse && this.props.submissionResponse.task) {
                     const task = this.props.submissionResponse.task;
                     this.props.fetchTaskForm(new Map({

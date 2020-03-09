@@ -28,7 +28,7 @@ exports[`CaseMetrics renders metrics 1`] = `
         </span>
       </summary>
       <div
-        className="govuk-grid-row mt-4"
+        className="govuk-grid-row govuk-!-margin-top-4"
       >
         <div
           className="govuk-grid-column-full"

@@ -61,18 +61,6 @@ describe('Reports Page', () => {
     expect(props.fetchReportsList).toBeCalled();
     expect(wrapper.find('#reportsCountLabel').text()).toEqual('Operational reports1 report');
 
-    const tableWrapper = wrapper.find('table');
-    expect(tableWrapper.exists()).toEqual(true);
-
-    const rows = wrapper.find('#report');
-    expect(rows.length).toEqual(1);
-
-    const firstRowColumns = rows
-      .first()
-      .find('td')
-      .map(column => column.text());
-    expect(firstRowColumns.length).toEqual(2);
-    expect(firstRowColumns[0]).toEqual('reportname');
-    expect(firstRowColumns[1]).toEqual('reportdescription');
+    expect(wrapper.find('#report').length).toEqual(1)
   });
 });
