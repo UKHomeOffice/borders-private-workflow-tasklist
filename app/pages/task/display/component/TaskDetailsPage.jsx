@@ -12,6 +12,7 @@ import {SUBMITTING} from '../../form/constants';
 import DataSpinner from '../../../../core/components/DataSpinner';
 import Loader from 'react-loader-advanced';
 import Comments from "./Comments";
+import {isUpdatingTask} from "../selectors";
 
 export class TaskDetailsPage extends React.Component {
 
@@ -72,6 +73,7 @@ export default withRouter(connect((state) => {
     return {
         kc: state.keycloak,
         submissionStatus: submissionStatus(state),
+        isUpdatingTask: isUpdatingTask(state),
         customEventSubmissionStatus: customEventSubmissionStatus(state),
         appConfig: state.appConfig,
         form: form(state),

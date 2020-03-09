@@ -17,11 +17,9 @@ import {
   total,
 } from '../selectors';
 import './MessagesPage.scss';
-import AppConstants from '../../../common/AppConstants';
 
 export class MessagesPage extends React.Component {
   componentDidMount() {
-    document.title = `Operational messages | ${AppConstants.APP_NAME}`;
     this.props.fetchNotifications();
   }
 

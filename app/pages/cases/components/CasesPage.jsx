@@ -14,11 +14,9 @@ import {
   loadingNextSearchResults,
   searching,
 } from '../selectors';
-import AppConstants from '../../../common/AppConstants';
 
 class CasesPage extends React.Component {
   componentDidMount() {
-    document.title = `Case view | ${AppConstants.APP_NAME}`;
     const {
       match: { params },
     } = this.props;

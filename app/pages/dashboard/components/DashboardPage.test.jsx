@@ -2,7 +2,6 @@ import React from 'react';
 import configureStore from 'redux-mock-store';
 import Immutable from 'immutable';
 import { DashboardPage } from './DashboardPage';
-import AppConstants from '../../../common/AppConstants';
 
 describe('DashboardPage', () => {
   let props;
@@ -18,12 +17,6 @@ describe('DashboardPage', () => {
     };
   });
 
-  it('sets document title as expected', () => {
-    shallow(<DashboardPage {...props} />);
-    expect(global.window.document.title).toBe(
-      `Operational dashboard | ${AppConstants.APP_NAME}`,
-    );
-  });
 
   it('renders panels if shift present', async () => {
     const wrapper = shallow(<DashboardPage {...props} />);

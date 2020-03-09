@@ -3,12 +3,11 @@ import configureStore from 'redux-mock-store';
 import Immutable, { Map, List } from 'immutable';
 import AppConstants from '../../../../common/AppConstants';
 import { FormsListPage } from './FormsListPage';
+import {MemoryRouter, Switch} from "react-router";
+import {RouteWithTitle} from "../../../../core/Main";
 
-jest.mock('react-device-detect', () => ({
-  isMobile: false,
-}));
 
-describe('ProceduresPage', () => {
+describe('FormsListPage', () => {
   const initialState = {
     'procedures-list-page': new Map({
       isFetchingProcessDefinitions: true,
@@ -24,16 +23,31 @@ describe('ProceduresPage', () => {
     };
   });
 
-  it('sets document title as expected', () => {
+  it('sets document title as expected', (done) => {
     const props = {
       isFetchingProcessDefinitions: true,
       processDefinitions: List([]),
       ...mocks,
     };
-    shallow(<FormsListPage {...props} />);
-    expect(global.window.document.title).toBe(
-      `Operational forms | ${AppConstants.APP_NAME}`,
-    );
+
+    mount(<MemoryRouter initialEntries={['/forms']}>
+      <Switch>
+        <RouteWithTitle name="Forms"
+                        title={`Operational forms | ${AppConstants.APP_NAME}` }
+                        exact path={AppConstants.FORMS_PATH}
+                        component={() => <FormsListPage {...props} />}/>
+
+      </Switch>
+
+    </MemoryRouter>);
+
+    requestAnimationFrame(() => {
+      expect(document.title).toBe(
+          `Operational forms | ${AppConstants.APP_NAME}`,
+      );
+      done();
+    });
+
   });
 
   it('renders loading when fetching data', () => {

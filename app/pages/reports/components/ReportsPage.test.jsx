@@ -4,6 +4,8 @@ import Immutable, { Map, List } from 'immutable';
 import Spinner from 'react-spinkit';
 import AppConstants from '../../../common/AppConstants';
 import { ReportsPage } from './ReportsPage';
+import {MemoryRouter, Switch} from "react-router";
+import {RouteWithTitle} from "../../../core/Main";
 
 describe('Reports Page', () => {
   const initialState = {
@@ -14,17 +16,30 @@ describe('Reports Page', () => {
   };
   const store = configureStore()(initialState);
 
-  it('sets document title as expected', () => {
+  it('sets document title as expected', (done) => {
     const props = {
       loadingReports: false,
       reports: List([]),
       fetchReportsList: jest.fn(),
       store,
     };
-    shallow(<ReportsPage {...props} />);
-    expect(global.window.document.title).toBe(
-      `Operational reports | ${AppConstants.APP_NAME}`,
-    );
+
+   mount(<MemoryRouter initialEntries={['/reports']}>
+      <Switch>
+        <RouteWithTitle name="Reports"
+                        title={`Operational reports | ${AppConstants.APP_NAME}` }
+                        exact path={AppConstants.REPORTS_PATH}
+                        component={() => <ReportsPage {...props} />}/>
+
+      </Switch>
+    </MemoryRouter>);
+    requestAnimationFrame(() => {
+      expect(document.title).toBe(
+          `Operational reports | ${AppConstants.APP_NAME}`,
+      );
+      done();
+    });
+
   });
 
   it('renders data spinner', async () => {

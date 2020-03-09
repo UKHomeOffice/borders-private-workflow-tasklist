@@ -5,11 +5,12 @@ import moment from 'moment';
 import { priority } from '../../../../core/util/priority';
 
 const TaskTitle = props => {
-  const { kc, task, businessKey, processDefinition, updateTask} = props;
+  const { kc, task, businessKey, processDefinition, updateTask, isUpdatingTask} = props;
   const taskPriority = priority(task.get('priority'));
   let assignee = 'You are the current assignee';
   const [displayDateChange, setDisplayDateChange] = useState(false);
   const [displayPriorityChange, setDisplayPriorityChange] = useState(false);
+  const [tPriority, setTPriority] = useState(task.get('priority'));
 
   if (!task.get('assignee')) {
     assignee = 'Unassigned';
@@ -100,7 +101,9 @@ const TaskTitle = props => {
                   </div>
                 </div>
               </div>
-              <button className="govuk-button govuk-!-margin-top-3" data-module="govuk-button"
+              <button className="govuk-button govuk-!-margin-top-3"
+                      data-module="govuk-button"
+              disabled={isUpdatingTask}
               onClick={() => {
                 updateTask({
                   taskId: task.get('id'),
@@ -132,32 +135,37 @@ const TaskTitle = props => {
           <div className="govuk-grid-column-one-quarter" id="taskPriority">
             <span className="govuk-caption-m govuk-!-font-size-19">Priority (<a
                 className="govuk-link"
+
                 onClick={(e) => {
                   e.preventDefault();
                   setDisplayPriorityChange(!displayPriorityChange)
                 }}
                 href="#">{displayPriorityChange ? 'cancel' : 'change'}</a>)</span>
-            {displayPriorityChange ? <div className="govuk-form-group govuk-!-margin-top-1">
-              <label className="govuk-label" htmlFor="priority">
-               Change priority
-              </label>
-              <select className="govuk-select" id="priority" name="priority"
-                onChange={(e) => {
-                  updateTask({
-                    taskId: task.get('id'),
-                    priority: e.target.value,
-                    dueDate: due
-                  })
-                }}
-                defaultValue={task.get('priority')}>
-                <option value="1000">High</option>
-                <option value="100" >Medium</option>
-                <option value="50">Low</option>
-              </select>
+            {displayPriorityChange ? <div className="govuk-form-group govuk-!-margin-top-2">
+              <div>
+                <select className="govuk-select" id="priority" name="priority"
+                  onChange={(e) => setTPriority(e.target.value)}
+                  defaultValue={task.get('priority')}>
+                  <option value="1000">High</option>
+                  <option value="100" >Medium</option>
+                  <option value="50">Low</option>
+                </select>
+              </div>
+              <div>
+              <button className="govuk-button govuk-!-margin-top-2"
+                      disabled={isUpdatingTask}
+                      data-module="govuk-button"
+                      onClick={() => {
+                        updateTask({
+                          taskId: task.get('id'),
+                          priority: tPriority,
+                          dueDate: due
+                        })
+                      }}>Change priority</button>
+              </div>
             </div> : <h4 className="govuk-heading-m govuk-!-font-size-19">
               {taskPriority}
             </h4>}
-
           </div>
           <div className="govuk-grid-column-one-quarter" id="taskAssignee">
             <span className="govuk-caption-m govuk-!-font-size-19">Assignee</span>

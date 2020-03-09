@@ -15,7 +15,6 @@ import AppConstants from '../../../../common/AppConstants';
 
 export class FormsListPage extends React.Component {
   componentDidMount() {
-    document.title = `Operational forms | ${AppConstants.APP_NAME}`;
     this.props.fetchProcessDefinitions();
     this.process = this.process.bind(this);
     this.viewProcessDiagram = this.viewProcessDiagram.bind(this);

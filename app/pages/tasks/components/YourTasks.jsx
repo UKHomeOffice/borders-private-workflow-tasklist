@@ -10,8 +10,6 @@ import GroupTasks from './GroupTasks';
 
 const taskUtils = new TaskUtils();
 const YourTasks = props => {
-  document.title = `Your tasks | ${AppConstants.APP_NAME}`;
-
   const {
     yourTasks,
     sortYourTasks,

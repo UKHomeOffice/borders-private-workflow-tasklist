@@ -1,13 +1,26 @@
 import React from 'react';
 import AppConstants from '../../../common/AppConstants';
 import CalendarPage from './CalendarPage';
+import {MemoryRouter, Switch} from "react-router";
+import {RouteWithTitle} from "../../../core/Main";
 
 describe('Calendar Page', () => {
   it('sets document title as expected', () => {
-    shallow(<CalendarPage />);
-    expect(global.window.document.title).toBe(
-      `Calendar | ${AppConstants.APP_NAME}`,
-    );
+    mount(<MemoryRouter initialEntries={['/calendar']}>
+      <Switch>
+        <RouteWithTitle name="Calendar"
+                        title={`Calendar | ${AppConstants.APP_NAME}` }
+                        exact path={AppConstants.CALENDAR_PATH}
+                        component={() => <CalendarPage  />}/>
+
+      </Switch>
+    </MemoryRouter>);
+    requestAnimationFrame(() => {
+      expect(document.title).toBe(
+          `Calendar | ${AppConstants.APP_NAME}`,
+      );
+      done();
+    });
   });
 
   it('renders calendar page', () => {
