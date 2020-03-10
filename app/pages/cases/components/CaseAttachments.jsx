@@ -20,7 +20,7 @@ class CaseAttachments extends React.Component {
     }
 
     render() {
-        const {attachments, businessKey, fetchingCaseAttachments} = this.props;
+        const {attachments, fetchingCaseAttachments} = this.props;
 
         return <div className="govuk-grid-row govuk-card govuk-!-margin-top-4">
             <div className="govuk-grid-column-full">
@@ -47,9 +47,10 @@ class CaseAttachments extends React.Component {
                                 </tr>
                                 </thead>
                                 <tbody className="govuk-table__body">
-                                {fetchingCaseAttachments ? <h4 className="govuk-heading-s">
-                                    Loading attachments for {businessKey} ...
-                                </h4> : (attachments && attachments.length !== 0 ? attachments.map(attachment => {
+                                {fetchingCaseAttachments ?
+                                 <tr  className="govuk-table__row">
+                                     <td><h4 className="govuk-heading-s">Loading attachments...</h4></td>
+                                 </tr>: (attachments && attachments.length !== 0 ? attachments.map(attachment => {
                                     return <tr key={attachment.url} className="govuk-table__row">
                                         <th scope="row" className="govuk-table__header">
                                             <a className="govuk-link" href="#"

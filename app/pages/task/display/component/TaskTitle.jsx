@@ -3,9 +3,10 @@ import PropTypes from 'prop-types';
 import React, { useState } from 'react';
 import moment from 'moment';
 import { priority } from '../../../../core/util/priority';
+import {Link} from "react-router-dom";
 
 const TaskTitle = props => {
-  const { kc, task, businessKey, processDefinition, updateTask, isUpdatingTask} = props;
+  const { kc, task, businessKey, processDefinition, updateTask, isUpdatingTask, history} = props;
   const taskPriority = priority(task.get('priority'));
   let assignee = 'You are the current assignee';
   const [displayDateChange, setDisplayDateChange] = useState(false);
@@ -39,7 +40,9 @@ const TaskTitle = props => {
       <React.Fragment>
         <div className="govuk-grid-row">
           <div className="govuk-grid-column-full" id="taskName">
-            <span className="govuk-caption-l">{businessKey}</span>
+            <span className="govuk-caption-l">
+              <Link className="govuk-link" target={"_blank"} to={`/cases/${businessKey}`}>{businessKey}</Link>
+              </span>
             <h2 className="govuk-heading-l">
               {task.get('name')}
             </h2>

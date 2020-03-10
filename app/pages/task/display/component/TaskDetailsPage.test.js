@@ -3,6 +3,7 @@ import configureStore from 'redux-mock-store';
 import Immutable from 'immutable';
 import moment from 'moment';
 import { TaskDetailsPage } from './TaskDetailsPage';
+import {MemoryRouter} from "react-router";
 
 const { Map, List } = Immutable;
 
@@ -37,11 +38,13 @@ describe('TaskDetailsPage', () => {
   });
 
   it('renders task if no form key', async () => {
-    const wrapper = await mount(<TaskDetailsPage
+    const wrapper = await mount(
+        <MemoryRouter>
+          <TaskDetailsPage
       store={store}
       {...props}
       updateDueDate={updateDueDate}
-    />);
+    /></MemoryRouter>);
     console.log(wrapper.html());
     expect(wrapper.find('#taskName').text()).toEqual('test');
     expect(wrapper.find('#taskAssignee').text()).toEqual('AssigneeUnassigned');
