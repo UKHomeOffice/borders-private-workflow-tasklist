@@ -2,6 +2,7 @@ import Immutable from 'immutable';
 import * as actions from './actionTypes';
 import _ from 'lodash';
 const {Map} = Immutable;
+import moment from 'moment';
 
 export const initialState = new Map({
     searching: false,
@@ -21,6 +22,14 @@ export const initialState = new Map({
     attachments: null
 });
 
+const sortByBusinessKey = (results) => {
+    const updatedCases = _.orderBy(results, (caseDetail) => {
+        const key = caseDetail.businessKey.split('-')[1];
+        return moment(key, "YYYYMMDD").toDate()
+    }, ['desc']);
+
+    return updatedCases;
+}
 function reducer(state = initialState, action) {
     switch (action.type) {
         case actions.FIND_CASES_BY_KEY:
@@ -29,6 +38,10 @@ function reducer(state = initialState, action) {
                 .set('caseDetails', null)
                 .set('businessKey', null);
         case actions.FIND_CASES_BY_KEY_SUCCESS:
+            if (action.payload.entity) {
+                const caseResults = action.payload.entity._embedded ? action.payload.entity._embedded.cases : [];
+                action.payload.entity._embedded.cases = sortByBusinessKey(caseResults);
+            }
             return state.set('searching', false)
                 .set('caseSearchResults', action.payload.entity);
         case actions.FIND_CASES_BY_KEY_FAILURE:
@@ -72,7 +85,7 @@ function reducer(state = initialState, action) {
             const cases = caseSearchResults._embedded.cases;
             const updatedResults = _.unionBy(cases, results, 'businessKey');
 
-            caseSearchResults._embedded.cases = updatedResults;
+            caseSearchResults._embedded.cases = sortByBusinessKey(updatedResults);
             caseSearchResults._links = action.payload.entity._links;
             return state.set('loadingNextSearchResults', false)
                 .set('caseSearchResults', caseSearchResults);

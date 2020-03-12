@@ -12,6 +12,10 @@ import {Provider} from "react-redux";
 describe('CaseActions', () => {
     let props;
     beforeEach(() => {
+        // Avoid `attachTo: document.body` Warning
+        const div = document.createElement('div');
+        div.setAttribute('id', 'container');
+        document.body.appendChild(div);
         props = {
             appConfig: {
                 referenceDataUrl: 'test',
@@ -48,6 +52,13 @@ describe('CaseActions', () => {
             }
         };
     });
+
+    afterEach(() => {
+        const div = document.getElementById('container');
+        if (div) {
+            document.body.removeChild(div);
+        }
+    })
     it('renders collection of actions as nav links', async () => {
         const history = createMemoryHistory('/case');
         const store = configureStore()({
@@ -71,8 +82,8 @@ describe('CaseActions', () => {
                     store={store}
                     {...props}
                 />
-            </Router>,
-        );
+            </Router>
+        ,{ attachTo: document.getElementById('container') });
         const actions = wrapper.find('li');
         expect(actions.exists()).toEqual(true);
         expect(actions.length).toEqual(2)
@@ -92,11 +103,13 @@ describe('CaseActions', () => {
                     />
                 </Provider>
             </Router>,
-        );
+            { attachTo: document.getElementById('container') });
+
+        console.log(wrapper);
         wrapper.find('a').at(0).prop('onClick')({
             preventDefault() {
             }
         });
-        expect(wrapper.html()).toEqual('<div class="govuk-grid-row govuk-card" id="caseActions"><div class="govuk-grid-column-full"><h3 class="govuk-heading-m">Case actions</h3><div class="govuk-tabs" data-module="govuk-tabs"><ul class="govuk-tabs__list"><li class="govuk-tabs__list-item  govuk-tabs__list-item--selected"><a class="govuk-tabs__tab" href="#test"> test</a></li><li class="govuk-tabs__list-item "><a class="govuk-tabs__tab" href="#test2"> test2</a></li></ul><section class="govuk-tabs__panel" id="test"><div id="loadingActionForm">Loading</div></section></div></div></div>')
+        expect(wrapper.html()).toEqual('<div class="govuk-grid-row govuk-card" id="caseActions"><div class="govuk-grid-column-full"><div id="caseDetails-businessKey-actions" class="govuk-accordion" data-module="govuk-accordion"><div class="govuk-accordion__controls"><button type="button" class="govuk-accordion__open-all" aria-expanded="false">Open all<span class="govuk-visually-hidden"> sections</span></button></div><div class="govuk-accordion__section"><div class="govuk-accordion__section-header"><h4 class="govuk-accordion__section-heading"><button type="button" id="heading-businessKey-actions" aria-controls="caseDetails-businessKey-actions-content-1" class="govuk-accordion__section-button" aria-expanded="false">Case actions</button><span class="govuk-accordion__icon" aria-hidden="true"></span></h4></div><div id="accordion-with-summary-sections-content-businessKey-actions" class="govuk-accordion__section-content" aria-labelledby="accordion-with-summary-sections-heading-businessKey-actions"><div class="govuk-tabs" data-module="govuk-tabs"><ul class="govuk-tabs__list"><li class="govuk-tabs__list-item  govuk-tabs__list-item--selected"><a class="govuk-tabs__tab" href="#test"> test</a></li><li class="govuk-tabs__list-item "><a class="govuk-tabs__tab" href="#test2"> test2</a></li></ul><section class="govuk-tabs__panel" id="test"><div id="loadingActionForm">Loading</div></section></div></div></div></div></div></div>')
     })
 });
