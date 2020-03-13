@@ -3,12 +3,12 @@ apiVersion: v1
 kind: Service
 metadata:
   labels:
-    name: {{.WWW_NAME}}
-  name: {{.WWW_NAME}}
+    name: maintenance
+  name: maintenance
 spec:
   ports:
   - name: https
     port: 443
     targetPort: 10443
   selector:
-    name: {{.WWW_NAME}}
+    name: maintenance

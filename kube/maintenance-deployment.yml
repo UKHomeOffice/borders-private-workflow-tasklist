@@ -1,0 +1,47 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: "maintenance"
+spec:
+  selector:
+    matchLabels:
+      name: "maintenance"
+  replicas: 1
+  revisionHistoryLimit: 3
+  template:
+    metadata:
+      labels:
+        name: "maintenance"
+    spec:
+      securityContext:
+        runAsUser: 1000
+        fsGroup: 1000
+      containers:
+      - name: maintenance-proxy
+        image: "{{.NGINX_IMAGE}}:{{.NGINX_TAG}}"
+        env:
+        - name: PROXY_SERVICE_HOST
+          value: "127.0.0.1"
+        - name: PROXY_SERVICE_PORT
+          value: "{{.WWW_PORT}}"
+        - name: ENABLE_UUID_PARAM
+          value: "FALSE"
+        - name: LOG_FORMAT_NAME
+          value: 'json'
+        - name: NAXSI_USE_DEFAULT_RULES
+          value: "FALSE"
+        - name: STATSD_METRICS
+          value: "FALSE"
+        - name: ADD_NGINX_SERVER_CFG
+          value: "location /release/ { root /tmp/data; index index.html; }"
+        ports:
+        - name: https
+          containerPort: 10443
+        volumeMounts:
+          - name: certs
+            mountPath: /certs
+      volumes:
+      - name: certs
+        secret:
+          secretName: "maintenance-pod-tls"

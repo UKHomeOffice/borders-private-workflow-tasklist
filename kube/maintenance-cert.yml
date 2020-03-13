@@ -1,0 +1,13 @@
+apiVersion: certmanager.k8s.io/v1alpha1
+kind: Certificate
+metadata:
+  name: maintenance-pod-tls
+spec:
+  secretName: maintenance-pod-tls
+  issuerRef:
+    name: platform-tls
+    kind: ClusterIssuer
+  commonName: maintenance.{{.KUBE_NAMESPACE}}.svc.cluster.local
+  dnsNames:
+  - localhost
+  - 127.0.0.1

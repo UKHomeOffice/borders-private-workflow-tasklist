@@ -156,11 +156,17 @@ pipeline:
         target: ANALYTICS_SITE_ID
     commands:
       - export WWW_TAG=$${DRONE_COMMIT_SHA}
+      - export MAINTENANCE_URL=maintenance.dev.cop.homeoffice.gov.uk
       - kd --insecure-skip-tls-verify -f kube/cert.yml
       - kd --insecure-skip-tls-verify -f kube/network-policy.yml
       - kd --insecure-skip-tls-verify -f kube/service.yml
       - kd --insecure-skip-tls-verify -f kube/deployment.yml --timeout=5m
       - kd --insecure-skip-tls-verify -f kube/ingress.yml
+      - kd --insecure-skip-tls-verify -f kube/maintenance-cert.yml
+      - kd --insecure-skip-tls-verify -f kube/maintenance-network-policy.yml
+      - kd --insecure-skip-tls-verify -f kube/maintenance-service.yml
+      - kd --insecure-skip-tls-verify -f kube/maintenance-deployment.yml --timeout=5m
+      - kd --insecure-skip-tls-verify -f kube/maintenance-ingress.yml
     when:
       branch: master
       event: push
@@ -283,6 +289,7 @@ pipeline:
         target: ANALYTICS_SITE_ID
     commands:
       - export WWW_TAG=$${DRONE_COMMIT_SHA}
+      - export MAINTENANCE_URL=maintenance.staging.cop.homeoffice.gov.uk
       - kd --insecure-skip-tls-verify -f kube/cert.yml
       - kd --insecure-skip-tls-verify -f kube/network-policy.yml
       - kd --insecure-skip-tls-verify -f kube/service.yml
@@ -363,6 +370,7 @@ pipeline:
         target: ANALYTICS_SITE_ID
     commands:
       - export WWW_TAG=$${DRONE_COMMIT_SHA}
+      - export MAINTENANCE_URL=maintenance.cop.homeoffice.gov.uk
       - kd --insecure-skip-tls-verify -f kube/cert.yml
       - kd --insecure-skip-tls-verify -f kube/network-policy.yml
       - kd --insecure-skip-tls-verify -f kube/service.yml
