@@ -14,6 +14,9 @@ export default (versions, agentString) => {
   };
   const browsers = versions.split(',');
   let isSupported = true;
+  console.log(versions);
+  console.log('userBrowser.name: ', userBrowser.name);
+  console.log('userBrowser.version: ', userBrowser.version);
 
   browsers.forEach(browser => {
     const name = browser.split('-')[0];
@@ -27,6 +30,6 @@ export default (versions, agentString) => {
       isSupported = false;
     }
   });
-
+  console.log('isSupported: ', isSupported);
   return isSupported;
 };

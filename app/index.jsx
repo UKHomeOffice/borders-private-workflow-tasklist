@@ -203,6 +203,10 @@ if (process.env.NODE_ENV === 'production') {
       );
     })
     .then(data => {
+      console.log(data.DETECT_BROWSER);
+      console.log(typeof data.DETECT_BROWSER);
+      console.log(data.BROWSER_VERSIONS);
+      console.log(typeof data.BROWSER_VERSIONS);
       kc = Keycloak({
         realm: data.KEYCLOAK_REALM,
         url: data.KEYCLOAK_URI,
@@ -225,6 +229,10 @@ if (process.env.NODE_ENV === 'production') {
       };
 
       const { detectBrowser, browserVersions } = store.getState().appConfig;
+      console.log(detectBrowser);
+      console.log(typeof detectBrowser);
+      console.log(browserVersions);
+      console.log(typeof browserVersions);
       if (detectBrowser && !browserIsSupported(browserVersions)) {
         unavailable(UnsupportedPage);
       } else {
