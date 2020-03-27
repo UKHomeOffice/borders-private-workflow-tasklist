@@ -1,12 +1,12 @@
 import React from 'react';
 import {Form, Formio} from 'react-formio';
+import _ from 'lodash';
+import FormioUtils from 'formiojs/utils';
 import AppConstants from '../../../../common/AppConstants';
 import GovUKDetailsObserver from '../../../../core/util/GovUKDetailsObserver';
 import FileService from '../../../../core/FileService';
 import secureLocalStorage from "../../../../common/security/SecureLocalStorage";
 import FormioInterpolator from '../../../../core/FormioInterpolator';
-import _ from 'lodash';
-import FormioUtils from 'formiojs/utils';
 
 class StartForm extends React.Component {
     constructor(props) {
@@ -23,7 +23,7 @@ class StartForm extends React.Component {
         return false;
     }
 
-    handleCancel = (resetForm) => {
+    handleCancel = resetForm => {
         this.props.history.replace(AppConstants.FORMS_PATH);
         resetForm(false);
     };
@@ -44,7 +44,8 @@ class StartForm extends React.Component {
                 sessionId: kc.tokenParsed.session_state,
                 email: kc.tokenParsed.email,
                 givenName: kc.tokenParsed.given_name,
-                familyName: kc.tokenParsed.family_name
+                familyName: kc.tokenParsed.family_name,
+                subject: kc.subject,
             }
         };
 
@@ -122,10 +123,10 @@ class StartForm extends React.Component {
             const that = this;
             Formio.registerPlugin({
                 priority: 0,
-                requestResponse: function (response) {
+                requestResponse (response) {
                     return {
                         ok: response.ok,
-                        json: () => response.json().then((result) => {
+                        json: () => response.json().then(result => {
                             if (!Array.isArray(result) && _.has(result, 'display')) {
                                 that.formioInterpolator.interpolate(result, submission);
                                 return result;
@@ -147,19 +148,22 @@ class StartForm extends React.Component {
             }
         }
         this.formioInterpolator.interpolate(startForm, submission);
-        return <Form
+        return (
+          <Form
             submission={{
                 data: submission
             }}
-            onChange={(instance) => dataChange(instance)}
+            onChange={instance => dataChange(instance)}
             form={startForm}
             ref={form => {
                 this.formNode = form;
                 formReference(form);
             }}
             options={options}
-            onCustomEvent={(event) => onCustomEvent(event)}
-            onSubmit={(submission) => handleSubmit(submission)}/>;
+            onCustomEvent={event => onCustomEvent(event)}
+            onSubmit={submission => handleSubmit(submission)}
+          />
+);
     }
 
     componentWillUnmount() {

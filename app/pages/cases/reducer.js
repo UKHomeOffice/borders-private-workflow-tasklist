@@ -1,8 +1,9 @@
 import Immutable from 'immutable';
-import * as actions from './actionTypes';
 import _ from 'lodash';
-const {Map} = Immutable;
 import moment from 'moment';
+import * as actions from './actionTypes';
+
+const {Map} = Immutable;
 
 export const initialState = new Map({
     searching: false,
@@ -22,8 +23,8 @@ export const initialState = new Map({
     attachments: null
 });
 
-const sortByBusinessKey = (results) => {
-    const updatedCases = _.orderBy(results, (caseDetail) => {
+const sortByBusinessKey = results => {
+    const updatedCases = _.orderBy(results, caseDetail => {
         const key = caseDetail.businessKey.split('-')[1];
         return moment(key, "YYYYMMDD").toDate()
     }, ['desc']);
@@ -51,7 +52,7 @@ function reducer(state = initialState, action) {
                 .set('loadingCaseDetails', true);
         case actions.GET_CASE_BY_KEY_SUCCESS:
             const caseLoaded = action.payload.entity;
-            caseLoaded.processInstances =  _.orderBy(caseLoaded.processInstances, (instance) => {
+            caseLoaded.processInstances =  _.orderBy(caseLoaded.processInstances, instance => {
                 return new Date(instance.startDate);
             }, [state.get('processStartSort')]);
             return state.set('caseDetails', caseLoaded)
@@ -82,7 +83,7 @@ function reducer(state = initialState, action) {
             const results = action.payload.entity._embedded? action.payload.entity._embedded.cases: [];
             const caseSearchResults = state.get('caseSearchResults');
 
-            const cases = caseSearchResults._embedded.cases;
+            const {cases} = caseSearchResults._embedded;
             const updatedResults = _.unionBy(cases, results, 'businessKey');
 
             caseSearchResults._embedded.cases = sortByBusinessKey(updatedResults);
@@ -99,7 +100,7 @@ function reducer(state = initialState, action) {
             const processStartSort = action.sort;
             const caseDetails = state.get('caseDetails');
 
-            caseDetails.processInstances =  _.orderBy(caseDetails.processInstances, (instance) => {
+            caseDetails.processInstances =  _.orderBy(caseDetails.processInstances, instance => {
                 return new Date(instance.startDate);
             }, [processStartSort]);
             return state.set('caseDetails', caseDetails).set('processStartSort', processStartSort);

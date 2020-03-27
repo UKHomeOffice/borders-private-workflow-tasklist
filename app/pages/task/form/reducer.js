@@ -55,7 +55,7 @@ function reducer(state = initialState, action) {
     case actions.COMPLETE_TASK_FORM_FAILURE:
       return state.set('submissionStatus', FAILED);
     case actions.SET_NEXT_TASK:
-      const task = action.task;
+      const {task} = action;
       return state.set('nextTask', Immutable.fromJS(task))
           .set('nextVariables', action.variables);
     case actions.TASK_CUSTOM_EVENT:

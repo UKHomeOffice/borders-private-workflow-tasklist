@@ -25,8 +25,8 @@ export class TaskCountPanel extends React.Component {
         this.props.log([
           {
             level: 'info',
-            user: user,
-            path: path,
+            user,
+            path,
             message: 'refreshing task count',
             data,
           },
@@ -53,8 +53,8 @@ export class TaskCountPanel extends React.Component {
       this.props.log([
         {
           level: 'info',
-          user: user,
-          path: path,
+          user,
+          path,
           message: 'task count loaded',
           taskCounts,
         },

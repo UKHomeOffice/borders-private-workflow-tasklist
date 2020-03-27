@@ -1,13 +1,13 @@
 import configureStore from "redux-mock-store";
 import {Map} from "immutable";
 import {createMemoryHistory} from "history";
-import fixtures from "./fixtures";
 import {Router} from "react-router";
 import React from "react";
-import CaseActions from "./CaseActions";
 import {combineReducers, createStore} from 'redux';
-import caseActions from "../index";
 import {Provider} from "react-redux";
+import CaseActions from "./CaseActions";
+import caseActions from "../index";
+import fixtures from "./fixtures";
 
 describe('CaseActions', () => {
     let props;
@@ -77,12 +77,12 @@ describe('CaseActions', () => {
             }
         };
         const wrapper = await mount(
-            <Router history={history}>
-                <CaseActions
-                    store={store}
-                    {...props}
-                />
-            </Router>
+          <Router history={history}>
+            <CaseActions
+              store={store}
+              {...props}
+            />
+          </Router>
         ,{ attachTo: document.getElementById('container') });
         const actions = wrapper.find('li');
         expect(actions.exists()).toEqual(true);
@@ -95,14 +95,14 @@ describe('CaseActions', () => {
         const store = createStore(combineReducers({[caseActions.constants.NAME]: caseActions.reducer}),
             {});
 
-        let wrapper = await mount(
-            <Router history={history}>
-                <Provider store={store}>
-                    <CaseActions
-                        {...props}
-                    />
-                </Provider>
-            </Router>,
+        const wrapper = await mount(
+          <Router history={history}>
+            <Provider store={store}>
+              <CaseActions
+                {...props}
+              />
+            </Provider>
+          </Router>,
             { attachTo: document.getElementById('container') });
 
         console.log(wrapper);

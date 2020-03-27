@@ -27,8 +27,15 @@ export class Complete extends React.Component {
         const userId = kc.tokenParsed.email;
         const taskAssignee = task.get('assignee');
         const displayButton = taskAssignee && taskAssignee === userId;
-        return displayButton ? <button className="govuk-button" onClick={() => this.complete()}
-                                       type="submit" disabled={!displayButton}>Complete</button> : <div/>
+        return displayButton ? (
+          <button
+            className="govuk-button"
+            onClick={() => this.complete()}
+            type="submit"
+            disabled={!displayButton}
+          >Complete
+          </button>
+) : <div />
 
 
 
@@ -44,7 +51,7 @@ Complete.propTypes = {
 
 const mapDispatchToProps = dispatch => bindActionCreators(actions, dispatch);
 
-export default withRouter(connect((state) => {
+export default withRouter(connect(state => {
     return {
         kc: state.keycloak,
         completeSuccessful: completeSuccessful(state)

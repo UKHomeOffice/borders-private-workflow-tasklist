@@ -94,8 +94,8 @@ export default class TaskForm extends React.Component {
     let submission = {};
 
     if (variables) {
-      if (variables['submissionData']) {
-        submission = variables['submissionData'];
+      if (variables.submissionData) {
+        submission = variables.submissionData;
       } else if (variables[formVariableSubmissionName]) {
         submission = variables[formVariableSubmissionName];
       }
@@ -138,7 +138,7 @@ export default class TaskForm extends React.Component {
       Formio.registerPlugin(
         {
           priority: 0,
-          requestResponse: function(response) {
+          requestResponse(response) {
             return {
               ok: response.ok,
               json: () =>

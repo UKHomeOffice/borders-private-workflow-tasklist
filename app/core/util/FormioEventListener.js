@@ -10,7 +10,7 @@ class FormioEventListener {
     initialize() {
         this.form.formio.on('error', errors => {
             PubSub.publish('formSubmissionError', {
-                errors: errors,
+                errors,
                 form: this.form
             });
             window.scrollTo(0, 0);
@@ -18,8 +18,8 @@ class FormioEventListener {
         this.form.formio.on('submit', () => {
             PubSub.publish('formSubmissionSuccessful');
         });
-        this.form.formio.on('change', (value) => {
-            const form = this.form;
+        this.form.formio.on('change', value => {
+            const {form} = this;
             PubSub.publish('formChange', {value, form});
         });
         this.form.formio.on('prevPage', () => {
@@ -29,7 +29,7 @@ class FormioEventListener {
         this.form.formio.on('nextPage', () => {
             window.scrollTo(0, 0);
         });
-        this.form.formio.on('componentError', (error) => {
+        this.form.formio.on('componentError', error => {
             if (this.props.log && (typeof this.props.log === 'function')) {
                 this.props.log([{
                     url: document.referrer,

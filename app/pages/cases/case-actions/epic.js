@@ -1,8 +1,8 @@
+import {combineEpics} from "redux-observable";
 import * as types from "./actionTypes";
 import {retry} from "../../../core/util/retry";
 import * as actions from "./actions";
 import {errorObservable} from "../../../core/error/epicUtil";
-import {combineEpics} from "redux-observable";
 
 const getActionForm = (action$, store, {client}) => action$.ofType(types.GET_ACTION_FORM)
     .mergeMap(action => client({

@@ -1,5 +1,6 @@
 import React from "react";
 import CaseMetrics from "./CaseMetrics";
+
 describe('CaseMetrics', () => {
     let props;
     beforeEach(() => {

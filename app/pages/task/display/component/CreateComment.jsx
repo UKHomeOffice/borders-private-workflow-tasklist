@@ -2,10 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import * as actions from '../actions';
 import { createStructuredSelector } from 'reselect';
-import { form, isFetchingCreateCommentForm } from '../selectors';
 import { Form } from 'react-formio';
+import * as actions from '../actions';
+import { form, isFetchingCreateCommentForm } from '../selectors';
 import './Comment.scss';
 
 class CreateComment extends React.Component {
@@ -29,24 +29,30 @@ class CreateComment extends React.Component {
       noAlerts: true,
     };
     if (form) {
-      return (<div><Form
-        form={form} options={options}
-        ref={form => this.form = form}
-        onSubmit={(submission) => {
+      return (
+        <div><Form
+          form={form}
+          options={options}
+          ref={form => this.form = form}
+          onSubmit={submission => {
           this.props.createComment({ taskId: this.props.taskId, comment: submission.data });
           this.form.formio.resetValue();
           this.form.formio.emit('submitDone');
           this.form.formio.triggerRedraw();
         }}
-      /></div>);
+        />
+        </div>
+);
     }
     return <div />;
   }
 
   render() {
-    return (<div id="commentContainer">
-      {this.renderForm()}
-    </div>);
+    return (
+      <div id="commentContainer">
+        {this.renderForm()}
+      </div>
+);
   }
 }
 

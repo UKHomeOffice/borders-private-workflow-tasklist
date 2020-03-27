@@ -32,12 +32,12 @@ const getCaseByKeyFailure = () => ({
     type: types.GET_CASE_BY_KEY_FAILURE
 });
 
-const getFormVersion = (versionId) => ({
+const getFormVersion = versionId => ({
     type: types.GET_FORM_VERSION,
     versionId
 });
 
-const getFormVersionSuccess = (payload) => ({
+const getFormVersionSuccess = payload => ({
     type: types.GET_FORM_VERSION_SUCCESS,
     payload
 });
@@ -46,7 +46,7 @@ const getFormVersionFailure = () => ({
     type: types.GET_FORM_VERSION_FAILURE
 });
 
-const setSelectedFormReference = (formReference) => ({
+const setSelectedFormReference = formReference => ({
     type: types.SET_SELECTED_FORM_REFERENCE,
     formReference
 });
@@ -58,7 +58,7 @@ const getFormSubmissionData = (businessKey, submissionDataKey) => ({
 });
 
 
-const getFormSubmissionDataSuccess = (payload) => ({
+const getFormSubmissionDataSuccess = payload => ({
     type: types.GET_FORM_SUBMISSION_DATA_SUCCESS,
     payload
 });
@@ -71,12 +71,12 @@ const resetForm = () => ({
     type: types.RESET_FORM
 });
 
-const loadNextSearchResults = (url) => ({
+const loadNextSearchResults = url => ({
     type: types.LOAD_NEXT_SEARCH_RESULTS,
     url
 });
 
-const loadNextSearchResultsSuccess = (payload) => ({
+const loadNextSearchResultsSuccess = payload => ({
     type: types.LOAD_NEXT_SEARCH_RESULTS_SUCCESS,
     payload
 });
@@ -85,17 +85,17 @@ const loadNextSearchResultsFailure = () => ({
     type: types.LOAD_NEXT_SEARCH_RESULTS_FAILURE
 });
 
-const setProcessStartSort = (sort) => ({
+const setProcessStartSort = sort => ({
     type: types.SET_PROCESS_START_DATE_SORT,
     sort
 });
 
-const getCaseAttachments = (businessKey) => ({
+const getCaseAttachments = businessKey => ({
     type: types.GET_CASE_ATTACHMENTS,
     businessKey
 });
 
-const getCaseAttachmentsSuccess = (payload) => ({
+const getCaseAttachmentsSuccess = payload => ({
     type: types.GET_CASE_ATTACHMENTS_SUCCESS,
     payload
 });

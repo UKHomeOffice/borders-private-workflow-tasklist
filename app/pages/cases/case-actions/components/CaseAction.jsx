@@ -2,9 +2,9 @@ import React from 'react';
 import {Form} from "react-formio";
 import PropTypes from "prop-types";
 import {bindActionCreators} from "redux";
-import {fetchActionForm, resetSelectedAction, executeAction, clearActionResponse} from "../actions";
 import {withRouter} from "react-router";
 import {connect} from "react-redux";
+import {fetchActionForm, resetSelectedAction, executeAction, clearActionResponse} from "../actions";
 import {actionForm, actionResponse, executingAction, loadingActionForm} from "../selectors";
 import withLog from "../../../../core/error/component/withLog";
 import FormioInterpolator from "../../../../core/FormioInterpolator";
@@ -51,13 +51,13 @@ class CaseAction extends React.Component {
             executingAction, actionResponse
         } = this.props;
         if (!selectedAction || !caseDetails) {
-            return <div id="emptyAction"/>
+            return <div id="emptyAction" />
         }
         if (loadingActionForm) {
             return <div id="loadingActionForm">Loading</div>
         }
         if (!actionForm) {
-            return <div id="emptyForm"/>
+            return <div id="emptyForm" />
         }
 
         if (executingAction) {
@@ -65,8 +65,8 @@ class CaseAction extends React.Component {
         }
 
         const submission = {
-            caseDetails: caseDetails,
-            selectedAction: selectedAction,
+            caseDetails,
+            selectedAction,
             keycloakContext: {
                 accessToken: kc.token,
                 refreshToken: kc.refreshToken,
@@ -87,15 +87,19 @@ class CaseAction extends React.Component {
         };
 
         this.formioInterpolator.interpolate(actionForm, submission);
-        return <div>
-            {actionResponse ? <div className="govuk-panel govuk-panel--confirmation">
-                    <div className="govuk-panel__body govuk-!-font-size-24 govuk-!-font-weight-bold">
-                        {selectedAction.completionMessage}
-                    </div>
+        return (
+          <div>
+            {actionResponse ? (
+              <div className="govuk-panel govuk-panel--confirmation">
+                <div className="govuk-panel__body govuk-!-font-size-24 govuk-!-font-weight-bold">
+                  {selectedAction.completionMessage}
                 </div>
+              </div>
+)
                 : null}
-            <Form form={actionForm}
-                  options={{
+            <Form
+              form={actionForm}
+              options={{
                       noAlerts: true,
                       fileService: new FileService(kc),
                       readOnly: this.props.executingAction,
@@ -122,11 +126,11 @@ class CaseAction extends React.Component {
                           }
                       }
                   }}
-                  submission={{
+              submission={{
                       data: submission
                   }}
-                  onSubmit={
-                      (submission) => {
+              onSubmit={
+                      submission => {
                           if (!this.props.executingAction) {
                               this.props.executeAction(
                                   selectedAction,
@@ -136,8 +140,9 @@ class CaseAction extends React.Component {
                           }
                       }
                   }
-
-            /></div>
+            />
+          </div>
+)
     }
 }
 
@@ -159,7 +164,7 @@ CaseAction.propTypes = {
         completionMessage: PropTypes.string,
         process: PropTypes.shape({
             formKey: PropTypes.string,
-            ['process-definition']: PropTypes.shape({
+            'process-definition': PropTypes.shape({
                 id: PropTypes.string,
                 key: PropTypes.string,
                 description: PropTypes.string,
@@ -175,7 +180,7 @@ const mapDispatchToProps = dispatch => bindActionCreators({
     resetSelectedAction, executeAction, clearActionResponse
 }, dispatch);
 
-export default withRouter(connect((state) => {
+export default withRouter(connect(state => {
     return {
         kc: state.keycloak,
         appConfig: state.appConfig,

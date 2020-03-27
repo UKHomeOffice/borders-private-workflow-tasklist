@@ -12,9 +12,9 @@ class FileService {
         const fd = new FormData();
 
         const data = {
-            file: file,
+            file,
             name: fileName,
-            dir: dir
+            dir
         };
         for (const key in data) {
             fd.append(key, data[key]);
@@ -25,7 +25,7 @@ class FileService {
                 'Content-Type': 'multipart/form-data',
                 'Authorization': `Bearer ${token}`
             },
-            onUploadProgress: function (progressEvent) {
+            onUploadProgress (progressEvent) {
                 evt({
                     total: progressEvent.total,
                     loaded: progressEvent.loaded
@@ -44,7 +44,7 @@ class FileService {
     }
 
     async getToken() {
-        let token = this.keycloak.token;
+        let {token} = this.keycloak;
         const isExpired = jwt_decode(token).exp < new Date().getTime() / 1000;
         if (isExpired) {
             try {
@@ -75,13 +75,13 @@ class FileService {
                 headers: {
                     'Authorization': `Bearer ${token}`
                 }
-            }).then((response) => {
+            }).then(response => {
                 if (response.status >= 200 && response.status < 300) {
                     resolve('File deleted');
                 } else {
                     reject('Failed to delete file');
                 }
-            }).catch((e) => {
+            }).catch(e => {
                 reject(e || 'Failed to delete file');
             });
         })
@@ -97,7 +97,7 @@ class FileService {
                 headers: {
                     'Authorization': `Bearer ${token}`
                 }
-            }).then((response) => {
+            }).then(response => {
                 const file = new Blob([response.data]);
                 const fileURL = URL.createObjectURL(file);
                 const link = document.createElement('a');
@@ -106,7 +106,7 @@ class FileService {
                 document.body.appendChild(link);
                 link.click();
                 resolve();
-            }).catch((e) => {
+            }).catch(e => {
                 reject(e);
             })
         });

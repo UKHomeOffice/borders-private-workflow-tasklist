@@ -30,7 +30,7 @@ export class Claim extends React.Component {
         </button>
       );
     }
-    return <React.Fragment/>;
+    return <React.Fragment />;
   }
 
   render() {

@@ -1,6 +1,6 @@
 class TaskExternalDetailsPage extends React.Component {
     render() {
-        return <div></div>
+        return <div />
     }
 }
 export default TaskExternalDetailsPage;

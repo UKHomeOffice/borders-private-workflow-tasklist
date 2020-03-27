@@ -1,9 +1,9 @@
 import React from 'react';
-import CaseAction from "./CaseAction";
 import {createMemoryHistory} from "history";
 import {Router} from "react-router";
 import configureStore from "redux-mock-store";
 import {Map} from "immutable";
+import CaseAction from "./CaseAction";
 import fixtures from "./fixtures";
 
 describe('CaseAction', () => {
@@ -42,12 +42,12 @@ describe('CaseAction', () => {
         const history = createMemoryHistory('/case');
         delete props.caseDetails;
         const wrapper = await mount(
-            <Router history={history}>
-                <CaseAction
-                    store={store}
-                    {...props}
-                />
-            </Router>,
+          <Router history={history}>
+            <CaseAction
+              store={store}
+              {...props}
+            />
+          </Router>,
         );
         const emptyDiv = wrapper.find('#emptyAction').first();
         expect(emptyDiv.exists()).toEqual(true);
@@ -67,12 +67,12 @@ describe('CaseAction', () => {
             }
         };
         const wrapper = await mount(
-            <Router history={history}>
-                <CaseAction
-                    store={store}
-                    {...props}
-                />
-            </Router>,
+          <Router history={history}>
+            <CaseAction
+              store={store}
+              {...props}
+            />
+          </Router>,
         );
         const loadingFormDiv = wrapper.find('#loadingActionForm').first();
         expect(loadingFormDiv.exists()).toEqual(true);
@@ -92,12 +92,12 @@ describe('CaseAction', () => {
             }
         };
         const wrapper = await mount(
-            <Router history={history}>
-                <CaseAction
-                    store={store}
-                    {...props}
-                />
-            </Router>,
+          <Router history={history}>
+            <CaseAction
+              store={store}
+              {...props}
+            />
+          </Router>,
         );
         const emptyForm = wrapper.find('#emptyForm').first();
         expect(emptyForm.exists()).toEqual(true);
@@ -119,12 +119,12 @@ describe('CaseAction', () => {
             }
         };
         const wrapper = await mount(
-            <Router history={history}>
-                <CaseAction
-                    store={store}
-                    {...props}
-                />
-            </Router>,
+          <Router history={history}>
+            <CaseAction
+              store={store}
+              {...props}
+            />
+          </Router>,
         );
         const submittingAction = wrapper.find('#submittingAction').first();
         expect(submittingAction.exists()).toEqual(true);
@@ -148,12 +148,12 @@ describe('CaseAction', () => {
             }
         };
         const wrapper = await mount(
-            <Router history={history}>
-                <CaseAction
-                    store={store}
-                    {...props}
-                />
-            </Router>,
+          <Router history={history}>
+            <CaseAction
+              store={store}
+              {...props}
+            />
+          </Router>,
         );
         const formio = wrapper.find('Form');
         expect(formio.exists()).toEqual(true);

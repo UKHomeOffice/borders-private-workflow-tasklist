@@ -1,12 +1,12 @@
 import React from 'react';
 import {bindActionCreators} from "redux";
-import {getFormVersion, getFormSubmissionData, resetForm} from "../actions";
 import {withRouter} from "react-router";
 import {connect} from "react-redux";
-import {formSubmissionData, formVersionDetails, loadingFormSubmissionData, loadingFormVersion} from "../selectors";
-import withLog from "../../../core/error/component/withLog";
 import PropTypes from "prop-types";
 import {Form} from "react-formio";
+import {formSubmissionData, formVersionDetails, loadingFormSubmissionData, loadingFormVersion} from "../selectors";
+import withLog from "../../../core/error/component/withLog";
+import {getFormVersion, getFormSubmissionData, resetForm} from "../actions";
 import GovUKDetailsObserver from "../../../core/util/GovUKDetailsObserver";
 
 class FormDetailsPanel extends React.Component {
@@ -45,10 +45,11 @@ class FormDetailsPanel extends React.Component {
             return <div style={{justifyContent: 'center', paddingTop: '20px'}}>Loading form...</div>
         }
         if (!formVersionDetails) {
-            return <div/>;
+            return <div />;
         }
 
-        return <Form
+        return (
+          <Form
             form={formVersionDetails.schema}
             submission={{data: formSubmissionData}}
             ref={form => {
@@ -62,7 +63,9 @@ class FormDetailsPanel extends React.Component {
                     showNext: true,
                     showSubmit: false
                 }
-            }}/>
+            }}
+          />
+)
     }
 }
 
@@ -91,7 +94,7 @@ const mapDispatchToProps = dispatch => bindActionCreators({getFormVersion,
         getFormSubmissionData, resetForm},
     dispatch);
 
-export default withRouter(connect((state) => {
+export default withRouter(connect(state => {
     return {
         kc: state.keycloak,
         appConfig: state.appConfig,

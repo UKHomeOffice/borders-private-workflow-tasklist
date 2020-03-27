@@ -56,7 +56,7 @@ describe('YourGroupTasksContainer Page', () => {
   });
   const fetchYourGroupTasks = jest.fn();
 
-  it('sets document title as expected', (done) => {
+  it('sets document title as expected', done => {
     const props = {
       yourGroupTasks: Immutable.fromJS({
         isFetchingYourGroupTasks: true,
@@ -70,14 +70,19 @@ describe('YourGroupTasksContainer Page', () => {
 
     mount(<MemoryRouter initialEntries={['/your-group-tasks']}>
       <Switch>
-        <RouteWithTitle name="Your group tasks"
-                        title={`Your team’s tasks | ${AppConstants.APP_NAME}` }
-                        exact path={AppConstants.YOUR_GROUP_TASKS_PATH}
-                        component={() => <YourGroupTasksContainer
-                            store={store}
-                            {...props}
-                            fetchYourGroupTasks={fetchYourGroupTasks}
-                        />}/>
+        <RouteWithTitle
+          name="Your group tasks"
+          title={`Your team’s tasks | ${AppConstants.APP_NAME}`}
+          exact
+          path={AppConstants.YOUR_GROUP_TASKS_PATH}
+          component={() => (
+            <YourGroupTasksContainer
+              store={store}
+              {...props}
+              fetchYourGroupTasks={fetchYourGroupTasks}
+            />
+)}
+        />
 
       </Switch>
     </MemoryRouter>);

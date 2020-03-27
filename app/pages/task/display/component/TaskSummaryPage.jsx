@@ -10,15 +10,15 @@ const TaskSummaryPage = props => {
     const {task, variables} = props;
 
     return (
-        <React.Fragment>
-            <TaskTitle {...props} />
-            <div className="govuk-grid-row govuk-!-padding-top-3">
-                <div className="govuk-grid-column-full ">
-                    <p className="govuk-body-l">{task.get('description')}</p>
-                    <Actions task={task} variables={variables}/>
-                </div>
-            </div>
-        </React.Fragment>
+      <React.Fragment>
+        <TaskTitle {...props} />
+        <div className="govuk-grid-row govuk-!-padding-top-3">
+          <div className="govuk-grid-column-full ">
+            <p className="govuk-body-l">{task.get('description')}</p>
+            <Actions task={task} variables={variables} />
+          </div>
+        </div>
+      </React.Fragment>
     );
 };
 

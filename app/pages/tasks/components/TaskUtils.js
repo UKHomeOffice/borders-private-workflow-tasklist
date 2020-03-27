@@ -10,7 +10,7 @@ export default class TaskUtils {
                 const byReference = _.groupBy(tasks, data => {
                     return data.businessKey;
                 });
-                const sortKeys = _.orderBy(Object.keys(byReference), (o) => {
+                const sortKeys = _.orderBy(Object.keys(byReference), o => {
                     return moment(o.split('-')[1]).format('YYYYMMDD');
                 }, ['desc']);
 
@@ -23,7 +23,7 @@ export default class TaskUtils {
                     return Number(key);
                 }, ['desc']);
                 return _.fromPairs(_.map(sortByPriority, key => {
-                    return [priority(Number(' ' + key)).trim(), byPriority[key]]
+                    return [priority(Number(` ${  key}`)).trim(), byPriority[key]]
                 }));
             default:
                 const sortByKeys = object => {

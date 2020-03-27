@@ -77,6 +77,10 @@ spec:
           value: "{{.ANALYTICS_URL}}"
         - name: ANALYTICS_SITE_ID
           value: "{{.ANALYTICS_SITE_ID}}"
+        - name: BROWSER_VERSIONS
+          value: "{{.BROWSER_VERSIONS}}"
+        - name: DETECT_BROWSER
+          value: "{{.DETECT_BROWSER}}"
         securityContext:
           runAsNonRoot: true
         readinessProbe:

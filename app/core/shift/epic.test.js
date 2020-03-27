@@ -1,6 +1,7 @@
 import configureMockStore from 'redux-mock-store';
 import { ActionsObservable } from 'redux-observable';
 import { Observable } from 'rxjs/Observable';
+import PubSub from 'pubsub-js';
 import reducer from './reducer';
 import * as types from './actionTypes';
 import 'rxjs/add/observable/throw';
@@ -8,7 +9,6 @@ import 'rxjs/add/observable/of';
 import 'rxjs/add/operator/mergeMap';
 import epic from './epic';
 import 'rxjs';
-import PubSub from 'pubsub-js';
 
 jest.setTimeout(50000);
 

@@ -31,7 +31,7 @@ const createActiveShift = shiftInfo => ({
   shiftInfo,
 });
 
-const createActiveShiftSuccess = (payload) => ({
+const createActiveShiftSuccess = payload => ({
   type: types.CREATE_ACTIVE_SHIFT_SUCCESS,
   payload
 });
@@ -68,7 +68,7 @@ const fetchStaffDetailsFailure = () => ({
   type: types.FETCH_STAFF_DETAILS_FAILURE,
 });
 
-const fetchExtendedStaffDetails = (payload) => ({
+const fetchExtendedStaffDetails = payload => ({
   type: types.FETCH_EXTENDED_STAFF_DETAILS,
 });
 
@@ -94,7 +94,7 @@ const endShiftFailure = () => ({
   type: types.END_SHIFT_FAILURE,
 });
 
-const setHasActiveShift = (hasShift) => ({
+const setHasActiveShift = hasShift => ({
   type: types.SET_HAS_ACTIVE_SHIFT,
   hasShift
 });

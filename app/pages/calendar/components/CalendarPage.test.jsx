@@ -1,17 +1,20 @@
 import React from 'react';
+import {MemoryRouter, Switch} from "react-router";
 import AppConstants from '../../../common/AppConstants';
 import CalendarPage from './CalendarPage';
-import {MemoryRouter, Switch} from "react-router";
 import {RouteWithTitle} from "../../../core/Main";
 
 describe('Calendar Page', () => {
   it('sets document title as expected', () => {
     mount(<MemoryRouter initialEntries={['/calendar']}>
       <Switch>
-        <RouteWithTitle name="Calendar"
-                        title={`Calendar | ${AppConstants.APP_NAME}` }
-                        exact path={AppConstants.CALENDAR_PATH}
-                        component={() => <CalendarPage  />}/>
+        <RouteWithTitle
+          name="Calendar"
+          title={`Calendar | ${AppConstants.APP_NAME}`}
+          exact
+          path={AppConstants.CALENDAR_PATH}
+          component={() => <CalendarPage  />}
+        />
 
       </Switch>
     </MemoryRouter>);

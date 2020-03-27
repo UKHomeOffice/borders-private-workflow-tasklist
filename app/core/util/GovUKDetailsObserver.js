@@ -12,7 +12,7 @@ export default class GovUKDetailsObserver {
           new Details(element).init()
         });
     });
-    this.observer.observe(this.node, { childList: true, attributes: false, subtree: subtree });
+    this.observer.observe(this.node, { childList: true, attributes: false, subtree });
     return this;
   }
 

@@ -30,7 +30,7 @@ const executeAction = (selectedAction, submissionData, caseDetails) => ({
     caseDetails
 });
 
-const executeActionSuccess = (payload) => ({
+const executeActionSuccess = payload => ({
    type: types.EXECUTE_ACTION_SUCCESS,
    payload
 });

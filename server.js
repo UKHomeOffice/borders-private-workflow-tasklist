@@ -94,7 +94,9 @@ app.get('/api/config', (req, res) => {
     REPORT_URI: process.env.REPORT_URI,
     ANALYTICS_URL: process.env.ANALYTICS_URL,
     ANALYTICS_SITE_ID: process.env.ANALYTICS_SITE_ID,
-    API_REF_URI: process.env.API_REF_URI
+    API_REF_URI: process.env.API_REF_URI,
+    DETECT_BROWSER: process.env.DETECT_BROWSER,
+    BROWSER_VERSIONS: process.env.BROWSER_VERSIONS,
   });
 });
 

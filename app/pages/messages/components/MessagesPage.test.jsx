@@ -2,9 +2,9 @@ import React from 'react';
 import configureStore from 'redux-mock-store';
 import Immutable, { Map, List, Set } from 'immutable';
 import moment from 'moment';
+import {MemoryRouter, Switch} from "react-router";
 import AppConstants from '../../../common/AppConstants';
 import { MessagesPage } from './MessagesPage';
-import {MemoryRouter, Switch} from "react-router";
 import {RouteWithTitle} from "../../../core/Main";
 
 describe('MessagesPage', () => {
@@ -31,7 +31,7 @@ describe('MessagesPage', () => {
     };
   });
 
-  it('sets document title as expected', (done) => {
+  it('sets document title as expected', done => {
     const props = {
       isFetching: true,
       notifications: new List([]),
@@ -40,10 +40,13 @@ describe('MessagesPage', () => {
 
     mount(<MemoryRouter initialEntries={['/messages']}>
       <Switch>
-        <RouteWithTitle name="Message"
-                        title={`Operational messages | ${AppConstants.APP_NAME}` }
-                        exact path={AppConstants.MESSAGES_PATH}
-                        component={() => <MessagesPage {...props} />}/>
+        <RouteWithTitle
+          name="Message"
+          title={`Operational messages | ${AppConstants.APP_NAME}`}
+          exact
+          path={AppConstants.MESSAGES_PATH}
+          component={() => <MessagesPage {...props} />}
+        />
 
       </Switch>
     </MemoryRouter>);

@@ -46,7 +46,7 @@ export default function (ComposedComponent) {
             user,
             path,
             message: `${user} being redirected to ${redirectPath}`,
-            level: 'info',
+            level: 'debug',
             data,
           }]);
           this.props.history.replace(redirectPath);
