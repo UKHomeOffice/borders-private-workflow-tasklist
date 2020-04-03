@@ -39,7 +39,7 @@ function reducer(state = initialState, action) {
                 .set('caseDetails', null)
                 .set('businessKey', null);
         case actions.FIND_CASES_BY_KEY_SUCCESS:
-            if (action.payload.entity) {
+            if (action.payload.entity && action.payload.entity._embedded) {
                 const caseResults = action.payload.entity._embedded ? action.payload.entity._embedded.cases : [];
                 action.payload.entity._embedded.cases = sortByBusinessKey(caseResults);
             }
