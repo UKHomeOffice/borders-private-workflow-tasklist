@@ -1,6 +1,6 @@
 import React from 'react';
 
-const UnavailablePage = () => (
+const UnsupportedPage = () => (
   <div
     style={{ marginTop: '20px' }}
     className="govuk-error-summary"
@@ -10,16 +10,20 @@ const UnavailablePage = () => (
     data-module="error-summary"
   >
     <h2 className="govuk-error-summary__title" id="error-summary-title">
-      Sorry, the service is unavailable
+      Sorry, your browser is not supported
     </h2>
     <div className="govuk-error-summary__body">
-      <p>Try again later.</p>
-
       <p>
-        Your answers were not saved. When the service is available, you will
-        have to start again.
+        Please use one of the{' '}
+        <a
+          href="https://doc.dev.cop.homeoffice.gov.uk/service.html#operational-support-model"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          supported browsers
+        </a>
+        .
       </p>
-
       <p>
         Contact the{' '}
         <a href="https://support.cop.homeoffice.gov.uk/servicedesk/customer/portal/3/">
@@ -27,12 +31,14 @@ const UnavailablePage = () => (
         </a>{' '}
         if you have any questions.
       </p>
-
-      <h3>Support hours:</h3>
-
+      <h3
+        className="govuk-heading-s"
+      >
+        Support hours
+      </h3>
       <p>Monday to Friday: 8am to 6pm </p>
     </div>
   </div>
 );
 
-export default UnavailablePage;
+export default UnsupportedPage;

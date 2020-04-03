@@ -21,7 +21,7 @@ export class App extends React.Component {
     log(
       [
         {
-          level: 'info',
+          level: 'debug',
           user,
           path: location.pathname,
           message: `Route requested ${location.pathname}`,
@@ -46,7 +46,7 @@ export class App extends React.Component {
             message: 'cleared secure local storage',
           },
           {
-            level: 'info',
+            level: 'debug',
             user,
             path: currentLocation.pathname,
             message: `Route changed from ${previousLocation.pathname} to ${currentLocation.pathname}`,
@@ -73,8 +73,7 @@ export class App extends React.Component {
   }
 }
 
-const AppBanner = props => {
-  const { appConfig } = props;
+const AppBanner = ({ appConfig }) => {
   const environment = () => {
     if (appConfig.uiEnvironment.toLowerCase() !== 'production') {
       return (
@@ -104,13 +103,20 @@ const AppBanner = props => {
 };
 
 App.propTypes = {
-  log: PropTypes.func,
-  location: PropTypes.object,
+  log: PropTypes.func.isRequired,
+  location: PropTypes.object.isRequired,
+  kc: PropTypes.object.isRequired,
+  appConfig: PropTypes.object.isRequired,
+};
+
+AppBanner.propTypes = {
+  appConfig: PropTypes.object.isRequired,
 };
 
 const mapDispatchToProps = dispatch => bindActionCreators({}, dispatch);
+const mapStateToProps = ({ keycloak, appConfig }) => ({
+  kc: keycloak,
+  appConfig,
+});
 
-export default withRouter(connect(state => ({
-  kc: state.keycloak,
-  appConfig: state.appConfig,
-}), mapDispatchToProps)(withLog(App)));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(withLog(App)));

@@ -1,5 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import {bindActionCreators} from 'redux';
+import {Formio} from 'react-formio';
+import {withRouter} from 'react-router-dom';
+import {connect} from 'react-redux';
+import PubSub from "pubsub-js";
+import Immutable from 'immutable';
+import Loader from "react-loader-advanced";
 import {
     customEventSubmissionStatus,
     form,
@@ -7,12 +14,8 @@ import {
     submissionResponse,
     submissionStatus
 } from '../selectors';
-import {bindActionCreators} from 'redux';
 import * as taskFormActions from '../actions';
 import * as taskActions from '../../display/actions';
-import {Formio} from 'react-formio';
-import {withRouter} from 'react-router-dom';
-import {connect} from 'react-redux';
 import AppConstants from '../../../../common/AppConstants';
 import NotFound from '../../../../core/components/NotFound';
 import {FAILED, SUBMISSION_SUCCESSFUL, SUBMITTING} from '../constants';
@@ -21,9 +24,6 @@ import withLog from '../../../../core/error/component/withLog';
 import DataSpinner from '../../../../core/components/DataSpinner';
 import {unclaimSuccessful} from '../../display/selectors';
 
-import PubSub from "pubsub-js";
-import Immutable from 'immutable';
-import Loader from "react-loader-advanced";
 import secureLocalStorage from "../../../../common/security/SecureLocalStorage";
 
 const {Map} = Immutable;
@@ -55,6 +55,16 @@ export class CompleteTaskForm extends React.Component {
         }
     }
 
+    handleCustomEvent = (event, variableName) => {
+        const {task} = this.props;
+        if (event.type === 'unclaim') {
+            this.props.unclaimTask(task.get('id'));
+        } else if (event.type === 'cancel') {
+            this.props.history.replace(AppConstants.YOUR_TASKS_PATH);
+        } else {
+            this.props.customEvent(event, task, variableName);
+        }
+    };
 
     handleSubmission(submissionStatus) {
         const taskId = this.props.task ? this.props.task.get('id') : (this.props.nextTask ? this.props.nextTask.get('id') : null);
@@ -64,8 +74,8 @@ export class CompleteTaskForm extends React.Component {
         switch (submissionStatus) {
             case SUBMITTING :
                 this.props.log([{
-                    user: user,
-                    path: path,
+                    user,
+                    path,
                     level: 'info',
                     message: `Submitting data for ${taskName}`
                 }]);
@@ -77,7 +87,7 @@ export class CompleteTaskForm extends React.Component {
                     secureLocalStorage.remove(taskId);
                 }
                 if (this.props.submissionResponse && this.props.submissionResponse.task) {
-                    const task = this.props.submissionResponse.task;
+                    const {task} = this.props.submissionResponse;
                     this.props.fetchTaskForm(new Map({
                         id: task.id,
                         formKey: task.formKey,
@@ -85,7 +95,7 @@ export class CompleteTaskForm extends React.Component {
                     }));
                     this.props.setNextTask(this.props.submissionResponse.task, this.props.submissionResponse.variables);
                 } else {
-                    const task = this.props.task;
+                    const {task} = this.props;
                     PubSub.publish('submission', {
                         submission: true,
                         autoDismiss: true,
@@ -93,8 +103,8 @@ export class CompleteTaskForm extends React.Component {
                     });
                     this.form.formio.emit('submitDone');
                     this.props.log([{
-                        user: user,
-                        path: path,
+                        user,
+                        path,
                         level: 'info',
                         message: `${taskName} successfully completed`
                     }]);
@@ -107,8 +117,8 @@ export class CompleteTaskForm extends React.Component {
                 break;
             case FAILED :
                 this.props.log([{
-                    user: user,
-                    path: path,
+                    user,
+                    path,
                     level: 'error',
                     message: `Failed to complete ${taskName}`
                 }]);
@@ -118,24 +128,13 @@ export class CompleteTaskForm extends React.Component {
             default:
                 this.props.log([{
                     level: 'warn',
-                    path: path,
-                    user: user,
+                    path,
+                    user,
                     message: 'Unknown submission status',
-                    submissionStatus: submissionStatus
+                    submissionStatus
                 }]);
         }
     }
-
-    handleCustomEvent = (event, variableName) => {
-        const {task} = this.props;
-        if (event.type === 'unclaim') {
-            this.props.unclaimTask(task.get('id'));
-        } else if (event.type === 'cancel') {
-            this.props.history.replace(AppConstants.YOUR_TASKS_PATH);
-        } else {
-            this.props.customEvent(event, task, variableName);
-        }
-    };
 
     componentWillUnmount() {
         this.form = null;
@@ -144,18 +143,24 @@ export class CompleteTaskForm extends React.Component {
 
     render() {
         const {loadingTaskForm, form, fromProcedure, history, submissionStatus, nextTask, nextVariables} = this.props;
-        const task = nextTask ? nextTask: this.props.task;
-        const variables = nextVariables? nextVariables: this.props.variables;
+        const task = nextTask || this.props.task;
+        const variables = nextVariables || this.props.variables;
         if (loadingTaskForm) {
-            return <DataSpinner
-                message={fromProcedure ? "Loading next form to complete" : "Loading form for task..."}/>;
+            return (
+              <DataSpinner
+                message={fromProcedure ? "Loading next form to complete" : "Loading form for task..."}
+              />
+);
         }
         if (!form) {
-            return <NotFound resource="Form" id={task.get('name')}/>;
+            return <NotFound resource="Form" id={task.get('name')} />;
         }
 
-        return <Loader show={submissionStatus === SUBMITTING}
-                       message={<div style={{
+        return (
+          <Loader
+            show={submissionStatus === SUBMITTING}
+            message={(
+              <div style={{
                            justifyContent: 'center',
                            zIndex: 100,
                            borderRadius: 0,
@@ -164,19 +169,27 @@ export class CompleteTaskForm extends React.Component {
                            right: 0,
                            top: '-20px',
                            margin: 'auto'
-                       }}><DataSpinner
-                           message="Submitting data..."/></div>}
-                       hideContentOnLoad={submissionStatus === SUBMITTING}
-                       foregroundStyle={{color: 'black'}}
-                       backgroundStyle={{backgroundColor: 'white'}}><TaskForm
+                       }}
+              ><DataSpinner
+                message="Submitting data..."
+              />
+              </div>
+)}
+            hideContentOnLoad={submissionStatus === SUBMITTING}
+            foregroundStyle={{color: 'black'}}
+            backgroundStyle={{backgroundColor: 'white'}}
+          ><TaskForm
             {...this.props}
-            { ...{ form, history, task, variables } }
+            {...{ form, history, task, variables }}
             onSubmitTaskForm={(submissionData, variableName) => {
                 this.props.submitTaskForm(form.id, task.get('id'),
                     submissionData, variableName);
             }}
-            onCustomEvent={(event) => this.handleCustomEvent(event)}
-            formReference={(form) => this.form = form}/></Loader>
+            onCustomEvent={event => this.handleCustomEvent(event)}
+            formReference={form => this.form = form}
+          />
+          </Loader>
+)
     }
 }
 
@@ -193,10 +206,10 @@ CompleteTaskForm.propTypes = {
 };
 
 
-const mapDispatchToProps = dispatch => bindActionCreators(Object.assign({}, taskFormActions, taskActions), dispatch);
+const mapDispatchToProps = dispatch => bindActionCreators({ ...taskFormActions, ...taskActions}, dispatch);
 
 
-export default withRouter(connect((state) => {
+export default withRouter(connect(state => {
     return {
         form: form(state),
         loadingTaskForm: loadingTaskForm(state),

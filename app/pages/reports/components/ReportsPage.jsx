@@ -4,11 +4,11 @@ import { withRouter } from 'react-router-dom';
 import { createStructuredSelector } from 'reselect';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import uuid from 'uuid';
 import { loadingReports, reports } from '../selectors';
 import DataSpinner from '../../../core/components/DataSpinner';
 import AppConstants from '../../../common/AppConstants';
 import * as actions from '../actions';
-import uuid from 'uuid';
 
 export class ReportsPage extends React.Component {
   componentDidMount() {
@@ -21,35 +21,37 @@ export class ReportsPage extends React.Component {
     if (reports) {
       reports.forEach(report => {
         items.push(
-            <div
-                id="report"
+          <div
+            id="report"
+            className="govuk-grid-row"
+            key={uuid()}
+          >
+            <div className="govuk-grid-column-full govuk-card">
+              <h4 className="govuk-heading-s">{report.get('name')}</h4>
+              <p
+                id="formDescription"
+                className="govuk-body"
+              >
+                {report.get('description')}
+              </p>
+              <div
                 className="govuk-grid-row"
-                key={uuid()}
-            >
-              <div className="govuk-grid-column-full govuk-card">
-                <h4 className="govuk-heading-s">{report.get('name')}</h4>
-                <p
-                    id="formDescription"
-                    className="govuk-body"
-                >
-                  {report.get('description')}
-                </p>
-                <div
-                    className="govuk-grid-row">
-                  <div className="govuk-grid-column-one-third">
-                    <button
-                        id="actionButton"
-                        className="govuk-button"
-                        onClick={() => {
+              >
+                <div className="govuk-grid-column-one-third">
+                  <button
+                    id="actionButton"
+                    className="govuk-button"
+                    onClick={() => {
                           this.props.history.push(
                             `/report?reportName=${report.get('htmlName')}`,
                         );}}
-                        type="submit"
-                    >View</button>
-                  </div>
+                    type="submit"
+                  >View
+                  </button>
                 </div>
               </div>
             </div>
+          </div>
         );
       });
     }
@@ -59,7 +61,7 @@ export class ReportsPage extends React.Component {
         <div className="govuk-grid-row" id="reportsCountLabel">
           <div className="govuk-grid-column-one-half">
             <span className="govuk-caption-l">Operational reports</span>
-            <h2 className="govuk-heading-l" >
+            <h2 className="govuk-heading-l">
               {reports.size} {reports.size === 1 ? 'report' : 'reports'}
             </h2>
           </div>
@@ -75,7 +77,7 @@ export class ReportsPage extends React.Component {
             <DataSpinner message="Loading reports" />
           </div>
         ) : (
-            <React.Fragment>{items}</React.Fragment>
+          <React.Fragment>{items}</React.Fragment>
         )}
       </div>
     );

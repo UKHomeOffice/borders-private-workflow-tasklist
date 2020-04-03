@@ -30,47 +30,53 @@ export class Header extends React.Component {
     }
 
     render() {
-        return <header className="govuk-header" role="banner" data-module="header">
+        return (
+          <header className="govuk-header" role="banner" data-module="header">
             <SkipLink />
             <div className="govuk-header__container govuk-width-container">
-                <div className="govuk-header__content" style={{width: '100%'}}>
-                    <div className="govuk-grid-row">
-                        <div className="govuk-grid-column-one-half">
-                            <a
-                                id="dashboard"
-                                href={AppConstants.DASHBOARD_PATH}
-                                onClick={event => this.dashboard(event)}
-                                className="govuk-header__link govuk-header__link--service-name"
-                            >{AppConstants.APP_NAME}</a>
-                        </div>
-                        <div className="govuk-grid-column-one-half header-nav">
-                            <a
-                                id="profile"
-                                href={`${AppConstants.SUBMIT_A_FORM}/edit-your-profile`}
-                                onClick={(event) => {
+              <div className="govuk-header__content" style={{width: '100%'}}>
+                <div className="govuk-grid-row">
+                  <div className="govuk-grid-column-one-half">
+                    <a
+                      id="dashboard"
+                      href={AppConstants.DASHBOARD_PATH}
+                      onClick={event => this.dashboard(event)}
+                      className="govuk-header__link govuk-header__link--service-name"
+                    >{AppConstants.APP_NAME}
+                    </a>
+                  </div>
+                  <div className="govuk-grid-column-one-half header-nav">
+                    <a
+                      id="profile"
+                      href={`${AppConstants.SUBMIT_A_FORM}/edit-your-profile`}
+                      onClick={event => {
                                     event.preventDefault();
                                     this.props.history.replace(`${AppConstants.SUBMIT_A_FORM}/edit-your-profile`)
                                 }}
-                                className="govuk-header__link header-nav__link"
-                            >My profile</a>
-                            <a
-                                id="support"
-                                className="govuk-header__link header-nav__link"
-                                href={`${this.props.appConfig.serviceDeskUrls.support}`}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                            >Support</a>
-                            <a
-                                id="logout"
-                                href={"/logout"}
-                                onClick={this.logout}
-                                className="govuk-header__link header-nav__link"
-                            >Sign out</a>
-                        </div>
-                    </div>
+                      className="govuk-header__link header-nav__link"
+                    >My profile
+                    </a>
+                    <a
+                      id="support"
+                      className="govuk-header__link header-nav__link"
+                      href={`${this.props.appConfig.serviceDeskUrls.support}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >Support
+                    </a>
+                    <a
+                      id="logout"
+                      href="/logout"
+                      onClick={this.logout}
+                      className="govuk-header__link header-nav__link"
+                    >Sign out
+                    </a>
+                  </div>
                 </div>
+              </div>
             </div>
-        </header>;
+          </header>
+);
     }
 }
 

@@ -1,6 +1,6 @@
+import Immutable from 'immutable';
 import TaskUtils from "./TaskUtils";
 
-import Immutable from 'immutable';
 
 const {Map} = Immutable;
 

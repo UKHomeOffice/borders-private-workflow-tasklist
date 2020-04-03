@@ -31,7 +31,7 @@ export class FormsListPage extends React.Component {
 
   viewProcessDiagram = process => {
     this.props.history.replace(
-      '/procedure-diagram/' + process.getIn(['process-definition', 'key']),
+      `/procedure-diagram/${  process.getIn(['process-definition', 'key'])}`,
     );
   };
 

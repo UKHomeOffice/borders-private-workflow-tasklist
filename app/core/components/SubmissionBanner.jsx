@@ -38,27 +38,31 @@ class SubmissionBanner extends React.Component {
     const { submission, message, type } = this.state;
     if (submission) {
        if (type === 'warning') {
-         return <div style={{display: 'flex', justifyContent: 'center', paddingTop: '15px'}}>
-           <div className="govuk-warning-text">
-             <span className="govuk-warning-text__icon" aria-hidden="true" style={{width: '40px', height:'40px'}}>!</span>
-             <strong className="govuk-warning-text__text">
-               <span className="govuk-warning-text__assistive">Warning</span>
-               {message}
-             </strong>
-           </div>
-         </div>
-       } else {
-         return <div className="container" id="successfulSubmission" style={{paddingTop: '5px'}}>
-           <div className="govuk-panel govuk-panel--confirmation">
-             <div className="govuk-panel__body govuk-!-font-size-24 govuk-!-font-weight-bold">
-               {message}
+         return (
+           <div style={{display: 'flex', justifyContent: 'center', paddingTop: '15px'}}>
+             <div className="govuk-warning-text">
+               <span className="govuk-warning-text__icon" aria-hidden="true" style={{width: '40px', height:'40px'}}>!</span>
+               <strong className="govuk-warning-text__text">
+                 <span className="govuk-warning-text__assistive">Warning</span>
+                 {message}
+               </strong>
              </div>
            </div>
-         </div>
-       }
-    } else {
+)
+       } 
+         return (
+           <div className="container" id="successfulSubmission" style={{paddingTop: '5px'}}>
+             <div className="govuk-panel govuk-panel--confirmation">
+               <div className="govuk-panel__body govuk-!-font-size-24 govuk-!-font-weight-bold">
+                 {message}
+               </div>
+             </div>
+           </div>
+)
+       
+    } 
       return null;
-    }
+    
   }
 }
 

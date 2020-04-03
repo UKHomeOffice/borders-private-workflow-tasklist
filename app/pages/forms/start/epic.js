@@ -81,8 +81,8 @@ const submit = (action$, store, { client }) => action$.ofType(types.SUBMIT)
       entity: nonShiftApiCall ? createVariable(submissionData, variableName, store.getState().keycloak.tokenParsed.email)
         : {
           data: submissionData,
-          processKey: processKey,
-          variableName: variableName,
+          processKey,
+          variableName,
           businessKey: submissionData.businessKey,
         },
       headers: {

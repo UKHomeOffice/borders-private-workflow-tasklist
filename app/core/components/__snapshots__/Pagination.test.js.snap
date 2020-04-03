@@ -376,7 +376,6 @@ exports[`Pagination renders pagination 1`] = `
               >
                 »
               </span>
-               
             </a>
           </li>
         </ul>

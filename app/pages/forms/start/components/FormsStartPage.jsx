@@ -106,8 +106,8 @@ export class ProcessStartPage extends React.Component {
       case SUBMITTING:
         this.props.log([
           {
-            user: user,
-            path: path,
+            user,
+            path,
             level: 'info',
             message: `Submitting data for ${processKey}`,
           },
@@ -121,8 +121,8 @@ export class ProcessStartPage extends React.Component {
         );
         this.props.log([
           {
-            user: user,
-            path: path,
+            user,
+            path,
             level: 'info',
             message: `Procedure ${processKey} successfully started`,
           },
@@ -147,8 +147,8 @@ export class ProcessStartPage extends React.Component {
       case FAILED:
         this.props.log([
           {
-            user: user,
-            path: path,
+            user,
+            path,
             level: 'error',
             message: `Procedure ${processKey} failed to be initiated`,
           },
@@ -165,10 +165,10 @@ export class ProcessStartPage extends React.Component {
         this.props.log([
           {
             level: 'warn',
-            path: path,
-            user: user,
+            path,
+            user,
             message: 'Unknown submission status',
-            submissionStatus: submissionStatus,
+            submissionStatus,
           },
         ]);
     }
@@ -218,7 +218,7 @@ export class ProcessStartPage extends React.Component {
         {backToFormsLink()}
         <Loader
           show={submissionStatus === SUBMITTING}
-          message={
+          message={(
             <div
               style={{
                 justifyContent: 'center',
@@ -233,7 +233,7 @@ export class ProcessStartPage extends React.Component {
             >
               <DataSpinner message="Submitting form..." />
             </div>
-          }
+          )}
           hideContentOnLoad={submissionStatus === SUBMITTING}
           foregroundStyle={{ color: 'black' }}
           backgroundStyle={{ backgroundColor: 'white' }}
@@ -252,7 +252,7 @@ export class ProcessStartPage extends React.Component {
                     variables={
                       this.props.submissionResponse.processInstance.variables
                     }
-                    fromProcedure={true}
+                    fromProcedure
                     task={
                       new Map({
                         fromProcedure: true,

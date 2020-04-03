@@ -9,13 +9,13 @@ import {connect} from 'react-redux';
 import {debounce, throttle} from 'throttle-debounce';
 import {withRouter} from 'react-router';
 
+import _ from "lodash";
+import moment from 'moment';
 import * as actions from '../actions';
 import DataSpinner from '../../../core/components/DataSpinner';
 import YourTasks from './YourTasks';
 import {yourTasks} from '../selectors';
-import _ from "lodash";
 import {priority} from "../../../core/util/priority";
-import moment from 'moment';
 import secureLocalStorage from "../../../common/security/SecureLocalStorage";
 import TaskUtils from "./TaskUtils";
 
@@ -32,10 +32,10 @@ export class YourTasksContainer extends React.Component {
         this.taskUtils = new TaskUtils();
     }
 
-    connect = (user) => {
+    connect = user => {
         const uiEnv = this.props.appConfig.uiEnvironment.toLowerCase();
         this.client = new Client({
-            debug: function (str) {
+            debug (str) {
                 if (uiEnv === 'development' || uiEnv === 'local') {
                     console.log(str);
                 }
@@ -52,7 +52,7 @@ export class YourTasksContainer extends React.Component {
         this.client.onConnect = function (frame) {
             self.props.log([{
                 message: 'Connected to websocket',
-                user: user,
+                user,
                 level: 'info',
                 path: self.props.location.pathname
             }]);
@@ -63,8 +63,8 @@ export class YourTasksContainer extends React.Component {
             });
             self.websocketSubscriptions.push(userSub);
             self.props.log([{
-                message: 'Number of subscriptions ' + self.websocketSubscriptions.length,
-                user: user,
+                message: `Number of subscriptions ${self.websocketSubscriptions.length}`,
+                user,
                 level: 'info',
                 path: self.props.location.pathname
             }]);
@@ -72,8 +72,8 @@ export class YourTasksContainer extends React.Component {
 
         this.client.onStompError = function (frame) {
             self.props.log([{
-                message: `Failed to connect ${frame.headers['message']}`,
-                user: user,
+                message: `Failed to connect ${frame.headers.message}`,
+                user,
                 level: 'error',
                 path: self.props.location.pathname
             }]);
@@ -131,24 +131,24 @@ export class YourTasksContainer extends React.Component {
         const {yourTasks} = this.props;
 
         if (yourTasks.get('isFetchingTasksAssignedToYou')) {
-            return <DataSpinner message="Fetching tasks assigned to you"/>;
+            return <DataSpinner message="Fetching tasks assigned to you" />;
         }
         const groupBy = yourTasks.get('groupBy');
         return (
-            <YourTasks
-                grouping={groupBy}
-                filterTasksByName={this.filterTasksByName}
-                sortYourTasks={this.sortYourTasks}
-                goToTask={this.goToTask}
-                yourTasks={this.taskUtils.applyGrouping(groupBy, yourTasks.get('tasks').toJS())}
-                total={yourTasks.get('total')}
-                sortValue={yourTasks.get('sortValue')}
-                filterValue={yourTasks.get('yourTasksFilterValue')}
-                groupTasks={(grouping) => {
+          <YourTasks
+            grouping={groupBy}
+            filterTasksByName={this.filterTasksByName}
+            sortYourTasks={this.sortYourTasks}
+            goToTask={this.goToTask}
+            yourTasks={this.taskUtils.applyGrouping(groupBy, yourTasks.get('tasks').toJS())}
+            total={yourTasks.get('total')}
+            sortValue={yourTasks.get('sortValue')}
+            filterValue={yourTasks.get('yourTasksFilterValue')}
+            groupTasks={grouping => {
                     secureLocalStorage.set('yourTasksGrouping', grouping);
                     this.props.groupYourTasks(grouping)
                 }}
-            />
+          />
         );
     }
 }

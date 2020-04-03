@@ -24,10 +24,24 @@ export class DashboardPanel extends React.Component {
     this.connect = this.connect.bind(this);
   }
 
-  connect = (user) => {
+  componentDidMount() {
+    if (this.props.shift) {
+      const user = this.props.kc.tokenParsed.email;
+      this.connect(user);
+    }
+}
+
+  componentWillUnmount() {
+    this.retryCount = 0;
+    if (this.client) {
+      this.client.deactivate();
+    }
+  }
+
+  connect = user => {
     const uiEnv = this.props.appConfig.uiEnvironment.toLowerCase();
     this.client = new Client({
-      debug: function (str) {
+      debug (str) {
         if (uiEnv === 'development' || uiEnv === 'local') {
             console.log(str);
         }
@@ -44,24 +58,24 @@ export class DashboardPanel extends React.Component {
     this.client.onConnect = function(frame) {
       self.props.log([{
         message: 'Connected to websocket',
-        user: user,
+        user,
         level: 'info',
         path: self.props.location.pathname
       }]);
 
-      const teamSub = self.client.subscribe(`/topic/task/${self.props.shift.get('teamid')}`, (msg) => {
+      const teamSub = self.client.subscribe(`/topic/task/${self.props.shift.get('teamid')}`, msg => {
         PubSub.publishSync("refreshCount", {});
       });
       self.websocketSubscriptions.push(teamSub);
 
-      const userSub = self.client.subscribe(`/user/queue/task`, (msg) => {
+      const userSub = self.client.subscribe(`/user/queue/task`, msg => {
         PubSub.publishSync("refreshCount", {});
       });
       self.websocketSubscriptions.push(userSub);
 
       self.props.log([{
-        message: 'Number of subscriptions ' + self.websocketSubscriptions.length,
-        user: user,
+        message: `Number of subscriptions ${self.websocketSubscriptions.length}`,
+        user,
         level: 'info',
         path: self.props.location.pathname
       }]);
@@ -69,8 +83,8 @@ export class DashboardPanel extends React.Component {
 
     this.client.onStompError = function (frame) {
       self.props.log([{
-        message: `Failed to connect ${frame.headers['message']}`,
-        user: user,
+        message: `Failed to connect ${frame.headers.message}`,
+        user,
         level: 'error',
         path: self.props.location.pathname
       }]);
@@ -78,38 +92,29 @@ export class DashboardPanel extends React.Component {
     this.client.activate();
   };
 
-  componentDidMount() {
-    if (this.props.shift) {
-      const user = this.props.kc.tokenParsed.email;
-      this.connect(user);
-    }
-}
-
-  componentWillUnmount() {
-    this.retryCount = 0;
-    if (this.client) {
-      this.client.deactivate();
-    }
-  }
-
   render() {
     return (
       <div>
         <div className="govuk-grid-row">
           <ul className="govuk-list">
-            <TaskCountPanel {...this.props}/>
+            <TaskCountPanel {...this.props} />
             <MessagesPanel {...this.props} />
           </ul>
         </div>
-        <hr className="govuk-section-break govuk-section-break--m govuk-section-break--visible"/>
+        <hr className="govuk-section-break govuk-section-break--m govuk-section-break--visible" />
         <div className="govuk-grid-row govuk-!-padding-top-3">
           <Suspense
-            fallback={<div style={{display: 'flex', justifyContent: 'center', paddingTop: '20px'}}><DataSpinner
-                message="Loading panels..."/></div>}>
+            fallback={(
+              <div style={{display: 'flex', justifyContent: 'center', paddingTop: '20px'}}><DataSpinner
+                message="Loading panels..."
+              />
+              </div>
+)}
+          >
             <ul className="govuk-list">
-              <ProceduresDashboardPanel {...this.props}/>
-              <ReportsDashboardPanel {...this.props}/>
-              <CasesDashboardPanel {...this.props}/>
+              <ProceduresDashboardPanel {...this.props} />
+              <ReportsDashboardPanel {...this.props} />
+              <CasesDashboardPanel {...this.props} />
             </ul>
           </Suspense>
         </div>
@@ -120,7 +125,7 @@ export class DashboardPanel extends React.Component {
 
 const mapDispatchToProps = dispatch => bindActionCreators({}, dispatch);
 
-export default withRouter(connect((state) => {
+export default withRouter(connect(state => {
   return {
     kc: state.keycloak,
     appConfig: state.appConfig

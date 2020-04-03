@@ -1,9 +1,9 @@
 import React from 'react';
 import configureStore from 'redux-mock-store';
 import Immutable, { Map, List } from 'immutable';
+import {MemoryRouter, Switch} from "react-router";
 import AppConstants from '../../../../common/AppConstants';
 import { FormsListPage } from './FormsListPage';
-import {MemoryRouter, Switch} from "react-router";
 import {RouteWithTitle} from "../../../../core/Main";
 
 
@@ -23,7 +23,7 @@ describe('FormsListPage', () => {
     };
   });
 
-  it('sets document title as expected', (done) => {
+  it('sets document title as expected', done => {
     const props = {
       isFetchingProcessDefinitions: true,
       processDefinitions: List([]),
@@ -32,10 +32,13 @@ describe('FormsListPage', () => {
 
     mount(<MemoryRouter initialEntries={['/forms']}>
       <Switch>
-        <RouteWithTitle name="Forms"
-                        title={`Operational forms | ${AppConstants.APP_NAME}` }
-                        exact path={AppConstants.FORMS_PATH}
-                        component={() => <FormsListPage {...props} />}/>
+        <RouteWithTitle
+          name="Forms"
+          title={`Operational forms | ${AppConstants.APP_NAME}`}
+          exact
+          path={AppConstants.FORMS_PATH}
+          component={() => <FormsListPage {...props} />}
+        />
 
       </Switch>
 

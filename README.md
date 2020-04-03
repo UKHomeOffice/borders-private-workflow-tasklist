@@ -1,4 +1,10 @@
-# Borders Workflow Task List
+# COP Private UI
+
+This UI provides a central point for forms,tasks and cases. Forms and tasks are surfaced to users by business processes. Actions that you perform on tasks are controlled
+by business processes. The UI is agnostic of any particular business specific code rather it relies on the business process service 
+to tell it what forms and tasks are available to a given user.
+
+**Please note: Do not place fixes that related to a particular business process in the UI. You should seek to fix those in the appropriate BPMN. This is a shared UI across multiple business processes and users**
 
 ## Set up
 

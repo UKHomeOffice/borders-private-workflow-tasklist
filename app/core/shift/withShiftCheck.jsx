@@ -2,16 +2,16 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
-import {hasActiveShift, isFetchingShift, shift} from './selectors';
-import * as actions from './actions';
 import {createStructuredSelector} from 'reselect';
 import {Redirect, withRouter} from 'react-router';
+import moment from 'moment';
+import Immutable from 'immutable';
+import {hasActiveShift, isFetchingShift, shift} from './selectors';
+import * as actions from './actions';
 import ErrorHandlingComponent from '../error/component/ErrorHandlingComponent';
 import * as errorActions from '../error/actions';
 import DataSpinner from '../components/DataSpinner';
 import secureLocalStorage from "../../common/security/SecureLocalStorage";
-import moment from 'moment';
-import Immutable from 'immutable';
 import AppConstants from "../../common/AppConstants";
 
 const uuidv4 = require('uuid/v4');
@@ -51,23 +51,29 @@ export default function (ComposedComponent) {
             if (shift) {
                 const endDateTime = moment(shift.get('enddatetime'));
                 return moment().diff(endDateTime) < 0
-            } else {
+            } 
                 return false;
-            }
+            
         }
 
         render() {
             const {hasActiveShift, isFetchingShift} = this.props;
             if (isFetchingShift) {
-                return <DataSpinner message={`Checking if you have an active shift`}/>;
-            } else {
+                return <DataSpinner message="Checking if you have an active shift" />;
+            } 
                 if (hasActiveShift) {
-                    return <ErrorHandlingComponent><BackButton {...this.props}><ComposedComponent {...this.props}
-                                                                                                  key={uuidv4()}/></BackButton></ErrorHandlingComponent>;
-                } else {
-                    return <Redirect to={AppConstants.SHIFT_PATH}/>;
-                }
-            }
+                    return (
+                      <ErrorHandlingComponent><BackButton {...this.props}><ComposedComponent
+                        {...this.props}
+                        key={uuidv4()}
+                      />
+                      </BackButton>
+                      </ErrorHandlingComponent>
+);
+                } 
+                    return <Redirect to={AppConstants.SHIFT_PATH} />;
+                
+            
         }
 
     }
@@ -75,14 +81,21 @@ export default function (ComposedComponent) {
     class BackButton extends React.Component {
         render() {
             if (this.props.location.pathname !== AppConstants.DASHBOARD_PATH) {
-                return <React.Fragment>
-                    <a href={AppConstants.DASHBOARD_PATH} style={{textDecoration: 'none'}} className="govuk-back-link govuk-!-font-size-19"
-                       onClick={(event) => {
+                return (
+                  <React.Fragment>
+                    <a
+                      href={AppConstants.DASHBOARD_PATH}
+                      style={{textDecoration: 'none'}}
+                      className="govuk-back-link govuk-!-font-size-19"
+                      onClick={event => {
                            event.preventDefault();
                            this.props.history.replace(AppConstants.DASHBOARD_PATH)
-                       }}>Back to dashboard</a>
+                       }}
+                    >Back to dashboard
+                    </a>
                     {this.props.children}
-                </React.Fragment>;
+                  </React.Fragment>
+);
             }
             return <React.Fragment>{this.props.children}</React.Fragment>;
         }
@@ -97,12 +110,12 @@ export default function (ComposedComponent) {
     };
 
     const mapStateToProps = createStructuredSelector({
-        hasActiveShift: hasActiveShift,
-        isFetchingShift: isFetchingShift,
-        shift: shift
+        hasActiveShift,
+        isFetchingShift,
+        shift
     });
 
-    const mapDispatchToProps = dispatch => bindActionCreators(Object.assign({}, actions, errorActions), dispatch);
+    const mapDispatchToProps = dispatch => bindActionCreators({ ...actions, ...errorActions}, dispatch);
 
     return withRouter(connect(mapStateToProps, mapDispatchToProps)(withShiftCheck));
 }

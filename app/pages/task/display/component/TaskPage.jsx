@@ -89,7 +89,7 @@ class TaskPage extends React.Component {
       </React.Fragment>
     ) : task.get('assignee') &&
       task.get('assignee') === this.props.kc.tokenParsed.email ? (
-      <TaskDetailsPage {...this.props} />
+        <TaskDetailsPage {...this.props} />
     ) : (
       <TaskSummaryPage {...this.props} />
     );
@@ -107,13 +107,13 @@ TaskPage.propTypes = {
 };
 
 const mapStateToProps = createStructuredSelector({
-  isFetchingTask: isFetchingTask,
-  task: task,
-  candidateGroups: candidateGroups,
-  variables: variables,
-  businessKey: businessKey,
-  processDefinition: processDefinition,
-  extensionData: extensionData,
+  isFetchingTask,
+  task,
+  candidateGroups,
+  variables,
+  businessKey,
+  processDefinition,
+  extensionData,
   kc: state => state.keycloak,
 });
 

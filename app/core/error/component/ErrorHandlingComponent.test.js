@@ -50,7 +50,7 @@ describe('Error Handling Component', () => {
   }
     const wrapper = await mount(
       <ErrorHandlingComponent
-          {...props}
+        {...props}
         store={store}
         hasError
         errors={Immutable.fromJS([{

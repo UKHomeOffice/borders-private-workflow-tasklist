@@ -33,7 +33,7 @@ export default class ProcessViewer extends React.Component {
         return false;
     }
 
-    renderDiagram = (xml) => {
+    renderDiagram = xml => {
         this.bpmnModeler.importXML(xml, err => {
             if (err) {
                 console.log('error rendering', err);
@@ -70,18 +70,24 @@ export default class ProcessViewer extends React.Component {
 
     render() {
         const {processDefinition} = this.props;
-        return <div>
-            <div id="processName" style={{textAlign: 'center', marginTop: '5px'}}
-                 className="govuk-heading-m">{processDefinition.getIn(['process-definition', 'name'])}</div>
+        return (
+          <div>
+            <div
+              id="processName"
+              style={{textAlign: 'center', marginTop: '5px'}}
+              className="govuk-heading-m"
+            >{processDefinition.getIn(['process-definition', 'name'])}
+            </div>
 
             <div className="process-content">
-                <div id="canvas"/>
+              <div id="canvas" />
             </div>
             <ZoomControls
-                onZoomIn={this.handleZoomIn}
-                onZoomOut={this.handleZoomOut}
-                onZoomReset={this.handleZoomReset}
+              onZoomIn={this.handleZoomIn}
+              onZoomOut={this.handleZoomOut}
+              onZoomReset={this.handleZoomReset}
             />
-        </div>;
+          </div>
+);
     }
 }

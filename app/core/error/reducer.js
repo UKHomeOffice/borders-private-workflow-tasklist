@@ -29,7 +29,7 @@ function reducer(state = initialState, action) {
         }
       }
       if (!errorToReturn.message) {
-        errorToReturn.message = `Failed to execute action: ${JSON.parse(error['error'].value)}`;
+        errorToReturn.message = `Failed to execute action: ${JSON.parse(error.error.value)}`;
       }
       errorToReturn.raw = error;
 

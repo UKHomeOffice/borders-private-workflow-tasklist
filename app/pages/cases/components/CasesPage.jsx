@@ -20,7 +20,7 @@ class CasesPage extends React.Component {
     const {
       match: { params },
     } = this.props;
-    const businessKey = params.businessKey;
+    const {businessKey} = params;
     if (businessKey) {
       this.props.findCasesByKey(businessKey.toUpperCase());
     }
@@ -37,7 +37,7 @@ class CasesPage extends React.Component {
       businessKeyQuery,
       match: { params },
     } = this.props;
-    const businessKey = params.businessKey;
+    const {businessKey} = params;
     return (
       <React.Fragment>
         <div className="govuk-grid-row">

@@ -1,11 +1,11 @@
 import React from 'react';
 import {Form} from 'react-formio';
 import moment from 'moment';
+import FormioUtils from 'formiojs/utils';
 import AppConstants from '../../../common/AppConstants';
 import GovUKDetailsObserver from '../../../core/util/GovUKDetailsObserver';
 import FileService from "../../../core/FileService";
 import secureLocalStorage from "../../../common/security/SecureLocalStorage";
-import FormioUtils from 'formiojs/utils';
 
 export default class ShiftForm extends React.Component {
 
@@ -22,7 +22,7 @@ export default class ShiftForm extends React.Component {
         return false;
     }
 
-    handleCancel = (resetForm) => {
+    handleCancel = resetForm => {
         this.props.history.replace(AppConstants.DASHBOARD_PATH);
         resetForm(false);
     };
@@ -59,9 +59,9 @@ export default class ShiftForm extends React.Component {
             },
         };
         if (!shiftForm) {
-            return <div/>;
+            return <div />;
         }
-        let shiftSubmission = {
+        const shiftSubmission = {
             data: {
                 keycloakContext: {
                     accessToken: kc.token,
@@ -94,8 +94,7 @@ export default class ShiftForm extends React.Component {
                 locationid: shift.get('locationid'),
                 phone: shift.get('phone')
             };
-        } else {
-            if (staffDetails) {
+        } else if (staffDetails) {
                 const defaultTeam = staffDetails.get('defaultteam');
                 shiftSubmission.data = {
                     ...shiftSubmission.data,
@@ -108,8 +107,6 @@ export default class ShiftForm extends React.Component {
                     phone: staffDetails.get('phone')
                 };
             }
-
-        }
         FormioUtils.eachComponent(shiftForm.components, component => {
             if (component.defaultValue) {
                 component.defaultValue = FormioUtils.interpolate(component.defaultValue, {
@@ -117,14 +114,20 @@ export default class ShiftForm extends React.Component {
                 })
             }
         });
-        return <Form form={shiftForm} submission={shiftSubmission} options={options}
-                     ref={form => {
+        return (
+          <Form
+            form={shiftForm}
+            submission={shiftSubmission}
+            options={options}
+            ref={form => {
                          this.formNode = form;
                          formReference(form);
                      }}
-                     onSubmit={(submission) => {
+            onSubmit={submission => {
                          submit(shiftForm, submission)
-                     }}/>
+                     }}
+          />
+)
 
     }
 

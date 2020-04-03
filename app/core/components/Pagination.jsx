@@ -38,8 +38,8 @@ class Pagination extends React.Component {
     }
 
     setPage(page) {
-        let {items, pageSize} = this.props;
-        let pager = this.state.pager;
+        const {items, pageSize} = this.props;
+        let {pager} = this.state;
 
         if (page < 1 || page > pager.totalPages) {
             return;
@@ -49,10 +49,10 @@ class Pagination extends React.Component {
         pager = this.getPager(items.size, page, pageSize);
 
         // get new page of items from items array
-        let pageOfItems = items.slice(pager.startIndex, pager.endIndex + 1);
+        const pageOfItems = items.slice(pager.startIndex, pager.endIndex + 1);
 
         // update state
-        this.setState({pager: pager});
+        this.setState({pager});
 
         // call change page function in parent component
         this.props.onChangePage(pageOfItems);
@@ -66,9 +66,9 @@ class Pagination extends React.Component {
         pageSize = pageSize || 10;
 
         // calculate total pages
-        let totalPages = Math.ceil(totalItems / pageSize);
+        const totalPages = Math.ceil(totalItems / pageSize);
 
-        let startPage, endPage;
+        let startPage; let endPage;
         if (totalPages <= 10) {
             // less than 10 total pages so show all
             startPage = 1;
@@ -88,67 +88,80 @@ class Pagination extends React.Component {
         }
 
         // calculate start and end item indexes
-        let startIndex = (currentPage - 1) * pageSize;
-        let endIndex = Math.min(startIndex + pageSize - 1, totalItems - 1);
+        const startIndex = (currentPage - 1) * pageSize;
+        const endIndex = Math.min(startIndex + pageSize - 1, totalItems - 1);
 
         // create an array of pages to ng-repeat in the pager control
-        let pages = [...Array((endPage + 1) - startPage).keys()].map(i => startPage + i);
+        const pages = [...Array((endPage + 1) - startPage).keys()].map(i => startPage + i);
 
         // return object with all pager properties required by the view
         return {
-            totalItems: totalItems,
-            currentPage: currentPage,
-            pageSize: pageSize,
-            totalPages: totalPages,
-            startPage: startPage,
-            endPage: endPage,
-            startIndex: startIndex,
-            endIndex: endIndex,
-            pages: pages
+            totalItems,
+            currentPage,
+            pageSize,
+            totalPages,
+            startPage,
+            endPage,
+            startIndex,
+            endIndex,
+            pages
         };
     }
 
     render() {
-        let pager = this.state.pager;
+        const {pager} = this.state;
 
         if (!pager.pages || pager.pages.length <= 1) {
             return null;
         }
         const summary = `Showing ${pager.currentPage} - ${pager.totalPages} of ${pager.totalItems} results`;
         return (
-            <React.Fragment>
-                <div className="govuk-grid-row govuk-!-margin-bottom-2">
-                    <div className="govuk-grid-column-full">
-                        <div className="pagination__summary govuk-!-font-size-19">{summary}</div>
-                    </div>
-                </div>
-                <div className="govuk-grid-row pagination-center">
-                    <div className="govuk-grid-column-full">
-                        <nav role="navigation" aria-label="comments-pagination">
-                            <ul className="pagination govuk-!-font-size-19">
-                                <li className="pagination__item">
-                                    <a className="pagination__link" onClick={() => this.setPage(pager.currentPage - 1)}><span aria-hidden="true"
-                                                                                                                              role="presentation">&laquo;</span> Previous</a>
-                                </li>
-                                {pager.pages.map((page, index) => {
+          <React.Fragment>
+            <div className="govuk-grid-row govuk-!-margin-bottom-2">
+              <div className="govuk-grid-column-full">
+                <div className="pagination__summary govuk-!-font-size-19">{summary}</div>
+              </div>
+            </div>
+            <div className="govuk-grid-row pagination-center">
+              <div className="govuk-grid-column-full">
+                <nav role="navigation" aria-label="comments-pagination">
+                  <ul className="pagination govuk-!-font-size-19">
+                    <li className="pagination__item">
+                      <a className="pagination__link" onClick={() => this.setPage(pager.currentPage - 1)}><span
+                        aria-hidden="true"
+                        role="presentation"
+                      >&laquo;
+                                                                                                          </span> Previous
+                      </a>
+                    </li>
+                    {pager.pages.map((page, index) => {
                                         const current = pager.currentPage === page ? 'current' : '';
                                         const paginationLink = `pagination__link ${current}`;
-                                        return <li key={index} className="pagination__item">
-                                            <a className={paginationLink}
-                                               onClick={() => this.setPage(page)}>{page}</a>
-                                        </li>
+                                        return (
+                                          <li key={index} className="pagination__item">
+                                            <a
+                                              className={paginationLink}
+                                              onClick={() => this.setPage(page)}
+                                            >{page}
+                                            </a>
+                                          </li>
+)
 
                                     }
                                 )}
-                                <li className="pagination__item">
-                                    <a className="pagination__link" onClick={() => this.setPage(pager.currentPage + 1)}>Next <span
-                                        aria-hidden="true" role="presentation">&raquo;</span> </a>
-                                </li>
-                            </ul>
-                        </nav>
-                    </div>
-                </div>
-            </React.Fragment>
+                    <li className="pagination__item">
+                      <a className="pagination__link" onClick={() => this.setPage(pager.currentPage + 1)}>Next <span
+                        aria-hidden="true"
+                        role="presentation"
+                      >&raquo;
+                                                                                                               </span> 
+                      </a>
+                    </li>
+                  </ul>
+                </nav>
+              </div>
+            </div>
+          </React.Fragment>
 
         );
     }

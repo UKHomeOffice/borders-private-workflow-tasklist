@@ -2,9 +2,9 @@ import React from 'react';
 import configureStore from 'redux-mock-store';
 import Immutable, { Map, List } from 'immutable';
 import Spinner from 'react-spinkit';
+import {MemoryRouter, Switch} from "react-router";
 import AppConstants from '../../../common/AppConstants';
 import { ReportsPage } from './ReportsPage';
-import {MemoryRouter, Switch} from "react-router";
 import {RouteWithTitle} from "../../../core/Main";
 
 describe('Reports Page', () => {
@@ -16,7 +16,7 @@ describe('Reports Page', () => {
   };
   const store = configureStore()(initialState);
 
-  it('sets document title as expected', (done) => {
+  it('sets document title as expected', done => {
     const props = {
       loadingReports: false,
       reports: List([]),
@@ -25,14 +25,17 @@ describe('Reports Page', () => {
     };
 
    mount(<MemoryRouter initialEntries={['/reports']}>
-      <Switch>
-        <RouteWithTitle name="Reports"
-                        title={`Operational reports | ${AppConstants.APP_NAME}` }
-                        exact path={AppConstants.REPORTS_PATH}
-                        component={() => <ReportsPage {...props} />}/>
+     <Switch>
+       <RouteWithTitle
+         name="Reports"
+         title={`Operational reports | ${AppConstants.APP_NAME}`}
+         exact
+         path={AppConstants.REPORTS_PATH}
+         component={() => <ReportsPage {...props} />}
+       />
 
-      </Switch>
-    </MemoryRouter>);
+     </Switch>
+   </MemoryRouter>);
     requestAnimationFrame(() => {
       expect(document.title).toBe(
           `Operational reports | ${AppConstants.APP_NAME}`,

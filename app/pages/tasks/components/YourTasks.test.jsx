@@ -104,7 +104,7 @@ describe('YourTasks Page', () => {
   });
   const fetchTasksAssignedToYou = jest.fn();
 
-  it('sets document title as expected', (done) => {
+  it('sets document title as expected', done => {
     const taskUtil = new TaskUtils();
     const props = {
       filterTasksByName: jest.fn(),
@@ -128,10 +128,13 @@ describe('YourTasks Page', () => {
 
     mount(<MemoryRouter initialEntries={['/your-tasks']}>
       <Switch>
-        <RouteWithTitle name="Your tasks"
-                        title={`Your tasks | ${AppConstants.APP_NAME}` }
-                        exact path={AppConstants.YOUR_TASKS_PATH}
-                        component={() => <YourTasks {...props} />}/>
+        <RouteWithTitle
+          name="Your tasks"
+          title={`Your tasks | ${AppConstants.APP_NAME}`}
+          exact
+          path={AppConstants.YOUR_TASKS_PATH}
+          component={() => <YourTasks {...props} />}
+        />
 
       </Switch>
     </MemoryRouter>);

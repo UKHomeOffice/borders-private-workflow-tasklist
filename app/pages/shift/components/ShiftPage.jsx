@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 
 import { bindActionCreators } from 'redux';
 import ImmutablePropTypes from 'react-immutable-proptypes';
+import Loader from 'react-loader-advanced';
 import {
     activeShiftSuccess,
     isFetchingShift,
@@ -18,7 +19,6 @@ import {
     submittingActiveShift,
 } from '../../../core/shift/selectors';
 import * as actions from '../../../core/shift/actions';
-import Loader from 'react-loader-advanced';
 import DataSpinner from '../../../core/components/DataSpinner';
 import ShiftForm from './ShiftForm';
 import secureLocalStorage from "../../../common/security/SecureLocalStorage";
@@ -72,19 +72,27 @@ export class ShiftPage extends React.Component {
           return <DataSpinner message="Getting shift form" />;
         }
       const spinner = <DataSpinner message="Submitting your shift details..." />;
-      return (<Loader show={submittingActiveShift} message={spinner}
-                    hideContentOnLoad={submittingActiveShift}
-                    foregroundStyle={{color: 'black'}}
-                    backgroundStyle={{backgroundColor: 'white'}}>
-                <div className="govuk-grid-row" style={{padding: '10px 10px'}}>
-                    <div className="govuk-grid-row-column-full" id="shiftWizardForm">
-                        <ShiftForm {...this.props} formReference={(form) => this.form = form}
-                                   submit={(shiftForm, submission) => {
+      return (
+        <Loader
+          show={submittingActiveShift}
+          message={spinner}
+          hideContentOnLoad={submittingActiveShift}
+          foregroundStyle={{color: 'black'}}
+          backgroundStyle={{backgroundColor: 'white'}}
+        >
+          <div className="govuk-grid-row" style={{padding: '10px 10px'}}>
+            <div className="govuk-grid-row-column-full" id="shiftWizardForm">
+              <ShiftForm
+                {...this.props}
+                formReference={form => this.form = form}
+                submit={(shiftForm, submission) => {
                                        this.props.submit(shiftForm.id, submission.data);
-                                   }}/>
-                    </div>
-                </div>
-            </Loader>);
+                                   }}
+              />
+            </div>
+          </div>
+        </Loader>
+);
     }
 
 }
@@ -106,7 +114,7 @@ ShiftPage.propTypes = {
 
 const mapDispatchToProps = dispatch => bindActionCreators(actions, dispatch);
 
-export default withRouter(connect((state) => ({
+export default withRouter(connect(state => ({
         isFetchingShift: isFetchingShift(state),
         submittingActiveShift: submittingActiveShift(state),
         activeShiftSuccess: activeShiftSuccess(state),

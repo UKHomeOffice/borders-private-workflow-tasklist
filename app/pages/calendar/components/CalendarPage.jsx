@@ -26,8 +26,8 @@ class CalendarPage extends React.Component {
             selectable: true,
             locale: 'en-gb',
             defaultView: $(window).width() > 576 ? 'agendaWeek' : 'listWeek',
-            windowResize: (view) => {
-                const currentView = view['name'];
+            windowResize: view => {
+                const currentView = view.name;
                 const expectedView = $(window).width() > 576 ? 'agendaWeek' : 'listWeek';
                 if (currentView !== expectedView) {
                     $(calendar).fullCalendar('changeView', expectedView);
@@ -38,7 +38,7 @@ class CalendarPage extends React.Component {
     }
 
     render() {
-        return <div ref='calendar' style={{paddingTop: '20px'}}/>
+        return <div ref='calendar' style={{paddingTop: '20px'}} />
     }
 }
 

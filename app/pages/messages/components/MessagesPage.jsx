@@ -54,7 +54,7 @@ export class MessagesPage extends React.Component {
           <div className="govuk-grid-row" id="numberOfMessages">
             <div className="govuk-grid-column-one-half">
               <span className="govuk-caption-l">Operational messages</span>
-              <h2 className="govuk-heading-l" >
+              <h2 className="govuk-heading-l">
                 {this.props.total} messages
               </h2>
             </div>
@@ -63,8 +63,7 @@ export class MessagesPage extends React.Component {
         <InfiniteScroll
           pageStart={0}
           loadMore={() =>
-            this.props.fetchNotificationsNextPage(this.props.nextPage)
-          }
+            this.props.fetchNotificationsNextPage(this.props.nextPage)}
           initialLoad={false}
           hasMore={this.props.hasMoreItems}
         >
@@ -166,13 +165,13 @@ MessagesPage.propTypes = {
 };
 
 const mapStateToProps = createStructuredSelector({
-  notifications: notifications,
-  isFetching: isFetching,
-  total: total,
-  nextPage: nextPage,
-  hasMoreItems: hasMoreItems,
-  pageSize: pageSize,
-  acknowledgingTaskIds: acknowledgingTaskIds,
+  notifications,
+  isFetching,
+  total,
+  nextPage,
+  hasMoreItems,
+  pageSize,
+  acknowledgingTaskIds,
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators(actions, dispatch);

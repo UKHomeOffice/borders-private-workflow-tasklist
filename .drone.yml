@@ -154,6 +154,10 @@ pipeline:
         target: ANALYTICS_URL
       - source: DEV_ANALYTICS_SITE_ID
         target: ANALYTICS_SITE_ID
+      - source: DEV_WWW_BROWSER_VERSIONS
+        target: BROWSER_VERSIONS
+      - source: DEV_WWW_DETECT_BROWSER
+        target: DETECT_BROWSER
     commands:
       - export WWW_TAG=$${DRONE_COMMIT_SHA}
       - kd --insecure-skip-tls-verify -f kube/cert.yml
@@ -165,40 +169,60 @@ pipeline:
       branch: master
       event: push
 
-  open-snow-change-dev:
-    image: quay.io/ukhomeofficedigital/snowtify:latest
-    secrets:
-      - source: DEV_SERVICE_NOW_PASSWORD
-        target: SNOW_TEST_PASS
-      - source: DEV_SERVICE_NOW_USERNAME
-        target: SNOW_TEST_USER
-    environment:
-      - SNOW_DESC=${DRONE_COMMIT_SHA}
-      - SNOW_ENDPOINT=https://cto-change-dev.internal.cto-notprod.homeoffice.gov.uk/create
-      - SNOW_INT_ID_FILE=/build/internal-id
-      - SNOW_EXTERNAL_ID=${DRONE_REPO}:${DRONE_COMMIT_SHA}
-    when:
-      branch: master
-      event: push
-      status: success
-
-  complete-snow-change-dev:
-    image: quay.io/ukhomeofficedigital/snowtify:latest
-    secrets:
-      - source: DEV_SERVICE_NOW_PASSWORD
-        target: SNOW_TEST_PASS
-      - source: DEV_SERVICE_NOW_USERNAME
-        target: SNOW_TEST_USER
-    environment:
-      - SNOW_DESC=${DRONE_COMMIT_SHA}
-      - SNOW_ENDPOINT=https://cto-change-dev.internal.cto-notprod.homeoffice.gov.uk/update
-      - SNOW_INT_ID_FILE=/build/internal-id
-    comments: Successful deployment of ${DRONE_REPO}:${DRONE_COMMIT_SHA}
-    deployment_outcome: success
-    when:
-      branch: master
-      event: push
-      status: success
+#  create-change-desc-dev:
+#    image: docker:git
+#    commands:
+#      - git show --name-only >> $SNOW_DESC_FILE
+#    when:
+#      branch: master
+#      event: push
+#
+#  open-snow-change-dev:
+#    image: quay.io/ukhomeofficedigital/snowtify:latest
+#    secrets:
+#      - source: DEV_SERVICE_NOW_PASSWORD
+#        target: SNOW_TEST_PASS
+#      - source: DEV_SERVICE_NOW_URL
+#        target: SNOW_ENDPOINT
+#      - source: DEV_SERVICE_NOW_USERNAME
+#        target: SNOW_TEST_USER
+#    environment:
+#      - SNOW_EXTERNAL_ID=${DRONE_REPO}:${DRONE_COMMIT_SHA}
+#    when:
+#      branch: master
+#      event: push
+#
+#  complete-snow-change-dev:
+#    image: quay.io/ukhomeofficedigital/snowtify:latest
+#    secrets:
+#      - source: DEV_SERVICE_NOW_PASSWORD
+#        target: SNOW_TEST_PASS
+#      - source: DEV_SERVICE_NOW_URL
+#        target: SNOW_ENDPOINT
+#      - source: DEV_SERVICE_NOW_USERNAME
+#        target: SNOW_TEST_USER
+#    comments: Successful deployment of ${DRONE_REPO}:${DRONE_COMMIT_SHA}
+#    deployment_outcome: success
+#    when:
+#      branch: master
+#      event: push
+#      status: success
+#
+#  cancel-snow-change-dev:
+#    image: quay.io/ukhomeofficedigital/snowtify:latest
+#    secrets:
+#      - source: DEV_SERVICE_NOW_PASSWORD
+#        target: SNOW_TEST_PASS
+#      - source: DEV_SERVICE_NOW_URL
+#        target: SNOW_ENDPOINT
+#      - source: DEV_SERVICE_NOW_USERNAME
+#        target: SNOW_TEST_USER
+#    comments: Failed deployment of ${DRONE_REPO}:${DRONE_COMMIT_SHA}
+#    deployment_outcome: fail
+#    when:
+#      branch: master
+#      event: push
+#      status: failure
 
   # CB-936 Moved here whilst we investigate slow build times and timing out vulnerability scans
   vulnerability-scan:
@@ -281,6 +305,10 @@ pipeline:
         target: ANALYTICS_URL
       - source: STAGING_ANALYTICS_SITE_ID
         target: ANALYTICS_SITE_ID
+      - source: STAGING_WWW_BROWSER_VERSIONS
+        target: BROWSER_VERSIONS
+      - source: STAGING_WWW_DETECT_BROWSER
+        target: DETECT_BROWSER
     commands:
       - export WWW_TAG=$${DRONE_COMMIT_SHA}
       - kd --insecure-skip-tls-verify -f kube/cert.yml
@@ -361,6 +389,10 @@ pipeline:
         target: ANALYTICS_URL
       - source: PRODUCTION_ANALYTICS_SITE_ID
         target: ANALYTICS_SITE_ID
+      - source: PRODUCTION_WWW_BROWSER_VERSIONS
+        target: BROWSER_VERSIONS
+      - source: PRODUCTION_WWW_DETECT_BROWSER
+        target: DETECT_BROWSER
     commands:
       - export WWW_TAG=$${DRONE_COMMIT_SHA}
       - kd --insecure-skip-tls-verify -f kube/cert.yml
@@ -389,3 +421,9 @@ pipeline:
       branch: master
       event: [ push, deployment ]
       status: [ success, failure ]
+
+matrix:                 # setup some common env vars
+  SNOW_DESC_FILE:
+    - /build/change-desc.txt
+  SNOW_INT_ID_FILE:
+    - /build/internal-id

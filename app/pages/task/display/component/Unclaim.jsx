@@ -21,13 +21,18 @@ class Unclaim extends React.Component {
         const taskAssignee = task.get('assignee');
         const displayButton = taskAssignee && taskAssignee === userId;
 
-        return displayButton ?
-            <button id={'claimTask' + taskId}
-                    className="govuk-button"
-                    disabled={submittingUnclaim}
-                    onClick={() => {
+        return displayButton ? (
+          <button
+            id={`claimTask${  taskId}`}
+            className="govuk-button"
+            disabled={submittingUnclaim}
+            onClick={() => {
                         this.props.unclaimTask(this.props.task.get('id'));
-                    }} type="submit">Unclaim</button> : <div/>;
+                    }}
+            type="submit"
+          >Unclaim
+          </button>
+          ) : <div />;
     }
 
 }
@@ -42,7 +47,7 @@ Unclaim.propTypes = {
 
 const mapDispatchToProps = dispatch => bindActionCreators(actions, dispatch);
 
-export default withRouter(connect((state) => {
+export default withRouter(connect(state => {
     return {
         kc: state.keycloak,
         unclaimSuccessful: unclaimSuccessful(state),

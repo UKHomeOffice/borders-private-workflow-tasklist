@@ -14,14 +14,16 @@ export class ReportsDashboardPanel extends React.Component {
     }
 
     render() {
-        return <li className="__card govuk-grid-column-one-third" id="reportsPanel" style={{marginBottom: '30px'}}>
+        return (
+          <li className="__card govuk-grid-column-one-third" id="reportsPanel" style={{marginBottom: '30px'}}>
             <a href={AppConstants.REPORTS_PATH} onClick={this.reports.bind(this)} className="card__body" id="reportsPageLink">
-                <span className="govuk-!-font-size-36 govuk-!-font-weight-bold">Reports</span>
+              <span className="govuk-!-font-size-36 govuk-!-font-weight-bold">Reports</span>
             </a>
             <div className="card__footer">
-                <span className="govuk-!-font-size-19">Operational reports</span>
+              <span className="govuk-!-font-size-19">Operational reports</span>
             </div>
-        </li>
+          </li>
+)
     }
 }
 

@@ -1,8 +1,8 @@
 import React from 'react';
 import { bindActionCreators } from 'redux';
-import * as actions from '../actions';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import * as actions from '../actions';
 
 export default function (ComposedComponent) {
   class withLog extends React.Component {
