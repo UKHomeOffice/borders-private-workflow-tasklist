@@ -10,7 +10,7 @@ import {retry} from '../../core/util/retry';
 const findCasesByKey = (action$, store, {client}) => action$.ofType(types.FIND_CASES_BY_KEY)
     .mergeMap(action => client({
         method: 'GET',
-        path: `${store.getState().appConfig.workflowServiceUrl}/api/workflow/cases?businessKeyQuery=${encodeURIComponent(`${action.key}%`)}`,
+        path: `${store.getState().appConfig.workflowServiceUrl}/api/workflow/cases?query=${encodeURIComponent(`${action.key}`)}`,
         headers: {
             Accept: 'application/json',
             Authorization: `Bearer ${store.getState().keycloak.token}`,
