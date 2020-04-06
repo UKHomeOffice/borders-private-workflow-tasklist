@@ -22,7 +22,7 @@ class CasesPage extends React.Component {
     } = this.props;
     const {businessKey} = params;
     if (businessKey) {
-      this.props.findCasesByKey(businessKey.toUpperCase());
+      this.props.findCasesByKey(businessKey);
     }
   }
 
@@ -68,7 +68,7 @@ class CasesPage extends React.Component {
                   if (query === '') {
                     that.props.resetCase();
                   } else {
-                    that.props.findCasesByKey(query.toUpperCase());
+                    that.props.findCasesByKey(query);
                   }
                 }}
               />
