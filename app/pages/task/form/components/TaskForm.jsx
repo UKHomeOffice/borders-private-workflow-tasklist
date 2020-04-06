@@ -129,6 +129,7 @@ export default class TaskForm extends React.Component {
         workflowUrl: appConfig.workflowServiceUrl,
         operationalDataUrl: appConfig.operationalDataUrl,
         privateUiUrl: window.location.origin,
+        attachmentServiceUrl: appConfig.attachmentServiceUrl
       },
       processContext: variables,
       taskContext: task.toJS(),

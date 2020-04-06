@@ -82,7 +82,8 @@ class CaseAction extends React.Component {
                 referenceDataUrl: appConfig.apiRefUrl,
                 workflowUrl: appConfig.workflowServiceUrl,
                 operationalDataUrl: appConfig.operationalDataUrl,
-                privateUiUrl: window.location.origin
+                privateUiUrl: window.location.origin,
+                attachmentServiceUrl: appConfig.attachmentServiceUrl
             }
         };
 
