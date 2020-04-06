@@ -47,7 +47,7 @@ class CasesPage extends React.Component {
               Cases
             </h2>
             <div className="govuk-inset-text">
-              Enter a BF number to search for cases.{' '}
+              Enter a COP number in quotes to search for cases.{' '}, for example "COP-20200406-24"
               <strong>Please note all actions are audited.</strong>
             </div>
           </div>
