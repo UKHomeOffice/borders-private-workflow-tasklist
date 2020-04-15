@@ -6,7 +6,7 @@ pipeline:
   test:
     image: node:10
     commands:
-    - npm install
+    - npm ci
     - npm run test:coverage
     when:
       event: push

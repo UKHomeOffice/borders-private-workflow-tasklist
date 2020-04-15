@@ -154,6 +154,7 @@ exports[`TaskForm Component matches snapshot 1`] = `
     Object {
       "data": Object {
         "environmentContext": Object {
+          "attachmentServiceUrl": undefined,
           "operationalDataUrl": undefined,
           "privateUiUrl": "http://localhost",
           "referenceDataUrl": undefined,
