@@ -46,6 +46,8 @@ class StartForm extends React.Component {
                 givenName: kc.tokenParsed.given_name,
                 familyName: kc.tokenParsed.family_name,
                 subject: kc.subject,
+                url: kc.authServerUrl,
+                realm: kc.realm,
             }
         };
 

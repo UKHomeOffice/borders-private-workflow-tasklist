@@ -129,13 +129,8 @@ const renderApp = App => {
           },
         ];
         const history = MatomoTracker({
-          trackPageView: true,
-	  enableLinkTracking: true,
           url: store.getState().appConfig.analyticsUrl,
-          siteId: store.getState().appConfig.analyticsSiteId,
-          injectScript : true,
-          clientTrackerName: 'matomo.js',
-          serverTrackerName: 'matomo.php'
+          siteId: store.getState().appConfig.analyticsSiteId
         }).connectToHistory(createBrowserHistory());
 
         setInterval(() => {

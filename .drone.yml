@@ -169,60 +169,60 @@ pipeline:
       branch: master
       event: push
 
-#  create-change-desc-dev:
-#    image: docker:git
-#    commands:
-#      - git show --name-only >> $SNOW_DESC_FILE
-#    when:
-#      branch: master
-#      event: push
-#
-#  open-snow-change-dev:
-#    image: quay.io/ukhomeofficedigital/snowtify:latest
-#    secrets:
-#      - source: DEV_SERVICE_NOW_PASSWORD
-#        target: SNOW_TEST_PASS
-#      - source: DEV_SERVICE_NOW_URL
-#        target: SNOW_ENDPOINT
-#      - source: DEV_SERVICE_NOW_USERNAME
-#        target: SNOW_TEST_USER
-#    environment:
-#      - SNOW_EXTERNAL_ID=${DRONE_REPO}:${DRONE_COMMIT_SHA}
-#    when:
-#      branch: master
-#      event: push
-#
-#  complete-snow-change-dev:
-#    image: quay.io/ukhomeofficedigital/snowtify:latest
-#    secrets:
-#      - source: DEV_SERVICE_NOW_PASSWORD
-#        target: SNOW_TEST_PASS
-#      - source: DEV_SERVICE_NOW_URL
-#        target: SNOW_ENDPOINT
-#      - source: DEV_SERVICE_NOW_USERNAME
-#        target: SNOW_TEST_USER
-#    comments: Successful deployment of ${DRONE_REPO}:${DRONE_COMMIT_SHA}
-#    deployment_outcome: success
-#    when:
-#      branch: master
-#      event: push
-#      status: success
-#
-#  cancel-snow-change-dev:
-#    image: quay.io/ukhomeofficedigital/snowtify:latest
-#    secrets:
-#      - source: DEV_SERVICE_NOW_PASSWORD
-#        target: SNOW_TEST_PASS
-#      - source: DEV_SERVICE_NOW_URL
-#        target: SNOW_ENDPOINT
-#      - source: DEV_SERVICE_NOW_USERNAME
-#        target: SNOW_TEST_USER
-#    comments: Failed deployment of ${DRONE_REPO}:${DRONE_COMMIT_SHA}
-#    deployment_outcome: fail
-#    when:
-#      branch: master
-#      event: push
-#      status: failure
+  create-change-desc-dev:
+    image: docker:git
+    commands:
+      - git show --name-only >> $SNOW_DESC_FILE
+    when:
+      branch: master
+      event: push
+
+  open-snow-change-dev:
+    image: quay.io/ukhomeofficedigital/snowtify:latest
+    secrets:
+      - source: DEV_SERVICE_NOW_PASSWORD
+        target: SNOW_TEST_PASS
+      - source: DEV_SERVICE_NOW_URL
+        target: SNOW_ENDPOINT
+      - source: DEV_SERVICE_NOW_USERNAME
+        target: SNOW_TEST_USER
+    environment:
+      - SNOW_EXTERNAL_ID=${DRONE_REPO}:${DRONE_COMMIT_SHA}
+    when:
+      branch: master
+      event: push
+
+  complete-snow-change-dev:
+    image: quay.io/ukhomeofficedigital/snowtify:latest
+    secrets:
+      - source: DEV_SERVICE_NOW_PASSWORD
+        target: SNOW_TEST_PASS
+      - source: DEV_SERVICE_NOW_URL
+        target: SNOW_ENDPOINT
+      - source: DEV_SERVICE_NOW_USERNAME
+        target: SNOW_TEST_USER
+    comments: Successful deployment of ${DRONE_REPO}:${DRONE_COMMIT_SHA}
+    deployment_outcome: success
+    when:
+      branch: master
+      event: push
+      status: success
+
+  cancel-snow-change-dev:
+    image: quay.io/ukhomeofficedigital/snowtify:latest
+    secrets:
+      - source: DEV_SERVICE_NOW_PASSWORD
+        target: SNOW_TEST_PASS
+      - source: DEV_SERVICE_NOW_URL
+        target: SNOW_ENDPOINT
+      - source: DEV_SERVICE_NOW_USERNAME
+        target: SNOW_TEST_USER
+    comments: Failed deployment of ${DRONE_REPO}:${DRONE_COMMIT_SHA}
+    deployment_outcome: fail
+    when:
+      branch: master
+      event: push
+      status: failure
 
   # CB-936 Moved here whilst we investigate slow build times and timing out vulnerability scans
   vulnerability-scan:
