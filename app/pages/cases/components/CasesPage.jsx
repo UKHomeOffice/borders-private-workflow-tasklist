@@ -55,7 +55,7 @@ class CasesPage extends React.Component {
             <div className="govuk-form-group input-icon">
               <DebounceInput
                 minLength={3}
-                debounceTimeout={500}
+                debounceTimeout={1000}
                 spellCheck="false"
                 type="text"
                 className="govuk-input"
