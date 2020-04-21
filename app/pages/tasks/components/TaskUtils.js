@@ -10,22 +10,22 @@ export default class TaskUtils {
         const {nextPageUrl, prevPageUrl, firstPageUrl, lastPageUrl, load} = props;
         if (firstPageUrl) {
             pagination.onFirst = () => {
-                load(`${firstPageUrl}&sort=${props.sortValue}${props.filterValue? `&name=${props.filterValue}`: ''}`);
+                load(`${firstPageUrl}&${props.sortValue}${props.filterValue? `&name=${props.filterValue}`: ''}`);
             };
         }
         if (prevPageUrl) {
             pagination.onPrev = () => {
-                load(`${prevPageUrl}&sort=${props.sortValue}${props.filterValue? `&name=${props.filterValue}`: ''}`);
+                load(`${prevPageUrl}&${props.sortValue}${props.filterValue? `&name=${props.filterValue}`: ''}`);
             };
         }
         if (nextPageUrl) {
             pagination.onNext = () => {
-                load(`${nextPageUrl}&sort=${props.sortValue}${props.filterValue? `&name=${props.filterValue}`: ''}`);
+                load(`${nextPageUrl}&${props.sortValue}${props.filterValue? `&name=${props.filterValue}`: ''}`);
             };
         }
         if (lastPageUrl) {
             pagination.onLast = () => {
-                load(`${lastPageUrl}&sort=${props.sortValue}${props.filterValue? `&name=${props.filterValue}`: ''}`);
+                load(`${lastPageUrl}&${props.sortValue}${props.filterValue? `&name=${props.filterValue}`: ''}`);
             };
         }
         return pagination;
