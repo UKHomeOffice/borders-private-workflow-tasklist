@@ -4,12 +4,22 @@ import PropTypes from 'prop-types';
 const TaskPagination = ({paginationActions}) => {
  const {onFirst, onPrev, onNext, onLast} = paginationActions;
  return  (
-   <div className="govuk-grid-row text-center">
+   <div className="govuk-grid-row govuk-!-margin-top-2">
      <div className="govuk-grid-column-full">
-       <button type="submit" data-module="govuk-button" className={`govuk-button govuk-!-margin-right-2 ${!onFirst ? 'govuk-button--disabled' : ''}`} onClick={onFirst} disabled={!onFirst}><span aria-hidden="true" role="presentation">&laquo;</span> First</button>
-       <button type="submit" data-module="govuk-button" className={`govuk-button govuk-!-margin-right-2 ${!onPrev ? 'govuk-button--disabled' : ''}`} onClick={onPrev} disabled={!onPrev}><span aria-hidden="true" role="presentation">&lsaquo;</span> Previous</button>
-       <button type="submit" data-module="govuk-button" className={`govuk-button govuk-!-margin-right-2 ${!onNext ? 'govuk-button--disabled' : ''}`} onClick={onNext} disabled={!onNext}>Next <span aria-hidden="true" role="presentation">&rsaquo;</span></button>
-       <button type="submit" data-module="govuk-button" className={`govuk-button ${!onLast ? 'govuk-button--disabled' : ''}`} onClick={onLast} disabled={!onLast}>Last <span aria-hidden="true" role="presentation">&raquo;</span></button>
+       <div className="govuk-grid-row">
+         <div className="govuk-grid-column-one-quarter">
+           <button type="submit" data-module="govuk-button" className={`govuk-button govuk-!-width-full ${!onFirst ? 'govuk-button--disabled' : ''}`} onClick={onFirst} disabled={!onFirst}><span aria-hidden="true" role="presentation">&laquo;</span> First</button>
+         </div>
+         <div className="govuk-grid-column-one-quarter">
+           <button type="submit" data-module="govuk-button" className={`govuk-button govuk-!-width-full ${!onPrev ? 'govuk-button--disabled' : ''}`} onClick={onPrev} disabled={!onPrev}><span aria-hidden="true" role="presentation">&lsaquo;</span> Previous</button>
+         </div>
+         <div className="govuk-grid-column-one-quarter">
+           <button type="submit" data-module="govuk-button" className={`govuk-button govuk-!-width-full ${!onNext ? 'govuk-button--disabled' : ''}`} onClick={onNext} disabled={!onNext}>Next <span aria-hidden="true" role="presentation">&rsaquo;</span></button>
+         </div>
+         <div className="govuk-grid-column-one-quarter">
+           <button type="submit" data-module="govuk-button" className={`govuk-button govuk-!-width-full ${!onLast ? 'govuk-button--disabled' : ''}`} onClick={onLast} disabled={!onLast}>Last <span aria-hidden="true" role="presentation">&raquo;</span></button>
+         </div>
+       </div>
      </div>
    </div>
 )

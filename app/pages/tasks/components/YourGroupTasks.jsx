@@ -148,7 +148,7 @@ const YourGroupTasks = props => {
               {totalTasks} assigned to your team
             </h2>
             <div className="govuk-inset-text">
-              <strong>This page auto refreshes 5 minutes</strong>
+              <strong>This page auto refreshes every 5 minutes</strong>
             </div>
           </div>
 
