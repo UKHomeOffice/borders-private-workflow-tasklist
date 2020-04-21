@@ -16,6 +16,16 @@ export const initialState = new Map({
     lastPageUrl: null
 });
 
+const resolve = (links, path) => {
+    const link = _.get(links, path);
+    const self =  _.get(links, 'self.href');
+    if (link === self) {
+        return undefined
+    }
+    return link;
+};
+
+
 const setData = (state, action) => {
     const {entity} = action.payload;
     // eslint-disable-next-line no-underscore-dangle
@@ -29,10 +39,10 @@ const setData = (state, action) => {
     if (page.totalElements > page.size) {
         // eslint-disable-next-line no-underscore-dangle
         const links = entity._links;
-        first = _.get(links, 'first.href');
+        first = resolve(links, 'first.href');
         prev = _.get(links, 'prev.href');
         next = _.get(links,'next.href');
-        last = _.get(links, 'last.href');
+        last = resolve(links, 'last.href');
     }
     return state
         .set('isFetchingTasks', false)

@@ -51,7 +51,7 @@ export class YourGroupTasksContainer extends React.Component {
         sort,
         filter,
       );
-    }, AppConstants.ONE_MINUTE);
+    }, AppConstants.REFRESH_TIMEOUT);
 
     if (secureLocalStorage.get('yourTeamTasksGrouping')) {
       groupYourTeamTasks(

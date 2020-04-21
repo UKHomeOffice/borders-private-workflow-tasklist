@@ -140,7 +140,7 @@ describe('YourGroupTasksContainer Page', () => {
     expect(fetchYourGroupTasks).toBeCalled();
     expect(wrapper.find('.loader-content').exists()).toEqual(false);
     expect(wrapper.find('#yourGroupTasksTotalCount').text()).toEqual(
-      'Your team’s tasks1 task assigned to your team',
+      'Your team’s tasks1 task assigned to your teamThis page auto refreshes 5 minutes',
     );
     const rows = wrapper.find('#taskGroups');
     expect(rows.length).toEqual(1);
@@ -222,7 +222,7 @@ describe('YourGroupTasksContainer Page', () => {
     expect(fetchYourGroupTasks).toBeCalledWith('sort=due,desc', null, false);
 
     // kick off timer
-    jest.advanceTimersByTime(AppConstants.ONE_MINUTE);
+    jest.advanceTimersByTime(AppConstants.REFRESH_TIMEOUT);
     expect(fetchYourGroupTasks).toBeCalledWith('sort=due,desc', 'TEST', true);
 
     //

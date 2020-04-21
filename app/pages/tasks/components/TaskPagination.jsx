@@ -6,10 +6,10 @@ const TaskPagination = ({paginationActions}) => {
  return  (
    <div className="govuk-grid-row text-center">
      <div className="govuk-grid-column-full">
-       <button type="submit" className="govuk-button govuk-!-margin-right-2" onClick={onFirst} disabled={!onFirst}><span aria-hidden="true" role="presentation">&laquo;</span> First</button>
-       <button type="submit" className="govuk-button govuk-!-margin-right-2" onClick={onPrev} disabled={!onPrev}><span aria-hidden="true" role="presentation">&lsaquo;</span> Previous</button>
-       <button type="submit" className="govuk-button govuk-!-margin-right-2" onClick={onNext} disabled={!onNext}>Next <span aria-hidden="true" role="presentation">&rsaquo;</span></button>
-       <button type="submit" className="govuk-button govuk-!-margin-right-2" onClick={onLast} disabled={!onLast}>Last <span aria-hidden="true" role="presentation">&raquo;</span></button>
+       <button type="submit" data-module="govuk-button" className={`govuk-button govuk-!-margin-right-2 ${!onFirst ? 'govuk-button--disabled' : ''}`} onClick={onFirst} disabled={!onFirst}><span aria-hidden="true" role="presentation">&laquo;</span> First</button>
+       <button type="submit" data-module="govuk-button" className={`govuk-button govuk-!-margin-right-2 ${!onPrev ? 'govuk-button--disabled' : ''}`} onClick={onPrev} disabled={!onPrev}><span aria-hidden="true" role="presentation">&lsaquo;</span> Previous</button>
+       <button type="submit" data-module="govuk-button" className={`govuk-button govuk-!-margin-right-2 ${!onNext ? 'govuk-button--disabled' : ''}`} onClick={onNext} disabled={!onNext}>Next <span aria-hidden="true" role="presentation">&rsaquo;</span></button>
+       <button type="submit" data-module="govuk-button" className={`govuk-button ${!onLast ? 'govuk-button--disabled' : ''}`} onClick={onLast} disabled={!onLast}>Last <span aria-hidden="true" role="presentation">&raquo;</span></button>
      </div>
    </div>
 )

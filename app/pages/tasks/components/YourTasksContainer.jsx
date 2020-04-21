@@ -31,7 +31,6 @@ export class YourTasksContainer extends React.Component {
     constructor(props) {
         super(props);
         this.websocketSubscriptions = [];
-        this.retryCount = 0;
         this.connect = this.connect.bind(this);
         this.goToTask = this.goToTask.bind(this);
         this.sortYourTasks = this.sortYourTasks.bind(this);

@@ -134,7 +134,7 @@ const YourTasks = props => {
         <div className="govuk-grid-row">
           <div className="govuk-grid-column-full">{dataToDisplay}</div>
         </div>
-        <TaskPagination {...{paginationActions}} />
+        { total !== 0 ? <TaskPagination {...{paginationActions}} /> : null}
       </div>
     </div>
   );

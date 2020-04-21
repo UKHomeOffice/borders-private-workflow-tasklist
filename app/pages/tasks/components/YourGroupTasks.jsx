@@ -81,6 +81,7 @@ const YourGroupTasks = props => {
                       )}
                     </div>
                     <div className="govuk-grid-column-one-third govuk-!-margin-bottom-3">
+                      {/* eslint-disable-next-line no-nested-ternary */}
                       {task.assignee === null ? (
                         <span className="govuk-!-font-size-19 govuk-!-font-weight-bold">
                           Unassigned
@@ -146,7 +147,11 @@ const YourGroupTasks = props => {
             <h2 className="govuk-heading-l">
               {totalTasks} assigned to your team
             </h2>
+            <div className="govuk-inset-text">
+              <strong>This page auto refreshes 5 minutes</strong>
+            </div>
           </div>
+
         </div>
         <div className="govuk-grid-row govuk-!-padding-top-3">
           <div className="govuk-grid-column-two-thirds">
@@ -169,7 +174,7 @@ const YourGroupTasks = props => {
         <div className="govuk-grid-row">
           <div className="govuk-grid-column-full">{dataToDisplay}</div>
         </div>
-        <TaskPagination {...{paginationActions}} />
+        { total !== 0 ? <TaskPagination {...{paginationActions}} /> : null}
       </div>
     </div>
   );
@@ -187,10 +192,12 @@ YourGroupTasks.defaultProps = {
   groupTasks: () => {},
   sortValue: '',
   filterValue: '',
-  grouping: 'category'
+  grouping: 'category',
+  onRefreshWindowChange: () => {}
 };
 
 YourGroupTasks.propTypes = {
+  onRefreshWindowChange: PropTypes.func,
   paginationActions: PropTypes.shape({
     onFirst: PropTypes.func,
     onPrev: PropTypes.func,

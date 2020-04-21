@@ -31,5 +31,5 @@ export default class AppConstants {
 
     static CASES_PATH = "/cases";
 
-    static ONE_MINUTE = 60000;
+    static REFRESH_TIMEOUT = 300000;
 }
