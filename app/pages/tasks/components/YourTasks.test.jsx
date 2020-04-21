@@ -15,9 +15,9 @@ jest.useFakeTimers();
 describe('YourTasks Page', () => {
   let store;
   const date = moment();
-  const yourTasks = Immutable.fromJS({
-    isFetchingTasksAssignedToYou: false,
-    yourTasksSortValue: 'sort=due,desc',
+  const yourTasks = {
+    isFetchingTasks: false,
+    sortValue: 'sort=due,desc',
     appConfig: {
       uiEnvironment: 'local',
     },
@@ -25,7 +25,7 @@ describe('YourTasks Page', () => {
       token: 'token',
     },
     total: 1,
-    tasks: [
+    tasks: Immutable.fromJS([
       {
         task: {
           id: 'id',
@@ -84,8 +84,8 @@ describe('YourTasks Page', () => {
         },
         'process-definition': null,
       },
-    ],
-  });
+    ]),
+  };
   beforeEach(() => {
     store = configureStore()({
       'tasks-page': new Map({}),
@@ -157,9 +157,7 @@ describe('YourTasks Page', () => {
         },
         token: 'token',
       },
-      yourTasks: Immutable.fromJS({
-        isFetchingTasksAssignedToYou: true,
-      }),
+      isFetchingTasks: true
     };
     const wrapper = await mount(
       <YourTasksContainer
@@ -185,7 +183,7 @@ describe('YourTasks Page', () => {
         },
         token: 'token',
       },
-      yourTasks,
+      ...yourTasks
     };
     const wrapper = await mount(
       <YourTasksContainer
@@ -215,7 +213,7 @@ describe('YourTasks Page', () => {
         },
         token: 'token',
       },
-      yourTasks,
+      ...yourTasks,
     };
     const wrapper = await mount(
       <YourTasksContainer
@@ -233,14 +231,14 @@ describe('YourTasks Page', () => {
     });
     expect(fetchTasksAssignedToYou).toBeCalledWith(
       'sort=created,desc',
-      undefined,
+      null,
       true,
     );
 
     sortTaskInput.simulate('change', { target: { value: 'sort=test,desc' } });
     expect(fetchTasksAssignedToYou).toBeCalledWith(
       'sort=test,desc',
-      undefined,
+      null,
       true,
     );
   });
@@ -256,7 +254,7 @@ describe('YourTasks Page', () => {
         },
         token: 'token',
       },
-      yourTasks,
+      ...yourTasks,
     };
     const wrapper = await mount(
       <YourTasksContainer
@@ -300,23 +298,21 @@ describe('YourTasks Page', () => {
         token: 'token',
       },
       history,
-      yourTasks: Immutable.fromJS({
-        isFetchingTasksAssignedToYou: false,
-        yourTasksSortValue: 'sort=due,desc',
-        yourTasksFilterValue: 'TEST',
-        total: 1,
-        tasks: [
-          {
-            task: {
-              id: 'id',
-              name: 'test',
-              priority: 1000,
-              due: date,
-              created: date,
-            },
+      isFetchingTasks: false,
+      sortValue: 'sort=due,desc',
+      filterValue: 'TEST',
+      total: 1,
+      tasks: Immutable.fromJS([
+        {
+          task: {
+            id: 'id',
+            name: 'test',
+            priority: 1000,
+            due: date,
+            created: date,
           },
-        ],
-      }),
+        },
+      ]),
     };
 
     const wrapper = await mount(

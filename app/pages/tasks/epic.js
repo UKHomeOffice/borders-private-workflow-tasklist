@@ -29,6 +29,16 @@ const fetchYourGroupTasks = (action$, store, { client }) => action$.ofType(types
   }).retryWhen(retry).map(payload => actions.fetchYourGroupTasksSuccess(payload))
     .catch(error => errorObservable(actions.fetchYourGroupTasksFailure(), error)));
 
+const load =  (action$, store, { client }) => action$.ofType(types.LOAD)
+    .mergeMap(action => client({
+        method: 'GET',
+        path: `${action.url}`,
+        headers: {
+            Accept: 'application/json',
+            Authorization: `Bearer ${store.getState().keycloak.token}`,
+        },
+    }).retryWhen(retry).map(payload => actions.loadSuccess(payload))
+        .catch(error => errorObservable(actions.loadFailure(), error)));
 
 export default combineEpics(fetchTasksAssignedYou,
-  fetchYourGroupTasks);
+  fetchYourGroupTasks, load);

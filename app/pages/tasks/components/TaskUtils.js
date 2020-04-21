@@ -1,8 +1,36 @@
 import _ from "lodash";
 import moment from "moment";
 import {priority} from "../../../core/util/priority";
+import * as actions from "../actions";
 
 export default class TaskUtils {
+
+    buildPaginationAction(props) {
+        const pagination = {};
+        // eslint-disable-next-line no-shadow
+        const {nextPageUrl, prevPageUrl, firstPageUrl, lastPageUrl, load} = props;
+        if (firstPageUrl) {
+            pagination.onFirst = () => {
+                load(firstPageUrl);
+            };
+        }
+        if (prevPageUrl) {
+            pagination.onPrev = () => {
+                load(prevPageUrl);
+            };
+        }
+        if (nextPageUrl) {
+            pagination.onNext = () => {
+                load(nextPageUrl);
+            };
+        }
+        if (lastPageUrl) {
+            pagination.onLast = () => {
+                load(lastPageUrl);
+            };
+        }
+        return actions;
+    }
 
     applyGrouping(groupBy, tasks) {
         switch (groupBy) {
