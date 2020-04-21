@@ -1,7 +1,6 @@
 import _ from "lodash";
 import moment from "moment";
 import {priority} from "../../../core/util/priority";
-import * as actions from "../actions";
 
 export default class TaskUtils {
 
@@ -29,7 +28,7 @@ export default class TaskUtils {
                 load(lastPageUrl);
             };
         }
-        return actions;
+        return pagination;
     }
 
     applyGrouping(groupBy, tasks) {
