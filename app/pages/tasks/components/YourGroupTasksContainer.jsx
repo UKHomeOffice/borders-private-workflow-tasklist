@@ -135,6 +135,7 @@ export class YourGroupTasksContainer extends React.Component {
   render() {
     const { isFetchingTasks, groupBy, tasks, total, sortValue, filterValue, kc,
       groupYourTeamTasks, claimTask, unclaimTask } = this.props;
+
     const {tokenParsed} = kc;
     if (isFetchingTasks) {
       return <DataSpinner message="Fetching your group tasks" />;

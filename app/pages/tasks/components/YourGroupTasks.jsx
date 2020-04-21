@@ -157,7 +157,7 @@ const YourGroupTasks = props => {
           <div className="govuk-grid-column-two-thirds">
             <div className="govuk-grid-row">
               <div className="govuk-grid-column-one-half">
-                <SortTasks tasks={sortValue} sortTasks={sortYourGroupTasks} />
+                <SortTasks sortValue={sortValue} sortTasks={sortYourGroupTasks} />
               </div>
               <div className="govuk-grid-column-one-half">
                 <GroupTasks groupTasks={groupTasks} grouping={grouping} />
@@ -193,11 +193,9 @@ YourGroupTasks.defaultProps = {
   sortValue: '',
   filterValue: '',
   grouping: 'category',
-  onRefreshWindowChange: () => {}
 };
 
 YourGroupTasks.propTypes = {
-  onRefreshWindowChange: PropTypes.func,
   paginationActions: PropTypes.shape({
     onFirst: PropTypes.func,
     onPrev: PropTypes.func,
