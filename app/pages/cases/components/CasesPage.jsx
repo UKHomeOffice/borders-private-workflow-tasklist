@@ -22,7 +22,7 @@ class CasesPage extends React.Component {
     } = this.props;
     const {businessKey} = params;
     if (businessKey) {
-      this.props.findCasesByKey(businessKey);
+      this.props.findCasesByKey(`"${businessKey}"`);
     }
   }
 
