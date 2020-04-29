@@ -118,6 +118,7 @@ class CaseAction extends React.Component {
                                   formId: actionForm.id,
                                   title: actionForm.title,
                                   name: actionForm.name,
+                                  submittedBy: kc.tokenParsed.email,
                                   submissionDate: new Date(),
                                   process: {
                                       definitionId: selectedAction.process['process-definition'].id

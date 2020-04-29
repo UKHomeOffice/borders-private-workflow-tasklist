@@ -78,6 +78,7 @@ export default class TaskForm extends React.Component {
             title: form.title,
             name: form.name,
             submissionDate: new Date(),
+            submittedBy: kc.tokenParsed.email,
             process: {
               definitionId: task.get('processDefinitionId'),
             },

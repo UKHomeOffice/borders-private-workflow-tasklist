@@ -98,6 +98,7 @@ class StartForm extends React.Component {
                         title: startForm.title,
                         name: startForm.name,
                         submissionDate: new Date(),
+                        submittedBy: kc.tokenParsed.email,
                         process: {
                             key: processDefinition.getIn(['process-definition', 'key']),
                             definitionId: processDefinition.getIn(['process-definition', 'id']),
