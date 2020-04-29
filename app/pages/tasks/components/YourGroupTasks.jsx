@@ -7,6 +7,7 @@ import SortTasks from './SortTasks';
 import AppConstants from '../../../common/AppConstants';
 import TaskUtils from './TaskUtils';
 import GroupTasks from './GroupTasks';
+import TaskPagination from "./TaskPagination";
 
 const taskUtils = new TaskUtils();
 
@@ -21,9 +22,10 @@ const YourGroupTasks = props => {
     userId,
     total,
     groupTasks,
-    grouping = 'category',
+    grouping,
     sortValue,
     filterValue,
+    paginationActions
   } = props;
 
   const dataToDisplay = _.map(yourGroupTasks, (value, key) => {
@@ -79,6 +81,7 @@ const YourGroupTasks = props => {
                       )}
                     </div>
                     <div className="govuk-grid-column-one-third govuk-!-margin-bottom-3">
+                      {/* eslint-disable-next-line no-nested-ternary */}
                       {task.assignee === null ? (
                         <span className="govuk-!-font-size-19 govuk-!-font-weight-bold">
                           Unassigned
@@ -144,13 +147,17 @@ const YourGroupTasks = props => {
             <h2 className="govuk-heading-l">
               {totalTasks} assigned to your team
             </h2>
+            <div className="govuk-inset-text">
+              <strong>This page auto refreshes every 5 minutes</strong>
+            </div>
           </div>
+
         </div>
         <div className="govuk-grid-row govuk-!-padding-top-3">
           <div className="govuk-grid-column-two-thirds">
             <div className="govuk-grid-row">
               <div className="govuk-grid-column-one-half">
-                <SortTasks tasks={sortValue} sortTasks={sortYourGroupTasks} />
+                <SortTasks sortValue={sortValue} sortTasks={sortYourGroupTasks} />
               </div>
               <div className="govuk-grid-column-one-half">
                 <GroupTasks groupTasks={groupTasks} grouping={grouping} />
@@ -167,12 +174,35 @@ const YourGroupTasks = props => {
         <div className="govuk-grid-row">
           <div className="govuk-grid-column-full">{dataToDisplay}</div>
         </div>
+        { total !== 0 ? <TaskPagination {...{paginationActions}} /> : null}
       </div>
     </div>
   );
 };
 
+YourGroupTasks.defaultProps = {
+  paginationActions: {
+    onFirst: null,
+    onPrev: null,
+    onNext: null,
+    onLast: null
+  },
+  yourGroupTasks: {},
+  total: 0,
+  groupTasks: () => {},
+  sortValue: '',
+  filterValue: '',
+  grouping: 'category',
+};
+
 YourGroupTasks.propTypes = {
+  paginationActions: PropTypes.shape({
+    onFirst: PropTypes.func,
+    onPrev: PropTypes.func,
+    onNext: PropTypes.func,
+    onLast: PropTypes.func
+  }),
+  total: PropTypes.number,
   groupTasks: PropTypes.func,
   claimTask: PropTypes.func.isRequired,
   filterTasksByName: PropTypes.func.isRequired,

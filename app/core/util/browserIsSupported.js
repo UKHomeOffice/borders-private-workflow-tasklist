@@ -20,9 +20,9 @@ export default (versions, agentString) => {
     const version = browser.split('-')[1].split('.');
     if (
       (userBrowser.name.match(new RegExp(name, 'i')) &&
-        userBrowser.version[0] < version[0]) ||
+        +userBrowser.version[0] < version[0]) ||
       (userBrowser.version[0] === version[0] &&
-        userBrowser.version[1] < version[1])
+        +userBrowser.version[1] < version[1])
     ) {
       isSupported = false;
     }

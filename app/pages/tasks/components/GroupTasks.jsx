@@ -19,8 +19,11 @@ const GroupTasks = ({groupTasks, grouping}) => {
           <option value="priority">Priority</option>
         </select>
       </div>
-)
-};
+)};
+
+GroupTasks.defaultProps = {
+    grouping: 'category'
+}
 
 GroupTasks.propTypes = {
     groupTasks: PropTypes.func.isRequired,

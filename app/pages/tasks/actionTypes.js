@@ -14,3 +14,7 @@ export const RESET_YOUR_TASKS = 'RESET_YOUR_TASKS';
 export const GROUP_YOUR_TASKS = "GROUP_YOUR_TASKS";
 
 export const GROUP_YOUR_TEAM_TASKS = "GROUP_YOUR_TEAM_TASKS";
+
+export const LOAD = "LOAD";
+export const LOAD_SUCCESS = "LOAD_SUCCESS";
+export const LOAD_FAILURE = "LOAD_FAILURE";

@@ -15,11 +15,11 @@ describe('YourGroupTasksContainer Page', () => {
   const mockStore = configureStore();
   let store;
   const date = moment();
-  const yourGroupTasks = Immutable.fromJS({
-    isFetchingYourGroupTasks: false,
-    yourGroupTasksSortValue: 'sort=due,desc',
+  const yourGroupTasks ={
+    isFetchingTasks: false,
+    sortValue: 'sort=due,desc',
     total: 1,
-    tasks: [
+    tasks: Immutable.fromJS([
       {
         task: {
           id: 'id',
@@ -30,8 +30,8 @@ describe('YourGroupTasksContainer Page', () => {
           assignee: 'test@test.com',
         },
       },
-    ],
-  });
+    ]),
+  };
   beforeEach(() => {
     store = mockStore({
       'tasks-page': new Map({}),
@@ -58,9 +58,7 @@ describe('YourGroupTasksContainer Page', () => {
 
   it('sets document title as expected', done => {
     const props = {
-      yourGroupTasks: Immutable.fromJS({
-        isFetchingYourGroupTasks: true,
-      }),
+      isFetchingTasks: true,
       kc: {
         tokenParsed: {
           email: 'email',
@@ -96,9 +94,7 @@ describe('YourGroupTasksContainer Page', () => {
 
   it('renders data spinner while loading tasks', async () => {
     const props = {
-      yourGroupTasks: Immutable.fromJS({
-        isFetchingYourGroupTasks: true,
-      }),
+      isFetchingTasks: true,
       kc: {
         tokenParsed: {
           email: 'email',
@@ -123,7 +119,7 @@ describe('YourGroupTasksContainer Page', () => {
 
     const props = {
       history,
-      yourGroupTasks,
+      ...yourGroupTasks,
       kc: {
         tokenParsed: {
           email: 'test@test.com',
@@ -144,7 +140,7 @@ describe('YourGroupTasksContainer Page', () => {
     expect(fetchYourGroupTasks).toBeCalled();
     expect(wrapper.find('.loader-content').exists()).toEqual(false);
     expect(wrapper.find('#yourGroupTasksTotalCount').text()).toEqual(
-      'Your team’s tasks1 task assigned to your team',
+      'Your team’s tasks1 task assigned to your teamThis page auto refreshes every 5 minutes',
     );
     const rows = wrapper.find('#taskGroups');
     expect(rows.length).toEqual(1);
@@ -155,7 +151,7 @@ describe('YourGroupTasksContainer Page', () => {
 
     const props = {
       history,
-      yourGroupTasks,
+      ...yourGroupTasks,
       kc: {
         tokenParsed: {
           email: 'test@test.com',
@@ -195,23 +191,21 @@ describe('YourGroupTasksContainer Page', () => {
           email: 'email',
         },
       },
-      yourGroupTasks: Immutable.fromJS({
-        isFetchingTasksAssignedToYou: false,
-        yourGroupTasksSortValue: 'sort=due,desc',
-        yourGroupTasksFilterValue: 'TEST',
-        total: 1,
-        tasks: [
-          {
-            task: {
-              id: 'id',
-              name: 'test',
-              priority: 1000,
-              due: date,
-              created: date,
-            },
-          },
-        ],
-      }),
+      isFetchingTasks: false,
+      sortValue: 'sort=due,desc',
+      filterValue: 'TEST',
+      total: 1,
+      tasks: Immutable.fromJS([
+      {
+        task: {
+          id: 'id',
+          name: 'test',
+          priority: 1000,
+          due: date,
+          created: date,
+        },
+      },
+    ]),
     };
 
     const wrapper = await mount(
@@ -228,7 +222,7 @@ describe('YourGroupTasksContainer Page', () => {
     expect(fetchYourGroupTasks).toBeCalledWith('sort=due,desc', null, false);
 
     // kick off timer
-    jest.advanceTimersByTime(AppConstants.ONE_MINUTE);
+    jest.advanceTimersByTime(AppConstants.REFRESH_TIMEOUT);
     expect(fetchYourGroupTasks).toBeCalledWith('sort=due,desc', 'TEST', true);
 
     //
@@ -247,23 +241,21 @@ describe('YourGroupTasksContainer Page', () => {
       },
       history,
       claimSuccessful: true,
-      yourGroupTasks: Immutable.fromJS({
-        isFetchingTasksAssignedToYou: false,
-        yourGroupTasksSortValue: 'sort=due,desc',
-        yourGroupTasksFilterValue: 'TEST',
-        total: 1,
-        tasks: [
-          {
-            task: {
-              id: 'id',
-              name: 'test',
-              priority: 1000,
-              due: date,
-              created: date,
-            },
+      isFetchingTasks: false,
+      sortValue: 'sort=due,desc',
+      filterValue: 'TEST',
+      total: 1,
+      tasks: Immutable.fromJS([
+        {
+          task: {
+            id: 'id',
+            name: 'test',
+            priority: 1000,
+            due: date,
+            created: date,
           },
-        ],
-      }),
+        },
+      ])
     };
 
     const wrapper = await mount(

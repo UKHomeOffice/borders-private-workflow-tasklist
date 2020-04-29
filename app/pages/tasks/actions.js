@@ -26,6 +26,7 @@ const fetchYourGroupTasks = (sortValue, filterValue, skipLoading) => ({
   skipLoading,
 });
 
+
 const fetchYourGroupTasksSuccess = payload => ({
   type: types.FETCH_YOUR_GROUP_TASKS_SUCCESS,
   payload,
@@ -50,6 +51,20 @@ const groupYourTeamTasks = groupBy => ({
     groupBy
 });
 
+const load = url => ({
+    type: types.LOAD,
+    url
+});
+
+const loadSuccess = payload => ({
+    type: types.LOAD_SUCCESS,
+    payload
+});
+
+const loadFailure = () => ({
+    type: types.LOAD_FAILURE
+});
+
 export {
     fetchTasksAssignedToYou,
     fetchTasksAssignedToYouSuccess,
@@ -60,5 +75,8 @@ export {
     handleUnclaim,
     resetYourTasks,
     groupYourTasks,
-    groupYourTeamTasks
+    groupYourTeamTasks,
+    load,
+    loadFailure,
+    loadSuccess
 };

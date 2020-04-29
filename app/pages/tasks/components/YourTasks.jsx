@@ -7,6 +7,8 @@ import SortTasks from './SortTasks';
 import AppConstants from '../../../common/AppConstants';
 import TaskUtils from './TaskUtils';
 import GroupTasks from './GroupTasks';
+import '../../../core/components/Pagination.scss';
+import TaskPagination from "./TaskPagination";
 
 const taskUtils = new TaskUtils();
 const YourTasks = props => {
@@ -19,7 +21,8 @@ const YourTasks = props => {
     total,
     sortValue,
     filterValue,
-    grouping = 'category',
+    grouping,
+    paginationActions
   } = props;
 
   const dataToDisplay = _.map(yourTasks, (value, key) => {
@@ -131,9 +134,25 @@ const YourTasks = props => {
         <div className="govuk-grid-row">
           <div className="govuk-grid-column-full">{dataToDisplay}</div>
         </div>
+        { total !== 0 ? <TaskPagination {...{paginationActions}} /> : null}
       </div>
     </div>
   );
+};
+
+YourTasks.defaultProps = {
+  paginationActions: {
+    onFirst: null,
+    onPrev: null,
+    onNext: null,
+    onLast: null
+  },
+  yourTasks: {},
+  total: 0,
+  groupTasks: () => {},
+  sortValue: '',
+  filterValue: '',
+  grouping: 'category'
 };
 
 YourTasks.propTypes = {
@@ -141,6 +160,17 @@ YourTasks.propTypes = {
   goToTask: PropTypes.func.isRequired,
   sortYourTasks: PropTypes.func.isRequired,
   yourTasks: PropTypes.object,
+  paginationActions: PropTypes.shape({
+    onFirst: PropTypes.func,
+    onPrev: PropTypes.func,
+    onNext: PropTypes.func,
+    onLast: PropTypes.func
+  }),
+  total: PropTypes.number,
+  groupTasks: PropTypes.func,
+  sortValue: PropTypes.string,
+  filterValue: PropTypes.string,
+  grouping: PropTypes.string
 };
 
 export default YourTasks;

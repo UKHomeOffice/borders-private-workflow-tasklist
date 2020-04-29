@@ -9,21 +9,28 @@ import {connect} from 'react-redux';
 import {debounce, throttle} from 'throttle-debounce';
 import {withRouter} from 'react-router';
 
-import _ from "lodash";
-import moment from 'moment';
+import {List} from "immutable";
 import * as actions from '../actions';
 import DataSpinner from '../../../core/components/DataSpinner';
 import YourTasks from './YourTasks';
-import {yourTasks} from '../selectors';
-import {priority} from "../../../core/util/priority";
+import {
+    filterValueSelector,
+    firstPageUrlSelector,
+    groupBySelector, isFetchingTasksSelector,
+    lastPageUrlSelector,
+    nextPageUrlSelector,
+    prevPageUrlSelector,
+    totalSelector,
+    sortValueSelector, tasksSelector,
+} from '../selectors';
 import secureLocalStorage from "../../../common/security/SecureLocalStorage";
 import TaskUtils from "./TaskUtils";
+
 
 export class YourTasksContainer extends React.Component {
     constructor(props) {
         super(props);
         this.websocketSubscriptions = [];
-        this.retryCount = 0;
         this.connect = this.connect.bind(this);
         this.goToTask = this.goToTask.bind(this);
         this.sortYourTasks = this.sortYourTasks.bind(this);
@@ -32,8 +39,26 @@ export class YourTasksContainer extends React.Component {
         this.taskUtils = new TaskUtils();
     }
 
+    componentDidMount() {
+        this.loadYourTasks(false, 'sort=due,desc');
+        if (secureLocalStorage.get('yourTasksGrouping')) {
+            const {groupYourTasks} = this.props;
+            groupYourTasks(secureLocalStorage.get('yourTasksGrouping'));
+        }
+    }
+
+
+    componentWillUnmount() {
+        const { resetYourTasks } = this.props;
+        if (this.client) {
+            this.client.deactivate();
+        }
+        resetYourTasks();
+    }
+
     connect = user => {
-        const uiEnv = this.props.appConfig.uiEnvironment.toLowerCase();
+        const {appConfig} = this.props;
+        const uiEnv = appConfig.uiEnvironment.toLowerCase();
         this.client = new Client({
             debug (str) {
                 if (uiEnv === 'development' || uiEnv === 'local') {
@@ -49,20 +74,21 @@ export class YourTasksContainer extends React.Component {
         this.client.webSocketFactory = function () {
             return new SockJS(`${self.props.appConfig.workflowServiceUrl}/ws/workflow/tasks?access_token=${self.props.kc.token}`);
         };
-        this.client.onConnect = function (frame) {
-            self.props.log([{
+        this.client.onConnect = function () {
+            // eslint-disable-next-line no-unused-vars
+            const {log, loadYourTasks, websocketSubscriptions, sortValue, filterValue} = self;
+            log([{
                 message: 'Connected to websocket',
                 user,
                 level: 'info',
                 path: self.props.location.pathname
             }]);
-
             const userSub = self.client.subscribe('/user/queue/task', () => {
-                this.loadYourTasks(true, self.props.yourTasks.get('yourTasksSortValue'),
-                    self.props.yourTasks.get('yourTasksFilterValue'));
+                loadYourTasks(true, sortValue,
+                    filterValue);
             });
             self.websocketSubscriptions.push(userSub);
-            self.props.log([{
+            log([{
                 message: `Number of subscriptions ${self.websocketSubscriptions.length}`,
                 user,
                 level: 'info',
@@ -81,89 +107,117 @@ export class YourTasksContainer extends React.Component {
         this.client.activate();
     };
 
-    componentDidMount() {
-        this.loadYourTasks(false, 'sort=due,desc');
-        if (secureLocalStorage.get('yourTasksGrouping')) {
-            this.props.groupYourTasks(secureLocalStorage.get('yourTasksGrouping'));
-        }
-    }
 
 
     loadYourTasks(skipLoading, yourTasksSortValue, yourTasksFilterValue = null) {
-        this.props.fetchTasksAssignedToYou(yourTasksSortValue, yourTasksFilterValue, skipLoading);
+        const { fetchTasksAssignedToYou } = this.props;
+        fetchTasksAssignedToYou(yourTasksSortValue, yourTasksFilterValue, skipLoading);
     }
 
     goToTask(taskId) {
-        this.props.history.replace(`/task/${taskId}?from=yourTasks`);
+        const { history } = this.props;
+        history.replace(`/task/${taskId}?from=yourTasks`);
     }
 
-    componentWillUnmount() {
-        if (this.client) {
-            this.client.deactivate();
-        }
-        this.props.resetYourTasks();
-    }
 
-    debounceSearch(sortValue, filterValue) {
-        if (filterValue.length <= 2 || filterValue.endsWith(' ')) {
+
+    debounceSearch(sort, filter) {
+        const {fetchTasksAssignedToYou} = this.props;
+        if (filter.length <= 2 || filter.endsWith(' ')) {
             throttle(200, () => {
-                this.props.fetchTasksAssignedToYou(sortValue, filterValue, true);
+                fetchTasksAssignedToYou(sort, filter, true);
             })();
         } else {
             debounce(500, () => {
-                this.props.fetchTasksAssignedToYou(sortValue, filterValue, true);
+                fetchTasksAssignedToYou(sort, filter, true);
             })();
         }
     }
 
     filterTasksByName(event) {
         event.persist();
-        const {yourTasks} = this.props;
-        this.debounceSearch(yourTasks.get('yourTasksSortValue'), event.target.value);
+        const {sortValue:sort} = this.props;
+        this.debounceSearch(sort, event.target.value);
     }
 
     sortYourTasks(event) {
-        this.props.fetchTasksAssignedToYou(event.target.value,
-            this.props.yourTasks.get('yourTasksFilterValue'), true);
+        const {fetchTasksAssignedToYou, filterValue:filter} = this.props;
+        fetchTasksAssignedToYou(event.target.value, filter, true);
     }
 
-    render() {
-        const {yourTasks} = this.props;
 
-        if (yourTasks.get('isFetchingTasksAssignedToYou')) {
+
+    render() {
+
+        const {isFetchingTasks, groupBy, tasks, total, sortValue, filterValue, groupYourTasks} = this.props;
+
+        if (isFetchingTasks) {
             return <DataSpinner message="Fetching tasks assigned to you" />;
         }
-        const groupBy = yourTasks.get('groupBy');
         return (
           <YourTasks
             grouping={groupBy}
+            paginationActions={
+               this.taskUtils.buildPaginationAction(this.props)
+            }
             filterTasksByName={this.filterTasksByName}
             sortYourTasks={this.sortYourTasks}
             goToTask={this.goToTask}
-            yourTasks={this.taskUtils.applyGrouping(groupBy, yourTasks.get('tasks').toJS())}
-            total={yourTasks.get('total')}
-            sortValue={yourTasks.get('sortValue')}
-            filterValue={yourTasks.get('yourTasksFilterValue')}
+            yourTasks={this.taskUtils.applyGrouping(groupBy, tasks.toJS())}
+            total={total}
+            sortValue={sortValue}
+            filterValue={filterValue}
             groupTasks={grouping => {
                     secureLocalStorage.set('yourTasksGrouping', grouping);
-                    this.props.groupYourTasks(grouping)
+                    groupYourTasks(grouping)
                 }}
           />
         );
     }
 }
 
+YourTasksContainer.defaultProps = {
+    isFetchingTasks: true,
+    tasks: new List([]),
+    total: 0,
+    sortValue: 'sort=due,desc',
+    filterValue: null,
+    groupBy: 'category'
+};
+
+
 YourTasksContainer.propTypes = {
+    history: PropTypes.shape({
+        replace: PropTypes.func.isRequired
+    }).isRequired,
+    appConfig: PropTypes.shape({
+        uiEnvironment: PropTypes.string.isRequired
+    }).isRequired,
     groupBy: PropTypes.string,
-    groupYourTasks: PropTypes.func,
-    resetYourTasks: PropTypes.func,
+    groupYourTasks: PropTypes.func.isRequired,
+    resetYourTasks: PropTypes.func.isRequired,
     fetchTasksAssignedToYou: PropTypes.func.isRequired,
-    yourTasks: ImmutablePropTypes.map,
+    isFetchingTasks: PropTypes.bool,
+    tasks: ImmutablePropTypes.list,
+    total: PropTypes.number,
+    sortValue: PropTypes.string,
+    filterValue: PropTypes.string,
 };
 const mapDispatchToProps = dispatch => bindActionCreators(actions, dispatch);
 
 export default connect(state => ({
-    yourTasks: yourTasks(state),
+    isFetchingTasks: isFetchingTasksSelector(state),
+    tasks: tasksSelector(state),
+    total: totalSelector(state),
+    sortValue: sortValueSelector(state),
+    filterValue: filterValueSelector(state),
+    groupBy: groupBySelector(state),
+    nextPageUrl: nextPageUrlSelector(state),
+    prevPageUrl: prevPageUrlSelector(state),
+    firstPageUrl: firstPageUrlSelector(state),
+    lastPageUrl: lastPageUrlSelector(state),
     appConfig: state.appConfig,
     kc: state.keycloak,
 }), mapDispatchToProps)(withRouter(YourTasksContainer));
+
+

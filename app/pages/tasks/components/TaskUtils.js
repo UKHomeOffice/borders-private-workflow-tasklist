@@ -4,6 +4,33 @@ import {priority} from "../../../core/util/priority";
 
 export default class TaskUtils {
 
+    buildPaginationAction(props) {
+        const pagination = {};
+        // eslint-disable-next-line no-shadow
+        const {nextPageUrl, prevPageUrl, firstPageUrl, lastPageUrl, load} = props;
+        if (firstPageUrl) {
+            pagination.onFirst = () => {
+                load(`${firstPageUrl}&${props.sortValue}${props.filterValue? `&name=${props.filterValue}`: ''}`);
+            };
+        }
+        if (prevPageUrl) {
+            pagination.onPrev = () => {
+                load(`${prevPageUrl}&${props.sortValue}${props.filterValue? `&name=${props.filterValue}`: ''}`);
+            };
+        }
+        if (nextPageUrl) {
+            pagination.onNext = () => {
+                load(`${nextPageUrl}&${props.sortValue}${props.filterValue? `&name=${props.filterValue}`: ''}`);
+            };
+        }
+        if (lastPageUrl) {
+            pagination.onLast = () => {
+                load(`${lastPageUrl}&${props.sortValue}${props.filterValue? `&name=${props.filterValue}`: ''}`);
+            };
+        }
+        return pagination;
+    }
+
     applyGrouping(groupBy, tasks) {
         switch (groupBy) {
             case 'reference':

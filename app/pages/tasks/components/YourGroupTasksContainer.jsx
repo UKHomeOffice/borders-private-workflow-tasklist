@@ -5,9 +5,9 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { debounce, throttle } from 'throttle-debounce';
 import { withRouter } from 'react-router';
+import {List} from "immutable";
 import * as actions from '../actions';
 import * as taskActions from '../../task/display/actions';
-import { yourGroupTasks } from '../selectors';
 import DataSpinner from '../../../core/components/DataSpinner';
 import YourGroupTasks from './YourGroupTasks';
 import AppConstants from '../../../common/AppConstants';
@@ -17,6 +17,18 @@ import {
 } from '../../task/display/selectors';
 import secureLocalStorage from '../../../common/security/SecureLocalStorage';
 import TaskUtils from './TaskUtils';
+import {
+  isFetchingTasksSelector,
+  tasksSelector,
+  totalSelector,
+  sortValueSelector,
+  filterValueSelector,
+  groupBySelector,
+  nextPageUrlSelector,
+  prevPageUrlSelector,
+  firstPageUrlSelector,
+  lastPageUrlSelector
+} from "../selectors";
 
 export class YourGroupTasksContainer extends React.Component {
   constructor(props) {
@@ -31,32 +43,36 @@ export class YourGroupTasksContainer extends React.Component {
   componentDidMount() {
     this.loadYourGroupTasks(false, 'sort=due,desc');
     const that = this;
+    const {groupYourTeamTasks} = this.props;
     this.timeoutId = setInterval(() => {
-      const { yourGroupTasks } = that.props;
+      const { sortValue:sort, filterValue:filter } = that.props;
       this.loadYourGroupTasks(
         true,
-        yourGroupTasks.get('yourGroupTasksSortValue'),
-        yourGroupTasks.get('yourGroupTasksFilterValue'),
+        sort,
+        filter,
       );
-    }, AppConstants.ONE_MINUTE);
+    }, AppConstants.REFRESH_TIMEOUT);
 
     if (secureLocalStorage.get('yourTeamTasksGrouping')) {
-      this.props.groupYourTeamTasks(
+      groupYourTeamTasks(
         secureLocalStorage.get('yourTeamTasksGrouping'),
       );
     }
   }
 
+  // eslint-disable-next-line no-unused-vars
   componentDidUpdate(prevProps, prevState, snapshot) {
+    // eslint-disable-next-line no-shadow
+    const {unclaimSuccessful, claimSuccessful, handleUnclaim} = this.props;
     if (
-      prevProps.unclaimSuccessful !== this.props.unclaimSuccessful &&
-      this.props.unclaimSuccessful &&
+      prevProps.unclaimSuccessful !== unclaimSuccessful &&
+      unclaimSuccessful &&
       this.selectedTask
     ) {
-      this.props.handleUnclaim(this.selectedTask);
+      handleUnclaim(this.selectedTask);
     }
 
-    if (this.props.claimSuccessful && this.selectedTask) {
+    if (claimSuccessful && this.selectedTask) {
       this.goToTask(this.selectedTask);
     }
   }
@@ -67,7 +83,8 @@ export class YourGroupTasksContainer extends React.Component {
   }
 
   goToTask(taskId) {
-    this.props.history.replace(`/task/${taskId}?from=yourGroupTasks`);
+    const {history} = this.props;
+    history.replace(`/task/${taskId}?from=yourGroupTasks`);
   }
 
   loadYourGroupTasks(
@@ -75,92 +92,128 @@ export class YourGroupTasksContainer extends React.Component {
     yourGroupTasksSortValue,
     yourGroupTasksFilterValue = null,
   ) {
-    this.props.fetchYourGroupTasks(
+    const { fetchYourGroupTasks } = this.props;
+    fetchYourGroupTasks(
       yourGroupTasksSortValue,
       yourGroupTasksFilterValue,
       skipLoading,
     );
   }
 
-  debounceSearch(sortValue, filterValue) {
-    if (filterValue.length <= 2 || filterValue.endsWith(' ')) {
+  debounceSearch(sort, filter) {
+    const {fetchYourGroupTasks} = this.props;
+    if (filter.length <= 2 || filter.endsWith(' ')) {
       throttle(200, () => {
-        this.props.fetchYourGroupTasks(sortValue, filterValue, true);
+       fetchYourGroupTasks(sort, filter, true);
       })();
     } else {
       debounce(500, () => {
-        this.props.fetchYourGroupTasks(sortValue, filterValue, true);
+        fetchYourGroupTasks(sort, filter, true);
       })();
     }
   }
 
   filterTasksByName(event) {
     event.persist();
-    const { yourGroupTasks } = this.props;
+    const { sortValue:sort } = this.props;
     this.debounceSearch(
-      yourGroupTasks.get('yourGroupTasksSortValue'),
+        sort,
       event.target.value,
     );
   }
 
   sortYourGroupTasks(event) {
-    this.props.fetchYourGroupTasks(
+    const {fetchYourGroupTasks, filterValue:filter} = this.props;
+    fetchYourGroupTasks(
       event.target.value,
-      this.props.yourGroupTasks.get('yourGroupTasksFilterValue'),
+      filter,
       true,
     );
   }
 
+
   render() {
-    const { yourGroupTasks } = this.props;
-    if (yourGroupTasks.get('isFetchingYourGroupTasks')) {
+    const { isFetchingTasks, groupBy, tasks, total, sortValue, filterValue, kc,
+      groupYourTeamTasks, claimTask, unclaimTask } = this.props;
+
+    const {tokenParsed} = kc;
+    if (isFetchingTasks) {
       return <DataSpinner message="Fetching your group tasks" />;
     }
-    const groupBy = yourGroupTasks.get('groupBy');
 
     return (
       <YourGroupTasks
         grouping={groupBy}
-        total={yourGroupTasks.get('total')}
-        sortValue={yourGroupTasks.get('sortValue')}
-        filterValue={yourGroupTasks.get('yourTasksFilterValue')}
+        total={total}
+        sortValue={sortValue}
+        filterValue={filterValue}
+        paginationActions={
+          this.taskUtils.buildPaginationAction(this.props)
+        }
         filterTasksByName={this.filterTasksByName}
         yourGroupTasks={this.taskUtils.applyGrouping(
           groupBy,
-          yourGroupTasks.get('tasks').toJS(),
+          tasks.toJS(),
         )}
         sortYourGroupTasks={this.sortYourGroupTasks}
-        userId={this.props.kc.tokenParsed.email}
+        userId={tokenParsed.email}
         goToTask={this.goToTask}
         groupTasks={grouping => {
           secureLocalStorage.set('yourTeamTasksGrouping', grouping);
-          this.props.groupYourTeamTasks(grouping);
+          groupYourTeamTasks(grouping);
         }}
         claimTask={taskId => {
           if (this.selectedTask) {
             this.selectedTask = null;
           }
           this.selectedTask = taskId;
-          this.props.claimTask(taskId);
+          claimTask(taskId);
         }}
         handleUnclaim={taskId => {
           if (this.selectedTask) {
             this.selectedTask = null;
           }
           this.selectedTask = taskId;
-          this.props.unclaimTask(taskId);
+          unclaimTask(taskId);
         }}
       />
     );
   }
 }
 
+YourGroupTasksContainer.defaultProps = {
+  isFetchingTasks: true,
+  unclaimSuccessful: false,
+  claimSuccessful: false,
+  tasks: new List([]),
+  total: 0,
+  sortValue: 'sort=due,desc',
+  filterValue: null,
+  groupBy: 'category'
+};
+
+
+
 YourGroupTasksContainer.propTypes = {
-  groupYourTeamTasks: PropTypes.func,
-  handleUnclaim: PropTypes.func,
-  unclaimTask: PropTypes.func,
+  kc: PropTypes.shape({
+    tokenParsed: PropTypes.shape({
+      email: PropTypes.string.isRequired
+    }).isRequired
+  }).isRequired,
+  history: PropTypes.any.isRequired,
+  groupYourTeamTasks: PropTypes.func.isRequired,
+  handleUnclaim: PropTypes.func.isRequired,
+  claimSuccessful: PropTypes.bool,
+  unclaimSuccessful: PropTypes.bool,
+  unclaimTask: PropTypes.func.isRequired,
   fetchYourGroupTasks: PropTypes.func.isRequired,
-  yourGroupTasks: ImmutablePropTypes.map,
+  isFetchingTasks: PropTypes.bool,
+  claimTask: PropTypes.func.isRequired,
+  tasks: ImmutablePropTypes.list,
+  total: PropTypes.number,
+  sortValue: PropTypes.string,
+  filterValue: PropTypes.string,
+  groupBy: PropTypes.string
 };
 
 const mapDispatchToProps = dispatch =>
@@ -168,7 +221,16 @@ const mapDispatchToProps = dispatch =>
 
 export default connect(
   state => ({
-    yourGroupTasks: yourGroupTasks(state),
+    isFetchingTasks: isFetchingTasksSelector(state),
+    tasks: tasksSelector(state),
+    total: totalSelector(state),
+    sortValue: sortValueSelector(state),
+    filterValue: filterValueSelector(state),
+    groupBy: groupBySelector(state),
+    nextPageUrl: nextPageUrlSelector(state),
+    prevPageUrl: prevPageUrlSelector(state),
+    firstPageUrl: firstPageUrlSelector(state),
+    lastPageUrl: lastPageUrlSelector(state),
     unclaimSuccessful: unclaimSuccessful(state),
     claimSuccessful: claimSuccessful(state),
     kc: state.keycloak,
