@@ -8,16 +8,19 @@ import {formSubmissionData, formVersionDetails, loadingFormSubmissionData, loadi
 import withLog from "../../../core/error/component/withLog";
 import {getFormVersion, getFormSubmissionData, resetForm} from "../actions";
 import GovUKDetailsObserver from "../../../core/util/GovUKDetailsObserver";
+import FormioInterpolator from '../../../core/FormioInterpolator'
+import secureLocalStorage from '../../../common/security/SecureLocalStorage';
 
 class FormDetailsPanel extends React.Component {
 
     constructor(props) {
         super(props);
         this.formNode = React.createRef();
+        this.formioInterpolator = new FormioInterpolator();
     }
 
     componentDidMount() {
-        this.props.getFormVersion(this.props.formReference.versionId);
+        this.props.getFormVersion(this.props.formReference.formVersionId);
         this.props.getFormSubmissionData(this.props.businessKey, this.props.formReference.dataPath);
     }
 
@@ -79,7 +82,7 @@ FormDetailsPanel.propTypes = {
     formReference: PropTypes.shape({
         name: PropTypes.string,
         title: PropTypes.string,
-        versionId: PropTypes.string,
+        formVersionId: PropTypes.string,
         dataPath: PropTypes.string,
         submissionDate: PropTypes.string,
         submittedBy: PropTypes.string
@@ -101,7 +104,7 @@ export default withRouter(connect(state => {
         loadingFormVersion: loadingFormVersion(state),
         formVersionDetails: formVersionDetails(state),
         loadingSubmissionFormData: loadingFormSubmissionData(state),
-        formSubmissionData: formSubmissionData(state)
+        formSubmissionData: formSubmissionData(state),
 
 
     }
