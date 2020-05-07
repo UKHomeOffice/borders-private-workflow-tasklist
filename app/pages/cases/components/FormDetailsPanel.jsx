@@ -47,10 +47,11 @@ class FormDetailsPanel extends React.Component {
         if (loadingFormVersion && loadingFormSubmissionData) {
             return <div style={{justifyContent: 'center', paddingTop: '20px'}}>Loading form...</div>
         }
-        if (!formVersionDetails) {
+        if (!formVersionDetails || !formSubmissionData) {
             return <div />;
         }
 
+        this.formioInterpolator.interpolate(formVersionDetails.schema, formSubmissionData);
         return (
           <Form
             form={formVersionDetails.schema}
