@@ -169,7 +169,7 @@ exports[`TaskForm Component matches snapshot 1`] = `
           "refreshToken": undefined,
           "sessionId": "state",
         },
-        "processContext": undefined,
+        "processContext": Object {},
         "shiftDetailsContext": "",
         "staffDetailsDataContext": "",
         "taskContext": Object {
