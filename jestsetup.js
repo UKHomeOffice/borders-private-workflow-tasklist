@@ -12,3 +12,7 @@ global.MutationObserver = class {
   disconnect = jest.fn();
   observe = jest.fn((target, options) => {});
 };
+
+global.crypto = {
+  getRandomValues: jest.fn(),
+};

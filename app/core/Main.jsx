@@ -57,7 +57,7 @@ const Main = () => (
         <RouteWithTitle name="Your group tasks" title={`Your team’s tasks | ${AppConstants.APP_NAME}`} exact path={AppConstants.YOUR_GROUP_TASKS_PATH} component={() => <YourGroupTaskPage />} />
         <RouteWithTitle name="Forms" title={`Operational forms | ${AppConstants.APP_NAME}`} exact path={AppConstants.FORMS_PATH} component={() =><ProceduresPage />} />
         <RouteWithTitle name="Reports" title={`Operational reports | ${AppConstants.APP_NAME}`} exact path={AppConstants.REPORTS_PATH} component={() =><ReportsPage />} />
-        <RouteWithTitle exact path={AppConstants.REPORT_PATH} title={`Operational report | ${AppConstants.APP_NAME}`} component={() => <ReportPage />} />
+        <RouteWithTitle exact path={`${AppConstants.REPORTS_PATH}/:report`} title={`Operational report | ${AppConstants.APP_NAME}`} component={() => <ReportPage />} />
         <RouteWithTitle name="Messages" title={`Operational messages | ${AppConstants.APP_NAME}`} exact path={AppConstants.MESSAGES_PATH} component={() => <MessagesPage />} />
         <RouteWithTitle name="Calendar" title={`Calendar | ${AppConstants.APP_NAME}`} exact path={AppConstants.CALENDAR_PATH} component={() => <CalendarPage />} />
         <RouteWithTitle name="Procedure Start Page" title={`Operational form | ${AppConstants.APP_NAME}`} exact path={`${AppConstants.SUBMIT_A_FORM  }/:processKey`} component={() =><ProcessStartPage />} />

@@ -1,0 +1,20 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`PowerBIReport matches snapshot 1`] = `
+<Report
+  accessToken="xxx"
+  embedId="abc"
+  embedType="report"
+  embedUrl="http://www.example.com"
+  pageName="Power BI Report"
+  permissions="Read"
+  reportMode="view"
+  style={
+    Object {
+      "height": "100%",
+      "width": "100%",
+    }
+  }
+  tokenType="Embed"
+/>
+`;

@@ -1,53 +1,75 @@
-import React from "react";
-import Iframe from "react-iframe";
+import React from 'react';
+import PropTypes from 'prop-types';
+import { withRouter } from 'react-router';
+import { Link, Redirect } from 'react-router-dom';
+import { connect } from 'react-redux';
+import AppConstants from '../../../common/AppConstants';
+import HTMLReport from './HTMLReport';
+import PowerBIReport from './PowerBIReport';
 
-import queryString from 'query-string';
-import {withRouter} from "react-router";
-import {connect} from "react-redux";
+export const ReportPage = ({ appConfig, location }) => {
+  if (!location.state) return <Redirect to={AppConstants.REPORTS_PATH} />;
+  const { reportServiceUrl } = appConfig;
+  const {
+    accessToken,
+    embedUrl,
+    htmlName,
+    id,
+    name,
+    reportType,
+  } = location.state;
+  document.title = `${name} | ${AppConstants.APP_NAME}`;
 
-export class ReportPage extends React.Component {
+  return (
+    <div>
+      <Link
+        id="backToReports"
+        className="govuk-link govuk-back-link govuk-!-font-size-19"
+        to="/reports"
+      >
+        Back to reports
+      </Link>
 
-    render() {
+      <div
+        style={{
+          display: 'flex',
+          position: 'relative',
+          margin: 'auto',
+          justifyContent: 'center',
+          height: '100vh',
+        }}
+      >
+        {reportType === 'PowerBIReport' ? (
+          <PowerBIReport {...{ accessToken, embedUrl, id, name }} />
+        ) : (
+          <HTMLReport {...{ htmlName, reportServiceUrl }} />
+        )}
+      </div>
+    </div>
+  );
+};
 
-        const params = queryString.parse(this.props.location.search);
-        const {reportName} = params;
+ReportPage.propTypes = {
+  appConfig: PropTypes.shape({
+    reportServiceUrl: PropTypes.string.isRequired,
+  }).isRequired,
+  location: PropTypes.shape({
+    state: PropTypes.shape({
+      accessToken: PropTypes.string,
+      embedUrl: PropTypes.string,
+      htmlName: PropTypes.string,
+      id: PropTypes.string,
+      name: PropTypes.string.isRequired,
+      reportType: PropTypes.string,
+    }),
+  }).isRequired,
+};
 
-        return (
-          <div>
-            <a
-              href="#"
-              id="backToReports"
-              style={{textDecoration: 'none'}}
-              className="govuk-link govuk-back-link govuk-!-font-size-19"
-              onClick={() => this.props.history.replace('/reports')}
-            >Back to reports
-            </a>
-
-            <div style={{
-                display: 'flex',
-                position: 'relative',
-                margin: 'auto',
-                justifyContent: 'center',
-                height: '100vh'
-            }}
-            >
-              <Iframe
-                url={`${this.props.appConfig.reportServiceUrl}/api/reports/${reportName}`}
-                id="report"
-                width="100%"
-                height="100%"
-                position="relative"
-                display="initial"
-                allowFullScreen
-              />
-            </div>
-          </div>
-)
-    }
-}
-
-export default withRouter(connect(state => {
-    return {
-        appConfig: state.appConfig
-    };
-}, {})(ReportPage));
+export default withRouter(
+  connect(
+    state => ({
+      appConfig: state.appConfig,
+    }),
+    {},
+  )(ReportPage),
+);

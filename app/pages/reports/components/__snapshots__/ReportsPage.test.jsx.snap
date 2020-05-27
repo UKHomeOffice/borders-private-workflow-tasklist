@@ -1,0 +1,40 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Reports Page matches snapshot 1`] = `
+<div>
+  <div
+    className="govuk-grid-row"
+    id="reportsCountLabel"
+  >
+    <div
+      className="govuk-grid-column-one-half"
+    >
+      <span
+        className="govuk-caption-l"
+      >
+        Operational reports
+      </span>
+      <h2
+        className="govuk-heading-l"
+      >
+        0
+         
+        reports
+      </h2>
+    </div>
+  </div>
+  <div
+    style={
+      Object {
+        "display": "flex",
+        "justifyContent": "center",
+        "paddingTop": "20px",
+      }
+    }
+  >
+    <DataSpinner
+      message="Loading reports"
+    />
+  </div>
+</div>
+`;

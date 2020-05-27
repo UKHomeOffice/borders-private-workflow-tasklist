@@ -1,0 +1,13 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`HTMLReport matches snapshot 1`] = `
+<Iframe
+  allowFullScreen={true}
+  display="initial"
+  height="100%"
+  id="report"
+  position="relative"
+  url="http://localhost:9000/api/reports/HTML Report"
+  width="100%"
+/>
+`;
