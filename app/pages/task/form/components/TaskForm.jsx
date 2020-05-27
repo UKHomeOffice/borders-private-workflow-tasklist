@@ -100,7 +100,7 @@ export default class TaskForm extends React.Component {
       } else if (variables[formVariableSubmissionName]) {
         submission = variables[formVariableSubmissionName];
       }
-      delete variables.submissionData;
+
     }
     if (secureLocalStorage.get(task.get('id'))) {
       submission.data = {
@@ -132,7 +132,7 @@ export default class TaskForm extends React.Component {
         privateUiUrl: window.location.origin,
         attachmentServiceUrl: appConfig.attachmentServiceUrl
       },
-      processContext: variables,
+      processContext: _.omit(variables,  ['submissionData', formVariableSubmissionName]),
       taskContext: task.toJS(),
     };
     if (form) {
