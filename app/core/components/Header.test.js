@@ -21,13 +21,6 @@ describe('Header', () => {
     expect(wrapper.exists()).toBe(true);
   });
 
-  it('renders Profile link', () => {
-    const wrapper = shallow(<Header {...props} />);
-    const node = wrapper.find('#profile');
-    expect(node.text()).toBe('My profile');
-    expect(node.prop('href')).toBe('/submit-a-form/edit-your-profile');
-  });
-
   it('matches snapshot', () => {
     const wrapper = shallow(<Header {...props} />);
     expect(wrapper).toMatchSnapshot();

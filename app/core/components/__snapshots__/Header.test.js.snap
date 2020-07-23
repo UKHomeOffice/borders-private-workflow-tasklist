@@ -2,67 +2,127 @@
 
 exports[`Header matches snapshot 1`] = `
 <header
-  className="govuk-header"
+  className="govuk-header "
   data-module="header"
   role="banner"
 >
-  <SkipLink />
   <div
     className="govuk-header__container govuk-width-container"
   >
     <div
       className="govuk-header__content"
-      style={
-        Object {
-          "width": "100%",
-        }
-      }
     >
-      <div
-        className="govuk-grid-row"
+      <Link
+        className="govuk-header__link govuk-header__link--service-name"
+        id="serviceName"
+        to="/dashboard"
       >
-        <div
-          className="govuk-grid-column-one-half"
+        Central Operations Platform
+      </Link>
+      <nav>
+        <ul
+          aria-label="Top Level Navigation"
+          className="govuk-header__navigation "
+          id="navigation"
         >
-          <a
-            className="govuk-header__link govuk-header__link--service-name"
-            href="/dashboard"
-            id="dashboard"
-            onClick={[Function]}
+          <li
+            className="govuk-header__navigation-item govuk-header__navigation-item--active"
+            key="/dashboard"
           >
-            Central Operations Platform
-          </a>
-        </div>
-        <div
-          className="govuk-grid-column-one-half header-nav"
-        >
-          <a
-            className="govuk-header__link header-nav__link"
-            href="/submit-a-form/edit-your-profile"
-            id="profile"
-            onClick={[Function]}
+            <Link
+              className="govuk-header__link"
+              onClick={[Function]}
+              to="/dashboard"
+            >
+              Home
+            </Link>
+          </li>
+          <li
+            className="govuk-header__navigation-item "
+            key="/your-tasks"
           >
-            My profile
-          </a>
-          <a
-            className="govuk-header__link header-nav__link"
-            href="test"
-            id="support"
-            rel="noopener noreferrer"
-            target="_blank"
+            <Link
+              className="govuk-header__link"
+              onClick={[Function]}
+              to="/your-tasks"
+            >
+              Tasks
+            </Link>
+          </li>
+          <li
+            className="govuk-header__navigation-item "
+            key="/forms"
           >
-            Support
-          </a>
-          <a
-            className="govuk-header__link header-nav__link"
-            href="/logout"
-            id="logout"
-            onClick={[Function]}
+            <Link
+              className="govuk-header__link"
+              onClick={[Function]}
+              to="/forms"
+            >
+              Forms
+            </Link>
+          </li>
+          <li
+            className="govuk-header__navigation-item "
+            key="/cases"
           >
-            Sign out
-          </a>
-        </div>
-      </div>
+            <Link
+              className="govuk-header__link"
+              onClick={[Function]}
+              to="/cases"
+            >
+              Cases
+            </Link>
+          </li>
+          <li
+            className="govuk-header__navigation-item "
+            key="/reports"
+          >
+            <Link
+              className="govuk-header__link"
+              onClick={[Function]}
+              to="/reports"
+            >
+              Reports
+            </Link>
+          </li>
+          <li
+            className="govuk-header__navigation-item "
+            key="submit-a-form/edit-your-profile"
+          >
+            <Link
+              className="govuk-header__link"
+              onClick={[Function]}
+              to="submit-a-form/edit-your-profile"
+            >
+              My profile
+            </Link>
+          </li>
+          <li
+            className="govuk-header__navigation-item"
+          >
+            <Link
+              className="govuk-header__link"
+              id="support"
+              rel="noopener noreferrer"
+              target="_blank"
+              to="https://support.cop.homeoffice.gov.uk/servicedesk/customer/portal/3"
+            >
+              Support
+            </Link>
+          </li>
+          <li
+            className="govuk-header__navigation-item"
+          >
+            <Link
+              className="govuk-header__link"
+              id="logout"
+              onClick={[Function]}
+            >
+              Sign out
+            </Link>
+          </li>
+        </ul>
+      </nav>
     </div>
   </div>
 </header>
