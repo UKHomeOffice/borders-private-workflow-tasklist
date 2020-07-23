@@ -19,31 +19,37 @@ export class Header extends React.Component {
       this.state = {
         navData: [
           {
+            id: 'home',
             urlStem: AppConstants.DASHBOARD_PATH,
             text: 'Home',
             active: true,
           },
           {
+            id: 'tasks',
             urlStem: AppConstants.YOUR_TASKS_PATH,
             text: 'Tasks',
             active: false,
           },
           {
+            id: 'forms',
             urlStem: AppConstants.FORMS_PATH,
             text: 'Forms',
             active: false,
           },
           {
+            id: 'cases',
             urlStem: AppConstants.CASES_PATH,
             text: 'Cases',
             active: false,
           },
           {
+            id: 'reports',
             urlStem: AppConstants.REPORTS_PATH,
             text: 'Reports',
             active: false,
           },
           {
+            id: 'profile',
             urlStem: AppConstants.MY_PROFILE_PATH,
             text: 'My profile',
             active: false,
@@ -94,15 +100,16 @@ export class Header extends React.Component {
                 <ul id="navigation" className="govuk-header__navigation " aria-label="Top Level Navigation">
                   
                   {(this.state.navData).map(elem => {
-                  const activeState = elem.active === true ? 'govuk-header__navigation-item govuk-header__navigation-item--active' : 'govuk-header__navigation-item';
-                  return (
-                    <li className={activeState} key={elem.urlStem}>
-                      <Link to={elem.urlStem} className="govuk-header__link" onClick={() => this.setActivePage(elem.urlStem)}>{elem.text}</Link>
-                    </li>
-                  );
-                })}
+                    const activeState = elem.active === true ? 'govuk-header__navigation-item--active' : '';
+                    return (
+                      <li className={`govuk-header__navigation-item ${activeState}`} key={elem.urlStem}>
+                        <Link to={elem.urlStem} className="govuk-header__link" onClick={() => this.setActivePage(elem.urlStem)}>{elem.text}</Link>
+                      </li>
+                    );
+                  })}
                   <li className="govuk-header__navigation-item">
                     <Link 
+                      id='support'
                       className="govuk-header__link" 
                       to={AppConstants.SUPPORT_PATH}
                       target="_blank"
@@ -113,6 +120,7 @@ export class Header extends React.Component {
                   </li>
                   <li className="govuk-header__navigation-item">
                     <Link
+                      id='logout'
                       className="govuk-header__link" 
                       onClick={this.logout}
                     >
