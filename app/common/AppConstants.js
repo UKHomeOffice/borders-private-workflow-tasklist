@@ -33,7 +33,5 @@ export default class AppConstants {
 
     static MY_PROFILE_PATH = 'submit-a-form/edit-your-profile';
 
-    static SUPPORT_PATH = 'https://support.cop.homeoffice.gov.uk/servicedesk/customer/portal/3'
-
     static REFRESH_TIMEOUT = 300000;
 }
