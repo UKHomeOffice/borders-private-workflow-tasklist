@@ -7,6 +7,7 @@ import { withRouter, Link } from 'react-router-dom';
 // local imports
 import AppConstants from "../../common/AppConstants";
 import secureLocalStorage from '../../common/security/SecureLocalStorage';
+import SkipLink from './SkipLink';
 import './Header.scss';
 
 
@@ -87,6 +88,7 @@ export class Header extends React.Component {
       return (
 
         <header className="govuk-header " role="banner" data-module="header">
+          <SkipLink />
           <div className="govuk-header__container govuk-width-container">
             <div className="govuk-header__content">
               <Link 
@@ -108,15 +110,15 @@ export class Header extends React.Component {
                     );
                   })}
                   <li className="govuk-header__navigation-item">
-                    <Link 
+                    <a 
                       id='support'
                       className="govuk-header__link" 
-                      to="https://support.cop.homeoffice.gov.uk/servicedesk/customer/portal/3"
+                      href={AppConstants.SUPPORT_PATH}
                       target="_blank"
                       rel="noopener noreferrer"
                     >
                       Support
-                    </Link>
+                    </a>
                   </li>
                   <li className="govuk-header__navigation-item">
                     <Link

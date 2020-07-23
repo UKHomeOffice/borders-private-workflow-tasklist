@@ -6,6 +6,7 @@ exports[`Header matches snapshot 1`] = `
   data-module="header"
   role="banner"
 >
+  <SkipLink />
   <div
     className="govuk-header__container govuk-width-container"
   >
@@ -100,15 +101,15 @@ exports[`Header matches snapshot 1`] = `
           <li
             className="govuk-header__navigation-item"
           >
-            <Link
+            <a
               className="govuk-header__link"
+              href="https://support.cop.homeoffice.gov.uk/servicedesk/customer/portal/3"
               id="support"
               rel="noopener noreferrer"
               target="_blank"
-              to="https://support.cop.homeoffice.gov.uk/servicedesk/customer/portal/3"
             >
               Support
-            </Link>
+            </a>
           </li>
           <li
             className="govuk-header__navigation-item"
