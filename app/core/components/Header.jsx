@@ -7,6 +7,7 @@ import { withRouter, Link } from 'react-router-dom';
 // local imports
 import AppConstants from "../../common/AppConstants";
 import secureLocalStorage from '../../common/security/SecureLocalStorage';
+import './Header.scss';
 
 
 export class Header extends React.Component {
@@ -25,6 +26,26 @@ export class Header extends React.Component {
           {
             urlStem: AppConstants.YOUR_TASKS_PATH,
             text: 'Tasks',
+            active: false,
+          },
+          {
+            urlStem: AppConstants.FORMS_PATH,
+            text: 'Forms',
+            active: false,
+          },
+          {
+            urlStem: AppConstants.CASES_PATH,
+            text: 'Cases',
+            active: false,
+          },
+          {
+            urlStem: AppConstants.REPORTS_PATH,
+            text: 'Reports',
+            active: false,
+          },
+          {
+            urlStem: AppConstants.MY_PROFILE_PATH,
+            text: 'My profile',
             active: false,
           },
         ]
@@ -62,17 +83,16 @@ export class Header extends React.Component {
         <header className="govuk-header " role="banner" data-module="header">
           <div className="govuk-header__container govuk-width-container">
             <div className="govuk-header__content">
-              <a 
+              <Link 
                 id='serviceName'
-                href={AppConstants.DASHBOARD_PATH}
+                to={AppConstants.DASHBOARD_PATH}
                 className="govuk-header__link govuk-header__link--service-name"
               >
                 {AppConstants.APP_NAME}
-              </a>
-              {/* <button type="button" className="govuk-header__menu-button js-header-toggle" aria-controls="navigation" aria-label="Show or hide Top Level Navigation">Menu</button> */}
+              </Link>
               <nav>
-                
                 <ul id="navigation" className="govuk-header__navigation " aria-label="Top Level Navigation">
+                  
                   {(this.state.navData).map(elem => {
                   const activeState = elem.active === true ? 'govuk-header__navigation-item govuk-header__navigation-item--active' : 'govuk-header__navigation-item';
                   return (
@@ -81,9 +101,23 @@ export class Header extends React.Component {
                     </li>
                   );
                 })}
-
                   <li className="govuk-header__navigation-item">
-                    <a className="govuk-header__link" onClick={this.logout}>Sign out</a>
+                    <Link 
+                      className="govuk-header__link" 
+                      to={AppConstants.SUPPORT_PATH}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      Support
+                    </Link>
+                  </li>
+                  <li className="govuk-header__navigation-item">
+                    <Link
+                      className="govuk-header__link" 
+                      onClick={this.logout}
+                    >
+                      Sign out
+                    </Link>
                   </li>
                 </ul>
 
