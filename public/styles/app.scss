@@ -85,8 +85,16 @@ input:disabled {
   margin-left: 20px;
 }
 
-.govuk-header__link--service-name {
-  margin-left: -15px;
+@media (min-width: 48.0625em) {
+  .govuk-header__link--service-name {
+    margin-left: -15px;
+  }
+
+  .govuk-header__content {
+    display: flex;
+    justify-content: space-between;
+    width: 100% !important;
+  }
 }
 
 

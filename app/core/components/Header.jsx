@@ -8,7 +8,6 @@ import { withRouter, Link } from 'react-router-dom';
 import AppConstants from "../../common/AppConstants";
 import secureLocalStorage from '../../common/security/SecureLocalStorage';
 import SkipLink from './SkipLink';
-import './Header.scss';
 
 
 export class Header extends React.Component {
@@ -79,7 +78,7 @@ export class Header extends React.Component {
       this.props.history.push(AppConstants.DASHBOARD_PATH);
   }
 
-  toggleNav(event) {
+  toggleNavMobileActive(event) {
     event.preventDefault();
     const stateChange = this.state.navMobileActive = !this.state.navMobileActive
     this.setState({ navMobileActive: stateChange })
@@ -106,18 +105,25 @@ export class Header extends React.Component {
               </Link>
               <button 
                 type="button" 
-                className={this.state.navMobileActive === true ? 'govuk-header__menu-button govuk-js-header-toggle govuk-header__menu-button--open' : 'govuk-header__menu-button govuk-js-header-toggle'}
-                // className="govuk-header__menu-button govuk-js-header-toggle" 
+                className={
+                  this.state.navMobileActive === true 
+                  ? 'govuk-header__menu-button govuk-js-header-toggle govuk-header__menu-button--open' 
+                  : 'govuk-header__menu-button govuk-js-header-toggle'
+                }
                 aria-controls="navigation" 
                 aria-label="Show or hide Top Level Navigation"
-                onClick={event => this.toggleNav(event)}
+                onClick={event => this.toggleNavMobileActive(event)}
               >
                 Menu
               </button>
               <nav>
                 <ul 
                   id="navigation" 
-                  className={this.state.navMobileActive === true ? "govuk-header__navigation govuk-header__navigation--open" : "govuk-header__navigation"}
+                  className={
+                    this.state.navMobileActive === true 
+                    ? "govuk-header__navigation govuk-header__navigation--open" 
+                    : "govuk-header__navigation"
+                  }
                   aria-label="Top Level Navigation"
                 >
                   {(this.state.navData).map(elem => {
