@@ -41,20 +41,21 @@ export class FormsListPage extends React.Component {
       <React.Fragment>
         <div className="govuk-grid-row" id="proceduresCountLabel">
           <div className="govuk-grid-column-one-half">
-            <span className="govuk-caption-l">Operational forms</span>
-            <h2 className="govuk-heading-l">
-              {processDefinitions.size} forms
-            </h2>
+            <h1 className="govuk-heading-xl">Forms</h1>
+            <h2 className="govuk-heading-l">Operational forms</h2>
+            <p className="govuk-body-l">
+              Here are all the forms available on COP for completing a variety of tasks from reporting events to requesting building passes.
+            </p>
           </div>
         </div>
         <div className="govuk-grid-row">
           <div className="govuk-grid-column-full">
-            {isFetchingProcessDefinitions ? (
+            {isFetchingProcessDefinitions && (
               <h4 className="govuk-heading-s" id="loading">
                 Loading forms...
               </h4>
-            ) : (
-              processDefinitions.map(p => {
+            )}
+            {processDefinitions.map(p => {
                 const processDefinitionKey = p.getIn([
                   'process-definition',
                   'key',
@@ -80,7 +81,7 @@ export class FormsListPage extends React.Component {
                         className="govuk-grid-row"
                         key={processDefinitionKey}
                       >
-                        <div className="govuk-grid-column-one-third">
+                        {/* <div className="govuk-grid-column-one-third">
                           <button
                             id="actionButton"
                             className="govuk-button govuk-button--start"
@@ -103,13 +104,13 @@ export class FormsListPage extends React.Component {
                               />
                             </svg>
                           </button>
-                        </div>
+                        </div> */}
                       </div>
                     </div>
                   </div>
                 );
               })
-            )}
+            }
           </div>
         </div>
       </React.Fragment>
