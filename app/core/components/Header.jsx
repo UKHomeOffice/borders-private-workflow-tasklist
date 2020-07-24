@@ -18,12 +18,13 @@ export class Header extends React.Component {
       this.logout = this.logout.bind(this);
       this.dashboard = this.dashboard.bind(this);
       this.state = {
+        navMobileActive: false,
         navData: [
           {
             id: 'home',
             urlStem: AppConstants.DASHBOARD_PATH,
             text: 'Home',
-            active: true,
+            active: false,
           },
           {
             id: 'tasks',
@@ -78,6 +79,12 @@ export class Header extends React.Component {
       this.props.history.push(AppConstants.DASHBOARD_PATH);
   }
 
+  toggleNav(event) {
+    event.preventDefault();
+    const stateChange = this.state.navMobileActive = !this.state.navMobileActive
+    this.setState({ navMobileActive: stateChange })
+  }
+
   logout(event) {
       event.preventDefault();
       this.secureLocalStorage.removeAll();
@@ -86,7 +93,6 @@ export class Header extends React.Component {
 
   render() {
       return (
-
         <header className="govuk-header " role="banner" data-module="header">
           <SkipLink />
           <div className="govuk-header__container govuk-width-container">
@@ -98,9 +104,22 @@ export class Header extends React.Component {
               >
                 {AppConstants.APP_NAME}
               </Link>
+              <button 
+                type="button" 
+                className={this.state.navMobileActive === true ? 'govuk-header__menu-button govuk-js-header-toggle govuk-header__menu-button--open' : 'govuk-header__menu-button govuk-js-header-toggle'}
+                // className="govuk-header__menu-button govuk-js-header-toggle" 
+                aria-controls="navigation" 
+                aria-label="Show or hide Top Level Navigation"
+                onClick={event => this.toggleNav(event)}
+              >
+                Menu
+              </button>
               <nav>
-                <ul id="navigation" className="govuk-header__navigation " aria-label="Top Level Navigation">
-                  
+                <ul 
+                  id="navigation" 
+                  className={this.state.navMobileActive === true ? "govuk-header__navigation govuk-header__navigation--open" : "govuk-header__navigation"}
+                  aria-label="Top Level Navigation"
+                >
                   {(this.state.navData).map(elem => {
                     const activeState = elem.active === true ? 'govuk-header__navigation-item--active' : '';
                     return (
@@ -130,7 +149,6 @@ export class Header extends React.Component {
                     </Link>
                   </li>
                 </ul>
-
               </nav>
             </div>
           </div>
