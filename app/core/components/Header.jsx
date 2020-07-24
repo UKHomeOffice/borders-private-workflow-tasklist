@@ -17,7 +17,7 @@ export class Header extends React.Component {
       this.logout = this.logout.bind(this);
       this.dashboard = this.dashboard.bind(this);
       this.state = {
-        navMobileActive: false,
+        navMobileOpen: false,
         navData: [
           {
             id: 'home',
@@ -71,6 +71,7 @@ export class Header extends React.Component {
       }
     });
     this.setState({ navData: tempArr });
+    this.setState({ navMobileOpen: false })
   };
 
   dashboard(event) {
@@ -78,10 +79,10 @@ export class Header extends React.Component {
       this.props.history.push(AppConstants.DASHBOARD_PATH);
   }
 
-  toggleNavMobileActive(event) {
+  toggleNavMobileOpen(event) {
     event.preventDefault();
-    const stateChange = this.state.navMobileActive = !this.state.navMobileActive
-    this.setState({ navMobileActive: stateChange })
+    const stateChange = this.state.navMobileOpen = !this.state.navMobileOpen
+    this.setState({ navMobileOpen: stateChange })
   }
 
   logout(event) {
@@ -106,13 +107,13 @@ export class Header extends React.Component {
               <button 
                 type="button" 
                 className={
-                  this.state.navMobileActive === true 
+                  this.state.navMobileOpen === true 
                   ? 'govuk-header__menu-button govuk-js-header-toggle govuk-header__menu-button--open' 
                   : 'govuk-header__menu-button govuk-js-header-toggle'
                 }
                 aria-controls="navigation" 
                 aria-label="Show or hide Top Level Navigation"
-                onClick={event => this.toggleNavMobileActive(event)}
+                onClick={event => this.toggleNavMobileOpen(event)}
               >
                 Menu
               </button>
@@ -120,7 +121,7 @@ export class Header extends React.Component {
                 <ul 
                   id="navigation" 
                   className={
-                    this.state.navMobileActive === true 
+                    this.state.navMobileOpen === true 
                     ? "govuk-header__navigation govuk-header__navigation--open" 
                     : "govuk-header__navigation"
                   }
