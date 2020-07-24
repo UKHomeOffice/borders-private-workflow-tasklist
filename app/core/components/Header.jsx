@@ -15,7 +15,6 @@ export class Header extends React.Component {
       super(props);
       this.secureLocalStorage = secureLocalStorage;
       this.logout = this.logout.bind(this);
-      this.dashboard = this.dashboard.bind(this);
       this.state = {
         navMobileOpen: false,
         navData: [
@@ -59,25 +58,22 @@ export class Header extends React.Component {
       }
   }
 
-  setActivePage(url) {
+  handleLinkClick(url) {
+    // Set the nav link to it's active style
     const tempArr = [...this.state.navData];
     tempArr.map(elem => {
       const currentUrl = !url ? this.location.pathname : url;
       if (currentUrl === elem.urlStem) {
         elem.active = true;
-        document.activeElement.blur();
+        document.activeElement.blur(); // Remove the active element styling after click
       } else {
         elem.active = false;
       }
     });
     this.setState({ navData: tempArr });
+    // Ensure mobile menu is set to closed (false)
     this.setState({ navMobileOpen: false })
   };
-
-  dashboard(event) {
-      event.preventDefault();
-      this.props.history.push(AppConstants.DASHBOARD_PATH);
-  }
 
   toggleNavMobileOpen(event) {
     event.preventDefault();
@@ -131,7 +127,13 @@ export class Header extends React.Component {
                     const activeState = elem.active === true ? 'govuk-header__navigation-item--active' : '';
                     return (
                       <li className={`govuk-header__navigation-item ${activeState}`} key={elem.urlStem}>
-                        <Link to={elem.urlStem} className="govuk-header__link" onClick={() => this.setActivePage(elem.urlStem)}>{elem.text}</Link>
+                        <Link 
+                          to={elem.urlStem} 
+                          className="govuk-header__link" 
+                          onClick={() => this.handleLinkClick(elem.urlStem)}
+                        >
+                          {elem.text}
+                        </Link>
                       </li>
                     );
                   })}
@@ -147,13 +149,13 @@ export class Header extends React.Component {
                     </a>
                   </li>
                   <li className="govuk-header__navigation-item">
-                    <Link
+                    <a
                       id='logout'
                       className="govuk-header__link" 
                       onClick={this.logout}
                     >
                       Sign out
-                    </Link>
+                    </a>
                   </li>
                 </ul>
               </nav>
