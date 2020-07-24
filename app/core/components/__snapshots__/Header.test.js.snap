@@ -20,14 +20,23 @@ exports[`Header matches snapshot 1`] = `
       >
         Central Operations Platform
       </Link>
+      <button
+        aria-controls="navigation"
+        aria-label="Show or hide Top Level Navigation"
+        className="govuk-header__menu-button govuk-js-header-toggle"
+        onClick={[Function]}
+        type="button"
+      >
+        Menu
+      </button>
       <nav>
         <ul
           aria-label="Top Level Navigation"
-          className="govuk-header__navigation "
+          className="govuk-header__navigation"
           id="navigation"
         >
           <li
-            className="govuk-header__navigation-item govuk-header__navigation-item--active"
+            className="govuk-header__navigation-item "
             key="/dashboard"
           >
             <Link
@@ -114,13 +123,13 @@ exports[`Header matches snapshot 1`] = `
           <li
             className="govuk-header__navigation-item"
           >
-            <Link
+            <a
               className="govuk-header__link"
               id="logout"
               onClick={[Function]}
             >
               Sign out
-            </Link>
+            </a>
           </li>
         </ul>
       </nav>
