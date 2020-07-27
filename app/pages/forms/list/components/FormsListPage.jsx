@@ -39,6 +39,7 @@ export class FormsListPage extends React.Component {
     const { isFetchingProcessDefinitions, processDefinitions } = this.props;
     return (
       <React.Fragment>
+
         <div className="govuk-grid-row" id="proceduresCountLabel">
           <div className="govuk-grid-column-one-half">
             <h1 className="govuk-heading-xl">Forms</h1>
@@ -71,17 +72,20 @@ export class FormsListPage extends React.Component {
                     key={processDefinitionKey}
                   >
                     <div className="govuk-grid-column-full govuk-card">
-                      <p
-                        id="formDescription"
-                        className="govuk-body govuk-body govuk-!-font-size-19"
+                      <a
+                        id="actionButton"
+                        className="govuk-link govuk-link--no-visited-state"
+                        onClick={() => this.process(p)}
+                        onKeyPress={this.handleKeyPress}
+                        href=""
                       >
                         {description}
-                      </p>
-                      <div
+                      </a>
+                      {/* <div
                         className="govuk-grid-row"
                         key={processDefinitionKey}
                       >
-                        {/* <div className="govuk-grid-column-one-third">
+                        <div className="govuk-grid-column-one-third">
                           <button
                             id="actionButton"
                             className="govuk-button govuk-button--start"
@@ -104,13 +108,12 @@ export class FormsListPage extends React.Component {
                               />
                             </svg>
                           </button>
-                        </div> */}
-                      </div>
+                        </div>
+                      </div> */}
                     </div>
                   </div>
                 );
-              })
-            }
+              })}
           </div>
         </div>
       </React.Fragment>

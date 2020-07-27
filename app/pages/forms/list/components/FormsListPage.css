@@ -44,3 +44,7 @@ table.narrowtable-process td button {
     width: 100%;
     display:block;
 }
+
+a.govuk-link {
+  text-decoration: underline;
+}
