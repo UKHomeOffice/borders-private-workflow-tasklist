@@ -45,9 +45,9 @@ export class FormsListPage extends React.Component {
         </div>
 
         <div className="govuk-grid-row">
-          <div className="govuk-grid-column-one-third">
+          {/* <div className="govuk-grid-column-one-third">
             <h3 className="govuk-heading-m">Filter list</h3>
-          </div>
+          </div> */}
           <div className="govuk-grid-column-two-thirds">
             <h2 className="govuk-heading-l">Operational forms</h2>
             <p className="govuk-body-l">Here are all the forms available on COP for completing a variety of tasks from reporting events to requesting building passes.</p>
