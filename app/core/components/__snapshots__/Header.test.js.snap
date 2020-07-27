@@ -73,18 +73,6 @@ exports[`Header matches snapshot 1`] = `
           </li>
           <li
             className="govuk-header__navigation-item "
-            key="/cases"
-          >
-            <Link
-              className="govuk-header__link"
-              onClick={[Function]}
-              to="/cases"
-            >
-              Cases
-            </Link>
-          </li>
-          <li
-            className="govuk-header__navigation-item "
             key="/reports"
           >
             <Link
@@ -93,6 +81,18 @@ exports[`Header matches snapshot 1`] = `
               to="/reports"
             >
               Reports
+            </Link>
+          </li>
+          <li
+            className="govuk-header__navigation-item "
+            key="/cases"
+          >
+            <Link
+              className="govuk-header__link"
+              onClick={[Function]}
+              to="/cases"
+            >
+              Cases
             </Link>
           </li>
           <li

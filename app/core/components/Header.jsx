@@ -37,15 +37,15 @@ export class Header extends React.Component {
             active: false,
           },
           {
-            id: 'cases',
-            urlStem: AppConstants.CASES_PATH,
-            text: 'Cases',
-            active: false,
-          },
-          {
             id: 'reports',
             urlStem: AppConstants.REPORTS_PATH,
             text: 'Reports',
+            active: false,
+          },
+          {
+            id: 'cases',
+            urlStem: AppConstants.CASES_PATH,
+            text: 'Cases',
             active: false,
           },
           {
