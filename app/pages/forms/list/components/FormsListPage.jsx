@@ -73,8 +73,7 @@ export class FormsListPage extends React.Component {
                     <li className="app-task-list__item" key={processDefinitionKey}>
                       <span className="app-task-list__task-name">
                         <a
-                          id="actionButton"
-                          className="govuk-link govuk-link--no-visited-state govuk-body"
+                          className="govuk-link govuk-link--no-visited-state"
                           onClick={() => this.process(p)}
                           onKeyPress={this.handleKeyPress}
                           href=""
