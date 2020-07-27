@@ -10,7 +10,6 @@ import {
   isFetchingProcessDefinitions,
   processDefinitions,
 } from '../selectors';
-import './FormsListPage.css';
 import AppConstants from '../../../../common/AppConstants';
 
 export class FormsListPage extends React.Component {
@@ -57,35 +56,36 @@ export class FormsListPage extends React.Component {
                   Loading forms...
             </h4>
               )}
-            {processDefinitions.map(p => {
-                const processDefinitionKey = p.getIn([
-                  'process-definition',
-                  'key',
-                ]);
-                const description = p.getIn([
-                  'process-definition',
-                  'description',
-                ]);
-                return (
-                  <div
-                    id="form"
-                    className="govuk-grid-row"
-                    key={processDefinitionKey}
-                  >
-                    <div className="govuk-grid-column-full govuk-card">
-                      <a
-                        id="actionButton"
-                        className="govuk-link govuk-link--no-visited-state"
-                        onClick={() => this.process(p)}
-                        onKeyPress={this.handleKeyPress}
-                        href=""
-                      >
-                        {description}
-                      </a>
-                    </div>
-                  </div>
-                );
-              })}
+            <ul
+              id="formList"
+              className="app-task-list"
+            >
+              {processDefinitions.map(p => {
+                  const processDefinitionKey = p.getIn([
+                    'process-definition',
+                    'key',
+                  ]);
+                  const description = p.getIn([
+                    'process-definition',
+                    'description',
+                  ]);
+                  return (
+                    <li className="app-task-list__item" key={processDefinitionKey}>
+                      <span className="app-task-list__task-name">
+                        <a
+                          id="actionButton"
+                          className="govuk-link govuk-link--no-visited-state govuk-body"
+                          onClick={() => this.process(p)}
+                          onKeyPress={this.handleKeyPress}
+                          href=""
+                        >
+                          {description}
+                        </a>
+                      </span>
+                    </li>
+                  );
+                })}
+            </ul>
           </div>
         </div>
       </React.Fragment>
