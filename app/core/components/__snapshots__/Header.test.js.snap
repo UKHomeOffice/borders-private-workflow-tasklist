@@ -36,7 +36,7 @@ exports[`Header matches snapshot 1`] = `
           id="navigation"
         >
           <li
-            className="govuk-header__navigation-item "
+            className="govuk-header__navigation-item govuk-header__navigation-item--active"
             key="/dashboard"
           >
             <Link
@@ -97,12 +97,12 @@ exports[`Header matches snapshot 1`] = `
           </li>
           <li
             className="govuk-header__navigation-item "
-            key="submit-a-form/edit-your-profile"
+            key="/submit-a-form/edit-your-profile"
           >
             <Link
               className="govuk-header__link"
               onClick={[Function]}
-              to="submit-a-form/edit-your-profile"
+              to="/submit-a-form/edit-your-profile"
             >
               My profile
             </Link>

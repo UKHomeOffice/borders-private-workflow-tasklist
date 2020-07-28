@@ -65,7 +65,7 @@ describe('FormsListPage', () => {
     expect(mocks.fetchProcessDefinitions).toBeCalled();
   });
 
-  it('renders  a list of forms with form view', async () => {
+  it('renders a list of forms with form view', async () => {
     window.matchMedia = window.matchMedia
     || function matchMedia() {
       return {
