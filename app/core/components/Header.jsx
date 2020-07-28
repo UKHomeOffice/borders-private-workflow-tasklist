@@ -58,11 +58,15 @@ export class Header extends React.Component {
       }
   }
 
-  handleLinkClick(url) {
-    // Set the nav link to it's active style
+  componentDidMount() {
+    this.setActiveNavItem()
+  }
+
+  setActiveNavItem(url) {
     const tempArr = [...this.state.navData];
+    const currentUrl = !url ? this.props.location.pathname : url;
+
     tempArr.map(elem => {
-      const currentUrl = !url ? this.location.pathname : url;
       if (currentUrl === elem.urlStem) {
         elem.active = true;
         document.activeElement.blur(); // Remove the active element styling after click
@@ -71,7 +75,10 @@ export class Header extends React.Component {
       }
     });
     this.setState({ navData: tempArr });
-    // Ensure mobile menu is set to closed (false)
+  }
+
+  handleLinkClick(url) {
+    this.setActiveNavItem(url)
     this.setState({ navMobileOpen: false })
   };
 
@@ -86,6 +93,7 @@ export class Header extends React.Component {
       this.secureLocalStorage.removeAll();
       this.props.kc.logout();
   }
+
 
   render() {
       return (

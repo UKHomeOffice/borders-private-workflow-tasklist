@@ -19,18 +19,19 @@ export class FormsListPage extends React.Component {
     this.viewProcessDiagram = this.viewProcessDiagram.bind(this);
   }
 
-  process = process => {
-    this.props.history.replace(
-      `${AppConstants.SUBMIT_A_FORM}/${process.getIn([
-        'process-definition',
-        'key',
-      ])}`,
-    );
-  };
-
   viewProcessDiagram = process => {
     this.props.history.replace(
       `/procedure-diagram/${  process.getIn(['process-definition', 'key'])}`,
+    );
+  };
+
+  process(event, p) {
+    event.preventDefault();
+    this.props.history.replace(
+      `${AppConstants.SUBMIT_A_FORM}/${p.getIn([
+        'process-definition',
+        'key',
+      ])}`,
     );
   };
 
@@ -43,7 +44,6 @@ export class FormsListPage extends React.Component {
             <h1 className="govuk-heading-xl">Forms</h1>
           </div>
         </div>
-
         <div className="govuk-grid-row">
           {/* <div className="govuk-grid-column-one-third">
             <h3 className="govuk-heading-m">Filter list</h3>
@@ -74,8 +74,7 @@ export class FormsListPage extends React.Component {
                       <span className="app-task-list__task-name">
                         <a
                           className="govuk-link govuk-link--no-visited-state"
-                          onClick={() => this.process(p)}
-                          onKeyPress={this.handleKeyPress}
+                          onClick={(event) => this.process(event, p)}
                           href=""
                         >
                           {description}
