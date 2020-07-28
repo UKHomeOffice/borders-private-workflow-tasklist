@@ -106,6 +106,7 @@ input:disabled {
 
 .app-container {
   @include govuk-width-container(1400px);
+  font-size: 19px; /* Default to 19px to match GDS */
 }
 
 .over-due-date {
