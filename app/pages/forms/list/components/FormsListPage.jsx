@@ -50,7 +50,7 @@ export class FormsListPage extends React.Component {
           </div> */}
           <div className="govuk-grid-column-two-thirds">
             <h2 className="govuk-heading-l">Operational forms</h2>
-            <p className="govuk-body-l">Here are all the forms available on COP for completing a variety of tasks from reporting events to requesting building passes.</p>
+            <p className="govuk-body-l">Here are all the forms available to you on COP. Use these forms to complete tasks such as submitting an Operational Activity Report or Reporting a Border Event.</p>
             {isFetchingProcessDefinitions && (
             <h4 className="govuk-heading-s" id="loading">
                   Loading forms...
