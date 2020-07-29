@@ -11,31 +11,29 @@ import withLog from '../../../core/error/component/withLog';
 
 export class MessagesPanel extends React.Component {
 
-    constructor(props) {
-        super(props);
-        this.messages = this.messages.bind(this);
+  constructor(props) {
+      super(props);
+      this.messages = this.messages.bind(this);
+  }
 
+  componentDidMount() {
+    if (this.props.hasActiveShift) {
+        this.token = PubSub.subscribe('refreshCount', (msg, data) => {
+          const path = this.props.history.location.pathname;
+          const user = this.props.kc.tokenParsed.email;
+          this.props.log([{
+            level: 'info',
+            user,
+            path,
+            message: 'refreshing message count',
+          }]);
+          this.props.fetchMessageCounts();
+        });
+        this.props.fetchMessageCounts();
+    } else {
+        this.props.setDefaultCounts();
     }
-
-    componentDidMount() {
-        if (this.props.hasActiveShift) {
-            this.token = PubSub.subscribe('refreshCount', (msg, data) => {
-              const path = this.props.history.location.pathname;
-              const user = this.props.kc.tokenParsed.email;
-              this.props.log([{
-                level: 'info',
-                user,
-                path,
-                message: 'refreshing message count',
-              }]);
-              this.props.fetchMessageCounts();
-            });
-            this.props.fetchMessageCounts();
-        } else {
-            this.props.setDefaultCounts();
-        }
-
-    }
+  }
 
   componentDidUpdate(prevProps, prevState, snapshot) {
     if (!this.props.isFetchingMessageCounts) {
@@ -53,49 +51,41 @@ export class MessagesPanel extends React.Component {
     }
   }
 
-    componentWillUnmount() {
-        if (this.token) {
-            PubSub.unsubscribe(this.token);
-        }
+  componentWillUnmount() {
+    if (this.token) {
+      PubSub.unsubscribe(this.token);
     }
+  }
 
-    messages(e) {
-        e.preventDefault();
-        this.props.history.replace({
-            pathname: AppConstants.MESSAGES_PATH,
-            shiftPresent: this.props.hasActiveShift
-        });
-    }
+  messages(e) {
+    e.preventDefault();
+    this.props.history.replace({
+      pathname: AppConstants.MESSAGES_PATH,
+      shiftPresent: this.props.hasActiveShift
+    });
+  }
 
-    render() {
-        const {isFetchingMessageCounts, messageCounts} = this.props;
-
-        return  (
-          <li className="__card govuk-grid-column-one-third" id="messagesPanel">
-            <a href={AppConstants.MESSAGES_PATH} onClick={this.messages} className="card__body" id="messagesPageLink">
-              {
-                    isFetchingMessageCounts ?   (
-                      <span
-                        className="govuk-!-font-size-19 govuk-!-font-weight-bold"
-                      >Loading
-                      </span>
-): (
-  <span
-    className="govuk-!-font-size-48 govuk-!-font-weight-bold"
-    id="messageCount"
-  >{messageCounts}
-  </span>
-)
-                }
-              <span className="govuk-!-font-size-19 govuk-!-font-weight-bold">messages</span>
-            </a>
-            <div className="card__footer">
-              <span className="govuk-!-font-size-19">Your messages/notifications</span>
-            </div>
-          </li>
-)
-
-    }
+  render() {
+    const {isFetchingMessageCounts, messageCounts} = this.props;
+    return  (
+      <li className="govuk-grid-column-one-third" id="messagesPanel">
+        <a
+          href={AppConstants.MESSAGES_PATH}
+          className="govuk-heading-m govuk-link home-promo__link"
+          id="messagesPageLink"
+          onClick={e => this.messages(e)}
+        >
+          {
+          isFetchingMessageCounts
+          ? ( <span>Loading</span> )
+          : ( <span id="messageCount">{messageCounts}</span> )
+          }
+          <span> messages</span>
+        </a>
+        <p className="govuk-body-s">Your messages/notifications</p>
+      </li>
+    )
+  }
 }
 
 MessagesPanel.propTypes = {
