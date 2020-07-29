@@ -82,7 +82,7 @@ export class TaskCountPanel extends React.Component {
     const { taskCounts, isFetchingTaskCounts } = this.props;
     return (
       <React.Fragment>
-        <li className="govuk-grid-column-one-third" id="yourTasksPanel">
+        <div className="govuk-grid-column-one-third" id="yourTasksPanel">
           <a
             href={AppConstants.YOUR_TASKS_PATH}
             className="govuk-heading-m govuk-link"
@@ -97,8 +97,8 @@ export class TaskCountPanel extends React.Component {
             <span> tasks assigned to you</span>
           </a>
           <p className="govuk-body-s">Tasks assigned to you</p>
-        </li>
-        <li className="govuk-grid-column-one-third" id="youTeamTasks">
+        </div>
+        <div className="govuk-grid-column-one-third" id="youTeamTasks">
           <a
             href={AppConstants.YOUR_GROUP_TASKS_PATH}
             className="govuk-heading-m govuk-link"
@@ -113,7 +113,7 @@ export class TaskCountPanel extends React.Component {
             <span> tasks assigned to your team</span>
           </a>
           <p className="govuk-body-s">Overall tasks assigned to your team</p>
-        </li>
+        </div>
       </React.Fragment>
     );
   }

@@ -15,7 +15,7 @@ export class FormsDashboardPanel extends React.Component {
 
   render() {
     return (
-      <li className="govuk-grid-column-one-third" id="proceduresPanel">
+      <div className="govuk-grid-column-one-third" id="proceduresPanel">
         <a 
           href={AppConstants.FORMS_PATH}
           className="govuk-heading-m govuk-link"
@@ -25,7 +25,7 @@ export class FormsDashboardPanel extends React.Component {
           Forms
         </a>
         <p className="govuk-body-s">Submit a form</p>
-      </li>
+      </div>
     )
   }
 }

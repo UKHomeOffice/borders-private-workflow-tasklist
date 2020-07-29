@@ -14,7 +14,7 @@ export class CasesDashboardPanel extends React.Component {
 
   render() {
     return (
-      <li className="govuk-grid-column-one-third" id="casesPanel">
+      <div className="govuk-grid-column-one-third" id="casesPanel">
         <a 
           href={AppConstants.CASES_PATH} 
           className="govuk-heading-m govuk-link"
@@ -26,7 +26,7 @@ export class CasesDashboardPanel extends React.Component {
         <p className="govuk-body-s">
             View active or closed cases
         </p>
-      </li>
+      </div>
     )
   }
 }

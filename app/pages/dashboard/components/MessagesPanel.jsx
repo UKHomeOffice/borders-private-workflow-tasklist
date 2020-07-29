@@ -68,7 +68,7 @@ export class MessagesPanel extends React.Component {
   render() {
     const {isFetchingMessageCounts, messageCounts} = this.props;
     return  (
-      <li className="govuk-grid-column-one-third" id="messagesPanel">
+      <div className="govuk-grid-column-one-third" id="messagesPanel">
         <a
           href={AppConstants.MESSAGES_PATH}
           className="govuk-heading-m govuk-link"
@@ -83,7 +83,7 @@ export class MessagesPanel extends React.Component {
           <span> messages</span>
         </a>
         <p className="govuk-body-s">Your messages/notifications</p>
-      </li>
+      </div>
     )
   }
 }
