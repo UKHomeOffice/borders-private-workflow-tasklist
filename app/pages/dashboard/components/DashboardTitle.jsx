@@ -20,7 +20,6 @@ class DashboardTitle extends React.Component {
 
   componentDidUpdate() {
     const { hasActiveShift } = this.props;
-
     if (!hasActiveShift) {
       window.location.reload();
     }
@@ -40,58 +39,85 @@ class DashboardTitle extends React.Component {
 
   render() {
     const { endingShift, hasActiveShift, kc } = this.props;
-    const shiftStatus = () => {
-      if (hasActiveShift) {
-        return (
-          <div className="govuk-grid-column-one-half" style={{ margin: '2% auto', textAlign: 'right' }}>
-            <div className="shift-button-ul">
-              <ul>
+    
+    return (
+      <div className="home-top" id="dashboardTitle">
+        <div className="govuk-width-container">
+          
+          <div className="govuk-grid-row home-top__flex-container">
+            
+            <div className="home-top__title">
+              <h1 className="home-top__text govuk-heading-xl">Welcome to the Central Operations Platform</h1>
+            </div>
+
+            <div className="home-top__info-box">
+              <h2 className="home-top__text govuk-heading-m">My details</h2>
+              <ul className="home-top__text govuk-list">
                 <li>
-                  <button
-                    id="editShift"
-                    className="govuk-button govuk-button--secondaryy"
-                    style={{ margin: '0' }}
-                    type="submit"
-                    onClick={this.viewShift}
-                    disabled={endingShift}
-                  >Edit shift
-                  </button>
-                </li>
-                <li>
-                  <button
-                    id="endShift"
-                    className="govuk-button govuk-button--warning"
-                    data-module="govuk-button"
-                    type="submit"
-                    onClick={this.endShift}
-                    disabled={endingShift}
-                    data-prevent-double-click="true"
-                  >End shift
-                  </button>
+                  <span>Name</span>
+                  <span>{kc.tokenParsed.given_name} {kc.tokenParsed.family_name}</span>
                 </li>
               </ul>
             </div>
-          </div>
-        );
-      }
-      return (
-        <div className="govuk-grid-column-one-half" style={{ margin: '7% auto', textAlign: 'right' }}>
-          <button id="startShift" className="govuk-button" type="submit" onClick={this.viewShift}>Start shift</button>
-        </div>
-      );
-    };
 
-    return (
-      <div className="govuk-grid-row govuk-!-padding-top-3">
-        <div className="govuk-grid-column-one-half">
-          <span className="govuk-caption-l">{kc.tokenParsed.given_name} {kc.tokenParsed.family_name}</span>
-          <h2 className="govuk-heading-l">
-            Operational dashboard
-          </h2>
+          </div>
+
         </div>
-        {shiftStatus()}
       </div>
-    );
+    )
+    
+    // const shiftStatus = () => {
+    //   if (hasActiveShift) {
+    //     return (
+    //       <div className="govuk-grid-column-one-half" style={{ margin: '2% auto', textAlign: 'right' }}>
+    //         <div className="shift-button-ul">
+    //           <ul>
+    //             <li>
+    //               <button
+    //                 id="editShift"
+    //                 className="govuk-button govuk-button--secondaryy"
+    //                 style={{ margin: '0' }}
+    //                 type="submit"
+    //                 onClick={this.viewShift}
+    //                 disabled={endingShift}
+    //               >Edit shift
+    //               </button>
+    //             </li>
+    //             <li>
+    //               <button
+    //                 id="endShift"
+    //                 className="govuk-button govuk-button--warning"
+    //                 data-module="govuk-button"
+    //                 type="submit"
+    //                 onClick={this.endShift}
+    //                 disabled={endingShift}
+    //                 data-prevent-double-click="true"
+    //               >End shift
+    //               </button>
+    //             </li>
+    //           </ul>
+    //         </div>
+    //       </div>
+    //     );
+    //   }
+    //   return (
+    //     <div className="govuk-grid-column-one-half" style={{ margin: '7% auto', textAlign: 'right' }}>
+    //       <button id="startShift" className="govuk-button" type="submit" onClick={this.viewShift}>Start shift</button>
+    //     </div>
+    //   );
+    // };
+
+    // return (
+    //   <div className="govuk-grid-row govuk-!-padding-top-3">
+    //     <div className="govuk-grid-column-one-half">
+          // <span className="govuk-caption-l">{kc.tokenParsed.given_name} {kc.tokenParsed.family_name}</span>
+    //       <h2 className="govuk-heading-l">
+    //         Operational dashboard
+    //       </h2>
+    //     </div>
+    //     {shiftStatus()}
+    //   </div>
+    // );
   }
 }
 

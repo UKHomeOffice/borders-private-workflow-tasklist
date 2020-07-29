@@ -1,2 +1,38 @@
 /* Styles specific to Home Office pages */
 
+.home-top {
+  background: #8F23B3;
+  color: #ffffff;
+}
+
+.home-top__text {
+  color: #FFFFFF;
+}
+
+.home-top__title {
+  padding-top: 25px;
+}
+
+.home-top__info-box {
+  background: #000000;
+  margin-top: 5px;
+  box-sizing: border-box;
+}
+
+@media (min-width: 40.0625em) {
+  .home-top__flex-container {
+    display: flex;
+    justify-content: space-between;
+    padding: 15px;
+  }
+
+  .home-top__title {
+    width: 66.6666%;
+  }
+
+  .home-top__info-box {
+    width: 33.3333%;
+    padding: 15px;
+    margin: -10px 0 0 0;
+  }
+}
