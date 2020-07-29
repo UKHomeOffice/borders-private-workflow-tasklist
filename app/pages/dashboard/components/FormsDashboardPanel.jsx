@@ -18,7 +18,7 @@ export class FormsDashboardPanel extends React.Component {
       <li className="govuk-grid-column-one-third" id="proceduresPanel">
         <a 
           href={AppConstants.FORMS_PATH}
-          className="govuk-heading-m govuk-link home-promo__link"
+          className="govuk-heading-m govuk-link"
           id="proceduresPageLink"
           onClick={e => this.procedures(e)}
         >

@@ -85,7 +85,7 @@ export class TaskCountPanel extends React.Component {
         <li className="govuk-grid-column-one-third" id="yourTasksPanel">
           <a
             href={AppConstants.YOUR_TASKS_PATH}
-            className="govuk-heading-m govuk-link home-promo__link"
+            className="govuk-heading-m govuk-link"
             id="yourTasksPageLink"
             onClick={e => this.yourTasks(e)}
           >
@@ -101,7 +101,7 @@ export class TaskCountPanel extends React.Component {
         <li className="govuk-grid-column-one-third" id="youTeamTasks">
           <a
             href={AppConstants.YOUR_GROUP_TASKS_PATH}
-            className="govuk-heading-m govuk-link home-promo__link"
+            className="govuk-heading-m govuk-link"
             id="yourTeamTasksPageLink"
             onClick={e => this.yourTeamTotalTasks(e)}
           >

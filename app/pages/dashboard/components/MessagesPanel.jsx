@@ -71,7 +71,7 @@ export class MessagesPanel extends React.Component {
       <li className="govuk-grid-column-one-third" id="messagesPanel">
         <a
           href={AppConstants.MESSAGES_PATH}
-          className="govuk-heading-m govuk-link home-promo__link"
+          className="govuk-heading-m govuk-link"
           id="messagesPageLink"
           onClick={e => this.messages(e)}
         >

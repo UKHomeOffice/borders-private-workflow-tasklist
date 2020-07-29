@@ -18,7 +18,7 @@ exports[`Reports Dashboard Panel renders reports dashboard panel 1`] = `
     id="reportsPanel"
   >
     <a
-      className="govuk-heading-m govuk-link home-promo__link"
+      className="govuk-heading-m govuk-link"
       href="/reports"
       id="reportsPageLink"
       onClick={[Function]}

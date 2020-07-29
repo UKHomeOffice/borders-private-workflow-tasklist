@@ -17,7 +17,7 @@ export class ReportsDashboardPanel extends React.Component {
       <li className="govuk-grid-column-one-third" id="reportsPanel">
         <a 
           href={AppConstants.REPORTS_PATH}
-          className="govuk-heading-m govuk-link home-promo__link"
+          className="govuk-heading-m govuk-link"
           id="reportsPageLink"
           onClick={e => this.reports(e)}
         >
