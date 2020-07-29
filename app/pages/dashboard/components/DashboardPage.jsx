@@ -7,7 +7,7 @@ import DashboardTitle from './DashboardTitle';
 import DashboardPanel from './DashboardPanel';
 import * as actions from '../../../core/shift/actions';
 import * as errorActions from '../../../core/error/actions';
-import "./Dashboard.scss";
+import "../../../../public/styles/homeoffice.scss"
 
 export class DashboardPage extends React.Component {
 
