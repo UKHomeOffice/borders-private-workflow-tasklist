@@ -5,7 +5,7 @@ import AppConstants from '../../../common/AppConstants';
 export class CasesDashboardPanel extends React.Component {
 
 
-    calendar(e) {
+    cases(e) {
         e.preventDefault();
         this.props.history.replace({
             pathname: AppConstants.CASES_PATH,
@@ -15,8 +15,8 @@ export class CasesDashboardPanel extends React.Component {
 
     render() {
         return (
-          <li className="__card govuk-grid-column-one-third" id="calendarPanel" style={{marginBottom: '30px'}}>
-            <a href={AppConstants.CALENDAR_PATH} className="card__body" id="calendarPageLink" style={{color: '#005ea5'}} onClick={this.calendar.bind(this)}>
+          <li className="__card govuk-grid-column-one-third" id="casesPanel" style={{marginBottom: '30px'}}>
+            <a href={AppConstants.CASES_PATH} className="card__body" id="casesPageLink" style={{color: '#005ea5'}} onClick={this.cases.bind(this)}>
               <span className="govuk-!-font-size-36 govuk-!-font-weight-bold">Cases</span>
             </a>
             <div className="card__footer">
