@@ -39,12 +39,6 @@ export class TaskCountPanel extends React.Component {
     }
   }
 
-  componentWillUnmount() {
-    if (this.subToken) {
-      PubSub.unsubscribe(this.subToken);
-    }
-  }
-
   componentDidUpdate(prevProps, prevState, snapshot) {
     if (!this.props.isFetchingTaskCounts) {
       const path = this.props.history.location.pathname;
@@ -59,6 +53,12 @@ export class TaskCountPanel extends React.Component {
           taskCounts,
         },
       ]);
+    }
+  }
+
+  componentWillUnmount() {
+    if (this.subToken) {
+      PubSub.unsubscribe(this.subToken);
     }
   }
 
@@ -81,64 +81,40 @@ export class TaskCountPanel extends React.Component {
   render() {
     const { taskCounts, isFetchingTaskCounts } = this.props;
     return (
-      <div>
-        <li className="__card govuk-grid-column-one-third" id="yourTasksPanel">
+      <React.Fragment>
+        <li className="govuk-grid-column-one-third" id="yourTasksPanel">
           <a
             href={AppConstants.YOUR_TASKS_PATH}
-            onClick={this.yourTasks}
-            className="card__body"
+            className="govuk-heading-m govuk-link home-promo__link"
             id="yourTasksPageLink"
+            onClick={e => this.yourTasks(e)}
           >
-            {isFetchingTaskCounts ? (
-              <span className="govuk-!-font-size-19 govuk-!-font-weight-bold">
-                Loading
-              </span>
-            ) : (
-              <span
-                className="govuk-!-font-size-48 govuk-!-font-weight-bold"
-                id="yourTaskCount"
-              >
-                {taskCounts.get('tasksAssignedToUser')}
-              </span>
-            )}
-            <span className="govuk-!-font-size-19 govuk-!-font-weight-bold">
-              tasks assigned to you
-            </span>
+            {
+            isFetchingTaskCounts 
+            ? ( <span>Loading</span> ) 
+            : ( <span id="yourTaskCount">{taskCounts.get('tasksAssignedToUser')}</span>)
+            }
+            <span> tasks assigned to you</span>
           </a>
-          <div className="card__footer">
-            <span className="govuk-!-font-size-19">Tasks assigned to you</span>
-          </div>
+          <p className="govuk-body-s">Tasks assigned to you</p>
         </li>
-        <li className="__card govuk-grid-column-one-third" id="youTeamTasks">
+        <li className="govuk-grid-column-one-third" id="youTeamTasks">
           <a
             href={AppConstants.YOUR_GROUP_TASKS_PATH}
-            onClick={this.yourTeamTotalTasks}
-            className="card__body"
+            className="govuk-heading-m govuk-link home-promo__link"
             id="yourTeamTasksPageLink"
+            onClick={e => this.yourTeamTotalTasks(e)}
           >
-            {isFetchingTaskCounts ? (
-              <span className="govuk-!-font-size-19 govuk-!-font-weight-bold">
-                Loading
-              </span>
-            ) : (
-              <span
-                className="govuk-!-font-size-48 govuk-!-font-weight-bold"
-                id="yourGroupTaskCount"
-              >
-                {taskCounts.get('totalTasksAllocatedToTeam')}
-              </span>
-            )}
-            <span className="govuk-!-font-size-19 govuk-!-font-weight-bold">
-              tasks assigned to your team
-            </span>
+            {
+            isFetchingTaskCounts 
+            ? ( <span>Loading</span>) 
+            : ( <span id="yourGroupTaskCount">{taskCounts.get('totalTasksAllocatedToTeam')}</span>)
+            }
+            <span> tasks assigned to your team</span>
           </a>
-          <div className="card__footer">
-            <span className="govuk-!-font-size-19">
-              Overall tasks assigned to your team
-            </span>
-          </div>
+          <p className="govuk-body-s">Overall tasks assigned to your team</p>
         </li>
-      </div>
+      </React.Fragment>
     );
   }
 }
