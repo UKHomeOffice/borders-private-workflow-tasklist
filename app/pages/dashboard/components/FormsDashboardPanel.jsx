@@ -4,28 +4,30 @@ import AppConstants from '../../../common/AppConstants';
 
 export class FormsDashboardPanel extends React.Component {
 
+  procedures(e) {
+    e.preventDefault();
+    this.props.history.replace({
+        pathname: AppConstants.FORMS_PATH, state: {
+            shiftPresent: this.props.hasActiveShift
+        }
+    });
+  }
 
-    procedures(e) {
-        e.preventDefault();
-        this.props.history.replace({
-            pathname: AppConstants.FORMS_PATH, state: {
-                shiftPresent: this.props.hasActiveShift
-            }
-        });
-    }
-
-    render() {
-        return (
-          <li className="__card govuk-grid-column-one-third" id="proceduresPanel" style={{marginBottom: '30px'}}>
-            <a href={AppConstants.FORMS_PATH} onClick={this.procedures.bind(this)} className="card__body" id="proceduresPageLink">
-              <span className="govuk-!-font-size-36 govuk-!-font-weight-bold">Forms</span>
-            </a>
-            <div className="card__footer">
-              <span className="govuk-!-font-size-19">Submit a form</span>
-            </div>
-          </li>
-)
-    }
+  render() {
+    return (
+      <li className="govuk-grid-column-one-third" id="proceduresPanel">
+        <a 
+          href={AppConstants.FORMS_PATH}
+          className="govuk-heading-m govuk-link home-promo__link"
+          id="proceduresPageLink"
+          onClick={e => this.procedures(e)}
+        >
+          Forms
+        </a>
+        <p className="govuk-body-s">Submit a form</p>
+      </li>
+    )
+  }
 }
 
 export default withRouter(FormsDashboardPanel)
