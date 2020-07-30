@@ -36,76 +36,106 @@ exports[`Header matches snapshot 1`] = `
           id="navigation"
         >
           <li
-            className="govuk-header__navigation-item govuk-header__navigation-item--active"
+            className="govuk-header__navigation-item "
             key="/dashboard"
           >
-            <Link
+            <NavLink
+              activeStyle={
+                Object {
+                  "color": "#1d8feb",
+                }
+              }
               className="govuk-header__link"
               onClick={[Function]}
               to="/dashboard"
             >
               Home
-            </Link>
+            </NavLink>
           </li>
           <li
             className="govuk-header__navigation-item "
             key="/your-tasks"
           >
-            <Link
+            <NavLink
+              activeStyle={
+                Object {
+                  "color": "#1d8feb",
+                }
+              }
               className="govuk-header__link"
               onClick={[Function]}
               to="/your-tasks"
             >
               Tasks
-            </Link>
+            </NavLink>
           </li>
           <li
             className="govuk-header__navigation-item "
             key="/forms"
           >
-            <Link
+            <NavLink
+              activeStyle={
+                Object {
+                  "color": "#1d8feb",
+                }
+              }
               className="govuk-header__link"
               onClick={[Function]}
               to="/forms"
             >
               Forms
-            </Link>
+            </NavLink>
           </li>
           <li
             className="govuk-header__navigation-item "
             key="/reports"
           >
-            <Link
+            <NavLink
+              activeStyle={
+                Object {
+                  "color": "#1d8feb",
+                }
+              }
               className="govuk-header__link"
               onClick={[Function]}
               to="/reports"
             >
               Reports
-            </Link>
+            </NavLink>
           </li>
           <li
             className="govuk-header__navigation-item "
             key="/cases"
           >
-            <Link
+            <NavLink
+              activeStyle={
+                Object {
+                  "color": "#1d8feb",
+                }
+              }
               className="govuk-header__link"
               onClick={[Function]}
               to="/cases"
             >
               Cases
-            </Link>
+            </NavLink>
           </li>
           <li
             className="govuk-header__navigation-item "
             key="/submit-a-form/edit-your-profile"
           >
-            <Link
+            <NavLink
+              activeStyle={
+                Object {
+                  "color": "#1d8feb",
+                }
+              }
               className="govuk-header__link"
               onClick={[Function]}
               to="/submit-a-form/edit-your-profile"
             >
               My profile
-            </Link>
+            </NavLink>
           </li>
           <li
             className="govuk-header__navigation-item"
