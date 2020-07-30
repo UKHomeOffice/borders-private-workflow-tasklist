@@ -13,7 +13,7 @@ exports[`Reports Dashboard Panel renders reports dashboard panel 1`] = `
     }
   }
 >
-  <li
+  <div
     className="govuk-grid-column-one-third"
     id="reportsPanel"
   >
@@ -30,6 +30,6 @@ exports[`Reports Dashboard Panel renders reports dashboard panel 1`] = `
     >
       Operational reports
     </p>
-  </li>
+  </div>
 </ReportsDashboardPanel>
 `;

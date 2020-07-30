@@ -1,0 +1,97 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`DashboardTitle renders the title section correctly 1`] = `
+<DashboardTitle
+  hasActiveShift={true}
+  isFetchingShift={false}
+  kc={
+    Object {
+      "tokenParsed": Object {
+        "family_name": "Familyname",
+        "given_name": "Givenname",
+      },
+    }
+  }
+  shift={
+    Immutable.Map {
+      "shiftid": "shiftid",
+    }
+  }
+  store={
+    Object {
+      "clearActions": [Function],
+      "dispatch": [Function],
+      "getActions": [Function],
+      "getState": [Function],
+      "replaceReducer": [Function],
+      "subscribe": [Function],
+    }
+  }
+>
+  <div
+    className="dashboard"
+    id="dashboardTitle"
+  >
+    <div
+      className="govuk-width-container"
+    >
+      <div
+        className="govuk-grid-row dashboard__flex-container"
+      >
+        <div
+          className="dashboard__title"
+        >
+          <h1
+            className="dashboard__text govuk-heading-xl"
+          >
+            Welcome to the Central Operations Platform
+          </h1>
+        </div>
+        <div
+          className="dashboard__info-box"
+        >
+          <h2
+            className="dashboard__text govuk-heading-m"
+          >
+            My details
+          </h2>
+          <ul
+            className="dashboard__text govuk-list"
+          >
+            <li>
+              <span
+                className="dashboard_text-heading"
+              >
+                Name
+              </span>
+              <span>
+                Givenname
+                 
+                Familyname
+              </span>
+            </li>
+          </ul>
+          <button
+            className="govuk-button govuk-button--secondaryy dashboard__shift-button"
+            id="editShift"
+            onClick={[Function]}
+            type="submit"
+          >
+            Edit shift
+          </button>
+          <button
+            className="govuk-button govuk-button--warning dashboard__shift-button"
+            data-module="govuk-button"
+            data-prevent-double-click="true"
+            id="endShift"
+            onClick={[Function]}
+            type="submit"
+          >
+            End shift
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</DashboardTitle>
+`;

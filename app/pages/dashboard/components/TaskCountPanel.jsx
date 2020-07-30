@@ -98,7 +98,7 @@ export class TaskCountPanel extends React.Component {
           </a>
           <p className="govuk-body-s">Tasks assigned to you</p>
         </div>
-        <div className="govuk-grid-column-one-third" id="youTeamTasks">
+        <div className="govuk-grid-column-one-third" id="yourTeamTasks">
           <a
             href={AppConstants.YOUR_GROUP_TASKS_PATH}
             className="govuk-heading-m govuk-link"
@@ -108,7 +108,7 @@ export class TaskCountPanel extends React.Component {
             {
             isFetchingTaskCounts 
             ? ( <span>Loading</span>) 
-            : ( <span id="yourGroupTaskCount">{taskCounts.get('totalTasksAllocatedToTeam')}</span>)
+            : ( <span id="yourTeamTaskCount">{taskCounts.get('totalTasksAllocatedToTeam')}</span>)
             }
             <span> tasks assigned to your team</span>
           </a>

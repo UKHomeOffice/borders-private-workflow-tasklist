@@ -10,7 +10,7 @@ import AppConstants from '../../../common/AppConstants';
 import secureLocalStorage from '../../../common/security/SecureLocalStorage';
 import { endingShift, hasActiveShift } from '../../../core/shift/selectors';
 
-class DashboardTitle extends React.Component {
+export class DashboardTitle extends React.Component {
   constructor(props) {
     super(props);
     this.endShift = this.endShift.bind(this);

@@ -13,7 +13,7 @@ exports[`Procedures Dashboard Panel renders forms dashboard panel 1`] = `
     }
   }
 >
-  <li
+  <div
     className="govuk-grid-column-one-third"
     id="proceduresPanel"
   >
@@ -30,6 +30,6 @@ exports[`Procedures Dashboard Panel renders forms dashboard panel 1`] = `
     >
       Submit a form
     </p>
-  </li>
+  </div>
 </FormsDashboardPanel>
 `;
