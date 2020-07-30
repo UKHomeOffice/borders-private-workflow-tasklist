@@ -16,6 +16,11 @@ a {
 a.govuk-link {
   text-decoration: underline;
 } 
+a.govuk-header__link:focus {
+  background-color: transparent; /* remove focus color from nav links, otherwise it will persist */
+  box-shadow: none;
+  color: #ffffff;
+}
 
 html {
   background-color: govuk-colour("light-grey");

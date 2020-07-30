@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
-import { withRouter, Link } from 'react-router-dom';
+import { withRouter, Link, NavLink } from 'react-router-dom';
 
 // local imports
 import AppConstants from "../../common/AppConstants";
@@ -28,57 +28,57 @@ export class Header extends React.Component {
             id: 'tasks',
             urlStem: AppConstants.YOUR_TASKS_PATH,
             text: 'Tasks',
-            active: false,
+            // active: false,
           },
           {
             id: 'forms',
             urlStem: AppConstants.FORMS_PATH,
             text: 'Forms',
-            active: false,
+            // active: false,
           },
           {
             id: 'reports',
             urlStem: AppConstants.REPORTS_PATH,
             text: 'Reports',
-            active: false,
+            // active: false,
           },
           {
             id: 'cases',
             urlStem: AppConstants.CASES_PATH,
             text: 'Cases',
-            active: false,
+            // active: false,
           },
           {
             id: 'profile',
             urlStem: AppConstants.MY_PROFILE_PATH,
             text: 'My profile',
-            active: false,
+            // active: false,
           },
         ]
       }
   }
 
-  componentDidMount() {
-    this.setActiveNavItem()
-  }
+  // componentDidMount() {
+  //   this.setActiveNavItem()
+  // }
 
-  setActiveNavItem(url) {
-    const tempArr = [...this.state.navData];
-    const currentUrl = !url ? this.props.location.pathname : url;
+  // setActiveNavItem(url) {
+  //   const tempArr = [...this.state.navData];
+  //   const currentUrl = !url ? this.props.location.pathname : url;
 
-    tempArr.map(elem => {
-      if (currentUrl === elem.urlStem) {
-        elem.active = true;
-        document.activeElement.blur(); // Remove the active element styling after click
-      } else {
-        elem.active = false;
-      }
-    });
-    this.setState({ navData: tempArr });
-  }
+  //   tempArr.map(elem => {
+  //     if (currentUrl === elem.urlStem) {
+  //       elem.active = true;
+  //       document.activeElement.blur(); // Remove the active element styling after click
+  //     } else {
+  //       elem.active = false;
+  //     }
+  //   });
+  //   this.setState({ navData: tempArr });
+  // }
 
-  handleLinkClick(url) {
-    this.setActiveNavItem(url)
+  handleLinkClick() {
+    // this.setActiveNavItem(url)
     this.setState({ navMobileOpen: false })
   };
 
@@ -135,13 +135,16 @@ export class Header extends React.Component {
                     const activeState = elem.active === true ? 'govuk-header__navigation-item--active' : '';
                     return (
                       <li className={`govuk-header__navigation-item ${activeState}`} key={elem.urlStem}>
-                        <Link 
+                        <NavLink 
                           to={elem.urlStem} 
                           className="govuk-header__link" 
                           onClick={() => this.handleLinkClick(elem.urlStem)}
+                          // GDS sets active style on the <li> element, but NavLink only works on the <a> 
+                          // So setting active color here to ensure it's applied on click
+                          activeStyle={{ color: "#1d8feb" }}
                         >
                           {elem.text}
-                        </Link>
+                        </NavLink>
                       </li>
                     );
                   })}
