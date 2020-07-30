@@ -1,0 +1,52 @@
+/* Styles specific to Home Office pages */
+
+.dashboard {
+  background: #8F23B3;
+  width: 100vw;
+  position: relative;
+  left: 50%;
+  right: 50%;
+  margin-left: -50vw;
+  margin-right: -50vw;
+  margin-top: -15px;
+}
+
+.dashboard__flex-container {
+  padding: 0 15px;
+}
+
+.dashboard__text {
+  color: #FFFFFF;
+}
+
+.dashboard_text-heading {
+  color: #b1b4b6;
+  display: block;
+}
+
+.dashboard__title {
+  padding-top: 25px;
+}
+
+
+.dashboard__info-box {
+  background: #000000;
+  margin: 5px -15px 0 -15px;
+  padding: 15px;
+  box-sizing: border-box;
+}
+
+@media (min-width: 40.0625em) {
+  .dashboard__flex-container {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .dashboard__title {
+    width: 66.6666%;
+  }
+
+  .dashboard__info-box {
+    width: 33.3333%;
+  }
+}
