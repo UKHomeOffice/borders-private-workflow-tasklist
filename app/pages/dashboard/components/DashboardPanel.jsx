@@ -94,7 +94,7 @@ export class DashboardPanel extends React.Component {
 
   render() {
     return (
-      <section id="dashboardPanel">
+      <div id="dashboardPanel">
         <div className="govuk-grid-row govuk-!-margin-top-4">
           <TaskCountPanel {...this.props} />
           <MessagesPanel {...this.props} />
@@ -113,7 +113,7 @@ export class DashboardPanel extends React.Component {
             <CasesDashboardPanel {...this.props} />
           </div>
         </Suspense>
-      </section>
+      </div>
     )
   }
 }

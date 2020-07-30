@@ -41,27 +41,22 @@ class DashboardTitle extends React.Component {
     const { endingShift, hasActiveShift, kc } = this.props;
     
     return (
-      <div className="home-top" id="dashboardTitle">
+      <div className="dashboard" id="dashboardTitle">
         <div className="govuk-width-container">
-          
-          <div className="govuk-grid-row home-top__flex-container">
-            
-            <div className="home-top__title">
-              <h1 className="home-top__text govuk-heading-xl">Welcome to the Central Operations Platform</h1>
+          <div className="govuk-grid-row dashboard__flex-container">
+            <div className="dashboard__title">
+              <h1 className="dashboard__text govuk-heading-xl">Welcome to the Central Operations Platform</h1>
             </div>
-
-            <div className="home-top__info-box">
-              <h2 className="home-top__text govuk-heading-m">My details</h2>
-              <ul className="home-top__text govuk-list">
+            <div className="dashboard__info-box">
+              <h2 className="dashboard__text govuk-heading-m">My details</h2>
+              <ul className="dashboard__text govuk-list">
                 <li>
-                  <span>Name</span>
+                  <span className="dashboard_text-heading">Name</span>
                   <span>{kc.tokenParsed.given_name} {kc.tokenParsed.family_name}</span>
                 </li>
               </ul>
             </div>
-
           </div>
-
         </div>
       </div>
     )
