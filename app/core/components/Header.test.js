@@ -29,10 +29,4 @@ describe('Header', () => {
     expect(wrapper).toMatchSnapshot();
   });
 
-  it('has one menu item in an active state', () => {
-    const wrapper = shallow(<Header {...props} />);
-    const navItem = wrapper.find('.govuk-header__navigation-item--active');
-    expect((navItem.children()).length).toBe(1);
-  });
-
 });
