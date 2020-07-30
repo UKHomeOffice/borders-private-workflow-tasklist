@@ -47,6 +47,8 @@ class DashboardTitle extends React.Component {
             <div className="dashboard__title">
               <h1 className="dashboard__text govuk-heading-xl">Welcome to the Central Operations Platform</h1>
             </div>
+
+            {hasActiveShift && (
             <div className="dashboard__info-box">
               <h2 className="dashboard__text govuk-heading-m">My details</h2>
               <ul className="dashboard__text govuk-list">
@@ -55,64 +57,33 @@ class DashboardTitle extends React.Component {
                   <span>{kc.tokenParsed.given_name} {kc.tokenParsed.family_name}</span>
                 </li>
               </ul>
+              <button
+                id="editShift"
+                className="govuk-button govuk-button--secondaryy dashboard__shift-button"
+                type="submit"
+                onClick={this.viewShift}
+                disabled={endingShift}
+              >Edit shift
+              </button>
+              <button
+                id="endShift"
+                className="govuk-button govuk-button--warning dashboard__shift-button"
+                data-module="govuk-button"
+                type="submit"
+                onClick={this.endShift}
+                disabled={endingShift}
+                data-prevent-double-click="true"
+              >End shift
+              </button>
             </div>
+          )}
+            {!hasActiveShift && (
+            <button id="startShift" className="govuk-button" type="submit" onClick={this.viewShift}>Start shift</button>
+          )}
           </div>
         </div>
       </div>
     )
-    
-    // const shiftStatus = () => {
-    //   if (hasActiveShift) {
-    //     return (
-    //       <div className="govuk-grid-column-one-half" style={{ margin: '2% auto', textAlign: 'right' }}>
-    //         <div className="shift-button-ul">
-    //           <ul>
-    //             <li>
-    //               <button
-    //                 id="editShift"
-    //                 className="govuk-button govuk-button--secondaryy"
-    //                 style={{ margin: '0' }}
-    //                 type="submit"
-    //                 onClick={this.viewShift}
-    //                 disabled={endingShift}
-    //               >Edit shift
-    //               </button>
-    //             </li>
-    //             <li>
-    //               <button
-    //                 id="endShift"
-    //                 className="govuk-button govuk-button--warning"
-    //                 data-module="govuk-button"
-    //                 type="submit"
-    //                 onClick={this.endShift}
-    //                 disabled={endingShift}
-    //                 data-prevent-double-click="true"
-    //               >End shift
-    //               </button>
-    //             </li>
-    //           </ul>
-    //         </div>
-    //       </div>
-    //     );
-    //   }
-    //   return (
-    //     <div className="govuk-grid-column-one-half" style={{ margin: '7% auto', textAlign: 'right' }}>
-    //       <button id="startShift" className="govuk-button" type="submit" onClick={this.viewShift}>Start shift</button>
-    //     </div>
-    //   );
-    // };
-
-    // return (
-    //   <div className="govuk-grid-row govuk-!-padding-top-3">
-    //     <div className="govuk-grid-column-one-half">
-          // <span className="govuk-caption-l">{kc.tokenParsed.given_name} {kc.tokenParsed.family_name}</span>
-    //       <h2 className="govuk-heading-l">
-    //         Operational dashboard
-    //       </h2>
-    //     </div>
-    //     {shiftStatus()}
-    //   </div>
-    // );
   }
 }
 

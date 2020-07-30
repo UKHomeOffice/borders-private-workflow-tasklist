@@ -28,12 +28,19 @@
   padding-top: 25px;
 }
 
-
 .dashboard__info-box {
   background: #000000;
   margin: 5px -15px 0 -15px;
   padding: 15px;
   box-sizing: border-box;
+}
+
+.dashboard__shift-button:nth-of-type(1) {
+  margin-bottom: 15px;
+}
+
+#dashboardPanel .govuk-grid-column-one-third {
+  border-bottom: 1px solid #b1b4b6;
 }
 
 @media (min-width: 40.0625em) {
@@ -48,5 +55,14 @@
 
   .dashboard__info-box {
     width: 33.3333%;
+  }
+
+  .dashboard__shift-button:nth-of-type(1) {
+    margin-bottom: 0;
+    margin-right: 15px;
+  }
+
+  .dashboard__panel-item {
+    border-bottom: none;
   }
 }
