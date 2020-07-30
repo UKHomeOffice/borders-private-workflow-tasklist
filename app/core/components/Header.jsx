@@ -22,63 +22,37 @@ export class Header extends React.Component {
             id: 'home',
             urlStem: AppConstants.DASHBOARD_PATH,
             text: 'Home',
-            active: false,
           },
           {
             id: 'tasks',
             urlStem: AppConstants.YOUR_TASKS_PATH,
             text: 'Tasks',
-            // active: false,
           },
           {
             id: 'forms',
             urlStem: AppConstants.FORMS_PATH,
             text: 'Forms',
-            // active: false,
           },
           {
             id: 'reports',
             urlStem: AppConstants.REPORTS_PATH,
             text: 'Reports',
-            // active: false,
           },
           {
             id: 'cases',
             urlStem: AppConstants.CASES_PATH,
             text: 'Cases',
-            // active: false,
           },
           {
             id: 'profile',
             urlStem: AppConstants.MY_PROFILE_PATH,
             text: 'My profile',
-            // active: false,
           },
         ]
       }
   }
 
-  // componentDidMount() {
-  //   this.setActiveNavItem()
-  // }
-
-  // setActiveNavItem(url) {
-  //   const tempArr = [...this.state.navData];
-  //   const currentUrl = !url ? this.props.location.pathname : url;
-
-  //   tempArr.map(elem => {
-  //     if (currentUrl === elem.urlStem) {
-  //       elem.active = true;
-  //       document.activeElement.blur(); // Remove the active element styling after click
-  //     } else {
-  //       elem.active = false;
-  //     }
-  //   });
-  //   this.setState({ navData: tempArr });
-  // }
-
   handleLinkClick() {
-    // this.setActiveNavItem(url)
     this.setState({ navMobileOpen: false })
   };
 
