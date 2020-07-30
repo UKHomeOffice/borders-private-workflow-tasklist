@@ -83,7 +83,7 @@ export class DashboardTitle extends React.Component {
           </div>
         </div>
       </div>
-    )
+    );
   }
 }
 
