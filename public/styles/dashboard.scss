@@ -1,7 +1,5 @@
-/* Styles specific to Home Office pages */
-
 .dashboard {
-  background: #8F23B3;
+  background-color: #9325b2; /* GDS _colours-organisations home-office */
   width: 100vw;
   position: relative;
   left: 50%;
@@ -16,11 +14,11 @@
 }
 
 .dashboard__text {
-  color: #FFFFFF;
+  color: govuk-colour("white") !important;
 }
 
 .dashboard_text-heading {
-  color: #b1b4b6;
+  color: govuk-colour("mid-grey");
   display: block;
 }
 
@@ -29,7 +27,7 @@
 }
 
 .dashboard__info-box {
-  background: #000000;
+  background: govuk-colour("black");
   margin: 5px -15px 0 -15px;
   padding: 15px;
   box-sizing: border-box;
@@ -40,7 +38,7 @@
 }
 
 #dashboardPanel .govuk-grid-column-one-third, #dashboardPanel .govuk-grid-row {
-  border-bottom: 1px solid #b1b4b6;
+  border-bottom: 1px solid $govuk-border-colour;
 }
 #dashboardPanel .govuk-grid-column-one-third:last-child, #dashboardPanel .govuk-grid-row:last-child {
   border-bottom: none;

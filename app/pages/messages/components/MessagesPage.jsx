@@ -16,7 +16,6 @@ import {
   pageSize,
   total,
 } from '../selectors';
-import './MessagesPage.scss';
 
 export class MessagesPage extends React.Component {
   componentDidMount() {
