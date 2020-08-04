@@ -166,4 +166,3 @@ export default withRouter(connect(state => ({
 kc: state.keycloak,
 appConfig: state.appConfig,
 }), mapDispatchToProps)(Header));
-
