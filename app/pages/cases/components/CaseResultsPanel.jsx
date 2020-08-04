@@ -5,10 +5,8 @@ import {bindActionCreators} from "redux";
 import PropTypes from "prop-types";
 import _ from "lodash";
 import {getCaseByKey} from '../actions';
-import {caseDetails, loadingCaseDetails, loadingNextSearchResults} from "../selectors";
+import {loadingNextSearchResults} from "../selectors";
 import withLog from "../../../core/error/component/withLog";
-import CaseDetailsPanel from "./CaseDetailsPanel";
-import DataSpinner from "../../../core/components/DataSpinner";
 
 class CaseResultsPanel extends React.Component {
 
@@ -21,7 +19,7 @@ class CaseResultsPanel extends React.Component {
   render() {
     const {
       searching, caseSearchResults,
-      businessKeyQuery, loadingCaseDetails, caseDetails,
+      businessKeyQuery,
       loadingNextSearchResults
     } = this.props;
 
@@ -84,16 +82,6 @@ class CaseResultsPanel extends React.Component {
             )} 
           </React.Fragment>
         )}
-        <div className="govuk-grid-column-three-quarters">
-          {loadingCaseDetails && (
-            <div style={{justifyContent: 'center', paddingTop: '20px'}}>
-              <DataSpinner
-                message="Loading case details"
-              />
-            </div>
-          )}
-          {/* {caseDetails && <CaseDetailsPanel {...{caseDetails}} />} */}
-        </div>
       </React.Fragment>
       )
     }
@@ -103,12 +91,7 @@ CaseResultsPanel.propTypes = {
     getCaseByKey: PropTypes.func.isRequired,
     loadNext: PropTypes.func,
     loadingNextSearchResults: PropTypes.bool,
-    loadingCaseDetails: PropTypes.bool,
     businessKey: PropTypes.string,
-    caseDetails: PropTypes.shape({
-        businessKey: PropTypes.string,
-        processInstances: PropTypes.arrayOf(PropTypes.object)
-    })
 };
 
 const mapDispatchToProps = dispatch => bindActionCreators({getCaseByKey}, dispatch);
@@ -117,8 +100,6 @@ export default withRouter(connect(state => {
     return {
         kc: state.keycloak,
         appConfig: state.appConfig,
-        caseDetails: caseDetails(state),
-        loadingCaseDetails: loadingCaseDetails(state),
         loadingNextSearchResults: loadingNextSearchResults(state)
 
     }
