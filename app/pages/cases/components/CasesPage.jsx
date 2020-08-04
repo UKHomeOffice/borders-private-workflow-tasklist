@@ -20,6 +20,14 @@ import CaseDetailsPanel from "./CaseDetailsPanel";
 import DataSpinner from "../../../core/components/DataSpinner";
 
 class CasesPage extends React.Component {
+  constructor(props) {
+    super(props);
+    this.searchForCases = this.searchForCases.bind(this);
+    this.state = {
+      queryToSearch: ""
+    }
+  }
+
   componentDidMount() {
     const {
       match: { params },
@@ -33,6 +41,24 @@ class CasesPage extends React.Component {
   componentWillUnmount() {
     this.props.resetCase();
   }
+
+  setSearchQuery(event) {
+    const query = event.target.value;
+    this.setState({ queryToSearch: query });
+    this.searchForCases(event)
+  }
+  
+  searchForCases(event) {
+    event.preventDefault();
+    const that = this;
+    window.history.pushState({}, null, '/cases');
+    if (this.state.queryToSearch === '') {
+      that.props.resetCase();
+    } else {
+      that.props.findCasesByKey(this.state.queryToSearch);
+    }  
+  }
+
 
   render() {
     const {
@@ -69,28 +95,13 @@ class CasesPage extends React.Component {
                   type="text"
                   className="govuk-input"
                   id="bfNumber"
-                  onChange={event => {
-                    const that = this;
-                    const query = event.target.value;
-                    window.history.pushState({}, null, '/cases');
-                    if (query === '') {
-                      that.props.resetCase();
-                    } else {
-                      that.props.findCasesByKey(query);
-                    }
-                  }}
+                  onChange={event => this.setSearchQuery(event)}
                 />
               </div>
               <button 
                 className="govuk-button" 
                 type="submit"
-                onClick={event => {
-                  event.preventDefault();
-                  const that = this;
-                  const query = event.target.value;
-                  window.history.pushState({}, null, '/cases');
-                  that.props.findCasesByKey(query);
-                }}
+                onClick={event => this.searchForCases(event)}
               >
                 Search
               </button>
