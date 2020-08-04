@@ -44,7 +44,7 @@ export const RouteWithTitle =({ title, ...props }) => {
 };
 
 const Main = () => (
-  <main className="govuk-main-wrapper govuk-!-padding-top-3" id="main-content" role="main">
+  <main className="govuk-main-wrapper" id="main-content" role="main">
     <Suspense fallback={<div style={{ justifyContent: 'center'}}><DataSpinner message="Loading routes" /></div>}>
       <Switch>
         <RouteWithTitle name="Accessibility Statement" title={`Accessibility Statement | ${AppConstants.APP_NAME}`} exact path="/accessibility-statement" component={AccessibilityStatement} />
