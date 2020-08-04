@@ -125,6 +125,13 @@ class CasesPage extends React.Component {
             />
           </div> 
           <div className="govuk-grid-column-three-quarters">
+            {(!loadingCaseDetails && !caseDetails) && (
+              <div>
+                <p class="govuk-body-l">To view the details of a specific case within COP please enter the COP reference number to the left.</p>
+                <p class="govuk-body">For a more detailed search query please use the reporting section within COP or an alternative product such as the Single Intelligence Platform (SIP) or the Criminal Intelligence Database (CID).</p>
+                <p class="govuk-body">Please note that all queries are audited.</p>
+              </div>
+            )}
             {loadingCaseDetails && (
               <div style={{justifyContent: 'center', paddingTop: '20px'}}>
                 <DataSpinner
