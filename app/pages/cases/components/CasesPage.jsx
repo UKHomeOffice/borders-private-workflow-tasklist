@@ -41,57 +41,73 @@ class CasesPage extends React.Component {
     return (
       <React.Fragment>
         <div className="govuk-grid-row">
-          <div className="govuk-grid-column-two-thirds">
-            <span className="govuk-caption-l">Case view</span>
-            <h2 className="govuk-heading-l">
-              Cases
-            </h2>
-            <div className="govuk-inset-text">
-              <p>Enter a COP number in quotes to search for cases—e.g. "COP-20200406-24".</p>
-              <p><strong>Please note all actions are audited.</strong></p>
-            </div>
+          <div className="govuk-grid-column-full">
+            <h1 className="govuk-heading-xl">Find a case</h1>
           </div>
-          <div className="govuk-grid-column-one-third">
-            <div className="govuk-form-group input-icon">
-              <DebounceInput
-                minLength={3}
-                debounceTimeout={1000}
-                spellCheck="false"
-                type="text"
-                className="govuk-input"
-                placeholder="Search using a COP prefixed number"
-                id="bfNumber"
-                onChange={event => {
+        </div>
+        <div className="govuk-grid-row">
+          <div className="govuk-grid-column-one-quarter">
+            <h3 className="govuk-heading-m">Case number search</h3>
+            <form>
+              <div className="govuk-form-group">
+                <label className="govuk-label" htmlFor="bfNumber">
+                  COP prefixed number
+                </label>
+                <span id="bfNumberHint" className="govuk-hint">
+                  Enter a COP number in quotes to search for cases e.g. "COP-20200406-24"
+                </span>
+                <DebounceInput
+                  minLength={3}
+                  debounceTimeout={1000}
+                  spellCheck="false"
+                  type="text"
+                  className="govuk-input"
+                  id="bfNumber"
+                  onChange={event => {
+                    const that = this;
+                    const query = event.target.value;
+                    window.history.pushState({}, null, '/cases');
+                    if (query === '') {
+                      that.props.resetCase();
+                    } else {
+                      that.props.findCasesByKey(query);
+                    }
+                  }}
+                />
+              </div>
+              <button 
+                className="govuk-button" 
+                type="submit"
+                onClick={event => {
+                  event.preventDefault();
                   const that = this;
                   const query = event.target.value;
                   window.history.pushState({}, null, '/cases');
-                  if (query === '') {
-                    that.props.resetCase();
-                  } else {
-                    that.props.findCasesByKey(query);
-                  }
+                  that.props.findCasesByKey(query);
                 }}
-              />
-              <i className="fa fa-search fa-lg" style={{ marginLeft: '5px' }} />
-            </div>
-          </div>
+              >
+                Search
+              </button>
+            </form>
+            <hr className="govuk-section-break govuk-section-break--m govuk-section-break--visible" />
+            <CaseResultsPanel
+              {...{
+                businessKey,
+                caseSearchResults,
+                searching,
+                businessKeyQuery,
+                loadNext: () => {
+                  const links = caseSearchResults._links;
+                  if ('next' in links) {
+                    const that = this;
+                    const nextUrl = links.next.href;
+                    _.throttle(that.props.loadNextSearchResults(nextUrl), 300);
+                  }
+                },
+              }}
+            />
+          </div> 
         </div>
-        <CaseResultsPanel
-          {...{
-            businessKey,
-            caseSearchResults,
-            searching,
-            businessKeyQuery,
-            loadNext: () => {
-              const links = caseSearchResults._links;
-              if ('next' in links) {
-                const that = this;
-                const nextUrl = links.next.href;
-                _.throttle(that.props.loadNextSearchResults(nextUrl), 300);
-              }
-            },
-          }}
-        />
       </React.Fragment>
     );
   }
