@@ -163,6 +163,7 @@ kc: PropTypes.shape({
 const mapDispatchToProps = dispatch => bindActionCreators({}, dispatch);
 
 export default withRouter(connect(state => ({
-kc: state.keycloak,
-appConfig: state.appConfig,
+  kc: state.keycloak,
+  appConfig: state.appConfig,
 }), mapDispatchToProps)(Header));
+
