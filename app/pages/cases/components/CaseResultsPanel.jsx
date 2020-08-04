@@ -63,7 +63,7 @@ class CaseResultsPanel extends React.Component {
             <p className="govuk-caption-m">Number of cases found</p>
             <h3 className="govuk-heading-m">{caseSearchResults.page.totalElements}</h3>
             {caseSearchResults.page.totalElements > 0 && (
-              <ul className="govuk-list">
+              <ul className="govuk-list" id="searchResults">
                 {businessKeys}
               </ul>
             )}

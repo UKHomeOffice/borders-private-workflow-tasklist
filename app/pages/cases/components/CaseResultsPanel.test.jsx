@@ -84,6 +84,8 @@ describe('CaseResultsPanel', () => {
           </Provider>
         </Router>);
 
-        expect(wrapper.html()).toEqual('<div class="govuk-grid-row"><div class="govuk-grid-column-one-quarter"><h3 class="govuk-heading-m">Search results</h3><span class="govuk-caption-m">Number of cases found</span><h3 class="govuk-heading-m">2</h3><ul class="govuk-list"><li><a class="govuk-link" href="">businessKey1</a></li><li><a class="govuk-link" href="">businessKey2</a></li></ul></div><div class="govuk-grid-column-three-quarters"></div></div>')
-    })
+        const resultsSection = wrapper.find('#searchResults');
+        expect(resultsSection.exists()).toBe(true);
+        expect(wrapper.html()).toEqual('<h3 class="govuk-heading-m">Search results</h3><p class="govuk-caption-m">Number of cases found</p><h3 class="govuk-heading-m">2</h3><ul class="govuk-list" id="searchResults"><li><a class="govuk-link" href="">businessKey1</a></li><li><a class="govuk-link" href="">businessKey2</a></li></ul>')
+    });
 });
