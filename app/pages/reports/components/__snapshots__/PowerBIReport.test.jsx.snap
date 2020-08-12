@@ -10,6 +10,7 @@ exports[`PowerBIReport matches snapshot 1`] = `
     extraSettings={
       Object {
         "filterPaneEnabled": false,
+        "layoutType": 2,
       }
     }
     onLoad={[Function]}
@@ -23,9 +24,6 @@ exports[`PowerBIReport matches snapshot 1`] = `
       }
     }
     tokenType="Embed"
-  />
-  <LogoBar
-    setFullscreen={[Function]}
   />
 </Fragment>
 `;
