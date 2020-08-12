@@ -1,4 +1,5 @@
 import React, { Component, Fragment } from 'react';
+import { models } from 'powerbi-client';
 import PropTypes from 'prop-types';
 import Report from 'powerbi-report-component';
 import LogoBar from '../../../core/components/LogoBar';
@@ -19,7 +20,16 @@ export default class PowerBIReport extends Component {
   };
 
   render() {
-    const { accessToken, embedUrl, id: embedId, name: pageName } = this.props;
+    const {
+      accessToken,
+      embedUrl,
+      id: embedId,
+      name: pageName,
+      useMobileLayout,
+    } = this.props;
+    const logoBar = useMobileLayout ? null : (
+      <LogoBar setFullscreen={this.setFullscreen} />
+    );
     return (
       <Fragment>
         <Report
@@ -27,6 +37,9 @@ export default class PowerBIReport extends Component {
           embedType="report"
           extraSettings={{
             filterPaneEnabled: false,
+            layoutType: useMobileLayout
+              ? models.LayoutType.MobilePortrait
+              : models.LayoutType.Master,
           }}
           onLoad={this.handleReportLoad}
           permissions="Read"
@@ -34,7 +47,7 @@ export default class PowerBIReport extends Component {
           style={{ width: '100%', height: '100%' }}
           tokenType="Embed"
         />
-        <LogoBar setFullscreen={this.setFullscreen} />
+        {logoBar}
       </Fragment>
     );
   }
@@ -45,4 +58,5 @@ PowerBIReport.propTypes = {
   embedUrl: PropTypes.string.isRequired,
   id: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
+  useMobileLayout: PropTypes.bool.isRequired,
 };

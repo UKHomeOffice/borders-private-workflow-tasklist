@@ -126,6 +126,7 @@
     "lodash": "^4.17.19",
     "moment": "^2.22.0",
     "piwik-react-router": "^0.12.1",
+    "powerbi-client": "^2.13.3",
     "powerbi-report-component": "^1.4.2",
     "prop-types": "^15.6.2",
     "pubsub-js": "^1.6.0",

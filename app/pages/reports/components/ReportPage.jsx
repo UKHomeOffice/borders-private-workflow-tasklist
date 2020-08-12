@@ -18,6 +18,7 @@ export const ReportPage = ({ appConfig, location }) => {
     name,
     reportType,
   } = location.state;
+  const useMobileLayout = window.innerWidth < 500;
   document.title = `${name} | ${AppConstants.APP_NAME}`;
 
   return (
@@ -32,14 +33,16 @@ export const ReportPage = ({ appConfig, location }) => {
 
       <div
         style={{
-          height: '50vw',
+          height: useMobileLayout ? '50vh' : '50vw',
           margin: 'auto',
-          maxHeight: '70vmin',
+          maxHeight: useMobileLayout ? null : '70vmin',
           position: 'relative',
         }}
       >
         {reportType === 'PowerBIReport' ? (
-          <PowerBIReport {...{ accessToken, embedUrl, id, name }} />
+          <PowerBIReport
+            {...{ accessToken, embedUrl, id, name, useMobileLayout }}
+          />
         ) : (
           <HTMLReport {...{ htmlName, reportServiceUrl }} />
         )}
