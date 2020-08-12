@@ -1,37 +1,35 @@
-
 export default class AppConstants {
+  static APP_NAME = 'Central Operations Platform';
 
-    static APP_NAME = 'Central Operations Platform';
+  static DASHBOARD_PATH = '/dashboard';
 
-    static DASHBOARD_PATH = '/dashboard';
+  static YOUR_TASKS_PATH = '/your-tasks';
 
-    static YOUR_TASKS_PATH = '/your-tasks';
+  static YOUR_GROUP_TASKS_PATH = '/your-group-tasks';
 
-    static YOUR_GROUP_TASKS_PATH = '/your-group-tasks';
+  static FORMS_PATH = '/forms';
 
-    static FORMS_PATH = '/forms';
+  static REPORTS_PATH = '/reports';
 
-    static REPORTS_PATH = '/reports';
+  static REPORT_PATH = '/report';
 
-    static REPORT_PATH = '/report';
+  static MESSAGES_PATH = '/messages';
 
-    static MESSAGES_PATH = '/messages';
+  static CALENDAR_PATH = '/calendar';
 
-    static CALENDAR_PATH = '/calendar';
+  static SUBMIT_A_FORM = '/submit-a-form';
 
-    static SUBMIT_A_FORM = '/submit-a-form';
+  static TASK_PATH = '/task';
 
-    static TASK_PATH='/task';
+  static SHIFT_PATH = '/shift';
 
-    static SHIFT_PATH = '/shift';
+  static PROCEDURE_DIAGRAM_PATH = '/procedure-diagram';
 
-    static PROCEDURE_DIAGRAM_PATH = '/procedure-diagram';
+  static ONBOARD_USER_PATH = '/onboard-user';
 
-    static ONBOARD_USER_PATH='/onboard-user';
+  static CASES_PATH = '/cases';
 
-    static CASES_PATH = "/cases";
+  static REFRESH_TIMEOUT = 300000;
 
-    static REFRESH_TIMEOUT = 300000;
-
-    static MOBILE_WIDTH = 640;
+  static MOBILE_WIDTH = 640;
 }
