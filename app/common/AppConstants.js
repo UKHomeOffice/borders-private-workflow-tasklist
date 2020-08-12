@@ -32,4 +32,6 @@ export default class AppConstants {
     static CASES_PATH = "/cases";
 
     static REFRESH_TIMEOUT = 300000;
+
+    static MOBILE_WIDTH = 640;
 }

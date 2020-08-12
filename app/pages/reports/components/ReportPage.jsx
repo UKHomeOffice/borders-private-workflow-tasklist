@@ -18,7 +18,7 @@ export const ReportPage = ({ appConfig, location }) => {
     name,
     reportType,
   } = location.state;
-  const useMobileLayout = window.innerWidth < 500;
+  const useMobileLayout = window.innerWidth < AppConstants.MOBILE_WIDTH;
   document.title = `${name} | ${AppConstants.APP_NAME}`;
 
   return (
