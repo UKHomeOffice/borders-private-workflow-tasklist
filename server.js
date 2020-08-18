@@ -97,6 +97,7 @@ app.get('/api/config', (req, res) => {
     API_REF_URI: process.env.API_REF_URI,
     DETECT_BROWSER: process.env.DETECT_BROWSER,
     BROWSER_VERSIONS: process.env.BROWSER_VERSIONS,
+    PRODUCT_PAGE_URI: process.env.PRODUCT_PAGE_URI,
   });
 });
 
