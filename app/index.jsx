@@ -75,7 +75,7 @@ const renderApp = App => {
                   );
                 }
               }
-              let {token} = store.getState().keycloak;
+              let { token } = store.getState().keycloak;
               const isExpired =
                 jwtDecode(token).exp < new Date().getTime() / 1000;
               if (isExpired) {
@@ -130,7 +130,7 @@ const renderApp = App => {
         ];
         const history = MatomoTracker({
           url: store.getState().appConfig.analyticsUrl,
-          siteId: store.getState().appConfig.analyticsSiteId
+          siteId: store.getState().appConfig.analyticsSiteId,
         }).connectToHistory(createBrowserHistory());
 
         setInterval(() => {
@@ -221,6 +221,7 @@ if (process.env.NODE_ENV === 'production') {
         serviceDeskUrls,
         browserVersions: data.BROWSER_VERSIONS,
         detectBrowser: data.DETECT_BROWSER === 'true',
+        productPageUrl: data.PRODUCT_PAGE_URI,
       };
 
       const { detectBrowser, browserVersions } = store.getState().appConfig;
@@ -252,6 +253,7 @@ if (process.env.NODE_ENV === 'production') {
     serviceDeskUrls,
     browserVersions: process.env.BROWSER_VERSIONS,
     detectBrowser: process.env.DETECT_BROWSER === 'true',
+    productPageUrl: process.env.PRODUCT_PAGE_URI,
   };
   const { detectBrowser, browserVersions } = store.getState().appConfig;
   if (detectBrowser && !browserIsSupported(browserVersions)) {

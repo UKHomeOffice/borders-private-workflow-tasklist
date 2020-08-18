@@ -8,6 +8,9 @@ import { RouteWithTitle } from '../../../core/Main';
 
 describe('Reports Page', () => {
   const initialProps = {
+    appConfig: {
+      productPageUrl: 'http://www.example.com',
+    },
     fetchReportsList: jest.fn(),
     history: {
       push: jest.fn(),

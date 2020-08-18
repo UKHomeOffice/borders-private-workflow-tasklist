@@ -7,7 +7,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import uuid from 'uuid';
 import _ from 'lodash';
-import { loadingReports, reports } from '../selectors';
+import { appConfig, loadingReports, reports } from '../selectors';
 import DataSpinner from '../../../core/components/DataSpinner';
 import * as actions from '../actions';
 
@@ -18,14 +18,18 @@ export class ReportsPage extends React.Component {
   }
 
   render() {
-    const { loadingReports: reportsLoading, reports: reportsList } = this.props;
+    const {
+      loadingReports: reportsLoading,
+      appConfig: { productPageUrl },
+      reports: reportsList,
+    } = this.props;
     const items = [];
     if (reportsList) {
       reportsList.forEach(report => {
         items.push(
           <div id="report" className="govuk-grid-row" key={uuid()}>
             <div className="govuk-grid-column-full govuk-card">
-              <h4 className="govuk-heading-s">{report.get('name')}</h4>
+              <h3 className="govuk-heading-m">{report.get('name')}</h3>
               <p id="formDescription" className="govuk-body">
                 {report.get('description')}
               </p>
@@ -83,7 +87,20 @@ export class ReportsPage extends React.Component {
             <DataSpinner message="Loading reports" />
           </div>
         ) : (
-          <React.Fragment>{items}</React.Fragment>
+          <React.Fragment>
+            <p className="govuk-body govuk-!-margin-bottom-8">
+              See{' '}
+              <a
+                href={`${productPageUrl}/help/using-cop-reports/`}
+                rel="noopener noreferrer"
+                target="_blank"
+              >
+                our guide
+              </a>{' '}
+              for help in understanding and using the reports.
+            </p>
+            {items}
+          </React.Fragment>
         )}
       </div>
     );
@@ -91,6 +108,9 @@ export class ReportsPage extends React.Component {
 }
 
 ReportsPage.propTypes = {
+  appConfig: PropTypes.shape({
+    productPageUrl: PropTypes.string.isRequired,
+  }).isRequired,
   fetchReportsList: PropTypes.func.isRequired,
   history: PropTypes.shape({
     push: PropTypes.func.isRequired,
@@ -100,8 +120,9 @@ ReportsPage.propTypes = {
 };
 
 const mapStateToProps = createStructuredSelector({
-  reports,
+  appConfig,
   loadingReports,
+  reports,
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators(actions, dispatch);

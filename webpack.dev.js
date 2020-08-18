@@ -22,7 +22,9 @@ module.exports = webpackMerge(common, {
   plugins: [
     new webpack.DefinePlugin({
       'process.env': {
-        WWW_KEYCLOAK_CLIENT_ID: JSON.stringify(process.env.WWW_KEYCLOAK_CLIENT_ID),
+        WWW_KEYCLOAK_CLIENT_ID: JSON.stringify(
+          process.env.WWW_KEYCLOAK_CLIENT_ID,
+        ),
         KEYCLOAK_REALM: JSON.stringify(process.env.KEYCLOAK_REALM),
         KEYCLOAK_URI: JSON.stringify(process.env.KEYCLOAK_URI),
         WWW_UI_ENVIRONMENT: JSON.stringify(process.env.WWW_UI_ENVIRONMENT),
@@ -36,14 +38,13 @@ module.exports = webpackMerge(common, {
         API_REF_URI: JSON.stringify(process.env.API_REF_URI),
         BROWSER_VERSIONS: JSON.stringify(process.env.BROWSER_VERSIONS),
         DETECT_BROWSER: JSON.stringify(process.env.DETECT_BROWSER),
+        PRODUCT_PAGE_URI: JSON.stringify(process.env.PRODUCT_PAGE_URI),
       },
     }),
     new webpack.HotModuleReplacementPlugin(),
   ],
   devServer: {
-    allowedHosts: [
-      'www.lodev.xyz',
-    ],
+    allowedHosts: ['www.lodev.xyz'],
     compress: true,
     contentBase: 'public/',
     historyApiFallback: true,
@@ -56,7 +57,7 @@ module.exports = webpackMerge(common, {
       app.use(compression({}));
       app.post('/log', (req, res, next) => {
         const body = [];
-        req.on('data', (chunk) => {
+        req.on('data', chunk => {
           console.log(chunk);
           body.push(chunk);
         });
