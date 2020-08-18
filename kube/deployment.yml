@@ -84,6 +84,8 @@ spec:
           value: "{{.BROWSER_VERSIONS}}"
         - name: DETECT_BROWSER
           value: "{{.DETECT_BROWSER}}"
+        - name: PRODUCT_PAGE_URI
+          value: "{{.PRODUCT_PAGE_URI}}"
         securityContext:
           runAsNonRoot: true
         readinessProbe:

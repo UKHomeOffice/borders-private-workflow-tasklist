@@ -158,6 +158,8 @@ pipeline:
         target: BROWSER_VERSIONS
       - source: DEV_WWW_DETECT_BROWSER
         target: DETECT_BROWSER
+      - source: DEV_WWW_PRODUCT_PAGE_URI
+        target: PRODUCT_PAGE_URI
     commands:
       - export WWW_TAG=$${DRONE_COMMIT_SHA}
       - kd --insecure-skip-tls-verify -f kube/cert.yml
@@ -308,6 +310,8 @@ pipeline:
         target: BROWSER_VERSIONS
       - source: STAGING_WWW_DETECT_BROWSER
         target: DETECT_BROWSER
+      - source: STAGING_WWW_PRODUCT_PAGE_URI
+        target: PRODUCT_PAGE_URI
     commands:
       - export WWW_TAG=$${DRONE_COMMIT_SHA}
       - kd --insecure-skip-tls-verify -f kube/cert.yml
@@ -392,6 +396,8 @@ pipeline:
         target: BROWSER_VERSIONS
       - source: PRODUCTION_WWW_DETECT_BROWSER
         target: DETECT_BROWSER
+      - source: PRODUCTION_WWW_PRODUCT_PAGE_URI
+        target: PRODUCT_PAGE_URI
     commands:
       - export WWW_TAG=$${DRONE_COMMIT_SHA}
       - kd --insecure-skip-tls-verify -f kube/cert.yml
