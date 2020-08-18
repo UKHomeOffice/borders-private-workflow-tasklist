@@ -19,8 +19,8 @@ export class ReportsPage extends React.Component {
 
   render() {
     const {
-      loadingReports: reportsLoading,
       appConfig: { productPageUrl },
+      loadingReports: reportsLoading,
       reports: reportsList,
     } = this.props;
     const items = [];
@@ -89,15 +89,15 @@ export class ReportsPage extends React.Component {
         ) : (
           <React.Fragment>
             <p className="govuk-body govuk-!-margin-bottom-8">
-              See{' '}
+              See our{' '}
               <a
                 href={`${productPageUrl}/help/using-cop-reports/`}
                 rel="noopener noreferrer"
                 target="_blank"
               >
-                our guide
+                reports help guide
               </a>{' '}
-              for help in understanding and using the reports.
+              for further information.
             </p>
             {items}
           </React.Fragment>
