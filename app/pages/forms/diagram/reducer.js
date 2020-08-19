@@ -9,12 +9,17 @@ const initialState = new Map({
 });
 
 function reducer(state = initialState, action) {
+  let xml;
   switch (action.type) {
     case actions.FETCH_PROCESS_DEFINITION_XML:
       return state.set('isFetchingProcessDefinitionXml', true);
     case actions.FETCH_PROCESS_DEFINITION_XML_SUCCESS:
-      const xml = action.payload && action.payload.entity ? action.payload.entity.bpmn20Xml : null;
-      return state.set('isFetchingProcessDefinitionXml', false)
+      xml =
+        action.payload && action.payload.entity
+          ? action.payload.entity.bpmn20Xml
+          : null;
+      return state
+        .set('isFetchingProcessDefinitionXml', false)
         .set('processDefinitionXml', xml);
     case actions.RESET_PROCEDURE_XML:
       return initialState;
@@ -22,6 +27,5 @@ function reducer(state = initialState, action) {
       return state;
   }
 }
-
 
 export default reducer;

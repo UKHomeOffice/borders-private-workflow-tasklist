@@ -1,7 +1,10 @@
 import Immutable from 'immutable';
 import * as actions from './actionTypes';
 import {
-  FAILED, NOT_SUBMITTED, SUBMISSION_SUCCESSFUL, SUBMITTING,
+  FAILED,
+  NOT_SUBMITTED,
+  SUBMISSION_SUCCESSFUL,
+  SUBMITTING,
 } from './constants';
 
 const { Map } = Immutable;
@@ -16,12 +19,16 @@ const initialState = new Map({
 });
 
 function reducer(state = initialState, action) {
+  let processDefinition;
   switch (action.type) {
     case actions.FETCH_PROCESS_DEFINITION:
-      return state.set('loadingForm', true).set('isFetchingProcessDefinition', true);
+      return state
+        .set('loadingForm', true)
+        .set('isFetchingProcessDefinition', true);
     case actions.FETCH_PROCESS_DEFINITION_SUCCESS:
-      const processDefinition = action.payload.entity ? action.payload.entity : {};
-      return state.set('isFetchingProcessDefinition', false)
+      processDefinition = action.payload.entity ? action.payload.entity : {};
+      return state
+        .set('isFetchingProcessDefinition', false)
         .set('processDefinition', Immutable.fromJS(processDefinition));
     case actions.FETCH_PROCESS_DEFINITION_FAILURE:
       return state.set('isFetchingProcessDefinition', false);
@@ -30,9 +37,7 @@ function reducer(state = initialState, action) {
     case actions.FETCH_FORM:
       return state.set('loadingForm', true);
     case actions.FETCH_FORM_SUCCESS:
-      const data = action.payload.entity;
-      return state.set('loadingForm', false)
-        .set('form', data);
+      return state.set('loadingForm', false).set('form', action.payload.entity);
     case actions.FETCH_FORM_FAILURE:
       return state.set('loadingForm', false);
 
@@ -44,7 +49,9 @@ function reducer(state = initialState, action) {
       return state.set('submissionStatus', SUBMITTING);
     case actions.SUBMIT_TO_WORKFLOW_SUCCESS:
       if (action.payload.entity && action.payload.entity.processInstance) {
-        const rawVariables = action.payload.entity.processInstance.variables ? action.payload.entity.processInstance.variables : {};
+        const rawVariables = action.payload.entity.processInstance.variables
+          ? action.payload.entity.processInstance.variables
+          : {};
         const variables = {};
         Object.keys(rawVariables).forEach(key => {
           if (rawVariables[key].type === 'Json') {
@@ -55,14 +62,14 @@ function reducer(state = initialState, action) {
         });
         action.payload.entity.processInstance.variables = variables;
       }
-      return state.set('submissionStatus', SUBMISSION_SUCCESSFUL)
-          .set('submissionResponse', action.payload.entity);
+      return state
+        .set('submissionStatus', SUBMISSION_SUCCESSFUL)
+        .set('submissionResponse', action.payload.entity);
     case actions.SUBMIT_TO_WORKFLOW_FAILURE:
       return state.set('submissionStatus', FAILED);
     default:
       return state;
   }
 }
-
 
 export default reducer;

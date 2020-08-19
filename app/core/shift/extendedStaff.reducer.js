@@ -1,6 +1,6 @@
 import Immutable from 'immutable';
 import * as actions from './actionTypes';
-import secureLocalStorage from "../../common/security/SecureLocalStorage";
+import secureLocalStorage from '../../common/security/SecureLocalStorage';
 
 const { Map } = Immutable;
 
@@ -10,13 +10,19 @@ export const extendedStaffInitialState = new Map({
 });
 
 function extendedStaffReducer(state = extendedStaffInitialState, action) {
+  let extendedStaff;
+  let extendedStaffResponse;
+  let hasExtendedStaffDetails;
   switch (action.type) {
     case actions.FETCH_EXTENDED_STAFF_DETAILS:
       return state.set('isFetchingExtendedStaffDetails', true);
     case actions.FETCH_EXTENDED_STAFF_DETAILS_SUCCESS:
-      const extendedStaffResponse = action.payload.entity;
-      const hasExtendedStaffDetails = extendedStaffResponse && extendedStaffResponse.length !== 0;
-      const extendedStaff = hasExtendedStaffDetails ? Immutable.fromJS(extendedStaffResponse[0]) : null;
+      extendedStaffResponse = action.payload.entity;
+      hasExtendedStaffDetails =
+        extendedStaffResponse && extendedStaffResponse.length !== 0;
+      extendedStaff = hasExtendedStaffDetails
+        ? Immutable.fromJS(extendedStaffResponse[0])
+        : null;
       if (extendedStaff) {
         secureLocalStorage.set('extendedStaffDetails', extendedStaff.toJS());
       }
