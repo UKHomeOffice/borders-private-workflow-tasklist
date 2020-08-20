@@ -95,7 +95,7 @@ export class ReportsPage extends React.Component {
                 rel="noopener noreferrer"
                 target="_blank"
               >
-                reports help guide
+                reports help guide (opens in new tab)
               </a>{' '}
               for further information.
             </p>
