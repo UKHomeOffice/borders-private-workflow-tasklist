@@ -68,19 +68,6 @@ const fetchStaffDetailsFailure = () => ({
   type: types.FETCH_STAFF_DETAILS_FAILURE,
 });
 
-const fetchExtendedStaffDetails = () => ({
-  type: types.FETCH_EXTENDED_STAFF_DETAILS,
-});
-
-const fetchExtendedStaffDetailsSuccess = payload => ({
-  type: types.FETCH_EXTENDED_STAFF_DETAILS_SUCCESS,
-  payload,
-});
-
-const fetchExtendedStaffDetailsFailure = () => ({
-  type: types.FETCH_EXTENDED_STAFF_DETAILS_FAILURE,
-});
-
 const endShift = () => ({
   type: types.END_SHIFT,
 });
@@ -123,9 +110,6 @@ export {
   fetchStaffDetails,
   fetchStaffDetailsSuccess,
   fetchStaffDetailsFailure,
-  fetchExtendedStaffDetails,
-  fetchExtendedStaffDetailsSuccess,
-  fetchExtendedStaffDetailsFailure,
   endShift,
   endShiftFailure,
   endShiftSuccess,

@@ -10,12 +10,10 @@ import {
     activeShiftSuccess,
     isFetchingShift,
     isFetchingStaffDetails,
-    isFetchingExtendedStaffDetails,
     loadingShiftForm,
     shift,
     shiftForm,
     staffDetails,
-    extendedStaffDetails,
     submittingActiveShift,
 } from '../../../core/shift/selectors';
 import * as actions from '../../../core/shift/actions';
@@ -36,7 +34,6 @@ export class ShiftPage extends React.Component {
       this.props.fetchActiveShift();
       this.props.fetchShiftForm();
       this.props.fetchStaffDetails();
-      this.props.fetchExtendedStaffDetails();
     }
 
   componentDidUpdate(prevProps, prevState, snapshot) {
@@ -59,12 +56,11 @@ export class ShiftPage extends React.Component {
             isFetchingShift,
             submittingActiveShift,
             isFetchingStaffDetails,
-            isFetchingExtendedStaffDetails,
             loadingShiftForm,
             shiftForm,
         } = this.props;
 
-      if (loadingShiftForm && isFetchingStaffDetails && isFetchingExtendedStaffDetails && isFetchingShift) {
+      if (loadingShiftForm && isFetchingStaffDetails && isFetchingShift) {
           return <DataSpinner message="Loading your shift details" />;
         }
 
@@ -101,13 +97,10 @@ ShiftPage.propTypes = {
   fetchShiftForm: PropTypes.func.isRequired,
   fetchActiveShift: PropTypes.func.isRequired,
   fetchStaffDetails: PropTypes.func.isRequired,
-  fetchExtendedStaffDetails: PropTypes.func.isRequired,
   isFetchingShift: PropTypes.bool,
   isFetchingStaffDetails: PropTypes.bool,
-  isFetchingExtendedStaffDetails: PropTypes.bool,
   shift: ImmutablePropTypes.map,
   staffDetails: ImmutablePropTypes.map,
-  extendedStaffDetails: ImmutablePropTypes.map,
   unauthorised: PropTypes.bool,
 };
 
@@ -122,9 +115,7 @@ export default withRouter(connect(state => ({
         shiftForm: shiftForm(state),
         loadingShiftForm: loadingShiftForm(state),
         staffDetails: staffDetails(state),
-        extendedStaffDetails: extendedStaffDetails(state),
         isFetchingStaffDetails: isFetchingStaffDetails(state),
-        isFetchingExtendedStaffDetails: isFetchingExtendedStaffDetails(state),
         kc: state.keycloak,
         appConfig: state.appConfig
 

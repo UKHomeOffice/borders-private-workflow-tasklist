@@ -12,6 +12,7 @@ import qs from 'querystring';
 import axios from 'axios';
 import jwtDecode from 'jwt-decode';
 import * as OfflinePluginRuntime from 'offline-plugin/runtime';
+import secureLocalStorage from "./common/security/SecureLocalStorage";
 import App from './core/App';
 import configureStore from './core/store/configureStore';
 import 'webpack-icons-installer/bootstrap';
@@ -32,11 +33,21 @@ let kc = null;
 Formio.use(gds);
 
 const renderApp = App => {
+
+  const saveExtendedStaffDetails = keycloak => {
+    secureLocalStorage.set('extendedStaffDetails', {
+      delegateEmails: keycloak.tokenParsed.delegate_email,
+      linemanagerEmail: keycloak.tokenParsed.line_manager_email,
+      name: keycloak.tokenParsed.name,
+    });
+  };
+
   kc.onTokenExpired = () => {
     kc.updateToken()
       .success(refreshed => {
         if (refreshed) {
           store.getState().keycloak = kc;
+          saveExtendedStaffDetails(kc);
         }
       })
       .error(() => {
@@ -48,7 +59,7 @@ const renderApp = App => {
     authenticated => {
       if (authenticated) {
         store.getState().keycloak = kc;
-
+        saveExtendedStaffDetails(kc);
         Formio.baseUrl = `${store.getState().appConfig.formUrl}`;
         Formio.formsUrl = `${store.getState().appConfig.formUrl}/form`;
         Formio.formUrl = `${store.getState().appConfig.formUrl}/form`;
@@ -138,6 +149,7 @@ const renderApp = App => {
             .success(refreshed => {
               if (refreshed) {
                 store.getState().keycloak = kc;
+                saveExtendedStaffDetails(kc);
               }
             })
             .error(() => {
