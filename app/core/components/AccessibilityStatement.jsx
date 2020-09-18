@@ -17,11 +17,11 @@ const AccessibilityStatement = () => (
             This accessibility statement contains information about the Central
             Operations Platform, available at{' '}
             <a
-              href="https://cop.homeoffice.gov.uk"
+              href="https://www.cop.homeoffice.gov.uk"
               target="_blank"
               rel="noopener noreferrer"
             >
-              https://cop.homeoffice.gov.uk
+              https://www.cop.homeoffice.gov.uk (opens in new tab)
             </a>
             .
           </p>
@@ -32,17 +32,17 @@ const AccessibilityStatement = () => (
           </p>
           <ul className="govuk-list govuk-list--bullet">
             <li>
-              Zoom in up to 300%, without the text spilling off the screen
+              Zoom in up to 300%, without the text spilling off the screen.
             </li>
-            <li>Navigate most of the website using just a keyboard</li>
-            <li>Listen to the service using a NVDA screen reader</li>
+            <li>Navigate most of the website using just a keyboard.</li>
+            <li>Reach the main dashboard from every form on COP.</li>
             <li>
-              Read and navigate the order on COP as it is logical and intuitive
-              / clear
+              Read and navigate the order on COP as it is logical and
+              intuitive/clear.
             </li>
             <li>
               Tab through questions in the form whilst always having the focus
-              visible
+              visible.
             </li>
           </ul>
           <p className="govuk-body">
@@ -55,7 +55,7 @@ const AccessibilityStatement = () => (
               target="_blank"
               rel="noopener noreferrer"
             >
-              Abilitynet
+              Abilitynet (opens in new tab)
             </a>{' '}
             has advice on making your device easier to use if you have a
             disability.
@@ -73,42 +73,45 @@ const AccessibilityStatement = () => (
           <ul className="govuk-list govuk-list--bullet">
             <li>
               Drop down lists may require users to “type to search” for their
-              options as not all options will be displayed initially
+              options as not all options will be displayed initially.
             </li>
             <li>
               Adding additional instances of a response, such as a second
-              passport number / adding a new staff grade in Operational Activity Reporting (OAR), may make the
-              form tab to the top of the page for keyboard only users
+              passport number/adding a new staff grade in Operational Activity
+              Reporting (OAR), may make the form tab to the top of the page for
+              keyboard only users.
             </li>
             <li>
               The JAWS screen reader is not compatible with the Edge Chromium
-              browser, which is the Home Office standard
+              browser, which is the Home Office standard.
             </li>
             <li>
               Skip to content does not highlight the body of text that it skips
-              to
+              to.
             </li>
             <li>
-              Some labels in names, such as the forms page, are unable to be
-              identified by the screen reader
+              Questions on the form and some labels in names, such as the forms
+              page, are unable to be identified by the screen reader. The NVDA
+              screen reader is able to read text fields, tabs, links and radio
+              buttons.
             </li>
             <li>
               Fields are only auto completed from information in the user’s
-              profile on COP and not from their browser
+              profile on COP and not from their browser.
             </li>
             <li>
               Headings and titles on COP forms and pages do not get read out by
-              the screen reader
+              the screen reader.
             </li>
-            <li>The main headings on each page are h2 and not h1</li>
+            <li>The main headings on each page are h2 and not h1.</li>
             <li>
               Images on COP product pages do not have a text description of the
-              image
+              image.
             </li>
-            <li>There are some images of text</li>
+            <li>There are some images of text.</li>
             <li>
               Videos in the Help pages about Mandatory Declarations and COP
-              reports do not contain sound, video descriptions or captions
+              reports do not contain sound, video descriptions or captions.
             </li>
           </ul>
 
@@ -130,12 +133,13 @@ const AccessibilityStatement = () => (
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                Help
+                Help (opens in new tab)
               </a>
+              .
             </li>
-            <li>Using the chat service on ITNow</li>
-            <li>Reporting an issue on ITNow</li>
-            <li>Calling the service desk on 0845 000 0050</li>
+            <li>Using the chat service on ITNow.</li>
+            <li>Reporting an issue on ITNow.</li>
+            <li>Calling the service desk on 0845 000 0050.</li>
           </ul>
 
           <h2 className="govuk-heading-l">
@@ -166,7 +170,8 @@ const AccessibilityStatement = () => (
               target="_blank"
               rel="noopener noreferrer"
             >
-              contact the Equality Advisory and Support Service (EASS)
+              contact the Equality Advisory and Support Service (EASS) (opens in
+              new tab)
             </a>
             .
           </p>
@@ -178,7 +183,7 @@ const AccessibilityStatement = () => (
               target="_blank"
               rel="noopener noreferrer"
             >
-              Equality Commission for Northern Ireland
+              Equality Commission for Northern Ireland (opens in new tab)
             </a>{' '}
             who are responsible for enforcing the Public Sector Bodies (Websites
             and Mobile Applications) (No. 2) Accessibility Regulations 2018 (the
@@ -203,6 +208,7 @@ const AccessibilityStatement = () => (
               rel="noopener noreferrer"
             >
               Web Content Accessibility Guidelines version 2.1 AA standard
+              (opens in new tab)
             </a>{' '}
             AA standard. The non-compliances are listed below.
           </p>
@@ -218,26 +224,26 @@ const AccessibilityStatement = () => (
           </h3>
           <ul className="govuk-list govuk-list--bullet">
             <li>
-              Pre-recorded Audio-only and Video-only (1.2.1) - there is no
+              Pre-recorded Audio-only and Video-only (1.2.1) – there is no
               transcript or audio description provided for Mandatory
-              Declarations and COP reports in the Help pages
+              Declarations and COP reports in the Help pages.
             </li>
             <li>
-              Captions pre-recorded (1.2.2) - captions are not provided for
+              Captions pre-recorded (1.2.2) – captions are not provided for
               Mandatory Declarations and COP reports in the Help pages so users
-              unable to read the demo in these videos
+              unable to read the demo in these videos.
             </li>
             <li>
               Audio descriptions or media alternative pre-recorded (1.2.3) and
-              Audio Description (Pre-recorded) (1.2.5) - transcript and audio
+              Audio Description (Pre-recorded) (1.2.5) – transcript and audio
               are not provided to the Mandatory Declarations and COP reports in
-              the Help pages so users are unable to follow the demo via audio /
-              transcripts
+              the Help pages so users are unable to follow the demo via
+              audio/transcripts.
             </li>
             <li>
-              Reflow (1.4.10) Mobile users may need to scroll left to right to
+              Reflow (1.4.10) – Mobile users may need to scroll left to right to
               see some of the COP pages and longer text may spill in drop down
-              lists
+              lists. Ensure that text does not spill in drop down lists.
             </li>
             <li>
               Info and relationship (1.3.1) – the Dashboard page contains
@@ -246,66 +252,71 @@ const AccessibilityStatement = () => (
               to items within the list.
             </li>
             <li>
-              Identify input purpose (1.3.5) - we autocomplete from information
-              in the user’s profile in our forms, not from the browser
+              Identify input purpose (1.3.5) – we autocomplete from information
+              in the user’s profile in our forms, not from the browser.
             </li>
             <li>
               Contrast (1.4.3) – the charts displayed in the Reports section
-              that display from PowerBI don’t provide effective contrast
+              that display from PowerBI don’t provide effective contrast.
             </li>
             <li>
-              Keyboard (2.1.1) - adding additional instances of a response, such
-              as a second passport number / adding a new staff grade in OAR, may
-              make the form tab to the top of the page for keyboard only users
+              Keyboard (2.1.1) – adding additional instances of a response, such
+              as a second passport number/adding a new staff grade in OAR, may
+              make the form tab to the top of the page for keyboard only users.
             </li>
             <li>
               Keyboard trap (2.1.2) – the screen reader does not read out all
               the options in the drop-down list in the port list for Record
               Border Event and Intelligence Referral forms as not all options
               are displayed so users will need to use the “type to search”
-              function to find the correct port
+              function to find the correct port.
             </li>
             <li>
-              Keyboard trap (2.1.2.) - Help for Events at the Border (EaB) and
-              OAR have pages with tables /
-              collapsible fields that are not read by the screen reader and
-              keyboard only users will be unable to access these.
+              Keyboard trap (2.1.2.) – Help for Events at the Border (EaB) and
+              OAR have pages with tables/collapsible fields that are not read by
+              the screen reader and keyboard only users will be unable to access
+              these.
             </li>
             <li>
               Bypass block (2.4.1) – the skip to content doesn’t highlight the
               body of text. Frames must have title attribute for screen readers.
             </li>
             <li>
-              Focus visible (2.4.7) - Command brief report scrollable region not
-              accessible by keyboard
+              Focus visible (2.4.7) – Command brief report scrollable region not
+              accessible by keyboard.
             </li>
             <li>
-              Label in name (2.5.3) - form page reading label of buttons as the
+              Label in name (2.5.3) – form page reading label of buttons as the
               same button as they are all called ‘Start’, on the tasks assigned
               to you page all buttons are read as “actions” and on the tasks
-              assigned to your team page all buttons are read as “claim”
+              assigned to your team page all buttons are read as “Claim”.
             </li>
             <li>
               Language of Page (3.1.1) – Single sign-on page lang attribute is
               required for screen reader to set the language.
             </li>
             <li>
-              Labels or instructions (3.3.2) - Effective form labels are
+              Labels or instructions (3.3.2) – Effective form labels are
               required to make forms accessible.
             </li>
             <li>
-              Parsing (4.1.1) - ID must be unique to differentiate each element
+              Parsing (4.1.1) – ID must be unique to differentiate each element
               from another in single sign-on, reports and forms page.
             </li>
             <li>
-              Name, Role, Value (4.1.2) - Keycloak page aria-hidden attribute on
+              Name, Role, Value (4.1.2) – Keycloak page aria-hidden attribute on
               an element removes the element and all its child nodes from the
               accessibility API.
             </li>
             <li>
-              Link purpose in context (2.4.4) - command brief have case links
+              Link purpose in context (2.4.4) – command brief have case links
               inside which have missing link names this is may not be visible to
-              screen reader users
+              screen reader users.
+            </li>
+            <li>
+              Status Message (4.1.3) – status messages/validation errors can be
+              read by screen readers, however screen readers are unable to read
+              questions within the form.
             </li>
           </ul>
 
@@ -342,7 +353,7 @@ const AccessibilityStatement = () => (
           <ul className="govuk-list govuk-list--bullet">
             <li>
               (2.1.2) Add in tool tip to prompt users to type in 3 letters in
-              long port drop-down lists to more easily find their selection
+              long port drop-down lists to more easily find their selection.
             </li>
             <li>
               (2.4.1) Skip to content to highlight the body of text that it
@@ -355,9 +366,8 @@ const AccessibilityStatement = () => (
           <ul className="govuk-list govuk-list--bullet">
             <li>
               (1.2.1, 1.2.2, 1.2.3, 1.2.5) Add a soundtrack and transcript to
-              the videos in the Help section on the Product Page
+              the videos in the Help section on the Product Page.
             </li>
-
             <li>
               (1.3.1) Lists marked up so that they don’t contain content
               elements other than list elements.
@@ -365,39 +375,39 @@ const AccessibilityStatement = () => (
             <li>
               (2.1.1) Ensure use of data grids to add additional instances of a
               response, doesn’t make the form tab to the top of the page for
-              keyboard only users
+              keyboard only users.
             </li>
             <li>
-              (2.1.2) Change the presentation of tabular information/
-              collapsible fields in the Help section on the Product Page to be
-              accessible
+              (2.1.2) Change the presentation of tabular information/collapsible
+              fields in the Help section on the Product Page to be accessible.
             </li>
             <li>
               (2.5.3) Ensure all labels in names are distinguishable by the
-              screen reader through updating the User Interface
+              screen reader through updating the User Interface.
             </li>
             <li>
-              Text descriptions will be added to any images in the Product page
+              Text descriptions will be added to any images in the Product page.
             </li>
             <li>
-              Heading consistency resolved to assist readout by screen readers
+              Heading consistency resolved to assist readout by screen readers.
             </li>
             <li>
-              (3.1.1) - Every HTML document to have a lang attribute applied and
+              (3.1.1) Every HTML document to have a lang attribute applied and
               that the attribute's value is valid value.
             </li>
-            <li>(3.3.2) - Every form element to have had a label applied</li>
+            <li>(3.3.2) Every form element to have had a label applied.</li>
             <li>
-              (4.1.1) - The value assigned to an ARIA ID to be made unique to
+              (4.1.1) The value assigned to an ARIA ID to be made unique to
               prevent the second instance from being overlooked by assistive
-              technology
+              technology.
             </li>
             <li>
               (4.1.2) Aria-hidden elements updated so they do not contain
-              focusable elements
+              focusable elements.
             </li>
             <li>
-              Reflow (1.4.10) Ensure that text does not spill in drop down lists
+              (4.1.3) Screen readers to identify and read questions on the COP
+              forms.
             </li>
           </ul>
 
@@ -405,9 +415,9 @@ const AccessibilityStatement = () => (
           <ul className="govuk-list govuk-list--bullet">
             <li>
               (1.4.3) Identify how Power BI charts can provide effective
-              contrast
+              contrast.
             </li>
-            <li>(2.4.7) Ensure that scrollable region has keyboard access</li>
+            <li>(2.4.7) Ensure that scrollable region has keyboard access.</li>
           </ul>
 
           <h3 className="govuk-heading-m">Disproportionate burden</h3>
@@ -450,7 +460,7 @@ const AccessibilityStatement = () => (
               target="_blank"
               rel="noopener noreferrer"
             >
-              Help
+              Help (opens in new tab)
             </a>
             . This is an excel spreadsheet and, once made accessible, will be
             made available here.
