@@ -77,7 +77,7 @@ const AccessibilityStatement = () => (
             </li>
             <li>
               Adding additional instances of a response, such as a second
-              passport number / adding a new staff grade in OAR, may make the
+              passport number / adding a new staff grade in Operational Activity Reporting (OAR), may make the
               form tab to the top of the page for keyboard only users
             </li>
             <li>
@@ -267,7 +267,7 @@ const AccessibilityStatement = () => (
             </li>
             <li>
               Keyboard trap (2.1.2.) - Help for Events at the Border (EaB) and
-              Operational Activity Reporting (OAR) have pages with tables /
+              OAR have pages with tables /
               collapsible fields that are not read by the screen reader and
               keyboard only users will be unable to access these.
             </li>
