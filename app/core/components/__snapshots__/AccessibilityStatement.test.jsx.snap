@@ -29,11 +29,11 @@ exports[`Accessibility Statement page matches snapshot 1`] = `
           This accessibility statement contains information about the Central Operations Platform, available at
            
           <a
-            href="https://cop.homeoffice.gov.uk/"
+            href="https://cop.homeoffice.gov.uk"
             rel="noopener noreferrer"
             target="_blank"
           >
-            https://cop.homeoffice.gov.uk/
+            https://cop.homeoffice.gov.uk
           </a>
           .
         </p>
@@ -476,7 +476,15 @@ exports[`Accessibility Statement page matches snapshot 1`] = `
         <p
           className="govuk-body"
         >
-          The full accessibility audit report is available on request from Help. This is an excel spreadsheet and, once made accessible, will be made available here.
+          The full accessibility audit report is available on request from
+          <a
+            href="https://support.cop.homeoffice.gov.uk/servicedesk/customer/portal/3"
+            rel="noopener noreferrer"
+            target="_blank"
+          >
+            Help
+          </a>
+          . This is an excel spreadsheet and, once made accessible, will be made available here.
         </p>
         <p
           className="govuk-body"
