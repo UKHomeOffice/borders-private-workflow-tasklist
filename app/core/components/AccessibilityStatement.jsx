@@ -454,18 +454,6 @@ const AccessibilityStatement = () => (
             carried out by the Home Office’s Quality Assurance and Testing team.
           </p>
           <p className="govuk-body">
-            The full accessibility audit report is available on request from{' '}
-            <a
-              href="https://support.cop.homeoffice.gov.uk/servicedesk/customer/portal/3"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Help (opens in new tab)
-            </a>
-            . This is an excel spreadsheet and, once made accessible, will be
-            made available here.
-          </p>
-          <p className="govuk-body">
             We tested the service based on a user's ability to complete key
             journeys. All parts of the chosen journeys were tested.
           </p>
