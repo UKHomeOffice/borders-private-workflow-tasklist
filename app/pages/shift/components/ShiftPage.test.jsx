@@ -8,6 +8,7 @@ describe('Shift page', () => {
   const fetchActiveShift = jest.fn();
   const fetchShiftForm = jest.fn();
   const fetchStaffDetails = jest.fn();
+  const fetchStaffId = jest.fn();
   const form = {
     display: 'form',
     components: [
@@ -56,6 +57,7 @@ describe('Shift page', () => {
   const initProps = {
     isFetchingShift: true,
     isFetchingStaffDetails: true,
+    isFetchingStaffId: true,
     loadingShiftForm: true,
     failedToCreateShift: false,
     submittingActiveShift: false,
@@ -81,6 +83,7 @@ describe('Shift page', () => {
     fetchActiveShift,
     fetchShiftForm,
     fetchStaffDetails,
+    fetchStaffId,
   };
 
   afterEach(() => {
@@ -99,6 +102,7 @@ describe('Shift page', () => {
       ...initProps,
       isFetchingShift: false,
       isFetchingStaffDetails: false,
+      isFetchingStaffId: false,
       loadingShiftForm: false,
       failedToCreateShift: false,
       submittingActiveShift: true,
@@ -117,6 +121,7 @@ describe('Shift page', () => {
 
     expect(fetchStaffDetails).toHaveBeenCalledTimes(1);
     expect(fetchShiftForm).toHaveBeenCalledTimes(1);
+    expect(fetchStaffId).toHaveBeenCalledTimes(1);
 
     expect(wrapper.find('#dataSpinner').exists()).toEqual(true);
     expect(wrapper.find('.loader-message').text()).toEqual(
@@ -129,6 +134,7 @@ describe('Shift page', () => {
       ...initProps,
       isFetchingShift: false,
       isFetchingStaffDetails: false,
+      isFetchingStaffId: false,
       loadingShiftForm: false,
       failedToCreateShift: true,
       appConfig: {
@@ -154,7 +160,7 @@ describe('Shift page', () => {
 
     expect(fetchStaffDetails).toHaveBeenCalledTimes(1);
     expect(fetchShiftForm).toHaveBeenCalledTimes(1);
-    expect(fetchStaffDetails).toHaveBeenCalledTimes(1);
+    expect(fetchStaffId).toHaveBeenCalledTimes(1);
 
     expect(wrapper.find('.govuk-error-summary').exists()).toEqual(true);
   });
@@ -164,6 +170,7 @@ describe('Shift page', () => {
       ...initProps,
       isFetchingShift: false,
       isFetchingStaffDetails: false,
+      isFetchingStaffId: false,
       loadingShiftForm: false,
     };
     const wrapper = await mount(<ShiftPage {...props} />);
@@ -179,6 +186,7 @@ describe('Shift page', () => {
       ...initProps,
       isFetchingShift: false,
       isFetchingStaffDetails: false,
+      isFetchingStaffId: false,
       loadingShiftForm: false,
       failedToCreateShift: false,
       submittingActiveShift: true,

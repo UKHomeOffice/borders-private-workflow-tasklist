@@ -81,6 +81,19 @@ const endShiftFailure = () => ({
   type: types.END_SHIFT_FAILURE,
 });
 
+const fetchStaffId = () => ({
+  type: types.FETCH_STAFF_ID,
+});
+
+const fetchStaffIdSuccess = payload => ({
+  type: types.FETCH_STAFF_ID_SUCCESS,
+  payload,
+});
+
+const fetchStaffIdFailure = () => ({
+  type: types.FETCH_STAFF_ID_FAILURE,
+});
+
 const setHasActiveShift = hasShift => ({
   type: types.SET_HAS_ACTIVE_SHIFT,
   hasShift,
@@ -110,6 +123,9 @@ export {
   fetchStaffDetails,
   fetchStaffDetailsSuccess,
   fetchStaffDetailsFailure,
+  fetchStaffId,
+  fetchStaffIdSuccess,
+  fetchStaffIdFailure,
   endShift,
   endShiftFailure,
   endShiftSuccess,

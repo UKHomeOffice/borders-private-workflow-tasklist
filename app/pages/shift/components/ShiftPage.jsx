@@ -10,6 +10,7 @@ import {
     activeShiftSuccess,
     isFetchingShift,
     isFetchingStaffDetails,
+    isFetchingStaffId,
     loadingShiftForm,
     shift,
     shiftForm,
@@ -34,6 +35,7 @@ export class ShiftPage extends React.Component {
       this.props.fetchActiveShift();
       this.props.fetchShiftForm();
       this.props.fetchStaffDetails();
+      this.props.fetchStaffId();
     }
 
   componentDidUpdate(prevProps, prevState, snapshot) {
@@ -56,11 +58,12 @@ export class ShiftPage extends React.Component {
             isFetchingShift,
             submittingActiveShift,
             isFetchingStaffDetails,
+            isFetchingStaffId,
             loadingShiftForm,
             shiftForm,
         } = this.props;
 
-      if (loadingShiftForm && isFetchingStaffDetails && isFetchingShift) {
+      if (loadingShiftForm && isFetchingStaffDetails && isFetchingShift && isFetchingStaffId) {
           return <DataSpinner message="Loading your shift details" />;
         }
 
@@ -97,8 +100,10 @@ ShiftPage.propTypes = {
   fetchShiftForm: PropTypes.func.isRequired,
   fetchActiveShift: PropTypes.func.isRequired,
   fetchStaffDetails: PropTypes.func.isRequired,
+  fetchStaffId: PropTypes.func.isRequired,
   isFetchingShift: PropTypes.bool,
   isFetchingStaffDetails: PropTypes.bool,
+  isFetchingStaffId: PropTypes.bool.isRequired,
   shift: ImmutablePropTypes.map,
   staffDetails: ImmutablePropTypes.map,
   unauthorised: PropTypes.bool,
@@ -115,6 +120,7 @@ export default withRouter(connect(state => ({
         shiftForm: shiftForm(state),
         loadingShiftForm: loadingShiftForm(state),
         staffDetails: staffDetails(state),
+        isFetchingStaffId: isFetchingStaffId(state),
         isFetchingStaffDetails: isFetchingStaffDetails(state),
         kc: state.keycloak,
         appConfig: state.appConfig

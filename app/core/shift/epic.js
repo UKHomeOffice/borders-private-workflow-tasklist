@@ -1,3 +1,4 @@
+import Immutable from 'immutable';
 import { combineEpics } from 'redux-observable';
 import PubSub from 'pubsub-js';
 import * as types from './actionTypes';
@@ -38,10 +39,12 @@ const endShift = (action$, store, { client }) =>
 const fetchStaffDetails = (action$, store, { client }) =>
   action$.ofType(types.FETCH_STAFF_DETAILS).mergeMap(() =>
     client({
-      method: 'POST',
+      method: 'GET',
       path: `${
-        store.getState().appConfig.operationalDataUrl
-      }/v1/rpc/staffdetails`,
+        store.getState().appConfig.apiRefUrl
+      }/v2/entities/team?filter=id=eq.${
+        store.getState().keycloak.tokenParsed.team_id
+      }`,
       entity: {
         argstaffemail: `${store.getState().keycloak.tokenParsed.email}`,
       },
@@ -51,14 +54,57 @@ const fetchStaffDetails = (action$, store, { client }) =>
         Authorization: `Bearer ${store.getState().keycloak.token}`,
       },
     })
-      .retryWhen(retry)
-      .map(payload => actions.fetchStaffDetailsSuccess(payload))
-      .catch(error =>
-        errorObservable(actions.fetchStaffDetailsFailure(), error),
-      ),
-  );
-
-
+    .retryWhen(retry)
+    .map(payload => {
+      let staffDetails;
+      const { entity: staffResponse } = payload;
+      if (staffResponse && staffResponse.data.length) {
+        staffDetails = {
+          adelphi: store.getState().keycloak.tokenParsed.adelphi_number,
+          dateofleaving: store.getState().keycloak.tokenParsed
+          .dateofleaving,
+          defaultlocationid: store.getState().keycloak.tokenParsed
+          .location_id,
+          defaultteam: staffResponse.data[0],
+          defaultteamid: staffResponse.data[0].id,
+          email: store.getState().keycloak.tokenParsed.email,
+          gradeid: store.getState().keycloak.tokenParsed.grade_id,
+          locationid: store.getState().keycloak.tokenParsed.location_id,
+          phone: store.getState().keycloak.tokenParsed.phone,
+          teamid: store.getState().keycloak.tokenParsed.team_id,
+        };
+      } else {
+        staffDetails = null;
+      }
+      return actions.fetchStaffDetailsSuccess(staffDetails);
+    })
+    .catch(error =>
+      errorObservable(actions.fetchStaffDetailsFailure(), error),
+    ),
+);
+const fetchStaffId = (action$, store, { client }) =>
+action$.ofType(types.FETCH_STAFF_ID).mergeMap(() =>
+  client({
+    method: 'GET',
+    path: `${
+      store.getState().appConfig.operationalDataUrl
+    }/v2/staff?filter=email=eq.${store.getState().keycloak.tokenParsed.email}`,
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${store.getState().keycloak.token}`,
+    },
+  })
+    .retryWhen(retry)
+    .map(payload => {
+      const { entity } = payload;
+      console.log('Shift epic fetched staff id:', entity[0].staffid);
+      return actions.fetchStaffIdSuccess(entity[0].staffid);
+    })
+    .catch(error =>
+      errorObservable(actions.fetchStaffIdFailure(), error),
+    ),
+);
 const fetchShiftForm = (action$, store, { client }) =>
   action$.ofType(types.FETCH_SHIFT_FORM).mergeMap(() =>
     client({
@@ -125,5 +171,6 @@ export default combineEpics(
   submit,
   fetchShiftForm,
   fetchStaffDetails,
+  fetchStaffId,
   endShift,
 );

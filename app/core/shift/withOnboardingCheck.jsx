@@ -12,6 +12,7 @@ import DataSpinner from '../components/DataSpinner';
 import {
   isCheckingOnBoarding,
   isFetchingStaffDetails,
+  isFetchingStaffId,
   staffDetails,
 } from './selectors';
 import OnboardChecker from './OnboardChecker';
@@ -23,15 +24,16 @@ export default function (ComposedComponent) {
     componentDidMount() {
       this.props.performOnboardingCheck();
       this.props.fetchStaffDetails();
+      this.props.fetchStaffId();
     }
 
     componentDidUpdate(prevProps) {
       const path = this.props.history.location.pathname;
       const user = this.props.kc.tokenParsed.email;
       if (
-        prevProps.isFetchingStaffDetails !==
-          this.props.isFetchingStaffDetails &&
-        !this.props.isFetchingStaffDetails
+        prevProps.isFetchingStaffId !==
+          this.props.isFetchingStaffId &&
+        !this.props.isFetchingStaffId
       ) {
         const { staffDetails } = this.props;
         let { redirectPath, data } = OnboardChecker.onBoardCheck(
@@ -76,6 +78,7 @@ export default function (ComposedComponent) {
   withOnboardingCheck.propTypes = {
     log: PropTypes.func,
     fetchStaffDetails: PropTypes.func.isRequired,
+    fetchStaffId: PropTypes.func.isRequired,
     performOnboardingCheck: PropTypes.func.isRequired,
     onboardingCheckCompete: PropTypes.func.isRequired,
     isCheckingOnBoarding: PropTypes.bool,
@@ -90,6 +93,7 @@ export default function (ComposedComponent) {
       state => ({
         staffDetails: staffDetails(state),
         isFetchingStaffDetails: isFetchingStaffDetails(state),
+        isFetchingStaffId: isFetchingStaffId(state),
         isCheckingOnBoarding: isCheckingOnBoarding(state),
         kc: state.keycloak,
       }),

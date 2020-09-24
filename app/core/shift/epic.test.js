@@ -1,3 +1,4 @@
+import { Map } from 'immutable';
 import configureMockStore from 'redux-mock-store';
 import { ActionsObservable } from 'redux-observable';
 import { Observable } from 'rxjs/Observable';
@@ -23,7 +24,14 @@ describe('shift epic', () => {
     keycloak: {
       token: 'test',
       tokenParsed: {
+        adelphi_number: '123456',
+        dateofleaving: null,
+        defaultlocationid: 1,
         email: 'testEmail@email.com',
+        grade_id: 2,
+        location_id: 1,
+        phone: '+4474630000000',
+        team_id: 2,
       },
     },
     appConfig: {
@@ -85,11 +93,25 @@ describe('shift epic', () => {
       { type: types.FETCH_STAFF_DETAILS, payload: {} },
     );
     const payload = {
-      staffid: 'staffid',
+      entity: {
+        data: [{}],
+      },
     };
     const client = () => Observable.of(payload);
     const expectedOutput = {
-      type: types.FETCH_STAFF_DETAILS_SUCCESS, payload,
+      type: types.FETCH_STAFF_DETAILS_SUCCESS,
+      payload: {
+        adelphi: '123456',
+        dateofleaving: null,
+        defaultlocationid: 1,
+        defaultteam: {},
+        defaultteamid: undefined,
+        email: 'testEmail@email.com',
+        gradeid: 2,
+        locationid: 1,
+        phone: '+4474630000000',
+        teamid: 2,
+      },
     };
 
     epic(action$, store, { client })
@@ -174,9 +196,11 @@ describe('shift epic', () => {
       status: {
         code: 200,
       },
-      entity: [{
-        staffid: 'staffid',
-      }],
+      entity: [
+        {
+          staffid: 'staffid',
+        },
+      ],
     };
     const client = () => Observable.of(payload);
 
