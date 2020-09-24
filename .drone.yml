@@ -421,11 +421,11 @@ pipeline:
     image: quay.io/ukhomeofficedigital/snowtify:latest
     secrets:
       - source: PRODUCTION_SERVICE_NOW_PASSWORD
-        target: SNOW_TEST_PASS
+        target: SNOW_PROD_PASS
       - source: PRODUCTION_SERVICE_NOW_URL
         target: SNOW_ENDPOINT
       - source: PRODUCTION_SERVICE_NOW_USERNAME
-        target: SNOW_TEST_USER
+        target: SNOW_PROD_USER
     environment:
       - SNOW_EXTERNAL_ID=${DRONE_REPO}:${DRONE_COMMIT_SHA}
     when:
@@ -436,11 +436,11 @@ pipeline:
     image: quay.io/ukhomeofficedigital/snowtify:latest
     secrets:
       - source: PRODUCTION_SERVICE_NOW_PASSWORD
-        target: SNOW_TEST_PASS
+        target: SNOW_PROD_PASS
       - source: PRODUCTION_SERVICE_NOW_URL
         target: SNOW_ENDPOINT
       - source: PRODUCTION_SERVICE_NOW_USERNAME
-        target: SNOW_TEST_USER
+        target: SNOW_PROD_USER
     comments: Successful deployment of ${DRONE_REPO}:${DRONE_COMMIT_SHA}
     deployment_outcome: success
     when:
@@ -452,11 +452,11 @@ pipeline:
     image: quay.io/ukhomeofficedigital/snowtify:latest
     secrets:
       - source: PRODUCTION_SERVICE_NOW_PASSWORD
-        target: SNOW_TEST_PASS
+        target: SNOW_PROD_PASS
       - source: PRODUCTION_SERVICE_NOW_URL
         target: SNOW_ENDPOINT
       - source: PRODUCTION_SERVICE_NOW_USERNAME
-        target: SNOW_TEST_USER
+        target: SNOW_PROD_USER
     comments: Failed deployment of ${DRONE_REPO}:${DRONE_COMMIT_SHA}
     deployment_outcome: fail
     when:
