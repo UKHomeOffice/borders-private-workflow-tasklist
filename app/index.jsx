@@ -34,11 +34,62 @@ Formio.use(gds);
 
 const renderApp = App => {
 
-  const saveExtendedStaffDetails = keycloak => {
+  const updateLocalStorage = async keycloak => {
+    const tp = keycloak.tokenParsed;
+    const config = {
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${keycloak.token}`,
+      },
+    };
+    let response;
+    const fetchTeam = async () => {
+      try {
+        response = await axios.get(
+          `${
+            store.getState().appConfig.apiRefUrl
+          }/v2/entities/team?filter=id=eq.${tp.team_id}&email=eq.${tp.email}`,
+          config,
+        );
+      } catch (error) {
+        console.log('Error fetching team:', error);
+      }
+      return response.data.data[0];
+    };
+    const fetchStaffId = async () => {
+      try {
+        response = await axios.get(
+          `${
+            store.getState().appConfig.operationalDataUrl
+          }/v2/staff?filter=email=eq.${tp.email}`,
+          config,
+        );
+      } catch (error) {
+        console.log('Error fetching staffId:', error);
+      }
+      return response.data[0].staffid;
+    };
+    const team = await fetchTeam();
+    const staffid = await fetchStaffId();
+    const staffDetails = {
+      adelphi: tp.adelphi_number,
+      dateofleaving: tp.dateofleaving /* Not expected to be present */,
+      defaultlocationid: tp.location_id,
+      email: tp.email,
+      gradeid: tp.grade_id,
+      locationid: tp.location_id,
+      phone: tp.phone,
+      staffid,
+      teamid: tp.team_id,
+      defaultteam: team,
+      defaultteamid: team.id,
+    };
+    secureLocalStorage.set(`staffContext::${tp.email}`, staffDetails);
     secureLocalStorage.set('extendedStaffDetails', {
-      delegateEmails: keycloak.tokenParsed.delegate_email,
-      linemanagerEmail: keycloak.tokenParsed.line_manager_email,
-      name: keycloak.tokenParsed.name,
+      delegateEmails: tp.delegate_email,
+      linemanagerEmail: tp.line_manager_email,
+      name: tp.name,
     });
   };
 
@@ -47,7 +98,7 @@ const renderApp = App => {
       .success(refreshed => {
         if (refreshed) {
           store.getState().keycloak = kc;
-          saveExtendedStaffDetails(kc);
+          updateLocalStorage(kc);
         }
       })
       .error(() => {
@@ -59,7 +110,7 @@ const renderApp = App => {
     authenticated => {
       if (authenticated) {
         store.getState().keycloak = kc;
-        saveExtendedStaffDetails(kc);
+        updateLocalStorage(kc);
         Formio.baseUrl = `${store.getState().appConfig.formUrl}`;
         Formio.formsUrl = `${store.getState().appConfig.formUrl}/form`;
         Formio.formUrl = `${store.getState().appConfig.formUrl}/form`;
@@ -149,7 +200,7 @@ const renderApp = App => {
             .success(refreshed => {
               if (refreshed) {
                 store.getState().keycloak = kc;
-                saveExtendedStaffDetails(kc);
+                updateLocalStorage(kc);
               }
             })
             .error(() => {
