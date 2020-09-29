@@ -55,19 +55,6 @@ const submitFailure = () => ({
   type: types.SUBMIT_VALIDATION_FAILURE,
 });
 
-const fetchStaffDetails = () => ({
-  type: types.FETCH_STAFF_DETAILS,
-});
-
-const fetchStaffDetailsSuccess = payload => ({
-  type: types.FETCH_STAFF_DETAILS_SUCCESS,
-  payload,
-});
-
-const fetchStaffDetailsFailure = () => ({
-  type: types.FETCH_STAFF_DETAILS_FAILURE,
-});
-
 const endShift = () => ({
   type: types.END_SHIFT,
 });
@@ -81,19 +68,6 @@ const endShiftFailure = () => ({
   type: types.END_SHIFT_FAILURE,
 });
 
-const fetchStaffId = () => ({
-  type: types.FETCH_STAFF_ID,
-});
-
-const fetchStaffIdSuccess = payload => ({
-  type: types.FETCH_STAFF_ID_SUCCESS,
-  payload,
-});
-
-const fetchStaffIdFailure = () => ({
-  type: types.FETCH_STAFF_ID_FAILURE,
-});
-
 const setHasActiveShift = hasShift => ({
   type: types.SET_HAS_ACTIVE_SHIFT,
   hasShift,
@@ -103,7 +77,7 @@ const performOnboardingCheck = () => ({
   type: types.PERFORM_ONBOARDING_CHECK,
 });
 
-const onboardingCheckCompete = () => ({
+const onboardingCheckComplete = () => ({
   type: types.PERFORM_ONBOARDING_CHECK_COMPLETE,
 });
 
@@ -120,16 +94,10 @@ export {
   fetchShiftForm,
   fetchShiftFormSuccess,
   fetchShiftFormFailure,
-  fetchStaffDetails,
-  fetchStaffDetailsSuccess,
-  fetchStaffDetailsFailure,
-  fetchStaffId,
-  fetchStaffIdSuccess,
-  fetchStaffIdFailure,
   endShift,
   endShiftFailure,
   endShiftSuccess,
   setHasActiveShift,
   performOnboardingCheck,
-  onboardingCheckCompete,
+  onboardingCheckComplete,
 };

@@ -17,8 +17,6 @@ describe('shift selector', () => {
       name: 'shiftForm',
       components: [],
     },
-    staffDetails: null,
-    isFetchingStaffDetails: true,
     endingShift: false,
   });
   const state = {
@@ -42,10 +40,6 @@ describe('shift selector', () => {
   });
   it('should return loadingShiftForm', () => {
     const result = selectors.loadingShiftForm(state);
-    expect(result).toEqual(true);
-  });
-  it('should return isFetchingStaffDetails', () => {
-    const result = selectors.isFetchingStaffDetails(state);
     expect(result).toEqual(true);
   });
   it('should return endingShift', () => {

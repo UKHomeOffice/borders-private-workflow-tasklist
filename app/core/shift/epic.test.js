@@ -88,39 +88,6 @@ describe('shift epic', () => {
         done();
       });
   });
-  it('can fetchStaffDetails', done => {
-    const action$ = ActionsObservable.of(
-      { type: types.FETCH_STAFF_DETAILS, payload: {} },
-    );
-    const payload = {
-      entity: {
-        data: [{}],
-      },
-    };
-    const client = () => Observable.of(payload);
-    const expectedOutput = {
-      type: types.FETCH_STAFF_DETAILS_SUCCESS,
-      payload: {
-        adelphi: '123456',
-        dateofleaving: null,
-        defaultlocationid: 1,
-        defaultteam: {},
-        defaultteamid: undefined,
-        email: 'testEmail@email.com',
-        gradeid: 2,
-        locationid: 1,
-        phone: '+4474630000000',
-        teamid: 2,
-      },
-    };
-
-    epic(action$, store, { client })
-      .subscribe(actualOutput => {
-        expect(actualOutput)
-          .toEqual(expectedOutput);
-        done();
-      });
-  });
   it('can fetchShiftForm', done => {
     const action$ = ActionsObservable.of(
       { type: types.FETCH_SHIFT_FORM, payload: {} },

@@ -12,7 +12,7 @@ import qs from 'querystring';
 import axios from 'axios';
 import jwtDecode from 'jwt-decode';
 import * as OfflinePluginRuntime from 'offline-plugin/runtime';
-import secureLocalStorage from "./common/security/SecureLocalStorage";
+import secureLocalStorage from './common/security/SecureLocalStorage';
 import App from './core/App';
 import configureStore from './core/store/configureStore';
 import 'webpack-icons-installer/bootstrap';
@@ -33,23 +33,34 @@ let kc = null;
 Formio.use(gds);
 
 const renderApp = App => {
-
-  const updateLocalStorage = async keycloak => {
-    const tp = keycloak.tokenParsed;
+  const updateLocalStorage = async ({ tokenParsed, token }) => {
+    const {
+      adelphi_number: adelphi,
+      dateofleaving,
+      location_id: defaultlocationid,
+      email,
+      grade_id: gradeid,
+      phone,
+      team_id: teamid,
+      delegate_email: delegateEmails,
+      line_manager_email: linemanagerEmail,
+      name,
+    } = tokenParsed;
     const config = {
       headers: {
         Accept: 'application/json',
         'Content-Type': 'application/json',
-        Authorization: `Bearer ${keycloak.token}`,
+        Authorization: `Bearer ${token}`,
       },
     };
     let response;
+
     const fetchTeam = async () => {
       try {
         response = await axios.get(
           `${
             store.getState().appConfig.apiRefUrl
-          }/v2/entities/team?filter=id=eq.${tp.team_id}&email=eq.${tp.email}`,
+          }/v2/entities/team?filter=id=eq.${teamid}&email=eq.${email}`,
           config,
         );
       } catch (error) {
@@ -57,12 +68,13 @@ const renderApp = App => {
       }
       return response.data.data[0];
     };
+
     const fetchStaffId = async () => {
       try {
         response = await axios.get(
           `${
             store.getState().appConfig.operationalDataUrl
-          }/v2/staff?filter=email=eq.${tp.email}`,
+          }/v2/staff?filter=email=eq.${tokenParsed.email}`,
           config,
         );
       } catch (error) {
@@ -70,27 +82,29 @@ const renderApp = App => {
       }
       return response.data[0].staffid;
     };
+
     const team = await fetchTeam();
     const staffid = await fetchStaffId();
     const staffDetails = {
-      adelphi: tp.adelphi_number,
-      dateofleaving: tp.dateofleaving /* Not expected to be present */,
-      defaultlocationid: tp.location_id,
-      email: tp.email,
-      gradeid: tp.grade_id,
-      locationid: tp.location_id,
-      phone: tp.phone,
+      adelphi,
+      dateofleaving,
+      defaultlocationid,
+      email,
+      gradeid,
+      locationid: defaultlocationid,
+      phone,
       staffid,
-      teamid: tp.team_id,
+      teamid,
       defaultteam: team,
-      defaultteamid: team.id,
+      defaultteamid: teamid,
     };
-    secureLocalStorage.set(`staffContext::${tp.email}`, staffDetails);
+    secureLocalStorage.set(`staffContext::${email}`, staffDetails);
     secureLocalStorage.set('extendedStaffDetails', {
-      delegateEmails: tp.delegate_email,
-      linemanagerEmail: tp.line_manager_email,
-      name: tp.name,
+      delegateEmails,
+      linemanagerEmail,
+      name,
     });
+    console.log('Saved staffDetails as', staffDetails);
   };
 
   kc.onTokenExpired = () => {

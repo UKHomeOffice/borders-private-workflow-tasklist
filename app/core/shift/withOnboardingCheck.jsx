@@ -5,63 +5,49 @@ import { connect } from 'react-redux';
 
 import { withRouter } from 'react-router';
 import PubSub from 'pubsub-js';
+import secureLocalStorage from '../../common/security/SecureLocalStorage';
 import * as actions from './actions';
 import * as logActions from '../error/actions';
 
 import DataSpinner from '../components/DataSpinner';
-import {
-  isCheckingOnBoarding,
-  isFetchingStaffDetails,
-  isFetchingStaffId,
-  staffDetails,
-} from './selectors';
+import { isCheckingOnBoarding } from './selectors';
 import OnboardChecker from './OnboardChecker';
 
 export default function (ComposedComponent) {
   class withOnboardingCheck extends React.Component {
-    static propTypes = {};
-
     componentDidMount() {
       this.props.performOnboardingCheck();
-      this.props.fetchStaffDetails();
-      this.props.fetchStaffId();
-    }
-
-    componentDidUpdate(prevProps) {
       const path = this.props.history.location.pathname;
       const user = this.props.kc.tokenParsed.email;
-      if (
-        prevProps.isFetchingStaffId !==
-          this.props.isFetchingStaffId &&
-        !this.props.isFetchingStaffId
-      ) {
-        const { staffDetails } = this.props;
-        let { redirectPath, data } = OnboardChecker.onBoardCheck(
-          staffDetails,
-          this.props.location.pathname,
-        );
+      const staffDetails = secureLocalStorage.get(`staffContext::${user}`);
+      console.log('WOB mounted and seeing SD from LS as', staffDetails);
+      let { redirectPath, data } = OnboardChecker.onBoardCheck(
+        staffDetails,
+        this.props.location.pathname,
+      );
 
-        if (path === '/onboard-user' && redirectPath === '/onboard-user') {
-          redirectPath = null;
-        }
+      if (path === '/onboard-user' && redirectPath === '/onboard-user') {
+        console.log('Already on onboard-user route');
+        redirectPath = null;
+      }
 
-        if (redirectPath) {
-          if (data) {
-            PubSub.publish('submission', data);
-          }
-          this.props.log([
-            {
-              user,
-              path,
-              message: `${user} being redirected to ${redirectPath}`,
-              level: 'debug',
-              data,
-            },
-          ]);
-          this.props.history.replace(redirectPath);
-        } else {
-          this.props.onboardingCheckCompete();
+      if (redirectPath) {
+        if (data) {
+          PubSub.publish('submission', data);
         }
+        this.props.log([
+          {
+            user,
+            path,
+            message: `${user} being redirected to ${redirectPath}`,
+            level: 'debug',
+            data,
+          },
+        ]);
+        this.props.history.replace(redirectPath);
+      } else {
+        console.log('Completing onboarding check');
+        this.props.onboardingCheckComplete();
       }
     }
 
@@ -77,12 +63,9 @@ export default function (ComposedComponent) {
 
   withOnboardingCheck.propTypes = {
     log: PropTypes.func,
-    fetchStaffDetails: PropTypes.func.isRequired,
-    fetchStaffId: PropTypes.func.isRequired,
     performOnboardingCheck: PropTypes.func.isRequired,
-    onboardingCheckCompete: PropTypes.func.isRequired,
+    onboardingCheckComplete: PropTypes.func.isRequired,
     isCheckingOnBoarding: PropTypes.bool,
-    isFetchingStaffDetails: PropTypes.bool,
   };
 
   const mapDispatchToProps = dispatch =>
@@ -91,9 +74,6 @@ export default function (ComposedComponent) {
   return withRouter(
     connect(
       state => ({
-        staffDetails: staffDetails(state),
-        isFetchingStaffDetails: isFetchingStaffDetails(state),
-        isFetchingStaffId: isFetchingStaffId(state),
         isCheckingOnBoarding: isCheckingOnBoarding(state),
         kc: state.keycloak,
       }),
