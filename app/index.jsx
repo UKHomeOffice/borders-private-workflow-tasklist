@@ -101,6 +101,7 @@ const renderApp = App => {
     secureLocalStorage.set(`staffContext::${email}`, staffDetails);
     secureLocalStorage.set('extendedStaffDetails', {
       delegateEmails,
+      email,
       linemanagerEmail,
       name,
     });
