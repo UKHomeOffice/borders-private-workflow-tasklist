@@ -6,18 +6,4 @@ const secureLocalStorage = new SecureLS({
   isCompression: true,
 });
 
-export const clearAllExceptDefault = () => {
-  secureLocalStorage
-    .getAllKeys()
-    .filter(key => ![
-      'shift', 
-      'extendedStaffDetails', 
-      'yourTasksGrouping', 
-      'yourTeamTasksGrouping', 
-      'yourTasksSorting', 
-      'yourTeamTasksSorting', 
-    ].includes(key))
-    .forEach(key => secureLocalStorage.remove(key));
-};
-
 export default secureLocalStorage;
