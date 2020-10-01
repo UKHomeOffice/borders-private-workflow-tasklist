@@ -39,11 +39,13 @@ export default function (ComposedComponent) {
 
 
         componentDidUpdate(prevProps, prevState, snapshot) {
-            if (this.props.hasActiveShift && this.shiftValid(this.props.shift)) {
-                this.secureLocalStorage.set("shift", this.props.shift);
-            } else {
-                this.secureLocalStorage.remove("shift");
-                this.props.history.replace(AppConstants.SHIFT_PATH)
+            if (!isFetchingShift) {
+                if (this.props.hasActiveShift && this.shiftValid(this.props.shift)) {
+                    this.secureLocalStorage.set("shift", this.props.shift);
+                } else {
+                    this.secureLocalStorage.remove("shift");
+                    this.props.history.replace(AppConstants.SHIFT_PATH);
+                }
             }
         }
 
