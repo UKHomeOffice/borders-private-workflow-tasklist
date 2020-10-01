@@ -105,7 +105,6 @@ const renderApp = App => {
       linemanagerEmail,
       name,
     });
-    console.log('Saved staffDetails as', staffDetails);
   };
 
   kc.onTokenExpired = () => {

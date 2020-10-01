@@ -20,14 +20,11 @@ export default function (ComposedComponent) {
       const path = this.props.history.location.pathname;
       const user = this.props.kc.tokenParsed.email;
       const staffDetails = secureLocalStorage.get(`staffContext::${user}`);
-      console.log('WOB mounted and seeing SD from LS as', staffDetails);
       let { redirectPath, data } = OnboardChecker.onBoardCheck(
         staffDetails,
         this.props.location.pathname,
       );
-
       if (path === '/onboard-user' && redirectPath === '/onboard-user') {
-        console.log('Already on onboard-user route');
         redirectPath = null;
       }
 
@@ -46,7 +43,6 @@ export default function (ComposedComponent) {
         ]);
         this.props.history.replace(redirectPath);
       } else {
-        console.log('Completing onboarding check');
         this.props.onboardingCheckComplete();
       }
     }
