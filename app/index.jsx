@@ -122,10 +122,10 @@ const renderApp = App => {
   };
 
   kc.init({ onLoad: 'login-required', checkLoginIframe: false }).success(
-    authenticated => {
+    async authenticated => {
       if (authenticated) {
         store.getState().keycloak = kc;
-        updateLocalStorage(kc);
+        await updateLocalStorage(kc);
         Formio.baseUrl = `${store.getState().appConfig.formUrl}`;
         Formio.formsUrl = `${store.getState().appConfig.formUrl}/form`;
         Formio.formUrl = `${store.getState().appConfig.formUrl}/form`;
