@@ -50,6 +50,7 @@ RUN set -eux ; \
 
 COPY --from=build /app/node_modules node_modules
 COPY --from=build /app/dist dist
+COPY --from=build /app/node_modules/node-gyp/test/fixtures/ca-bundle.crt /etc/ssl/certs/ca-bundle.crt
 
 RUN chown -R "$USER":"$GROUP" /app /drone "$HOME"
 
