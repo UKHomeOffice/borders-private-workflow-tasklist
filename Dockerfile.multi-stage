@@ -32,8 +32,6 @@ RUN set -eux; \
   npm cache verify
 
 FROM node:12.18-alpine3.11 as base
-ARG STORAGE_KEY
-ENV NODE_ENV='production'
 ENV USER node
 ENV GROUP node
 ENV HOME /home/${USER}
@@ -54,6 +52,17 @@ RUN set -eux ; \
 COPY --from=build /app/node_modules node_modules
 COPY --from=build /app/dist dist
 
+From base as prod
+ARG STORAGE_KEY
+ENV NODE_ENV='production'
+
+USER 1000
+EXPOSE 8080
+ENTRYPOINT exec node dist/server.js
+
+From prod as dev
+ARG STORAGE_KEY
+ENV NODE_ENV='dev'
 
 USER 1000
 EXPOSE 8080
