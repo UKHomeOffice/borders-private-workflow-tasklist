@@ -4,8 +4,6 @@ ENV USER node
 ENV GROUP node
 ENV HOME /home/${USER}
 ENV NPM_PACKAGES=${HOME}/npm-packages
-ENV PATH ${HOME}/bin:${NPM_PACKAGES}/bin:$HOME/yarn-v$YARN_VERSION/bin:$PATH
-ENV NODE_PATH $NPM_PACKAGES/lib/node_modules:$NODE_PATH
 
 ADD . /app/
 WORKDIR /app
@@ -15,6 +13,7 @@ RUN set -eux; \
   apk add --no-cache \
   py2-pip \
   bash \
+  openssl \
   libc6-compat \
   gcompat \
   libgcc \
@@ -38,22 +37,21 @@ ENV USER node
 ENV GROUP node
 ENV HOME /home/${USER}
 ENV NPM_PACKAGES=${HOME}/npm-packages
-ENV PATH ${HOME}/bin:${NPM_PACKAGES}/bin:$HOME/yarn-v$YARN_VERSION/bin:$PATH
-ENV NODE_PATH $NPM_PACKAGES/lib/node_modules:$NODE_PATH
 WORKDIR /app
 
 RUN set -eux ; \
   apk add --no-cache \
   py2-pip \
+  openssl \
   python; \
   rm -rf /var/cache/apk/* ; \
   mkdir -p /app /drone ;\
-  chown -R "$USER":"$GROUP" /app /drone "$HOME" ; \
   pip install PyPDF2
 
 COPY --from=build /app/node_modules node_modules
 COPY --from=build /app/dist dist
 
+RUN chown -R "$USER":"$GROUP" /app /drone "$HOME"
 
 USER 1000
 EXPOSE 8080
