@@ -60,7 +60,7 @@ const renderApp = App => {
         response = await axios.get(
           `${
             store.getState().appConfig.apiRefUrl
-          }/v2/entities/team?filter=id=eq.${teamid}&email=eq.${email}`,
+          }/v2/entities/team?filter=id=eq.${teamid}`,
           config,
         );
       } catch (error) {
