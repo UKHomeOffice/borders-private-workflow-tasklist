@@ -40,7 +40,6 @@ exports[`Header matches snapshot 1`] = `
             className="govuk-header__link header-nav__link"
             href="/submit-a-form/edit-your-profile"
             id="profile"
-            onClick={[Function]}
           >
             My profile
           </a>

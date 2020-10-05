@@ -49,10 +49,6 @@ export class Header extends React.Component {
                     <a
                       id="profile"
                       href={`${AppConstants.SUBMIT_A_FORM}/edit-your-profile`}
-                      onClick={event => {
-                                    event.preventDefault();
-                                    this.props.history.replace(`${AppConstants.SUBMIT_A_FORM}/edit-your-profile`)
-                                }}
                       className="govuk-header__link header-nav__link"
                     >My profile
                     </a>
