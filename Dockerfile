@@ -46,13 +46,14 @@ RUN set -eux ; \
   python; \
   rm -rf /var/cache/apk/* ; \
   mkdir -p /app /drone ;\
+  chown -R "$USER":"$GROUP" /app /drone "$HOME" ; \
   pip install PyPDF2
 
 COPY --from=build /app/node_modules node_modules
 COPY --from=build /app/dist dist
 COPY --from=build /app/node_modules/node-gyp/test/fixtures/ca-bundle.crt /etc/ssl/certs/ca-bundle.crt
+# COPY --from=digitalpatterns/node:4 /etc/pki/ca-trust/extracted/pem/tls-ca-bundle.pem /etc/ssl/certs/ca-bundle.crt
 
-RUN chown -R "$USER":"$GROUP" /app /drone "$HOME"
 
 USER 1000
 EXPOSE 8080
