@@ -17,6 +17,9 @@ describe('TaskForm Component', () => {
       },
       kc: {
         token: 'token',
+        realm: 'cop-test',
+        url: 'http://localhost',
+        subject: 'd3eb0456-1b82-4c64-a987-7201d9ce9312',
         tokenParsed: {
           email: 'yesy',
           family_name: 'test',

@@ -128,6 +128,8 @@ exports[`TaskForm Component matches snapshot 1`] = `
     Object {
       "fileService": FileService {
         "keycloak": Object {
+          "realm": "cop-test",
+          "subject": "d3eb0456-1b82-4c64-a987-7201d9ce9312",
           "token": "token",
           "tokenParsed": Object {
             "email": "yesy",
@@ -135,6 +137,7 @@ exports[`TaskForm Component matches snapshot 1`] = `
             "given_name": "name",
             "session_state": "state",
           },
+          "url": "http://localhost",
         },
       },
       "hooks": Object {
@@ -166,10 +169,10 @@ exports[`TaskForm Component matches snapshot 1`] = `
           "email": "yesy",
           "familyName": "test",
           "givenName": "name",
-          "realm": undefined,
+          "realm": "cop-test",
           "refreshToken": undefined,
           "sessionId": "state",
-          "subject": undefined,
+          "subject": "d3eb0456-1b82-4c64-a987-7201d9ce9312",
           "url": undefined,
         },
         "processContext": Object {},
