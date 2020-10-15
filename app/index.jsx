@@ -45,7 +45,13 @@ const renderApp = App => {
       delegate_email: delegateEmails,
       line_manager_email: linemanagerEmail,
       name,
+      realm_access: { roles },
     } = tokenParsed;
+
+    if (!(roles && roles.includes('copge'))) {
+      return;
+    }
+
     const config = {
       headers: {
         Accept: 'application/json',
@@ -83,7 +89,7 @@ const renderApp = App => {
       return response.data[0].staffid;
     };
 
-    const team = await fetchTeam();
+    const team = teamid && (await fetchTeam());
     const staffid = await fetchStaffId();
     const staffDetails = {
       adelphi,
