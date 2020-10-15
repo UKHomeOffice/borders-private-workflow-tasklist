@@ -10,7 +10,6 @@ import Header from './components/Header';
 import Footer from './components/Footer';
 import Main from './Main';
 import withLog from './error/component/withLog';
-import { clearAllExceptDefault } from '../common/security/SecureLocalStorage';
 
 const SubmissionBanner = lazy(() => import('./components/SubmissionBanner'));
 
@@ -36,7 +35,6 @@ export class App extends React.Component {
     const user = kc.tokenParsed.email;
 
     if (currentLocation !== previousLocation) {
-      clearAllExceptDefault();
       log(
         [
           {

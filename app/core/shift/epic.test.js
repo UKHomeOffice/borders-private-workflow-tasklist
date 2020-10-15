@@ -1,3 +1,4 @@
+import { Map } from 'immutable';
 import configureMockStore from 'redux-mock-store';
 import { ActionsObservable } from 'redux-observable';
 import { Observable } from 'rxjs/Observable';
@@ -23,7 +24,14 @@ describe('shift epic', () => {
     keycloak: {
       token: 'test',
       tokenParsed: {
+        adelphi_number: '123456',
+        dateofleaving: null,
+        defaultlocationid: 1,
         email: 'testEmail@email.com',
+        grade_id: 2,
+        location_id: 1,
+        phone: '+4474630000000',
+        team_id: 2,
       },
     },
     appConfig: {
@@ -77,44 +85,6 @@ describe('shift epic', () => {
               },
             },
           });
-        done();
-      });
-  });
-  it('can fetchStaffDetails', done => {
-    const action$ = ActionsObservable.of(
-      { type: types.FETCH_STAFF_DETAILS, payload: {} },
-    );
-    const payload = {
-      staffid: 'staffid',
-    };
-    const client = () => Observable.of(payload);
-    const expectedOutput = {
-      type: types.FETCH_STAFF_DETAILS_SUCCESS, payload,
-    };
-
-    epic(action$, store, { client })
-      .subscribe(actualOutput => {
-        expect(actualOutput)
-          .toEqual(expectedOutput);
-        done();
-      });
-  });
-  it('can fetchExtendedStaffDetails', done => {
-    const action$ = ActionsObservable.of(
-      { type: types.FETCH_EXTENDED_STAFF_DETAILS, payload: {} },
-    );
-    const payload = {
-      email: 'officer@homeoffice.gov.uk',
-    };
-    const client = () => Observable.of(payload);
-    const expectedOutput = {
-      type: types.FETCH_EXTENDED_STAFF_DETAILS_SUCCESS, payload,
-    };
-
-    epic(action$, store, { client })
-      .subscribe(actualOutput => {
-        expect(actualOutput)
-          .toEqual(expectedOutput);
         done();
       });
   });
@@ -193,9 +163,11 @@ describe('shift epic', () => {
       status: {
         code: 200,
       },
-      entity: [{
-        staffid: 'staffid',
-      }],
+      entity: [
+        {
+          staffid: 'staffid',
+        },
+      ],
     };
     const client = () => Observable.of(payload);
 

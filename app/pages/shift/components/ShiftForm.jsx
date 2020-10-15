@@ -29,7 +29,17 @@ export default class ShiftForm extends React.Component {
 
 
     render() {
-        const {shiftForm, shift, staffDetails, formReference, submit, kc, appConfig} = this.props;
+        const {
+          shiftForm,
+          shift,
+          formReference,
+          submit,
+          kc,
+          appConfig,
+        } = this.props;
+        const staffDetails = secureLocalStorage.get(
+          `staffContext::${kc.tokenParsed.email}`,
+        );
         const options = {
             noAlerts: true,
             language: 'en',
@@ -71,7 +81,7 @@ export default class ShiftForm extends React.Component {
                     givenName: kc.tokenParsed.given_name,
                     familyName: kc.tokenParsed.family_name
                 },
-                staffDetailsDataContext: secureLocalStorage.get(`staffContext::${kc.tokenParsed.email}`),
+                staffDetailsDataContext: staffDetails,
                 extendedStaffDetailsContext: secureLocalStorage.get('extendedStaffDetails'),
                 environmentContext: {
                     referenceDataUrl: appConfig.apiRefUrl,
@@ -96,16 +106,15 @@ export default class ShiftForm extends React.Component {
                 phone: shift.get('phone')
             };
         } else if (staffDetails) {
-                const defaultTeam = staffDetails.get('defaultteam');
                 shiftSubmission.data = {
                     ...shiftSubmission.data,
                     shiftminutes: 0,
                     shifthours: 8,
                     startdatetime: moment.utc(moment()),
-                    team: defaultTeam ? defaultTeam.toObject() : {},
-                    teamid: staffDetails.get('defaultteamid'),
-                    locationid: staffDetails.get('defaultlocationid'),
-                    phone: staffDetails.get('phone')
+                    team: staffDetails.defaultteam || {},
+                    teamid: staffDetails.defaultteamid,
+                    locationid: staffDetails.defaultlocationid,
+                    phone: staffDetails.phone,
                 };
             }
         FormioUtils.eachComponent(shiftForm.components, component => {

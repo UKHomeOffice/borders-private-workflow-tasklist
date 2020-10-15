@@ -12,6 +12,7 @@ import qs from 'querystring';
 import axios from 'axios';
 import jwtDecode from 'jwt-decode';
 import * as OfflinePluginRuntime from 'offline-plugin/runtime';
+import secureLocalStorage from './common/security/SecureLocalStorage';
 import App from './core/App';
 import configureStore from './core/store/configureStore';
 import 'webpack-icons-installer/bootstrap';
@@ -32,11 +33,86 @@ let kc = null;
 Formio.use(gds);
 
 const renderApp = App => {
+  const updateLocalStorage = async ({ tokenParsed, token }) => {
+    const {
+      adelphi_number: adelphi,
+      dateofleaving,
+      location_id: defaultlocationid,
+      email,
+      grade_id: gradeid,
+      phone,
+      team_id: teamid,
+      delegate_email: delegateEmails,
+      line_manager_email: linemanagerEmail,
+      name,
+    } = tokenParsed;
+    const config = {
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+    };
+    let response;
+
+    const fetchTeam = async () => {
+      try {
+        response = await axios.get(
+          `${
+            store.getState().appConfig.apiRefUrl
+          }/v2/entities/team?filter=id=eq.${teamid}`,
+          config,
+        );
+      } catch (error) {
+        console.log('Error fetching team:', error);
+      }
+      return response.data.data[0];
+    };
+
+    const fetchStaffId = async () => {
+      try {
+        response = await axios.get(
+          `${
+            store.getState().appConfig.operationalDataUrl
+          }/v2/staff?filter=email=eq.${tokenParsed.email}`,
+          config,
+        );
+      } catch (error) {
+        console.log('Error fetching staffId:', error);
+      }
+      return response.data[0].staffid;
+    };
+
+    const team = await fetchTeam();
+    const staffid = await fetchStaffId();
+    const staffDetails = {
+      adelphi,
+      dateofleaving,
+      defaultlocationid,
+      email,
+      gradeid,
+      locationid: defaultlocationid,
+      phone,
+      staffid,
+      teamid,
+      defaultteam: team,
+      defaultteamid: teamid,
+    };
+    secureLocalStorage.set(`staffContext::${email}`, staffDetails);
+    secureLocalStorage.set('extendedStaffDetails', {
+      delegateEmails,
+      email,
+      linemanagerEmail,
+      name,
+    });
+  };
+
   kc.onTokenExpired = () => {
     kc.updateToken()
       .success(refreshed => {
         if (refreshed) {
           store.getState().keycloak = kc;
+          updateLocalStorage(kc);
         }
       })
       .error(() => {
@@ -45,10 +121,10 @@ const renderApp = App => {
   };
 
   kc.init({ onLoad: 'login-required', checkLoginIframe: false }).success(
-    authenticated => {
+    async authenticated => {
       if (authenticated) {
         store.getState().keycloak = kc;
-
+        await updateLocalStorage(kc);
         Formio.baseUrl = `${store.getState().appConfig.formUrl}`;
         Formio.formsUrl = `${store.getState().appConfig.formUrl}/form`;
         Formio.formUrl = `${store.getState().appConfig.formUrl}/form`;
@@ -138,6 +214,7 @@ const renderApp = App => {
             .success(refreshed => {
               if (refreshed) {
                 store.getState().keycloak = kc;
+                updateLocalStorage(kc);
               }
             })
             .error(() => {
