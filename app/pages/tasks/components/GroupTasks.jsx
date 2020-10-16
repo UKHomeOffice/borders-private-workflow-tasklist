@@ -17,6 +17,7 @@ const GroupTasks = ({groupTasks, grouping}) => {
           <option value="category">Category</option>
           <option value="reference">BF Reference</option>
           <option value="priority">Priority</option>
+          <option value="assignee">Assignee</option>
         </select>
       </div>
 )};

@@ -40,9 +40,9 @@ const YourGroupTasks = props => {
                 borderTop: 'none',
               }}
               />
-              <h2 className="govuk-heading-m">
-                {`${key} ${value.length} ${tasks}`}
-              </h2>
+              <h3 className="govuk-heading-m">
+                {`${key === 'null' ? 'Unassigned' : key} ${value.length} ${tasks}`}
+              </h3>
             </React.Fragment>
           )}
           {_.map(value, val => {
