@@ -26,7 +26,7 @@ class CaseAttachments extends React.Component {
         return (
           <div className="govuk-grid-row govuk-card govuk-!-margin-top-4">
             <div className="govuk-grid-column-full">
-              <h2 className="govuk-heading-m">Case attachments</h2>
+              <h3 className="govuk-heading-m">Case attachments</h3>
               <details className="govuk-details" data-module="govuk-details">
                 <summary className="govuk-details__summary">
                   <span className="govuk-details__summary-text">

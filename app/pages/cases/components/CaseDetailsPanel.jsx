@@ -65,7 +65,7 @@ class CaseDetailsPanel extends React.Component {
               <div className="govuk-grid-column-full govuk-card">
                 <div className="govuk-grid-row">
                   <div className="govuk-grid-column-one-half">
-                    <h3 className="govuk-heading-s">{caseDetails.businessKey}</h3>
+                    <h2 className="govuk-heading-m">{caseDetails.businessKey}</h2>
                   </div>
                   <div className="govuk-grid-column-one-half">
                     <CopyToClipboard
@@ -85,7 +85,7 @@ class CaseDetailsPanel extends React.Component {
                  : null}
             <div className="govuk-grid-row govuk-card govuk-!-margin-top-4">
               <div className="govuk-grid-column-full">
-                <h3 className="govuk-heading-s">Case history</h3>
+                <h3 className="govuk-heading-m">Case history</h3>
                 <div className="govuk-form-group">
                   <label className="govuk-label" htmlFor="sort">
                                     Order by
