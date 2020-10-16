@@ -37,15 +37,17 @@ const renderApp = App => {
     const {
       adelphi_number: adelphi,
       dateofleaving,
-      location_id: defaultlocationid,
-      email,
-      grade_id: gradeid,
-      phone,
-      team_id: teamid,
       delegate_email: delegateEmails,
+      email,
+      family_name: surname,
+      given_name: firstname,
+      grade_id: gradeid,
       line_manager_email: linemanagerEmail,
+      location_id: defaultlocationid,
       name,
+      phone,
       realm_access: { roles },
+      team_id: teamid,
     } = tokenParsed;
 
     if (!(roles && roles.includes('copge'))) {
@@ -95,14 +97,16 @@ const renderApp = App => {
       adelphi,
       dateofleaving,
       defaultlocationid,
+      defaultteam: team,
+      defaultteamid: teamid,
       email,
+      firstname,
       gradeid,
       locationid: defaultlocationid,
       phone,
       staffid,
+      surname,
       teamid,
-      defaultteam: team,
-      defaultteamid: teamid,
     };
     secureLocalStorage.set(`staffContext::${email}`, staffDetails);
     secureLocalStorage.set('extendedStaffDetails', {
