@@ -44,9 +44,9 @@ const TaskTitle = props => {
           <span className="govuk-caption-l">
             <Link className="govuk-link" target="_blank" to={`/cases/${businessKey}`}>{businessKey}</Link>
           </span>
-          <h2 className="govuk-heading-l">
+          <h1 className="govuk-heading-l">
             {task.get('name')}
-          </h2>
+          </h1>
         </div>
       </div>
       <div className="govuk-grid-row">

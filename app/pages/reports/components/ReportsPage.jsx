@@ -29,7 +29,7 @@ export class ReportsPage extends React.Component {
         items.push(
           <div id="report" className="govuk-grid-row" key={uuid()}>
             <div className="govuk-grid-column-full govuk-card">
-              <h3 className="govuk-heading-m">{report.get('name')}</h3>
+              <h2 className="govuk-heading-m">{report.get('name')}</h2>
               <p id="formDescription" className="govuk-body">
                 {report.get('description')}
               </p>
@@ -71,9 +71,9 @@ export class ReportsPage extends React.Component {
         <div className="govuk-grid-row" id="reportsCountLabel">
           <div className="govuk-grid-column-one-half">
             <span className="govuk-caption-l">Operational reports</span>
-            <h2 className="govuk-heading-l">
+            <h1 className="govuk-heading-l">
               {reportsList.size} {reportsList.size === 1 ? 'report' : 'reports'}
-            </h2>
+            </h1>
           </div>
         </div>
         {reportsLoading ? (

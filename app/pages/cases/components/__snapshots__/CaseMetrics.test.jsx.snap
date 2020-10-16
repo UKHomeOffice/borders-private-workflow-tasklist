@@ -9,7 +9,7 @@ exports[`CaseMetrics renders metrics 1`] = `
     className="govuk-grid-column-full"
   >
     <h3
-      className="govuk-heading-m"
+      className="govuk-heading-s"
     >
       Case metrics
     </h3>

@@ -40,9 +40,9 @@ const YourGroupTasks = props => {
                 borderTop: 'none',
               }}
               />
-              <h3 className="govuk-heading-m">
+              <h2 className="govuk-heading-m">
                 {`${key} ${value.length} ${tasks}`}
-              </h3>
+              </h2>
             </React.Fragment>
           )}
           {_.map(value, val => {
@@ -147,9 +147,9 @@ const YourGroupTasks = props => {
             id="yourGroupTasksTotalCount"
           >
             <span className="govuk-caption-l">Your team&rsquo;s tasks</span>
-            <h2 className="govuk-heading-l">
+            <h1 className="govuk-heading-l">
               {totalTasks} assigned to your team
-            </h2>
+            </h1>
             <div className="govuk-inset-text">
               <strong>This page auto refreshes every 5 minutes</strong>
             </div>

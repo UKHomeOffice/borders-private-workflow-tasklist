@@ -57,11 +57,13 @@ class CaseResultsPanel extends React.Component {
         return (
           <div className="govuk-grid-row">
             <div className="govuk-grid-column-one-quarter">
-              <h3 className="govuk-heading-m">Search results</h3>
+              <h2 className="govuk-heading-m">Search results</h2>
               {caseSearchResults ? (
                 <React.Fragment>
                   <span className="govuk-caption-m">Number of cases found</span>
-                  <h3 className="govuk-heading-m">{caseSearchResults.page.totalElements}</h3>
+                  <h3 className="govuk-heading-s">
+                    {caseSearchResults.page.totalElements}
+                  </h3>
 
                   {caseSearchResults.page.totalElements > 0 ? (
                     <ul className="govuk-list">

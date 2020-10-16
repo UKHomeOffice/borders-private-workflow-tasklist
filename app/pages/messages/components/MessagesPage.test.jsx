@@ -102,7 +102,7 @@ describe('MessagesPage', () => {
     expect(messagesCountWrapper.text()).toEqual('Operational messages1 messages');
 
     const flashCardWrapper = wrapper.find('#messageName');
-    expect(flashCardWrapper.find('h3').text()).toEqual(
+    expect(flashCardWrapper.find('h2').text()).toEqual(
       '!WarningEmergency: name',
     );
     expect(wrapper.find('#messageCreated').text()).toEqual('a few seconds ago');

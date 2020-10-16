@@ -85,9 +85,7 @@ class DashboardTitle extends React.Component {
       <div className="govuk-grid-row govuk-!-padding-top-3">
         <div className="govuk-grid-column-one-half">
           <span className="govuk-caption-l">{kc.tokenParsed.given_name} {kc.tokenParsed.family_name}</span>
-          <h2 className="govuk-heading-l">
-            Operational dashboard
-          </h2>
+          <h1 className="govuk-heading-l">Operational dashboard</h1>
         </div>
         {shiftStatus()}
       </div>
