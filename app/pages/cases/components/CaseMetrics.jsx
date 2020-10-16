@@ -11,7 +11,7 @@ export default class CaseMetrics extends React.Component {
         return (
           <div className="govuk-grid-row govuk-card" id="caseMetrics">
             <div className="govuk-grid-column-full">
-              <h3 className="govuk-heading-s">Case metrics</h3>
+              <h3 className="govuk-heading-m">Case metrics</h3>
               <details className="govuk-details" data-module="govuk-details">
                 <summary className="govuk-details__summary">
                   <span className="govuk-details__summary-text">
