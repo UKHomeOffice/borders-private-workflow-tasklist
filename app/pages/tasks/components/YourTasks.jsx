@@ -37,9 +37,9 @@ const YourTasks = props => {
                 borderTop: 'none',
               }}
               />
-              <h3 className="govuk-heading-m">
+              <h2 className="govuk-heading-m">
                 {`${key} ${value.length} ${tasks}`}
-              </h3>
+              </h2>
             </React.Fragment>
           )}
           {_.map(value, val => {
@@ -111,9 +111,9 @@ const YourTasks = props => {
         <div className="govuk-grid-row">
           <div className="govuk-grid-column-one-half" id="yourTasksTotalCount">
             <span className="govuk-caption-l">Your tasks</span>
-            <h2 className="govuk-heading-l">
+            <h1 className="govuk-heading-l">
               {totalTasks} assigned to you
-            </h2>
+            </h1>
           </div>
         </div>
         <div className="govuk-grid-row govuk-!-padding-top-3">

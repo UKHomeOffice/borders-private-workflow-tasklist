@@ -42,9 +42,9 @@ export class FormsListPage extends React.Component {
         <div className="govuk-grid-row" id="proceduresCountLabel">
           <div className="govuk-grid-column-one-half">
             <span className="govuk-caption-l">Operational forms</span>
-            <h2 className="govuk-heading-l">
+            <h1 className="govuk-heading-l">
               {processDefinitions.size} forms
-            </h2>
+            </h1>
           </div>
         </div>
         <div className="govuk-grid-row">

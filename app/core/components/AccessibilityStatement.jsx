@@ -5,7 +5,7 @@ const AccessibilityStatement = () => (
     <main className="govuk-main-wrapper">
       <div className="govuk-grid-row">
         <div className="govuk-grid-column-two-thirds">
-          <h1 className="govuk-heading-xl">
+          <h1 className="govuk-heading-l">
             Accessibility statement for Central Operations Platform (COP)
           </h1>
           <p className="govuk-body">
@@ -61,7 +61,7 @@ const AccessibilityStatement = () => (
             disability.
           </p>
 
-          <h2 className="govuk-heading-l">How accessible this website is</h2>
+          <h2 className="govuk-heading-m">How accessible this website is</h2>
           <p className="govuk-body">
             We aim to meet international accessibility guidelines. However, this
             may not always be possible, or we may have missed a problem.
@@ -121,7 +121,7 @@ const AccessibilityStatement = () => (
             Non-accessible content section of this statement.
           </p>
 
-          <h2 className="govuk-heading-l">Feedback and contact information</h2>
+          <h2 className="govuk-heading-m">Feedback and contact information</h2>
           <p className="govuk-body">
             If you have difficulty using this service, contact us by:
           </p>
@@ -142,7 +142,7 @@ const AccessibilityStatement = () => (
             <li>Calling the service desk on 0845 000 0050.</li>
           </ul>
 
-          <h2 className="govuk-heading-l">
+          <h2 className="govuk-heading-m">
             Reporting accessibility problems with this website
           </h2>
           <p className="govuk-body">
@@ -158,7 +158,7 @@ const AccessibilityStatement = () => (
             feedback and contact information section) to tell us.
           </p>
 
-          <h2 className="govuk-heading-l">Enforcement procedure</h2>
+          <h2 className="govuk-heading-m">Enforcement procedure</h2>
           <p className="govuk-body">
             The Equality and Human Rights Commission (EHRC) is responsible for
             enforcing the Public Sector Bodies (Websites and Mobile
@@ -190,7 +190,7 @@ const AccessibilityStatement = () => (
             ‘accessibility regulations’) in Northern Ireland.
           </p>
 
-          <h2 className="govuk-heading-l">
+          <h2 className="govuk-heading-m">
             Technical information about this website’s accessibility
           </h2>
           <p className="govuk-body">
@@ -199,7 +199,7 @@ const AccessibilityStatement = () => (
             Applications) (No. 2) Accessibility Regulations 2018.
           </p>
 
-          <h2 className="govuk-heading-l">Compliance status</h2>
+          <h2 className="govuk-heading-m">Compliance status</h2>
           <p className="govuk-body">
             This website is not compliant with the{' '}
             <a
@@ -213,13 +213,13 @@ const AccessibilityStatement = () => (
             AA standard. The non-compliances are listed below.
           </p>
 
-          <h2 className="govuk-heading-l">Non-accessible content</h2>
+          <h2 className="govuk-heading-m">Non-accessible content</h2>
           <p className="govuk-body">
             The content listed below is non-accessible for the following
             reasons.
           </p>
 
-          <h3 className="govuk-heading-m">
+          <h3 className="govuk-heading-s">
             Non-compliance with the accessibility regulations
           </h3>
           <ul className="govuk-list govuk-list--bullet">
@@ -320,7 +320,7 @@ const AccessibilityStatement = () => (
             </li>
           </ul>
 
-          <h3 className="govuk-heading-m">
+          <h3 className="govuk-heading-s">
             What we’re doing to improve accessibility
           </h3>
           <p className="govuk-body">
@@ -420,7 +420,7 @@ const AccessibilityStatement = () => (
             <li>(2.4.7) Ensure that scrollable region has keyboard access.</li>
           </ul>
 
-          <h3 className="govuk-heading-m">Disproportionate burden</h3>
+          <h3 className="govuk-heading-s">Disproportionate burden</h3>
           <p className="govuk-body">
             The National Security (CT) referral form on COP currently has a list
             of accessibility issues. The COP team are aware of this and will not
@@ -429,7 +429,7 @@ const AccessibilityStatement = () => (
             contact information section).
           </p>
 
-          <h3 className="govuk-heading-m">
+          <h3 className="govuk-heading-s">
             Content that’s not within the scope of the accessibility regulations
           </h3>
           <h4 className="govuk-heading-s">PDFs</h4>
@@ -442,7 +442,7 @@ const AccessibilityStatement = () => (
             scope of the accessibility regulations.
           </p>
 
-          <h2 className="govuk-heading-l">
+          <h2 className="govuk-heading-m">
             Preparation of this accessibility statement
           </h2>
           <p className="govuk-body">

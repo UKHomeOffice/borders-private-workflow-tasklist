@@ -54,9 +54,9 @@ export class MessagesPage extends React.Component {
           <div className="govuk-grid-row" id="numberOfMessages">
             <div className="govuk-grid-column-one-half">
               <span className="govuk-caption-l">Operational messages</span>
-              <h2 className="govuk-heading-l">
+              <h1 className="govuk-heading-l">
                 {this.props.total} messages
-              </h2>
+              </h1>
             </div>
           </div>
         )}
@@ -112,7 +112,7 @@ const NotificationTask = ({ task, action }) => {
         <span className="govuk-caption-m" id="messageCreated">
           {created(task)}
         </span>
-        <h3 className="govuk-heading-m" id="messageName">
+        <h2 className="govuk-heading-m" id="messageName">
           {taskPriority >= 100 && taskPriority <= 1000 ? (
             <div className="govuk-warning-text ">
               <span
@@ -132,7 +132,7 @@ const NotificationTask = ({ task, action }) => {
               {determineTitle(task)}: {taskName}
             </div>
           )}
-        </h3>
+        </h2>
         <div className="govuk-card__content">
           <p className="govuk-body"> {taskDescription}</p>
         </div>

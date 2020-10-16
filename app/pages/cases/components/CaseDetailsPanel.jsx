@@ -65,7 +65,7 @@ class CaseDetailsPanel extends React.Component {
               <div className="govuk-grid-column-full govuk-card">
                 <div className="govuk-grid-row">
                   <div className="govuk-grid-column-one-half">
-                    <h3 className="govuk-heading-m">{caseDetails.businessKey}</h3>
+                    <h3 className="govuk-heading-s">{caseDetails.businessKey}</h3>
                   </div>
                   <div className="govuk-grid-column-one-half">
                     <CopyToClipboard
@@ -85,7 +85,7 @@ class CaseDetailsPanel extends React.Component {
                  : null}
             <div className="govuk-grid-row govuk-card govuk-!-margin-top-4">
               <div className="govuk-grid-column-full">
-                <h3 className="govuk-heading-m">Case history</h3>
+                <h3 className="govuk-heading-s">Case history</h3>
                 <div className="govuk-form-group">
                   <label className="govuk-label" htmlFor="sort">
                                     Order by
@@ -133,7 +133,7 @@ class CaseDetailsPanel extends React.Component {
                                               <div className="govuk-grid-row">
                                                 <div className="govuk-grid-column-one-half">
                                                   <span className="govuk-caption-m">Status</span>
-                                                  <h3 className="govuk-heading-m"><span
+                                                  <h3 className="govuk-heading-s"><span
                                                     className="govuk-tag"
                                                   >{processInstance.endDate ? 'Completed' : 'Active'}
                                                                                   </span>
@@ -141,17 +141,17 @@ class CaseDetailsPanel extends React.Component {
                                                 </div>
                                                 <div className="govuk-grid-column-one-half">
                                                   <span className="govuk-caption-m">Forms</span>
-                                                  <h3 className="govuk-heading-m">{Object.keys(groupedForms).length} completed</h3>
+                                                  <h3 className="govuk-heading-s">{Object.keys(groupedForms).length} completed</h3>
 
                                                 </div>
                                                 <div className="govuk-grid-column-one-half">
                                                   <span className="govuk-caption-m">Start date</span>
-                                                  <h3 className="govuk-heading-m">{moment(processInstance.startDate).format('DD/MM/YYYY HH:mm')}</h3>
+                                                  <h3 className="govuk-heading-s">{moment(processInstance.startDate).format('DD/MM/YYYY HH:mm')}</h3>
                                                 </div>
                                                 <div className="govuk-grid-column-one-half">
                                                   <span className="govuk-caption-m">End date</span>
 
-                                                  <h3 className="govuk-heading-m">
+                                                  <h3 className="govuk-heading-s">
                                                     {processInstance.endDate ? moment(processInstance.endDate).format('DD/MM/YYYY HH:mm') :
                                                                     'Active'}
                                                   </h3>

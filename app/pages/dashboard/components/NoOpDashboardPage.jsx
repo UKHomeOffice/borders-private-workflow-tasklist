@@ -12,9 +12,7 @@ export class NoOpDashboardPage extends React.Component {
         <div className="govuk-grid-row" style={{ width: '100%', height: '230px' }}>
           <div className="govuk-grid-column-full">
             <span className="govuk-caption-l">{this.props.kc.tokenParsed.given_name} {this.props.kc.tokenParsed.family_name}</span>
-            <h2 className="govuk-heading-l">
-                    Operational dashboard
-            </h2>
+            <h1 className="govuk-heading-l">Operational dashboard</h1>
           </div>
           <div className="govuk-grid-column-full">
             <p className="govuk-body">Your onboarding onto COP is complete. We have sent you a confirmation email and text.</p>

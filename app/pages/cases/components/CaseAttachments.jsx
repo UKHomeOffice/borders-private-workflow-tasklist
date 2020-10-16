@@ -26,7 +26,7 @@ class CaseAttachments extends React.Component {
         return (
           <div className="govuk-grid-row govuk-card govuk-!-margin-top-4">
             <div className="govuk-grid-column-full">
-              <h3 className="govuk-heading-m">Case attachments</h3>
+              <h2 className="govuk-heading-m">Case attachments</h2>
               <details className="govuk-details" data-module="govuk-details">
                 <summary className="govuk-details__summary">
                   <span className="govuk-details__summary-text">
@@ -55,7 +55,7 @@ class CaseAttachments extends React.Component {
                       <tbody className="govuk-table__body">
                         {fetchingCaseAttachments ? (
                           <tr className="govuk-table__row">
-                            <td><h4 className="govuk-heading-s">Loading attachments...</h4></td>
+                            <td><h3 className="govuk-heading-s">Loading attachments...</h3></td>
                           </tr>
                                ): (attachments && attachments.length !== 0 ? attachments.map(attachment => {
                                     return (
@@ -96,9 +96,9 @@ class CaseAttachments extends React.Component {
                                       </tr>
 )
                                 }) : (
-                                  <h4 className="govuk-heading-s govuk-!-margin-top-4">
+                                  <h3 className="govuk-heading-s govuk-!-margin-top-4">
                                     No attachments associated with case
-                                  </h4>
+                                  </h3>
 ))}
 
                       </tbody>

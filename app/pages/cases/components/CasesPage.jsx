@@ -45,9 +45,7 @@ class CasesPage extends React.Component {
         <div className="govuk-grid-row">
           <div className="govuk-grid-column-two-thirds">
             <span className="govuk-caption-l">Case view</span>
-            <h2 className="govuk-heading-l">
-              Cases
-            </h2>
+            <h1 className="govuk-heading-l">Cases</h1>
             <div className="govuk-inset-text">
               <p>Enter a COP number in quotes to search for cases—e.g. "COP-20200406-24".</p>
               <p><strong>Please note all actions are audited.</strong></p>
