@@ -84,6 +84,8 @@ describe('CaseResultsPanel', () => {
           </Provider>
         </Router>);
 
-        expect(wrapper.html()).toEqual('<div class="govuk-grid-row"><div class="govuk-grid-column-one-quarter"><h3 class="govuk-heading-m">Search results</h3><span class="govuk-caption-m">Number of cases found</span><h3 class="govuk-heading-m">2</h3><ul class="govuk-list"><li><a class="govuk-link" href="">businessKey1</a></li><li><a class="govuk-link" href="">businessKey2</a></li></ul></div><div class="govuk-grid-column-three-quarters"></div></div>')
+        expect(wrapper.html()).toEqual(
+          '<div class="govuk-grid-row"><div class="govuk-grid-column-one-quarter"><h2 class="govuk-heading-m">Search results</h2><span class="govuk-caption-m">Number of cases found</span><h3 class="govuk-heading-s">2</h3><ul class="govuk-list"><li><a class="govuk-link" href="">businessKey1</a></li><li><a class="govuk-link" href="">businessKey2</a></li></ul></div><div class="govuk-grid-column-three-quarters"></div></div>',
+        );
     })
 });

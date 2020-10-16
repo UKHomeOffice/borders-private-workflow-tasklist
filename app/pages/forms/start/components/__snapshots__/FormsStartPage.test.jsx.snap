@@ -55,11 +55,11 @@ exports[`Submit a form page renders the form and process definition 1`] = `
           >
             Operational form
           </span>
-          <h2
+          <h1
             className="govuk-heading-l"
           >
             procedure
-          </h2>
+          </h1>
           <StartForm
             appConfig={
               Object {

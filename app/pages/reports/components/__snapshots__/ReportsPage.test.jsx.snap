@@ -14,13 +14,13 @@ exports[`Reports Page matches snapshot 1`] = `
       >
         Operational reports
       </span>
-      <h2
+      <h1
         className="govuk-heading-l"
       >
         0
          
         reports
-      </h2>
+      </h1>
     </div>
   </div>
   <div
