@@ -26,7 +26,6 @@ const YourGroupTasks = props => {
     paginationActions
   } = props;
 
-
   const dataToDisplay = _.map(yourGroupTasks, (value, key) => {
     const tasks = value.length === 1 ? 'task' : 'tasks';
     return (
@@ -41,7 +40,7 @@ const YourGroupTasks = props => {
               }}
               />
               <h2 className="govuk-heading-m">
-                {`${key} ${value.length} ${tasks}`}
+                {`${key === 'null' && grouping === 'assignee' ? 'Unassigned' : key} ${value.length} ${tasks}`}
               </h2>
             </React.Fragment>
           )}
