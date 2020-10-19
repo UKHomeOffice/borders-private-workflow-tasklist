@@ -54,6 +54,11 @@ export default class TaskUtils {
     const byPriority = _.groupBy(tasks, key => {
       return priority(Number(` ${key.task.priority}`)).trim();
     });
+
+    const byAssignee = _.groupBy(tasks, data => {
+      return data['task'].assignee;
+    });
+
     const sortByKeys = object => {
       const sort = _.orderBy(
         Object.keys(object),
@@ -89,6 +94,9 @@ export default class TaskUtils {
           }),
         );
 
+      case 'assignee':
+        return sortByKeys(byAssignee);
+
       default:
         return sortByKeys(
           _.groupBy(tasks, data => {
@@ -105,6 +113,7 @@ export default class TaskUtils {
     switch (grouping) {
       case 'category':
       case 'priority':
+      case 'assignee':
         caption = val.businessKey;
         break;
       case 'reference':
