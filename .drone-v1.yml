@@ -76,20 +76,6 @@ steps:
     target:
     - secrets
 
-- name: vulnerability-scan
-  image: docker.digital.homeoffice.gov.uk/acp-anchore-submission:latest
-  environment:
-    DOCKERFILE: Dockerfile
-    IMAGE_NAME: cop-private-workflow-tasklist:${DRONE_COMMIT_SHA}
-    LOCAL_IMAGE: true
-    SERVICE_URL: http://anchore-submission-server:10080
-    TOLERATE: low
-  when:
-    branch:
-    - master
-    event:
-    - push
-
 - name: build
   pull: if-not-exists
   image: docker:19.03.12-dind
@@ -106,8 +92,7 @@ steps:
     - push
 
 - name: image_to_quay
-  pull: if-not-exists
-  image: quay.io/ukhomeofficedigital/drone-docker
+  image: plugins/docker
   settings:
     build_args:
     - WWW_STORAGE_KEY=$${WWW_DEV_STORAGE_KEY}
@@ -285,6 +270,20 @@ steps:
     - push
     status:
     - failure
+
+- name: vulnerability-scan
+  image: docker.digital.homeoffice.gov.uk/acp-anchore-submission:latest
+  environment:
+    DOCKERFILE: Dockerfile
+    IMAGE_NAME: cop-private-workflow-tasklist:${DRONE_COMMIT_SHA}
+    LOCAL_IMAGE: true
+    SERVICE_URL: http://anchore-submission-server:10080
+    TOLERATE: low
+  when:
+    branch:
+    - master
+    event:
+    - push
 
 - name: deploy_to_staging
   pull: if-not-exists
