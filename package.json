@@ -98,7 +98,7 @@
     "webpack-md5-hash": "0.0.6",
     "webpack-merge": "^4.1.1",
     "webpack-pwa-manifest": "^4.0.0",
-    "webpack-subresource-integrity": "^1.0.3"
+    "webpack-subresource-integrity": "^1.5.1"
   },
   "dependencies": {
     "@digitalpatterns/formio-gds-template": "1.6.0",
