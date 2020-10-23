@@ -10,6 +10,7 @@ import withLog from "../../../../core/error/component/withLog";
 import FormioInterpolator from "../../../../core/FormioInterpolator";
 import secureLocalStorage from "../../../../common/security/SecureLocalStorage";
 import FileService from "../../../../core/FileService";
+import { getCaseByKey } from '../../actions';
 
 class CaseAction extends React.Component {
     constructor(props) {
@@ -33,6 +34,7 @@ class CaseAction extends React.Component {
             const that = this;
             this.timer = setTimeout(() => {
                 that.props.clearActionResponse();
+                this.props.getCaseByKey(this.props.caseDetails.businessKey);
             }, 5000);
         }
     }
@@ -96,53 +98,55 @@ class CaseAction extends React.Component {
                   {selectedAction.completionMessage}
                 </div>
               </div>
-)
-                : null}
-            <Form
-              form={actionForm}
-              options={{
-                      noAlerts: true,
-                      fileService: new FileService(kc),
-                      readOnly: this.props.executingAction,
-                      hooks: {
-                          beforeSubmit: (submission, next) => {
-                              ['keycloakContext',
-                                  'staffDetailsDataContext',
-                                  'selectedAction',
-                                  'caseDetails']
-                                  .forEach(k => {
-                                      delete submission.data[k];
-                                  });
-                              submission.data.form = {
-                                  formVersionId: actionForm.versionId,
-                                  formId: actionForm.id,
-                                  title: actionForm.title,
-                                  name: actionForm.name,
-                                  submittedBy: kc.tokenParsed.email,
-                                  submissionDate: new Date(),
-                                  process: {
-                                      definitionId: selectedAction.process['process-definition'].id
-                                  }
-                              };
-                              next();
-                          }
-                      }
-                  }}
-              submission={{
-                      data: submission
-                  }}
-              onSubmit={
-                      submission => {
-                          if (!this.props.executingAction) {
-                              this.props.executeAction(
-                                  selectedAction,
-                                  submission.data,
-                                  caseDetails
-                              );
-                          }
-                      }
-                  }
-            />
+            )
+                : 
+            (
+              <Form
+                form={actionForm}
+                options={{
+                        noAlerts: true,
+                        fileService: new FileService(kc),
+                        readOnly: this.props.executingAction,
+                        hooks: {
+                            beforeSubmit: (submission, next) => {
+                                ['keycloakContext',
+                                    'staffDetailsDataContext',
+                                    'selectedAction',
+                                    'caseDetails']
+                                    .forEach(k => {
+                                        delete submission.data[k];
+                                    });
+                                submission.data.form = {
+                                    formVersionId: actionForm.versionId,
+                                    formId: actionForm.id,
+                                    title: actionForm.title,
+                                    name: actionForm.name,
+                                    submittedBy: kc.tokenParsed.email,
+                                    submissionDate: new Date(),
+                                    process: {
+                                        definitionId: selectedAction.process['process-definition'].id
+                                    }
+                                };
+                                next();
+                            }
+                        }
+                    }}
+                submission={{
+                        data: submission
+                    }}
+                onSubmit={
+                        submission => {
+                            if (!this.props.executingAction) {
+                                this.props.executeAction(
+                                    selectedAction,
+                                    submission.data,
+                                    caseDetails
+                                );
+                            }
+                        }
+                    }
+              />
+            )}
           </div>
 )
     }
@@ -179,7 +183,8 @@ CaseAction.propTypes = {
 
 const mapDispatchToProps = dispatch => bindActionCreators({
     fetchActionForm,
-    resetSelectedAction, executeAction, clearActionResponse
+    resetSelectedAction, executeAction, clearActionResponse,
+    getCaseByKey
 }, dispatch);
 
 export default withRouter(connect(state => {
