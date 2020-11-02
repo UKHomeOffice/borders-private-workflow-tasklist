@@ -207,9 +207,13 @@ steps:
 
 - name: create-change-desc-dev
   pull: if-not-exists
-  image: docker:git
+  image: docker:19.03.12-dind
   commands:
+  - n=0; while [ "$n" -lt 60 ] && [ ! -e /var/run/docker.sock ]; do n=$(( n + 1 )); sleep 1; done
   - git show --name-only >> $SNOW_DESC_FILE
+  volumes:
+  - name: dockersock
+    path: /var/run
   when:
     branch:
     - master
@@ -455,9 +459,13 @@ steps:
 
 - name: create-change-desc-production
   pull: if-not-exists
-  image: docker:git
+  image: docker:19.03.12-dind
   commands:
+  - n=0; while [ "$n" -lt 60 ] && [ ! -e /var/run/docker.sock ]; do n=$(( n + 1 )); sleep 1; done
   - git show --name-only >> $SNOW_DESC_FILE
+  volumes:
+  - name: dockersock
+    path: /var/run
   when:
     event:
     - promote
