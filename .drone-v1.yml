@@ -7,21 +7,7 @@ platform:
   os: linux
   arch: amd64
 
-workspace:
-  base: /build
-  path: src/github.com/ukhomeoffice/cop-private-workflow-tasklist
-
 steps:
-- name: test
-  pull: if-not-exists
-  image: node:10
-  commands:
-  - npm ci
-  - npm run test:coverage
-  when:
-    event:
-    - push
-
 - name: synch_dev_secrets
   pull: if-not-exists
   image: quay.io/ukhomeofficedigital/cop-secrets
@@ -33,7 +19,8 @@ steps:
     DEPLOY_ENV: dev
     DRONE_SERVER: https://drone-gh.acp.homeoffice.gov.uk
     DRONE_TOKEN:
-      from_secret: DRONE_PUBLIC_TOKEN
+      from_secret: DRONE_V1_PUBLIC_TOKEN
+    DRONE_VERSION: ${DRONE_SYSTEM_VERSION}
   when:
     event:
     - promote
@@ -51,7 +38,8 @@ steps:
     DEPLOY_ENV: staging
     DRONE_SERVER: https://drone-gh.acp.homeoffice.gov.uk
     DRONE_TOKEN:
-      from_secret: DRONE_PUBLIC_TOKEN
+      from_secret: DRONE_V1_PUBLIC_TOKEN
+    DRONE_VERSION: ${DRONE_SYSTEM_VERSION}
   when:
     event:
     - promote
@@ -69,26 +57,13 @@ steps:
     DEPLOY_ENV: production
     DRONE_SERVER: https://drone-gh.acp.homeoffice.gov.uk
     DRONE_TOKEN:
-      from_secret: DRONE_PUBLIC_TOKEN
+      from_secret: DRONE_V1_PUBLIC_TOKEN
+    DRONE_VERSION: ${DRONE_SYSTEM_VERSION}
   when:
     event:
     - promote
     target:
     - secrets
-
-- name: vulnerability-scan
-  image: docker.digital.homeoffice.gov.uk/acp-anchore-submission:latest
-  environment:
-    DOCKERFILE: Dockerfile
-    IMAGE_NAME: cop-private-workflow-tasklist:${DRONE_COMMIT_SHA}
-    LOCAL_IMAGE: true
-    SERVICE_URL: http://anchore-submission-server:10080
-    TOLERATE: low
-  when:
-    branch:
-    - master
-    event:
-    - push
 
 - name: build
   pull: if-not-exists
@@ -105,9 +80,23 @@ steps:
     event:
     - push
 
+- name: vulnerability-scan
+  image: docker.digital.homeoffice.gov.uk/acp-anchore-submission:latest
+  environment:
+    DOCKERFILE: Dockerfile
+    IMAGE_NAME: cop-private-workflow-tasklist:${DRONE_COMMIT_SHA}
+    LOCAL_IMAGE: true
+    SERVICE_URL: http://anchore-submission-server:10080
+    TOLERATE: low
+    WHITELIST_FILE: whitelist
+  when:
+    branch:
+    - master
+    event:
+    - push
+
 - name: image_to_quay
-  pull: if-not-exists
-  image: quay.io/ukhomeofficedigital/drone-docker
+  image: plugins/docker
   settings:
     build_args:
     - WWW_STORAGE_KEY=$${WWW_DEV_STORAGE_KEY}
