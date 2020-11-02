@@ -7,21 +7,7 @@ platform:
   os: linux
   arch: amd64
 
-workspace:
-  base: /build
-  path: src/github.com/ukhomeoffice/cop-private-workflow-tasklist
-
 steps:
-- name: test
-  pull: if-not-exists
-  image: node:10
-  commands:
-  - npm ci
-  - npm run test:coverage
-  when:
-    event:
-    - push
-
 - name: synch_dev_secrets
   pull: if-not-exists
   image: quay.io/ukhomeofficedigital/cop-secrets
@@ -88,6 +74,21 @@ steps:
   volumes:
   - name: dockersock
     path: /var/run
+  when:
+    branch:
+    - master
+    event:
+    - push
+
+- name: vulnerability-scan
+  image: docker.digital.homeoffice.gov.uk/acp-anchore-submission:latest
+  environment:
+    DOCKERFILE: Dockerfile
+    IMAGE_NAME: cop-private-workflow-tasklist:${DRONE_COMMIT_SHA}
+    LOCAL_IMAGE: true
+    SERVICE_URL: http://anchore-submission-server:10080
+    TOLERATE: low
+    WHITELIST_FILE: whitelist
   when:
     branch:
     - master
@@ -273,21 +274,6 @@ steps:
     - push
     status:
     - failure
-
-- name: vulnerability-scan
-  image: docker.digital.homeoffice.gov.uk/acp-anchore-submission:latest
-  environment:
-    DOCKERFILE: Dockerfile
-    IMAGE_NAME: cop-private-workflow-tasklist:${DRONE_COMMIT_SHA}
-    LOCAL_IMAGE: true
-    SERVICE_URL: http://anchore-submission-server:10080
-    TOLERATE: low
-    WHITELIST_FILE: whitelist
-  when:
-    branch:
-    - master
-    event:
-    - push
 
 - name: deploy_to_staging
   pull: if-not-exists
