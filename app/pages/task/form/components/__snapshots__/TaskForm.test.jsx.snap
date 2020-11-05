@@ -135,6 +135,10 @@ exports[`TaskForm Component matches snapshot 1`] = `
             "email": "yesy",
             "family_name": "test",
             "given_name": "name",
+            "groups": Array [
+              "/group/one",
+              "/group/two",
+            ],
             "session_state": "state",
           },
           "url": "http://localhost",
@@ -169,6 +173,10 @@ exports[`TaskForm Component matches snapshot 1`] = `
           "email": "yesy",
           "familyName": "test",
           "givenName": "name",
+          "groups": Array [
+            "/group/one",
+            "/group/two",
+          ],
           "realm": "cop-test",
           "refreshToken": undefined,
           "sessionId": "state",
