@@ -120,6 +120,7 @@ export default class TaskForm extends React.Component {
         subject: kc.subject,
         url: kc.authServerUrl,
         realm: kc.realm,
+        groups: kc.tokenParsed.groups,
       },
       shiftDetailsContext: secureLocalStorage.get('shift'),
       staffDetailsDataContext: secureLocalStorage.get(

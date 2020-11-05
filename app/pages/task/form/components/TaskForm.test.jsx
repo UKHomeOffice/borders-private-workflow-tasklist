@@ -25,6 +25,7 @@ describe('TaskForm Component', () => {
           family_name: 'test',
           given_name: 'name',
           session_state: 'state',
+          groups: ['/group/one', '/group/two']
         },
       },
       onCustomEvent: jest.fn(),
