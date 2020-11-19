@@ -41,6 +41,7 @@ class StartForm extends React.Component {
                 sessionId: kc.tokenParsed.session_state,
                 email: kc.tokenParsed.email,
                 givenName: kc.tokenParsed.given_name,
+                groups: kc.tokenParsed.groups,
                 familyName: kc.tokenParsed.family_name,
                 subject: kc.subject,
                 url: kc.authServerUrl,
