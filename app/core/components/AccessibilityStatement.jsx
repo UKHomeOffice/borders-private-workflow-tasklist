@@ -82,26 +82,26 @@ const AccessibilityStatement = () => (
               keyboard only users.
             </li>
             <li>
-              The JAWS screen reader is not compatible with the Edge Chromium
-              browser, which is the Home Office standard.
-            </li>
-            <li>
-              Skip to content does not highlight the body of text that it skips
-              to.
+              The JAWS screen reader does not read options in drop down lists
+              and users are unable to use their keyboard to navigate through
+              drop down lists with JAWS running in the background.
             </li>
             <li>
               Questions on the form and some labels in names, such as the forms
-              page, are unable to be identified by the screen reader. The NVDA
-              screen reader is able to read text fields, tabs, links and radio
-              buttons.
+              page, are unable to be identified by the NVDA screen reader. NVDA
+              is able to read text fields, tabs, links and radio buttons.
+            </li>
+            <li>
+              Headings and titles on COP forms and pages do not get read out by
+              the NVDA screen reader.
             </li>
             <li>
               Fields are only auto completed from information in the user’s
               profile on COP and not from their browser.
             </li>
             <li>
-              Headings and titles on COP forms and pages do not get read out by
-              the screen reader.
+              Skip to content does not highlight the body of text that it skips
+              to.
             </li>
             <li>The main headings on each page are h2 and not h1.</li>
             <li>
@@ -257,7 +257,7 @@ const AccessibilityStatement = () => (
             </li>
             <li>
               Contrast (1.4.3) – the charts displayed in the Reports section
-              that display from PowerBI don’t provide effective contrast.
+              that display from Power BI don’t provide effective contrast.
             </li>
             <li>
               Keyboard (2.1.1) – adding additional instances of a response, such
@@ -349,37 +349,19 @@ const AccessibilityStatement = () => (
             compliant by the dates set:
           </p>
 
-          <p className="govuk-body">By end October 2020</p>
+          <p className="govuk-body">By end of Jan 2021</p>
           <ul className="govuk-list govuk-list--bullet">
             <li>
-              (2.1.2) Add in tool tip to prompt users to type in 3 letters in
-              long port drop-down lists to more easily find their selection.
+              The main headings on each page will be changed from h2 to h1,
+              subheadings will be changed to h2, h3.
             </li>
             <li>
-              (2.4.1) Skip to content to highlight the body of text that it
-              skips to, ensuring all frame and iframe elements have valid title
-              attribute values.
-            </li>
-          </ul>
-
-          <p className="govuk-body">By end December 2020</p>
-          <ul className="govuk-list govuk-list--bullet">
-            <li>
-              (1.2.1, 1.2.2, 1.2.3, 1.2.5) Add a soundtrack and transcript to
-              the videos in the Help section on the Product Page.
+              (4.1.3) Screen readers to identify and read questions on the COP
+              forms.
             </li>
             <li>
               (1.3.1) Lists marked up so that they don’t contain content
               elements other than list elements.
-            </li>
-            <li>
-              (2.1.1) Ensure use of data grids to add additional instances of a
-              response, doesn’t make the form tab to the top of the page for
-              keyboard only users.
-            </li>
-            <li>
-              (2.1.2) Change the presentation of tabular information/collapsible
-              fields in the Help section on the Product Page to be accessible.
             </li>
             <li>
               (2.5.3) Ensure all labels in names are distinguishable by the
@@ -388,14 +370,6 @@ const AccessibilityStatement = () => (
             <li>
               Text descriptions will be added to any images in the Product page.
             </li>
-            <li>
-              Heading consistency resolved to assist readout by screen readers.
-            </li>
-            <li>
-              (3.1.1) Every HTML document to have a lang attribute applied and
-              that the attribute's value is valid value.
-            </li>
-            <li>(3.3.2) Every form element to have had a label applied.</li>
             <li>
               (4.1.1) The value assigned to an ARIA ID to be made unique to
               prevent the second instance from being overlooked by assistive
@@ -406,19 +380,44 @@ const AccessibilityStatement = () => (
               focusable elements.
             </li>
             <li>
-              (4.1.3) Screen readers to identify and read questions on the COP
-              forms.
+              Complete accessibility testing across the 2 new forms: EU
+              Transition and PCP Desk Ergonomic Assessment.
             </li>
           </ul>
 
           <p className="govuk-body">By March 2021</p>
           <ul className="govuk-list govuk-list--bullet">
             <li>
+              (1.2.1, 1.2.2, 1.2.3, 1.2.5) Add a soundtrack and transcript to
+              the videos in the Help section on the Product Page.
+            </li>
+            <li>
               (1.4.3) Identify how Power BI charts can provide effective
               contrast.
             </li>
+            <li>
+              (2.1.1) Ensure use of data grids to add additional instances of a
+              response doesn’t make the form tab to the top of the page for
+              keyboard only users.
+            </li>
+            <li>
+              (2.1.2) Change the presentation of tabular information/collapsible
+              fields in the Help section on the Product Page to be accessible.
+            </li>
             <li>(2.4.7) Ensure that scrollable region has keyboard access.</li>
+            <li>
+              (3.1.1) Every HTML document to have a lang attribute applied and a
+              valid value.
+            </li>
+            <li>(3.3.2) Every form element to have a label applied.</li>
           </ul>
+
+          <h3 className="govuk-heading-s">Plan to cover</h3>
+          <p className="govuk-body">
+            Two new services have joined COP since our last audit. We plan to
+            cover both new forms - The EU Transition and PCP Desk Ergonomic
+            Assessment by the end of January 2021.
+          </p>
 
           <h3 className="govuk-heading-s">Disproportionate burden</h3>
           <p className="govuk-body">
@@ -446,15 +445,15 @@ const AccessibilityStatement = () => (
             Preparation of this accessibility statement
           </h2>
           <p className="govuk-body">
-            This statement was prepared on 17th September 2020. It was last
-            reviewed on 17th September 2020.
+            This statement was prepared on 17 September 2020. It was last
+            reviewed on 8 December 2020.
           </p>
           <p className="govuk-body">
-            This website was last tested on 11th September 2020. The test was
+            This website was last tested on 11 September 2020. The test was
             carried out by the Home Office’s Quality Assurance and Testing team.
           </p>
           <p className="govuk-body">
-            We tested the service based on a user's ability to complete key
+            We tested the service based on a user’s ability to complete key
             journeys. All parts of the chosen journeys were tested.
           </p>
         </div>
