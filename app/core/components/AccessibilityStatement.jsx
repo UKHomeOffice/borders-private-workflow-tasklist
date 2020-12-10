@@ -397,7 +397,7 @@ const AccessibilityStatement = () => (
             </li>
             <li>
               (2.1.1) Ensure use of data grids to add additional instances of a
-              response, doesn’t make the form tab to the top of the page for
+              response doesn’t make the form tab to the top of the page for
               keyboard only users.
             </li>
             <li>
@@ -406,17 +406,17 @@ const AccessibilityStatement = () => (
             </li>
             <li>(2.4.7) Ensure that scrollable region has keyboard access.</li>
             <li>
-              (3.1.1) Every HTML document to have a lang attribute applied and
-              that the attribute’s value is valid value.
+              (3.1.1) Every HTML document to have a lang attribute applied and a
+              valid value.
             </li>
-            <li>(3.3.2) Every form element to have had a label applied.</li>
+            <li>(3.3.2) Every form element to have a label applied.</li>
           </ul>
 
           <h3 className="govuk-heading-s">Plan to cover</h3>
           <p className="govuk-body">
             Two new services have joined COP since our last audit. We plan to
             cover both new forms - The EU Transition and PCP Desk Ergonomic
-            Assessment, by the end of January 2021.
+            Assessment by the end of January 2021.
           </p>
 
           <h3 className="govuk-heading-s">Disproportionate burden</h3>
