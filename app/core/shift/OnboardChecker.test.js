@@ -3,7 +3,7 @@ import OnboardChecker from './OnboardChecker';
 
 describe('OnboardChecker', () => {
   it('onboard-user for new user', () => {
-    const staffDetails = null;
+    const staffDetails = {};
 
     const response = OnboardChecker.onBoardCheck(staffDetails);
     expect(response.redirectPath).toEqual('/onboard-user');
@@ -11,6 +11,7 @@ describe('OnboardChecker', () => {
 
   it('noops-dashboard for inflight onboarding process', () => {
     const staffDetails = {
+      staffid: 'staffid',
       onboardprocessinstanceid: 'id',
     };
     const response = OnboardChecker.onBoardCheck(staffDetails);
@@ -19,6 +20,7 @@ describe('OnboardChecker', () => {
 
   it('authorized redirectPath if staff contains dateofleaving', () => {
     const staffDetails = {
+      staffid: 'staffid',
       dateofleaving: '01/01/2018',
     };
     const response = OnboardChecker.onBoardCheck(staffDetails);
