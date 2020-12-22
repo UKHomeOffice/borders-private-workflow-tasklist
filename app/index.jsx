@@ -109,7 +109,7 @@ const renderApp = App => {
       teamid,
     };
     secureLocalStorage.set(`staffContext::${email}`, staffDetails);
-    secureLocalStorage.set('extendedStaffDetails', {
+    secureLocalStorage.set(`extendedStaffDetails::${email}`, {
       delegateEmails,
       email,
       linemanagerEmail,

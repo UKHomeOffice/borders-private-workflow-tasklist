@@ -79,7 +79,7 @@ class CaseAction extends React.Component {
       },
       shiftDetailsContext: secureLocalStorage.get('shift'),
       staffDetailsDataContext: secureLocalStorage.get(`staffContext::${kc.tokenParsed.email}`),
-      extendedStaffDetailsContext: secureLocalStorage.get('extendedStaffDetails'),
+      extendedStaffDetailsContext: secureLocalStorage.get(`extendedStaffDetails::${kc.tokenParsed.email}`),
       environmentContext: {
         referenceDataUrl: appConfig.apiRefUrl,
         workflowUrl: appConfig.workflowServiceUrl,

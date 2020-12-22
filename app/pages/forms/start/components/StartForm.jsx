@@ -63,7 +63,7 @@ class StartForm extends React.Component {
         if (!submission.extendedStaffDetailsContext) {
             submission = {
                 ...submission,
-              extendedStaffDetailsContext: secureLocalStorage.get('extendedStaffDetails')
+              extendedStaffDetailsContext: secureLocalStorage.get(`extendedStaffDetails::${kc.tokenParsed.email}`)
             };
         }
         if (!submission.environmentContext) {
