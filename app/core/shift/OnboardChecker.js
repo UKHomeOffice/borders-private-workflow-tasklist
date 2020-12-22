@@ -1,6 +1,6 @@
 export default class OnboardChecker {
   static onBoardCheck(staffDetails, location) {
-    if (!staffDetails) {
+    if (!staffDetails.staffid) {
       return {
         redirectPath: '/onboard-user',
         data: {

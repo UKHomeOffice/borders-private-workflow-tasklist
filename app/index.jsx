@@ -88,7 +88,7 @@ const renderApp = App => {
       } catch (error) {
         console.log('Error fetching staffId:', error);
       }
-      return response.data[0].staffid;
+      return response.data[0] ? response.data[0].staffid : null;
     };
 
     const team = teamid && (await fetchTeam());
