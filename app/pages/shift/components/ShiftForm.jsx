@@ -82,7 +82,7 @@ export default class ShiftForm extends React.Component {
                     familyName: kc.tokenParsed.family_name
                 },
                 staffDetailsDataContext: staffDetails,
-                extendedStaffDetailsContext: secureLocalStorage.get('extendedStaffDetails'),
+                extendedStaffDetailsContext: secureLocalStorage.get(`extendedStaffDetails::${kc.tokenParsed.email}`),
                 environmentContext: {
                     referenceDataUrl: appConfig.apiRefUrl,
                     workflowUrl: appConfig.workflowServiceUrl,

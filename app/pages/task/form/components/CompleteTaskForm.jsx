@@ -84,7 +84,7 @@ export class CompleteTaskForm extends React.Component {
                 window.scrollTo(0, 0);
                 Formio.clearCache();
                 if (taskId) {
-                    secureLocalStorage.remove(taskId);
+                    secureLocalStorage.remove(`${taskId}::${user}`);
                 }
                 if (this.props.submissionResponse && this.props.submissionResponse.task) {
                     const {task} = this.props.submissionResponse;

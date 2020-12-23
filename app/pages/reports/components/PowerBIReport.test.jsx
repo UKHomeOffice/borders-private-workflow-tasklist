@@ -16,7 +16,12 @@ describe('PowerBIReport', () => {
     id: 'abc',
     name: 'Power BI Report',
     useMobileLayout: true,
-    token: 'xyz',
+    kc: {
+      token: 'xyz',
+      tokenParsed: {
+        email: 'test@example.com',
+      },
+    },
   };
 
   it('renders a PowerBIReport', () => {

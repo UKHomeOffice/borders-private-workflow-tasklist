@@ -25,7 +25,7 @@ export default function (ComposedComponent) {
 
     componentDidMount() {
       this.props.resetErrors();
-      let shiftFromLocalStorage = this.secureLocalStorage.get('shift');
+      let shiftFromLocalStorage = this.secureLocalStorage.get(`shift::${this.props.kc.tokenParsed.email}`);
       if (!shiftFromLocalStorage) {
         this.props.fetchActiveShift();
       }
@@ -40,9 +40,9 @@ export default function (ComposedComponent) {
     componentDidUpdate(prevProps, prevState, snapshot) {
       if (!isFetchingShift) {
         if (this.props.hasActiveShift && this.shiftValid(this.props.shift)) {
-          this.secureLocalStorage.set('shift', this.props.shift);
+          this.secureLocalStorage.set(`shift::${this.props.kc.tokenParsed.email}`, this.props.shift);
         } else {
-          this.secureLocalStorage.remove('shift');
+          this.secureLocalStorage.remove(`shift::${this.props.kc.tokenParsed.email}`);
           this.props.history.replace(AppConstants.SHIFT_PATH);
         }
       }
@@ -103,12 +103,18 @@ export default function (ComposedComponent) {
     setHasActiveShift: PropTypes.func.isRequired,
     resetErrors: PropTypes.func.isRequired,
     isFetchingShift: PropTypes.bool,
+    kc: PropTypes.shape({
+      tokenParsed: PropTypes.shape({
+        email: PropTypes.string.isRequired
+      }).isRequired
+    }).isRequired,
     hasActiveShift: PropTypes.bool,
   };
 
   const mapStateToProps = createStructuredSelector({
     hasActiveShift,
     isFetchingShift,
+    kc: state => state.keycloak,
     shift,
   });
 

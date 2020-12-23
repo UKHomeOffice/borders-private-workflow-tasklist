@@ -18,7 +18,7 @@ export class PowerBIReport extends Component {
   }
 
   componentDidMount() {
-    const { apiRefUrl, accessToken, embedUrl, id, token } = this.props;
+    const { apiRefUrl, accessToken, embedUrl, id, kc } = this.props;
 
     const powerBIBranchNames = [
       'Central',
@@ -33,12 +33,12 @@ export class PowerBIReport extends Component {
 
     const {
       team: { branchid: branchId } = {},
-    } = secureLocalStorage.get('shift');
+    } = secureLocalStorage.get(`shift::${kc.tokenParsed.email}`);
 
     axios({
       method: 'get',
       url: `${apiRefUrl}/v2/entities/branch?filter=id=eq.${branchId}`,
-      headers: { Authorization: `Bearer ${token}` },
+      headers: { Authorization: `Bearer ${kc.token}` },
     })
       .then(({ data }) => {
         const branchName = data.data.length && data.data[0].name;
@@ -144,13 +144,18 @@ PowerBIReport.propTypes = {
   apiRefUrl: PropTypes.string.isRequired,
   embedUrl: PropTypes.string.isRequired,
   id: PropTypes.string.isRequired,
-  token: PropTypes.string.isRequired,
+  kc: PropTypes.shape({
+    token: PropTypes.string.isRequired,
+    tokenParsed: PropTypes.shape({
+      email: PropTypes.string.isRequired,
+    }).isRequired,
+  }).isRequired,
   useMobileLayout: PropTypes.bool.isRequired,
 };
 
 export default connect(state => {
   return {
-    token: state.keycloak.token,
+    kc: state.keycloak,
     apiRefUrl: state.appConfig.apiRefUrl,
   };
 })(PowerBIReport);

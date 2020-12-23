@@ -37,7 +37,7 @@ export class ShiftPage extends React.Component {
       if (this.props.submittingActiveShift !== prevProps.submittingActiveShift && !this.props.submittingActiveShift) {
           if (this.form && this.form.formio) {
               if (this.props.activeShiftSuccess) {
-                  this.secureLocalStorage.set('shift', this.props.shift);
+                  this.secureLocalStorage.set(`shift::${this.props.kc.tokenParsed.email}`, this.props.shift);
                   this.form.formio.emit('submitDone');
                   this.props.history.replace('/dashboard');
                 } else {
@@ -93,6 +93,11 @@ ShiftPage.propTypes = {
   fetchShiftForm: PropTypes.func.isRequired,
   fetchActiveShift: PropTypes.func.isRequired,
   isFetchingShift: PropTypes.bool,
+  kc: PropTypes.shape({
+    tokenParsed: PropTypes.shape({
+      email: PropTypes.string.isRequired
+    }).isRequired
+  }).isRequired,
   shift: ImmutablePropTypes.map,
   unauthorised: PropTypes.bool,
 };

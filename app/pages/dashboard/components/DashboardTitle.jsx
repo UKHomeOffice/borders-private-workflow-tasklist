@@ -28,7 +28,7 @@ class DashboardTitle extends React.Component {
 
   endShift(e) {
     e.preventDefault();
-    this.secureLocalStorage.remove('shift');
+    this.secureLocalStorage.remove(`shift::${this.props.kc.tokenParsed.email}`);
     this.props.endShift();
   }
 

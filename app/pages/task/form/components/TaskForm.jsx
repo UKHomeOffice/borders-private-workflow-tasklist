@@ -102,10 +102,10 @@ export default class TaskForm extends React.Component {
       }
 
     }
-    if (secureLocalStorage.get(task.get('id'))) {
+    if (secureLocalStorage.get(`${task.get('id')}::${kc.tokenParsed.email}`)) {
       submission.data = {
         ...submission.data,
-        ...secureLocalStorage.get(task.get('id'))
+        ...secureLocalStorage.get(`${task.get('id')}::${kc.tokenParsed.email}`)
       }
     }
     submission.data = {
@@ -122,13 +122,11 @@ export default class TaskForm extends React.Component {
         realm: kc.realm,
         groups: kc.tokenParsed.groups,
       },
-      shiftDetailsContext: secureLocalStorage.get('shift'),
+      shiftDetailsContext: secureLocalStorage.get(`shift::${kc.tokenParsed.email}`),
       staffDetailsDataContext: secureLocalStorage.get(
         `staffContext::${kc.tokenParsed.email}`,
       ),
-      extendedStaffDetailsContext: secureLocalStorage.get(
-        'extendedStaffDetails',
-      ),
+      extendedStaffDetailsContext: secureLocalStorage.get(`extendedStaffDetails::${kc.tokenParsed.email}`),
       environmentContext: {
         referenceDataUrl: appConfig.apiRefUrl,
         workflowUrl: appConfig.workflowServiceUrl,
@@ -191,7 +189,7 @@ export default class TaskForm extends React.Component {
           }
         }}
         onChange={instance => {
-          secureLocalStorage.set(task.get('id'),
+          secureLocalStorage.set(`${task.get('id')}::${kc.tokenParsed.email}`,
               _.omit(instance.data,
                   ['keycloakContext',
                    'shiftDetailsContext',
