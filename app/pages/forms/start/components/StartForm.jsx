@@ -33,7 +33,7 @@ class StartForm extends React.Component {
             dataChange, formReference, handleSubmit, onCustomEvent, appConfig,
             startForm, kc, processDefinition
         } = this.props;
-        let submission = secureLocalStorage.get(processDefinition.getIn(['process-definition', 'id'])) || {};
+        let submission = secureLocalStorage.get(`${processDefinition.getIn(['process-definition', 'id'])}::${kc.tokenParsed.email}`) || {};
         submission = {
             ...submission, keycloakContext: {
                 accessToken: kc.token,

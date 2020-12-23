@@ -82,20 +82,20 @@ export class ProcessStartPage extends React.Component {
     this.props.clearProcessDefinition();
     if (this.props.processDefinition.getIn(['process-definition', 'id'])) {
       this.secureLocalStorage.remove(
-        this.props.processDefinition.getIn(['process-definition', 'id']),
+        `${this.props.processDefinition.getIn(['process-definition', 'id'])}::${this.props.kc.tokenParsed.email}`
       );
     }
   }
 
   handleCustomEvent = event => {
-    const { history, processDefinition: pd } = this.props;
+    const { history, kc, processDefinition: pd } = this.props;
     switch (event.type) {
       case 'cancel':
-        this.secureLocalStorage.remove(pd.getIn(['process-definition', 'id']));
+        this.secureLocalStorage.remove(`${pd.getIn(['process-definition', 'id'])}::${kc.tokenParsed.email}`);
         history.replace(AppConstants.DASHBOARD_PATH);
         break;
       case 'cancel-form':
-        this.secureLocalStorage.remove(pd.getIn(['process-definition', 'id']));
+        this.secureLocalStorage.remove(`${pd.getIn(['process-definition', 'id'])}::${kc.tokenParsed.email}`);
         history.replace(AppConstants.FORMS_PATH);
         break;
       case 'save-draft':
@@ -120,7 +120,7 @@ export class ProcessStartPage extends React.Component {
         window.scrollTo(0, 0);
         this.form.formio.emit('submitDone');
         this.secureLocalStorage.remove(
-          this.props.processDefinition.getIn(['process-definition', 'id']),
+          `${this.props.processDefinition.getIn(['process-definition', 'id'])}::${user}`
         );
         this.props.log([
           {
@@ -159,7 +159,7 @@ export class ProcessStartPage extends React.Component {
         const submission = this.form.formio.submission
           ? this.form.formio.submission
           : this.secureLocalStorage.get(
-              this.props.processDefinition.getIn(['process-definition', 'id']),
+              `${this.props.processDefinition.getIn(['process-definition', 'id'])}::${user}`
             );
         this.form.formio.emit('error');
         this.form.formio.emit('change', submission);
@@ -180,6 +180,7 @@ export class ProcessStartPage extends React.Component {
   render() {
     const {
       form,
+      kc,
       loadingForm,
       noBackLink,
       processDefinition,
@@ -291,7 +292,7 @@ export class ProcessStartPage extends React.Component {
                     }}
                     dataChange={instance => {
                       this.secureLocalStorage.set(
-                        processDefinition.getIn(['process-definition', 'id']),
+                        `${processDefinition.getIn(['process-definition', 'id'])}::${kc.tokenParsed.email}`,
                         instance.data,
                       );
                     }}
@@ -328,6 +329,11 @@ ProcessStartPage.propTypes = {
   clearProcessDefinition: PropTypes.func.isRequired,
   history: PropTypes.shape({
     replace: PropTypes.func.isRequired,
+  }).isRequired,
+  kc: PropTypes.shape({
+    tokenParsed: PropTypes.shape({
+      email: PropTypes.string.isRequired,
+    }).isRequired,
   }).isRequired,
   submit: PropTypes.func,
   processDefinition: ImmutablePropTypes.map,
