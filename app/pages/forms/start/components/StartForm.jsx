@@ -51,7 +51,7 @@ class StartForm extends React.Component {
 
         if (!submission.shiftDetailsContext) {
             submission = {
-                ...submission, shiftDetailsContext: secureLocalStorage.get('shift')
+                ...submission, shiftDetailsContext: secureLocalStorage.get(`shift::${kc.tokenParsed.email}`)
             }
         }
         if (!submission.staffDetailsDataContext) {

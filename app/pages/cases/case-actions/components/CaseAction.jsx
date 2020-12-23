@@ -77,7 +77,7 @@ class CaseAction extends React.Component {
         givenName: kc.tokenParsed.given_name,
         familyName: kc.tokenParsed.family_name
       },
-      shiftDetailsContext: secureLocalStorage.get('shift'),
+      shiftDetailsContext: secureLocalStorage.get(`shift::${kc.tokenParsed.email}`),
       staffDetailsDataContext: secureLocalStorage.get(`staffContext::${kc.tokenParsed.email}`),
       extendedStaffDetailsContext: secureLocalStorage.get(`extendedStaffDetails::${kc.tokenParsed.email}`),
       environmentContext: {
