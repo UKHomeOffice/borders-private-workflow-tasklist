@@ -102,10 +102,10 @@ export default class TaskForm extends React.Component {
       }
 
     }
-    if (secureLocalStorage.get(task.get('id'))) {
+    if (secureLocalStorage.get(`${task.get('id')}::${kc.tokenParsed.email}`)) {
       submission.data = {
         ...submission.data,
-        ...secureLocalStorage.get(task.get('id'))
+        ...secureLocalStorage.get(`${task.get('id')}::${kc.tokenParsed.email}`)
       }
     }
     submission.data = {
@@ -189,7 +189,7 @@ export default class TaskForm extends React.Component {
           }
         }}
         onChange={instance => {
-          secureLocalStorage.set(task.get('id'),
+          secureLocalStorage.set(`${task.get('id')}::${kc.tokenParsed.email}`,
               _.omit(instance.data,
                   ['keycloakContext',
                    'shiftDetailsContext',
