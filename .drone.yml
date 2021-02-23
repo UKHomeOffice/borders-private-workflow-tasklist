@@ -79,14 +79,11 @@ steps:
     - secrets
 
 - name: build
-  pull: if-not-exists
-  image: docker:19.03.12-dind
+  pull: always
+  image: 340268328991.dkr.ecr.eu-west-2.amazonaws.com/acp/dind
   commands:
-  - n=0; while [ "$n" -lt 60 ] && [ ! -e /var/run/docker.sock ]; do n=$(( n + 1 )); sleep 1; done
+  - n=0; while [ "$n" -lt 60 ] && [ ! docker stats --no-stream ]; do n=$(( n + 1 )); sleep 1; done
   - docker build -t cop-private-workflow-tasklist:$${DRONE_COMMIT_SHA} .
-  volumes:
-  - name: dockersock
-    path: /var/run
   when:
     branch:
     - master
@@ -94,12 +91,12 @@ steps:
     - push
 
 - name: vulnerability-scan
-  image: docker.digital.homeoffice.gov.uk/acp-anchore-submission:latest
+  pull: always
+  image: 340268328991.dkr.ecr.eu-west-2.amazonaws.com/acp/anchore-submission:latest
   environment:
     DOCKERFILE: Dockerfile
     IMAGE_NAME: cop-private-workflow-tasklist:${DRONE_COMMIT_SHA}
     LOCAL_IMAGE: true
-    SERVICE_URL: http://anchore-submission-server:10080
     TOLERATE: low
     WHITELIST_FILE: whitelist
   when:
@@ -222,11 +219,8 @@ steps:
   pull: if-not-exists
   image: docker:git
   commands:
-  - n=0; while [ "$n" -lt 60 ] && [ ! -e /var/run/docker.sock ]; do n=$(( n + 1 )); sleep 1; done
+  - n=0; while [ "$n" -lt 60 ] && [ ! docker stats --no-stream ]; do n=$(( n + 1 )); sleep 1; done
   - git show --name-only >> /build/src/change-desc.txt
-  volumes:
-  - name: dockersock
-    path: /var/run
   environment:
     SNOW_DESC_FILE: /build/src/change-desc.txt
     SNOW_INT_ID_FILE: /build/src/internal-id
@@ -241,10 +235,10 @@ steps:
   image: quay.io/ukhomeofficedigital/snowtify:latest
   environment:
     SNOW_DESC_FILE: /build/src/change-desc.txt
-    SNOW_INT_ID_FILE: /build/src/internal-id
     SNOW_ENDPOINT:
       from_secret: DEV_SERVICE_NOW_URL
     SNOW_EXTERNAL_ID: ${DRONE_REPO}:${DRONE_COMMIT_SHA}
+    SNOW_INT_ID_FILE: /build/src/internal-id
     SNOW_TEST_PASS:
       from_secret: DEV_SERVICE_NOW_PASSWORD
     SNOW_TEST_USER:
@@ -263,9 +257,9 @@ steps:
     deployment_outcome: success
   environment:
     SNOW_DESC_FILE: /build/src/change-desc.txt
-    SNOW_INT_ID_FILE: /build/src/internal-id
     SNOW_ENDPOINT:
       from_secret: DEV_SERVICE_NOW_URL
+    SNOW_INT_ID_FILE: /build/src/internal-id
     SNOW_TEST_PASS:
       from_secret: DEV_SERVICE_NOW_PASSWORD
     SNOW_TEST_USER:
@@ -286,9 +280,9 @@ steps:
     deployment_outcome: fail
   environment:
     SNOW_DESC_FILE: /build/src/change-desc.txt
-    SNOW_INT_ID_FILE: /build/src/internal-id
     SNOW_ENDPOINT:
       from_secret: DEV_SERVICE_NOW_URL
+    SNOW_INT_ID_FILE: /build/src/internal-id
     SNOW_TEST_PASS:
       from_secret: DEV_SERVICE_NOW_PASSWORD
     SNOW_TEST_USER:
@@ -483,11 +477,8 @@ steps:
   pull: if-not-exists
   image: docker:git
   commands:
-  - n=0; while [ "$n" -lt 60 ] && [ ! -e /var/run/docker.sock ]; do n=$(( n + 1 )); sleep 1; done
+  - n=0; while [ "$n" -lt 60 ] && [ ! docker stats --no-stream ]; do n=$(( n + 1 )); sleep 1; done
   - git show --name-only >> /build/src/change-desc.txt
-  volumes:
-  - name: dockersock
-    path: /var/run
   environment:
     SNOW_DESC_FILE: /build/src/change-desc.txt
     SNOW_INT_ID_FILE: /build/src/internal-id
@@ -502,10 +493,10 @@ steps:
   image: quay.io/ukhomeofficedigital/snowtify:latest
   environment:
     SNOW_DESC_FILE: /build/src/change-desc.txt
-    SNOW_INT_ID_FILE: /build/src/internal-id
     SNOW_ENDPOINT:
       from_secret: PRODUCTION_SERVICE_NOW_URL
     SNOW_EXTERNAL_ID: ${DRONE_REPO}:${DRONE_COMMIT_SHA}
+    SNOW_INT_ID_FILE: /build/src/internal-id
     SNOW_PROD_PASS:
       from_secret: PRODUCTION_SERVICE_NOW_PASSWORD
     SNOW_PROD_USER:
@@ -524,9 +515,9 @@ steps:
     deployment_outcome: success
   environment:
     SNOW_DESC_FILE: /build/src/change-desc.txt
-    SNOW_INT_ID_FILE: /build/src/internal-id
     SNOW_ENDPOINT:
       from_secret: PRODUCTION_SERVICE_NOW_URL
+    SNOW_INT_ID_FILE: /build/src/internal-id
     SNOW_PROD_PASS:
       from_secret: PRODUCTION_SERVICE_NOW_PASSWORD
     SNOW_PROD_USER:
@@ -547,9 +538,9 @@ steps:
     deployment_outcome: fail
   environment:
     SNOW_DESC_FILE: /build/src/change-desc.txt
-    SNOW_INT_ID_FILE: /build/src/internal-id
     SNOW_ENDPOINT:
       from_secret: PRODUCTION_SERVICE_NOW_URL
+    SNOW_INT_ID_FILE: /build/src/internal-id
     SNOW_PROD_PASS:
       from_secret: PRODUCTION_SERVICE_NOW_PASSWORD
     SNOW_PROD_USER:
@@ -584,24 +575,12 @@ steps:
 
 services:
 - name: docker
-  image: docker:19.03.12-dind
-  volumes:
-  - name: dockersock
-    path: /var/run
+  image: 340268328991.dkr.ecr.eu-west-2.amazonaws.com/acp/dind
 
 - name: anchore-submission-server
-  image: docker.digital.homeoffice.gov.uk/acp-anchore-submission:latest
+  pull: always
+  image: 340268328991.dkr.ecr.eu-west-2.amazonaws.com/acp/anchore-submission:latest
   commands:
-  - /anchore-submission server
-  environment:
-    ANCHORE_URL: acp-anchore.acp.homeoffice.gov.uk
-    REGISTRY_URL: acp-ephemeral-registry.acp.homeoffice.gov.uk
-  volumes:
-  - name: dockersock
-    path: /var/run
-
-volumes:
-- name: dockersock
-  temp: {}
+  - /run.sh server
 
 ...
