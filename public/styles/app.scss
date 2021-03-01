@@ -11,6 +11,7 @@ $govuk-page-width: 1400px;
 a {
   cursor: pointer;
 }
+
 html {
   background-color: govuk-colour("light-grey");
 }
@@ -47,7 +48,6 @@ iframe {
 .govuk-accordion-no-bottom {
   border-bottom: none !important;
 }
-
 
 @media only screen and (max-width: 600px) {
   .sk-spinner {
@@ -89,7 +89,6 @@ input:disabled {
   margin-left: -15px;
 }
 
-
 .app-container {
   @include govuk-width-container(1400px);
 }
@@ -102,7 +101,6 @@ input:disabled {
   color: #00703c !important;
 }
 
-/* Preserve whitespace in details textareas */
-div[ref="details"] div[ref="input"] {
+div[ref="input"] {
   white-space: pre-wrap;
 }
