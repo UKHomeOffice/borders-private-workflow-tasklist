@@ -333,6 +333,9 @@ ProcessStartPage.propTypes = {
   kc: PropTypes.shape({
     tokenParsed: PropTypes.shape({
       email: PropTypes.string.isRequired,
+      realm_access: PropTypes.shape({
+        roles: PropTypes.arrayOf(PropTypes.string).isRequired,
+      }).isRequired,
     }).isRequired,
   }).isRequired,
   submit: PropTypes.func,
