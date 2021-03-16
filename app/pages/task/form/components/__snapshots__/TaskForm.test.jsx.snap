@@ -139,6 +139,11 @@ exports[`TaskForm Component matches snapshot 1`] = `
               "/group/one",
               "/group/two",
             ],
+            "realm_access": Object {
+              "roles": Array [
+                "role",
+              ],
+            },
             "session_state": "state",
           },
           "url": "http://localhost",
@@ -179,6 +184,9 @@ exports[`TaskForm Component matches snapshot 1`] = `
           ],
           "realm": "cop-test",
           "refreshToken": undefined,
+          "roles": Array [
+            "role",
+          ],
           "sessionId": "state",
           "subject": "d3eb0456-1b82-4c64-a987-7201d9ce9312",
           "url": undefined,
