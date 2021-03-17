@@ -145,6 +145,11 @@ exports[`Submit a form page renders the form and process definition 1`] = `
               Object {
                 "tokenParsed": Object {
                   "email": "email",
+                  "realm_access": Object {
+                    "roles": Array [
+                      "role",
+                    ],
+                  },
                 },
               }
             }

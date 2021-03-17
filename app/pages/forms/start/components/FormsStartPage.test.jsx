@@ -124,6 +124,7 @@ describe('Submit a form page', () => {
           email: 'email',
           given_name: 'given_name',
           family_name: 'familyName',
+          realm_access: { roles: ['role'] },
         },
       },
       match: {
@@ -175,6 +176,7 @@ describe('Submit a form page', () => {
       kc: {
         tokenParsed: {
           email: 'email',
+          realm_access: { roles: ['role'] },
         },
       },
       form: null,
@@ -221,6 +223,7 @@ describe('Submit a form page', () => {
       kc: {
         tokenParsed: {
           email: 'email',
+          realm_access: { roles: ['role'] },
         },
       },
       form: null,
@@ -262,6 +265,7 @@ describe('Submit a form page', () => {
       kc: {
         tokenParsed: {
           email: 'email',
+          realm_access: { roles: ['role'] },
         },
       },
       loadingForm: false,
@@ -308,6 +312,7 @@ describe('Submit a form page', () => {
       kc: {
         tokenParsed: {
           email: 'email',
+          realm_access: { roles: ['role'] },
         },
       },
       appConfig: {
@@ -362,6 +367,7 @@ describe('Submit a form page', () => {
       kc: {
         tokenParsed: {
           email: 'email',
+          realm_access: { roles: ['role'] },
         },
       },
       loadingForm: false,
@@ -439,6 +445,7 @@ describe('Submit a form page', () => {
       kc: {
         tokenParsed: {
           email: 'email',
+          realm_access: { roles: ['role'] },
         },
       },
     };

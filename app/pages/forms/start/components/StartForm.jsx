@@ -46,6 +46,7 @@ class StartForm extends React.Component {
                 subject: kc.subject,
                 url: kc.authServerUrl,
                 realm: kc.realm,
+                roles: kc.tokenParsed.realm_access.roles,
             }
         };
 
