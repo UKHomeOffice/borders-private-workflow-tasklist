@@ -151,7 +151,7 @@ exports[`TaskForm Component matches snapshot 1`] = `
       },
       "hooks": Object {
         "beforeCancel": [Function],
-        "beforeSubmit": [Function],
+        "customValidation": [Function],
       },
       "i18n": Object {
         "en": Object {

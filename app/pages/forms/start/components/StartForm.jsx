@@ -86,7 +86,7 @@ class StartForm extends React.Component {
                 beforeCancel: (...args) => {
                     this.handleCancel(args);
                 },
-                beforeSubmit: (submission, next) => {
+                customValidation: (submission, next) => {
                     const toDelete = ['keycloakContext', 'staffDetailsDataContext'];
                     toDelete.forEach(key => {
                         delete submission.data[key];

@@ -51,7 +51,7 @@ export default class ShiftForm extends React.Component {
                 beforeCancel: (...args) => {
                     this.handleCancel(args);
                 },
-                beforeSubmit: (submission, next) => {
+                customValidation: (submission, next) => {
                     const toDelete = ['keycloakContext', 'staffDetailsDataContext','environmentContext'];
                     toDelete.forEach(key => {
                         delete submission.data[key];
