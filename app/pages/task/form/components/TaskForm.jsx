@@ -63,7 +63,7 @@ export default class TaskForm extends React.Component {
         beforeCancel: (...args) => {
           this.handleCancel(args);
         },
-        beforeSubmit: (submission, next) => {
+        customValidation: (submission, next) => {
           [
             'keycloakContext',
             'staffDetailsDataContext',
