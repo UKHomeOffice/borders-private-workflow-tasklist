@@ -16,7 +16,7 @@ exports[`Privacy Policy page matches snapshot 1`] = `
         <h1
           className="govuk-heading-l"
         >
-          Privacy notice for Home Office and other Government departments' workforces
+          Privacy notice for Home Office and other Government departments’ workforces
         </h1>
         <p
           className="govuk-body"
