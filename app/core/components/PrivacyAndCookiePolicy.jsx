@@ -7,7 +7,7 @@ const PrivacyAndCookiePolicy = () => {
         <div className="govuk-grid-row">
           <div className="govuk-grid-column-two-thirds">
             <h1 className="govuk-heading-l">
-              Privacy notice for Home Office and other Government departments'
+              Privacy notice for Home Office and other Government departments’
               workforces
             </h1>
             <p className="govuk-body">
@@ -26,30 +26,28 @@ const PrivacyAndCookiePolicy = () => {
               The personal data we collect from you on COP may include:
             </p>
             <ul className="govuk-list govuk-list--bullet">
-              <li>Your full name.</li>
-              <li>Your job role and team.</li>
-              <li>Your Adelphi or Metis personal number.</li>
-              <li>Your mandatory declaration.</li>
-              <li>Your security clearance levels and expiry date.</li>
+              <li>your full name</li>
+              <li>your job role and team</li>
+              <li>your Adelphi or Metis personal number</li>
+              <li>your mandatory declaration</li>
+              <li>your security clearance levels and expiry date</li>
               <li>
-                Your Internet Protocol (IP) address, and details of which
-                version of web browser and device that you used.
+                your Internet Protocol (IP) address, and details of which
+                version of web browser and device that you used
               </li>
               <li>
-                Information on how you use the site, using cookies and page
+                information on how you use the site, using cookies and page
                 tagging techniques:
                 <ul className="govuk-list govuk-list--bullet">
-                  <li>The pages you visit on cop.homeoffice.gov.uk.</li>
-                  <li>
-                    How long you spend on each cop.homeoffice.gov.uk page.
-                  </li>
-                  <li>What you click on while you’re visiting the site.</li>
+                  <li>the pages you visit on cop.homeoffice.gov.uk</li>
+                  <li>how long you spend on each cop.homeoffice.gov.uk page</li>
+                  <li>what you click on while you’re visiting the site</li>
                 </ul>
               </li>
-              <li>Your POISE ID.</li>
-              <li>Your Home Office email address.</li>
-              <li>Your mobile phone number.</li>
-              <li>Pages that you view.</li>
+              <li>your POISE ID</li>
+              <li>your Home Office email address</li>
+              <li>your mobile phone number</li>
+              <li>pages that you view</li>
             </ul>
             <p className="govuk-body">
               All information added to the platform is linked to your unique
@@ -63,24 +61,24 @@ const PrivacyAndCookiePolicy = () => {
               required to provide the following information outlined above:
             </p>
             <ul className="govuk-list govuk-list--bullet">
-              <li>Your Adelphi or Metis personal number.</li>
-              <li>Your mandatory declaration.</li>
-              <li>Your security clearance levels and expiry date.</li>
-              <li>Your POISE ID (except IE, UKVI and NCA).</li>
+              <li>your Adelphi or Metis personal number</li>
+              <li>your mandatory declaration</li>
+              <li>your security clearance levels and expiry date</li>
+              <li>your POISE ID (except IE, UKVI and NCA)</li>
             </ul>
             <p className="govuk-body">
               For users from HM Revenue and Customs, we will additionally
               collect the following information:
             </p>
             <ul className="govuk-list govuk-list--bullet">
-              <li>Your Stride ID.</li>
+              <li>your Stride ID</li>
             </ul>
             <p className="govuk-body">For users from Leicestershire Police:</p>
             <ul className="govuk-list govuk-list--bullet">
               <li>
-                Your Home Office digital handle (i.e.
+                your Home Office digital handle (i.e.
                 firstname.lastname@digital.homeoffice.gov.uk) which is used to
-                provide access.
+                provide access
               </li>
             </ul>
             <p className="govuk-body">
@@ -122,18 +120,18 @@ const PrivacyAndCookiePolicy = () => {
             </p>
             <ul className="govuk-list govuk-list--bullet">
               <li>
-                _pk_id: Used to store a few details about you such as the unique
-                visitor ID, stored for 13 months.
+                _pk_id: used to store a few details about you such as the unique
+                visitor ID, stored for 13 months
               </li>
               <li>
-                _pk_ref: Used to store information to initially identify you
-                when you visit the website, stored for 6 months.
+                _pk_ref: used to store information to initially identify you
+                when you visit the website, stored for 6 months
               </li>
             </ul>
             <p className="govuk-body">The two types of session cookies are:</p>
             <ul className="govuk-list govuk-list--bullet">
-              <li>_pk_hsr: Heatmap and session recording.</li>
-              <li>_pk_ses: Used to store data for the visit for 30 minutes.</li>
+              <li>_pk_hsr: heatmap and session recording</li>
+              <li>_pk_ses: used to store data for the visit for 30 minutes</li>
             </ul>
             <p className="govuk-body">
               A user can remove cookies by deleting them from the browser. This
@@ -182,10 +180,8 @@ const PrivacyAndCookiePolicy = () => {
             </p>
             <p className="govuk-body">We will not:</p>
             <ul className="govuk-list govuk-list--bullet">
-              <li>Sell or rent your data to third parties.</li>
-              <li>
-                Share your data with third parties for marketing purposes.
-              </li>
+              <li>sell or rent your data to third parties</li>
+              <li>share your data with third parties for marketing purposes</li>
             </ul>
             <p className="govuk-body">
               We will share your data if we are required to do so by law – for
@@ -202,8 +198,8 @@ const PrivacyAndCookiePolicy = () => {
               We will only retain your personal data for as long as:
             </p>
             <ul className="govuk-list govuk-list--bullet">
-              <li>It is needed for the purposes set out in this document.</li>
-              <li>The law requires us to.</li>
+              <li>it is needed for the purposes set out in this document</li>
+              <li>the law requires us to</li>
             </ul>
             <p className="govuk-body">
               In general, this means that we will only hold your personal data
@@ -246,28 +242,28 @@ const PrivacyAndCookiePolicy = () => {
             <h2 className="govuk-heading-m">What are your rights?</h2>
             <p className="govuk-body">You have the right to request:</p>
             <ul className="govuk-list govuk-list--bullet">
-              <li>Information about how your personal data is processed.</li>
+              <li>information about how your personal data is processed</li>
               <li>
-                A copy of that personal data - this copy will be provided in a
-                structured, commonly used and machine-readable format.
+                a copy of that personal data - this copy will be provided in a
+                structured, commonly used and machine-readable format
               </li>
               <li>
-                That anything inaccurate in your personal data is corrected
-                immediately.
+                that anything inaccurate in your personal data is corrected
+                immediately
               </li>
             </ul>
             <p className="govuk-body">You can also:</p>
             <ul className="govuk-list govuk-list--bullet">
               <li>
-                Raise an objection about how your personal data is processed.
+                raise an objection about how your personal data is processed
               </li>
               <li>
-                Request that your personal data is erased if there is no longer
-                a justification for it.
+                request that your personal data is erased if there is no longer
+                a justification for it
               </li>
               <li>
-                Ask that the processing of your personal data is restricted in
-                certain circumstances.
+                ask that the processing of your personal data is restricted in
+                certain circumstances
               </li>
             </ul>
             <p className="govuk-body">
