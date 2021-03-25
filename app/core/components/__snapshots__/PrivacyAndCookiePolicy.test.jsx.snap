@@ -42,50 +42,50 @@ exports[`Privacy Policy page matches snapshot 1`] = `
           className="govuk-list govuk-list--bullet"
         >
           <li>
-            Your full name.
+            your full name
           </li>
           <li>
-            Your job role and team.
+            your job role and team
           </li>
           <li>
-            Your Adelphi or Metis personal number.
+            your Adelphi or Metis personal number
           </li>
           <li>
-            Your mandatory declaration.
+            your mandatory declaration
           </li>
           <li>
-            Your security clearance levels and expiry date.
+            your security clearance levels and expiry date
           </li>
           <li>
-            Your Internet Protocol (IP) address, and details of which version of web browser and device that you used.
+            your Internet Protocol (IP) address, and details of which version of web browser and device that you used
           </li>
           <li>
-            Information on how you use the site, using cookies and page tagging techniques:
+            information on how you use the site, using cookies and page tagging techniques:
             <ul
               className="govuk-list govuk-list--bullet"
             >
               <li>
-                The pages you visit on cop.homeoffice.gov.uk.
+                the pages you visit on cop.homeoffice.gov.uk
               </li>
               <li>
-                How long you spend on each cop.homeoffice.gov.uk page.
+                how long you spend on each cop.homeoffice.gov.uk page
               </li>
               <li>
-                What you click on while you’re visiting the site.
+                what you click on while you’re visiting the site
               </li>
             </ul>
           </li>
           <li>
-            Your POISE ID.
+            your POISE ID
           </li>
           <li>
-            Your Home Office email address.
+            your Home Office email address
           </li>
           <li>
-            Your mobile phone number.
+            your mobile phone number
           </li>
           <li>
-            Pages that you view.
+            pages that you view
           </li>
         </ul>
         <p
@@ -102,16 +102,16 @@ exports[`Privacy Policy page matches snapshot 1`] = `
           className="govuk-list govuk-list--bullet"
         >
           <li>
-            Your Adelphi or Metis personal number.
+            your Adelphi or Metis personal number
           </li>
           <li>
-            Your mandatory declaration.
+            your mandatory declaration
           </li>
           <li>
-            Your security clearance levels and expiry date.
+            your security clearance levels and expiry date
           </li>
           <li>
-            Your POISE ID (except IE, UKVI and NCA).
+            your POISE ID (except IE, UKVI and NCA)
           </li>
         </ul>
         <p
@@ -123,7 +123,7 @@ exports[`Privacy Policy page matches snapshot 1`] = `
           className="govuk-list govuk-list--bullet"
         >
           <li>
-            Your Stride ID.
+            your Stride ID
           </li>
         </ul>
         <p
@@ -135,7 +135,7 @@ exports[`Privacy Policy page matches snapshot 1`] = `
           className="govuk-list govuk-list--bullet"
         >
           <li>
-            Your Home Office digital handle (i.e. firstname.lastname@digital.homeoffice.gov.uk) which is used to provide access.
+            your Home Office digital handle (i.e. firstname.lastname@digital.homeoffice.gov.uk) which is used to provide access
           </li>
         </ul>
         <p
@@ -177,10 +177,10 @@ exports[`Privacy Policy page matches snapshot 1`] = `
           className="govuk-list govuk-list--bullet"
         >
           <li>
-            _pk_id: Used to store a few details about you such as the unique visitor ID, stored for 13 months.
+            _pk_id: used to store a few details about you such as the unique visitor ID, stored for 13 months
           </li>
           <li>
-            _pk_ref: Used to store information to initially identify you when you visit the website, stored for 6 months.
+            _pk_ref: used to store information to initially identify you when you visit the website, stored for 6 months
           </li>
         </ul>
         <p
@@ -192,10 +192,10 @@ exports[`Privacy Policy page matches snapshot 1`] = `
           className="govuk-list govuk-list--bullet"
         >
           <li>
-            _pk_hsr: Heatmap and session recording.
+            _pk_hsr: heatmap and session recording
           </li>
           <li>
-            _pk_ses: Used to store data for the visit for 30 minutes.
+            _pk_ses: used to store data for the visit for 30 minutes
           </li>
         </ul>
         <p
@@ -252,10 +252,10 @@ exports[`Privacy Policy page matches snapshot 1`] = `
           className="govuk-list govuk-list--bullet"
         >
           <li>
-            Sell or rent your data to third parties.
+            sell or rent your data to third parties
           </li>
           <li>
-            Share your data with third parties for marketing purposes.
+            share your data with third parties for marketing purposes
           </li>
         </ul>
         <p
@@ -282,10 +282,10 @@ exports[`Privacy Policy page matches snapshot 1`] = `
           className="govuk-list govuk-list--bullet"
         >
           <li>
-            It is needed for the purposes set out in this document.
+            it is needed for the purposes set out in this document
           </li>
           <li>
-            The law requires us to.
+            the law requires us to
           </li>
         </ul>
         <p
@@ -337,13 +337,13 @@ exports[`Privacy Policy page matches snapshot 1`] = `
           className="govuk-list govuk-list--bullet"
         >
           <li>
-            Information about how your personal data is processed.
+            information about how your personal data is processed
           </li>
           <li>
-            A copy of that personal data - this copy will be provided in a structured, commonly used and machine-readable format.
+            a copy of that personal data - this copy will be provided in a structured, commonly used and machine-readable format
           </li>
           <li>
-            That anything inaccurate in your personal data is corrected immediately.
+            that anything inaccurate in your personal data is corrected immediately
           </li>
         </ul>
         <p
@@ -355,13 +355,13 @@ exports[`Privacy Policy page matches snapshot 1`] = `
           className="govuk-list govuk-list--bullet"
         >
           <li>
-            Raise an objection about how your personal data is processed.
+            raise an objection about how your personal data is processed
           </li>
           <li>
-            Request that your personal data is erased if there is no longer a justification for it.
+            request that your personal data is erased if there is no longer a justification for it
           </li>
           <li>
-            Ask that the processing of your personal data is restricted in certain circumstances.
+            ask that the processing of your personal data is restricted in certain circumstances
           </li>
         </ul>
         <p
