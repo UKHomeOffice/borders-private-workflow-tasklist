@@ -7,7 +7,7 @@ import { createBrowserHistory } from 'history';
 import MatomoTracker from 'piwik-react-router';
 import Keycloak from 'keycloak-js';
 import { Formio } from 'react-formio';
-import gds from '@digitalpatterns/formio-gds-template';
+import gds from '@ukhomeoffice/formio-gds-template';
 import qs from 'querystring';
 import axios from 'axios';
 import jwtDecode from 'jwt-decode';

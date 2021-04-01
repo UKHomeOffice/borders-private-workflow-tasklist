@@ -101,7 +101,7 @@
     "webpack-subresource-integrity": "^1.5.1"
   },
   "dependencies": {
-    "@digitalpatterns/formio-gds-template": "1.6.0",
+    "@ukhomeoffice/formio-gds-template": "^1.0.5",
     "@stomp/stompjs": "^5.4.2",
     "axios": "^0.21.1",
     "bootstrap": "^4.3.1",
