@@ -46,7 +46,7 @@ const YourGroupTasks = props => {
           )}
           {_.map(value, val => {
             const { task } = val;
-            const due = moment(task.due);
+            const due = moment(task.due+'Z');
             const dueLabel = moment().to(due);
 
             return (
@@ -72,7 +72,7 @@ const YourGroupTasks = props => {
                 <div className="govuk-grid-column-one-half">
                   <div className="govuk-grid-row">
                     <div className="govuk-grid-column-one-third govuk-!-margin-bottom-3">
-                      {moment(task.due).isAfter() ? (
+                      {moment(task.due+'Z').isAfter() ? (
                         <span
                           aria-label={`due ${dueLabel}`}
                           className="govuk-!-font-size-19 govuk-!-font-weight-bold not-over-due-date"
