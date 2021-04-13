@@ -146,13 +146,13 @@ class CaseDetailsPanel extends React.Component {
                                                 </div>
                                                 <div className="govuk-grid-column-one-half">
                                                   <span className="govuk-caption-m">Start date</span>
-                                                  <h3 className="govuk-heading-s">{moment(processInstance.startDate+'Z').format('DD/MM/YYYY HH:mm')}</h3>
+                                                  <h3 className="govuk-heading-s">{moment.utc(processInstance.startDate).local().format('DD/MM/YYYY HH:mm')}</h3>
                                                 </div>
                                                 <div className="govuk-grid-column-one-half">
                                                   <span className="govuk-caption-m">End date</span>
 
                                                   <h3 className="govuk-heading-s">
-                                                    {processInstance.endDate ? moment(processInstance.endDate+'Z').format('DD/MM/YYYY HH:mm') :
+                                                    {processInstance.endDate ? moment.utc(processInstance.endDate).local().format('DD/MM/YYYY HH:mm') :
                                                                     'Active'}
                                                   </h3>
                                                 </div>
