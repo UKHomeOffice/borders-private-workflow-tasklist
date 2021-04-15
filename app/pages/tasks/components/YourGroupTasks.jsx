@@ -46,7 +46,7 @@ const YourGroupTasks = props => {
           )}
           {_.map(value, val => {
             const { task } = val;
-            const due = moment(task.due);
+            const due = moment.utc(task.due).local();
             const dueLabel = moment().to(due);
 
             return (
