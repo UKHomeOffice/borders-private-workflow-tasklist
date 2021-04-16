@@ -22,7 +22,7 @@ const TaskTitle = props => {
   ) {
     assignee = kc.tokenParsed.email;
   }
-  const due = moment(task.get('due'));
+  const due = moment.utc(task.get('due')).local();
   const dueLabel = moment().to(due);
   const [dueDate, setDueDate] = useState({
     day: due.format('DD'),
