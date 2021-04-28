@@ -91,7 +91,7 @@ class CaseAttachments extends React.Component {
                                           >{attachment.submittedFilename}
                                           </a>
                                         </th>
-                                        <td className="govuk-table__cell">{moment(attachment.submittedDateTime).format('DD-MM-YYYY HH:mm')}</td>
+                                        <td className="govuk-table__cell">{moment.utc(attachment.submittedDateTime).local().format('DD-MM-YYYY HH:mm')}</td>
                                         <td className="govuk-table__cell" style={{wordWrap: 'break-word'}}>{attachment.submittedEmail}</td>
                                       </tr>
 )
