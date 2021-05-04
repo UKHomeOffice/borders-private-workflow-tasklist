@@ -44,7 +44,7 @@ module.exports = webpackMerge(common, {
     new webpack.HotModuleReplacementPlugin(),
   ],
   devServer: {
-    allowedHosts: ['www.lodev.xyz'],
+    allowedHosts: ['www.local.cop.homeoffice.gov.uk'],
     compress: true,
     contentBase: 'public/',
     historyApiFallback: true,
