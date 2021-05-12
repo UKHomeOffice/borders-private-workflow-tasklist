@@ -28,6 +28,7 @@ describe('CaseAction', () => {
                     session_state: 'state',
                     line_manager_email: null,
                     delegate_email: null,
+                    groups: ['/Group_One', '/Group_Two'],
                 },
             },
             caseDetails: {
