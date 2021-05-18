@@ -5,7 +5,9 @@ import { bindActionCreators } from "redux";
 import { withRouter } from "react-router";
 import { connect } from "react-redux";
 import { fetchActionForm, resetSelectedAction, executeAction, clearActionResponse } from "../actions";
+import { getFormSubmissionData, resetForm } from "../../actions";
 import { actionForm, actionResponse, executingAction, loadingActionForm } from "../selectors";
+import { formSubmissionData } from "../../selectors";
 import withLog from "../../../../core/error/component/withLog";
 import FormioInterpolator from "../../../../core/FormioInterpolator";
 import secureLocalStorage from "../../../../common/security/SecureLocalStorage";
@@ -18,18 +20,56 @@ class CaseAction extends React.Component {
     this.formioInterpolator = new FormioInterpolator();
   }
 
+  latestFormDataPath = (processInstances, formKey) => {
+    return processInstances
+      .map(({ formReferences }) => formReferences)
+      .reduce((acc, val) => acc.concat(val), [])
+      .reduce((acc, { name, dataPath }) => name === formKey ? dataPath : acc, '')
+  }
+
   componentDidMount() {
-    if (this.props.selectedAction) {
-      this.props.fetchActionForm(this.props.selectedAction.process.formKey);
+    const {
+      caseDetails: { businessKey, processInstances = [] } = {},
+      fetchActionForm,
+      getFormSubmissionData,
+      selectedAction,
+      selectedAction: { process: { formKey } = {} } = {}
+    } = this.props;
+
+    if (selectedAction) {
+      fetchActionForm(formKey);
+
+      const latestFormDataPath = this.latestFormDataPath(processInstances, formKey);
+
+      if (latestFormDataPath) {
+        getFormSubmissionData(businessKey, latestFormDataPath);
+      }
     }
   }
 
-  componentDidUpdate(prevProps, prevState, snapshot) {
-    if (this.props.selectedAction.process['process-definition'].key !==
-      prevProps.selectedAction.process['process-definition'].key) {
+  componentDidUpdate(prevProps) {
+    const {
+      caseDetails: { businessKey, processInstances = [] } = {},
+      getFormSubmissionData,
+      resetForm,
+      selectedAction: { process: currProcess, process: { formKey } = {} } = {}
+    } = this.props;
+
+    const { selectedAction: { process: prevProcess } = {} } = prevProps;
+
+    if (currProcess['process-definition'].key !== prevProcess['process-definition'].key) {
       this.props.clearActionResponse();
-      this.props.fetchActionForm(this.props.selectedAction.process.formKey);
+      this.props.fetchActionForm(formKey);
+
+      resetForm();
+
+      const latestFormDataPath = this.latestFormDataPath(processInstances, formKey);
+
+      if (latestFormDataPath) {
+        getFormSubmissionData(businessKey, latestFormDataPath);
+      }
     }
+
     if (this.props.actionResponse) {
       const that = this;
       this.timer = setTimeout(() => {
@@ -50,7 +90,7 @@ class CaseAction extends React.Component {
     const {
       selectedAction, caseDetails,
       loadingActionForm, actionForm, kc, appConfig,
-      executingAction, actionResponse
+      executingAction, actionResponse, formSubmissionData
     } = this.props;
     if (!selectedAction || !caseDetails) {
       return <div id="emptyAction" />
@@ -87,7 +127,8 @@ class CaseAction extends React.Component {
         operationalDataUrl: appConfig.operationalDataUrl,
         privateUiUrl: window.location.origin,
         attachmentServiceUrl: appConfig.attachmentServiceUrl
-      }
+      },
+      formSubmissionData
     };
 
     this.formioInterpolator.interpolate(actionForm, submission);
@@ -129,7 +170,8 @@ class CaseAction extends React.Component {
                       }
                     };
                     next();
-                  }
+                  },
+                  beforeCancel: () => this.componentDidMount()
                 }
               }}
               submission={{
@@ -178,14 +220,27 @@ CaseAction.propTypes = {
         name: PropTypes.string
       })
     })
-  })
+  }),
+  formReference: PropTypes.shape({
+    name: PropTypes.string,
+    title: PropTypes.string,
+    formVersionId: PropTypes.string,
+    dataPath: PropTypes.string,
+    submissionDate: PropTypes.string,
+    submittedBy: PropTypes.string
+  }),
+  getFormSubmissionData: PropTypes.func.isRequired,
+  formSubmissionData: PropTypes.object,
+  resetForm: PropTypes.func.isRequired
 };
 
 
 const mapDispatchToProps = dispatch => bindActionCreators({
   fetchActionForm,
   resetSelectedAction, executeAction, clearActionResponse,
-  getCaseByKey
+  getCaseByKey,
+  getFormSubmissionData,
+  resetForm
 }, dispatch);
 
 export default withRouter(connect(state => {
@@ -195,7 +250,8 @@ export default withRouter(connect(state => {
     loadingActionForm: loadingActionForm(state),
     actionForm: actionForm(state),
     executingAction: executingAction(state),
-    actionResponse: actionResponse(state)
+    actionResponse: actionResponse(state),
+    formSubmissionData: formSubmissionData(state)
   }
 }, mapDispatchToProps)(withLog(CaseAction)));
 
