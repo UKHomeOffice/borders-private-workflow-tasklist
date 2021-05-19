@@ -8,6 +8,7 @@ import { Provider } from 'react-redux';
 import CaseActions from './CaseActions';
 import caseActions from '../index';
 import fixtures from './fixtures';
+import casePageActions from '../../index';
 
 describe('CaseActions', () => {
   let props;
@@ -93,7 +94,10 @@ describe('CaseActions', () => {
     const history = createMemoryHistory('/case');
 
     const store = createStore(
-      combineReducers({ [caseActions.NAME]: caseActions.reducer }),
+      combineReducers({
+        [caseActions.NAME]: caseActions.reducer,
+        [casePageActions.NAME]: casePageActions.reducer
+      }),
       {},
     );
 
