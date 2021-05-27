@@ -53,14 +53,6 @@ export class Header extends React.Component {
                     >My profile
                     </a>
                     <a
-                      id="support"
-                      className="govuk-header__link header-nav__link"
-                      href={`${this.props.appConfig.serviceDeskUrls.support}`}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >Support
-                    </a>
-                    <a
                       id="logout"
                       href="/logout"
                       onClick={this.logout}
