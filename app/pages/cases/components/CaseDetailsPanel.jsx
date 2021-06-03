@@ -15,6 +15,7 @@ import withLog from "../../../core/error/component/withLog";
 import CaseActions from "../case-actions/components/CaseActions";
 import CaseMetrics from "./CaseMetrics";
 import CaseAttachments from "./CaseAttachments";
+import {setSelectedAction} from '../case-actions/actions';
 
 class CaseDetailsPanel extends React.Component {
     constructor(props) {
@@ -221,6 +222,7 @@ class CaseDetailsPanel extends React.Component {
 
                                                                                         if ((!selectedFormReference || (keyFromSelectedReference && keyFromSelectedReference !== key))) {
                                                                                             this.props.setSelectedFormReference(form)
+                                                                                            this.props.setSelectedAction(this.props.caseDetails.actions[this.props.caseDetails.actions.length - 1]);
                                                                                         } else {
                                                                                             this.props.setSelectedFormReference(null)
                                                                                         }
@@ -291,6 +293,7 @@ class CaseDetailsPanel extends React.Component {
 
             const mapDispatchToProps = dispatch => bindActionCreators({
             getFormVersion,
+            setSelectedAction,
             setSelectedFormReference,
             setProcessStartSort
         }, dispatch);
