@@ -8,6 +8,7 @@ import CaseAction from "./CaseAction";
 import withLog from "../../../../core/error/component/withLog";
 import {setSelectedAction} from "../actions";
 import {selectedAction} from "../selectors";
+import {setSelectedFormReference} from '../../actions';
 
 class CaseActions extends React.Component {
 
@@ -20,7 +21,12 @@ class CaseActions extends React.Component {
     }
 
     render() {
-        const {caseDetails, selectedAction, setSelectedAction} = this.props;
+        const {
+          caseDetails,
+          selectedAction,
+          setSelectedAction,
+          setSelectedFormReference
+        } = this.props;
 
         return (
           <div className="govuk-grid-row govuk-card" id="caseActions">
@@ -63,6 +69,7 @@ class CaseActions extends React.Component {
                                                   onClick={event => {
                                                     event.preventDefault();
                                                     setSelectedAction(action);
+                                                    setSelectedFormReference(null);
                                                 }}
                                                 > {action.process['process-definition'].name}
                                                 </a>
@@ -109,7 +116,10 @@ CaseActions.propTypes = {
         }))
     })
 };
-const mapDispatchToProps = dispatch => bindActionCreators({setSelectedAction}, dispatch);
+const mapDispatchToProps = dispatch => bindActionCreators({
+  setSelectedAction,
+  setSelectedFormReference
+}, dispatch);
 
 export default withRouter(connect(state => {
     return {
