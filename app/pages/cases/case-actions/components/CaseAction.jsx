@@ -51,7 +51,6 @@ class CaseAction extends React.Component {
     const {
       caseDetails: { businessKey, processInstances = [] } = {},
       getFormSubmissionData,
-      resetForm,
       selectedAction: { process: currProcess, process: { formKey } = {} } = {}
     } = this.props;
 
@@ -60,9 +59,6 @@ class CaseAction extends React.Component {
     if (currProcess['process-definition'].key !== prevProcess['process-definition'].key) {
       this.props.clearActionResponse();
       this.props.fetchActionForm(formKey);
-
-      resetForm();
-
       const latestFormDataPath = this.latestFormDataPath(processInstances, formKey);
 
       if (latestFormDataPath) {
@@ -84,6 +80,7 @@ class CaseAction extends React.Component {
     if (this.timer) {
       clearTimeout(this.timer);
     }
+    this.props.resetForm();
   }
 
   render() {
@@ -106,7 +103,7 @@ class CaseAction extends React.Component {
       return <div id="submittingAction">Submitting action...</div>
     }
 
-    const submission = {
+    let submission = {
       caseDetails,
       selectedAction,
       keycloakContext: {
@@ -127,9 +124,16 @@ class CaseAction extends React.Component {
         operationalDataUrl: appConfig.operationalDataUrl,
         privateUiUrl: window.location.origin,
         attachmentServiceUrl: appConfig.attachmentServiceUrl
-      },
-      formSubmissionData
+      }
     };
+
+    const isPrepopulated = actionForm.components.find(c => c.key === 'caseActionPrepopulate');
+    if (isPrepopulated) {
+      submission = {
+        ...submission,
+        ...formSubmissionData
+      }
+    }
 
     this.formioInterpolator.interpolate(actionForm, submission);
     return (
